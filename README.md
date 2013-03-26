@@ -9,5 +9,14 @@ GitlHEVCAnalyzer is a tool for bitstream analysis for HEVC.
     <li>Custom Plugins Support</li>
 </ul>
 
-Intelligent Information Processing Lab
-http://gitl.sysu.edu.cn
+<a href="http://gitl.sysu.edu.cn">Intelligent Information Processing Lab</a> 
+
+How To Build
+============
+
+Written in C++ using Qt 5.0.
+
+running on windows platform
+
+'decoder' dictory must be put in the same dictory with the EXE.
+
