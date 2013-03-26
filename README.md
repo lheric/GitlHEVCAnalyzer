@@ -1,6 +1,13 @@
 GitlHEVCAnalyzer
 ================
 
-HEVC Analyzer
+GitlHEVCAnalyzer is a tool for bitstream analysis for HEVC.
 
-GITL Lab Video Tools
+<ul>
+    <li>Zoom In/Out Details</li>
+    <li>Bitsteam Compare</li>
+    <li>Custom Plugins Support</li>
+</ul>
+
+Intelligent Information Processing Lab
+http://gitl.sysu.edu.cn
