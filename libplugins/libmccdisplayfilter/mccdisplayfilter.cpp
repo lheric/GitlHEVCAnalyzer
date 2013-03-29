@@ -41,15 +41,7 @@ bool MCCDisplayFilter::init(FilterContext *pcContext)
             int iAddr = cMatchTarget.cap(2).toInt();
 
             int mcc = cMatchTarget.cap(3).toInt();
-            cout << mcc << endl;
-
-
-
-
-                m_ccLCU[iPoc][iAddr] = mcc;
-
-
-
+             m_ccLCU[iPoc][iAddr] = mcc;
         }
 
     }
@@ -70,14 +62,32 @@ bool MCCDisplayFilter::drawCTU  (QPainter* pcPainter,
 
 
     int mcc = m_ccLCU[iPoc][iAddr];
-    cout << iAddr << " " << iPoc << " " << mcc << endl;
+    //cout << iAddr << " " << iPoc << " " << mcc << endl;
     pcPainter->setBrush(Qt::NoBrush);
     pcPainter->setPen(QColor(255,0,0));
     QRect cCTURect(iCTUX, iCTUY, iCTUSize, iCTUSize);
     QFont cFont = pcPainter->font();
-    cFont.setPointSize(12);
+    pcPainter->setPen(QColor(0,0,255));
+    cFont.setPointSize(18);
     pcPainter->setFont(cFont);
     pcPainter->drawText(cCTURect,Qt::AlignCenter, QString("%1").arg(mcc));
+
+
+    //if(mcc>6)
+    //{
+    int iAlpha = 255-mcc*15;
+    iAlpha=((iAlpha<0)?(0):(iAlpha));
+    iAlpha=((iAlpha>175)?(175):(iAlpha));
+    pcPainter->setPen(Qt::NoPen);
+    pcPainter->setBrush(QColor(0,0,0,iAlpha));
+    pcPainter->drawRect(cCTURect);
+    //}
+//    else if(mcc == 0)
+//    {
+//        pcPainter->setPen(QColor(0,255,0));
+//        pcPainter->drawRect(cCTURect);
+//    }
+
 
     return true;
 }
