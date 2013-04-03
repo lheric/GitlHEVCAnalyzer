@@ -35,7 +35,7 @@
     classname* classname::m_instance = NULL; \
     QMutex classname::m_cGetInstanceMutex;
 
-// CLIP c BETWEEN a AND b
+/// CLIP c BETWEEN a AND b
 #define PIXEL_CLIP(a,b,c) ( ((c)>(b))?((c)=(b)):((c)<(a))?((c)=(a)):(c) )
 
 #endif

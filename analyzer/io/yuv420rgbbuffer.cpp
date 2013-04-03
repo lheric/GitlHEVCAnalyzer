@@ -37,6 +37,8 @@ bool YUV420RGBBuffer::setYUVFile( const QString& strYUVPath, int iWidth, int iHe
         delete[] m_puhRGBBuffer;
         m_puhRGBBuffer = new uchar[iWidth * iHeight * 3];
 
+
+
     }
 
 
@@ -60,8 +62,8 @@ QPixmap* YUV420RGBBuffer::getFrame(int iPoc)
 
     if( xReadFrame(iPoc) )
     {
-        QImage img(m_puhRGBBuffer, m_iBufferWidth, m_iBufferHeight, QImage::Format_RGB888 );
-        m_cFramePixmap = QPixmap::fromImage(img);
+        QImage cFrameImg(m_puhRGBBuffer, m_iBufferWidth, m_iBufferHeight, QImage::Format_RGB888 );
+        m_cFramePixmap = QPixmap::fromImage(cFrameImg.scaled(cFrameImg.size()));
         pcFramePixmap = &m_cFramePixmap;
     }
     else
@@ -111,20 +113,21 @@ void YUV420RGBBuffer::xYuv2rgb(uchar* puhYUV, uchar* puhRGB, int iWidth, int iHe
 
 
     int uiFrameSizeInPixel = iWidth*iHeight;
-    uchar* puhY = puhYUV;
-    uchar* puhU = puhYUV + uiFrameSizeInPixel;
-    uchar* puhV = puhYUV + uiFrameSizeInPixel*5/4;
+    uchar* const puhY = puhYUV;
+    uchar* const puhU = puhYUV + uiFrameSizeInPixel;
+    uchar* const puhV = puhYUV + uiFrameSizeInPixel*5/4;
 
     long lYOffset, lUVOffset;
     int iY, iU, iV;
     int tempR, tempG, tempB;
 
+    uchar* iCurRgbPixelOffset = 0;
     for(int y = 0; y < iHeight; ++y)
     {
         for(int x = 0; x < iWidth; ++x)
         {
             lYOffset  = iWidth*y+x;
-            lUVOffset = iWidth/2*(y/2)+x/2;
+            lUVOffset = iWidth/2*(y/2)+(x/2);
 
             iY = puhY[lYOffset];
             iU = puhU[lUVOffset];
@@ -138,13 +141,15 @@ void YUV420RGBBuffer::xYuv2rgb(uchar* puhYUV, uchar* puhRGB, int iWidth, int iHe
             tempB = iY
                     + iU + (iU>>1) + (iU>>2) - 227;
 
+
             PIXEL_CLIP(0,255,tempR);
             PIXEL_CLIP(0,255,tempG);
             PIXEL_CLIP(0,255,tempB);
 
-            *(puhRGB+3*lYOffset)     = tempR;
-            *(puhRGB+3*lYOffset + 1) = tempG;
-            *(puhRGB+3*lYOffset + 2) = tempB;
+            iCurRgbPixelOffset = puhRGB+3*(iWidth*y+x);
+            *(iCurRgbPixelOffset)     = tempR;
+            *(iCurRgbPixelOffset + 1) = tempG;
+            *(iCurRgbPixelOffset + 2) = tempB;
 
 
         }

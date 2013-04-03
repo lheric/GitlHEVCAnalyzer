@@ -17,6 +17,10 @@ bool JumpToPercentCommand::execute( CommandRequest& rcRequest, CommandRespond& r
     int iMinPOC = 0;
     int iPoc = int(iPercent*iMaxPOC/100.0+0.5);
 
+    /// [Optimization] if poc is not changed, do nothing
+    if( iPoc == pModel->getFrameBuffer().getPoc() )
+        return true;
+
     if( iPoc > iMaxPOC || iPoc < iMinPOC )
     {
         return false;

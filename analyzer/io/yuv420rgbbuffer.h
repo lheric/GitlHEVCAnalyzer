@@ -22,10 +22,11 @@ public:
     ADD_CLASS_FIELD(int, iBufferHeight, getBufferHeight, setBufferHeight)
     ADD_CLASS_FIELD(int, iPoc, getPoc, setPoc)
 
+
     ADD_CLASS_FIELD_PRIVATE(QPixmap, cFramePixmap)
-    ADD_CLASS_FIELD_PRIVATE(uchar*, puhYUVBuffer)
-    ADD_CLASS_FIELD_PRIVATE(uchar*, puhRGBBuffer)
-    ADD_CLASS_FIELD_PRIVATE(IOYUV, cIOYUV);
+    ADD_CLASS_FIELD_PRIVATE(uchar*,  puhYUVBuffer)
+    ADD_CLASS_FIELD_PRIVATE(uchar*,  puhRGBBuffer)
+    ADD_CLASS_FIELD_PRIVATE(IOYUV,   cIOYUV)
 
 protected:
     bool xReadFrame(int iPoc);

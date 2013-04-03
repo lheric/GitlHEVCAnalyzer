@@ -71,6 +71,14 @@ public:
 
 
     int xGetPUNum( PartSize ePartSize );
+
+
+    /*!
+     * Scale of the frame
+     */
+    ADD_CLASS_FIELD(double, iFrameScale, getFrameScale, setFrameScale)
+
+
     /*!
      * Filter Loader
      */

@@ -33,6 +33,5 @@ void GitlEventBus::post(GitlEvent* pcEvt)
 
     m_cBlockEvtDispatcher.postEvent(pcEvt);
 
-
 }
 
