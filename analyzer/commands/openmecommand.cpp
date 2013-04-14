@@ -1,5 +1,5 @@
 #include "openmecommand.h"
-#include "../modellocator.h"
+#include "model/modellocator.h"
 
 OpenMECommand::OpenMECommand()
 {

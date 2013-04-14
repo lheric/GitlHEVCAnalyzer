@@ -4,7 +4,7 @@ INCLUDEPATH    += ../../analyzer \
                   ../../libgitlevtbus
 HEADERS         = highlightdifffilter.h
 SOURCES         = highlightdifffilter.cpp
-TARGET          = $$qtLibraryTarget(highlightdiff)
+TARGET          = $$qtLibraryTarget(libhighlightdifffilter)
 DESTDIR         = $${OUT_PWD}/../../plugins
 
 

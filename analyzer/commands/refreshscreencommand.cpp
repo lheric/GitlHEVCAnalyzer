@@ -1,5 +1,5 @@
 #include "refreshscreencommand.h"
-#include "modellocator.h"
+#include "model/modellocator.h"
 #include <QPixmap>
 RefreshScreenCommand::RefreshScreenCommand(QObject *parent) :
     AbstractCommand(parent)

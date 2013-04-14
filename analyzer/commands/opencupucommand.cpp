@@ -1,6 +1,6 @@
 #include "opencupucommand.h"
 
-#include "../modellocator.h"
+#include "model/modellocator.h"
 
 OpenCUPUCommand::OpenCUPUCommand(QObject *parent) :
     AbstractCommand(parent)

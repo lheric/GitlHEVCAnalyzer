@@ -12,7 +12,7 @@ public:
     explicit CommandRequest();
     bool hasParameter(QString strParam) const;
     bool getParameter(QString strParam, QVariant& rvValue) const;
-    bool setParameter(QString strParam, QVariant rvValue);
+    bool setParameter(QString strParam, const QVariant& rvValue);
 
 protected:
     QMap<QString,QVariant> m_cRequest;

@@ -1,5 +1,5 @@
 #include "openencodergeneralcommand.h"
-#include "../modellocator.h"
+#include "model/modellocator.h"
 
 OpenEncoderGeneralCommand::OpenEncoderGeneralCommand(QObject *parent) :
     AbstractCommand(parent)

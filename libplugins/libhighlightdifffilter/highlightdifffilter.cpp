@@ -1,5 +1,5 @@
 #include "highlightdifffilter.h"
-#include "modellocator.h"
+#include "model/modellocator.h"
 
 HighlightDiffFilter::HighlightDiffFilter(QObject *parent) :
     QObject(parent)

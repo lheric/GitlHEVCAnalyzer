@@ -21,11 +21,11 @@ SOURCES += main.cpp \
     common/comsequence.cpp \
     common/comframe.cpp \
     common/comlcu.cpp \
-    modellocator.cpp \
     drawengine/drawengine.cpp \
     appgui/mainwindow.cpp \
     io/ioyuv.cpp \
     parsers/meparser.cpp \
+    model/modellocator.cpp \
     commands/openyuvcommand.cpp \
     commands/opencupucommand.cpp \
     commands/openmecommand.cpp \
@@ -67,11 +67,11 @@ HEADERS += \
     common/comframe.h \
     common/comlcu.h \
     common/comdef.h \
-    modellocator.h \
     drawengine/drawengine.h \
     appgui/mainwindow.h \
     io/ioyuv.h \
     parsers/meparser.h \
+    model/modellocator.h \
     common/commv.h \
     commands/openyuvcommand.h \
     commands/opencupucommand.h \

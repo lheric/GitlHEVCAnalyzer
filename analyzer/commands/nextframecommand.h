@@ -1,7 +1,7 @@
 #ifndef NEXTFRAMECOMMAND_H
 #define NEXTFRAMECOMMAND_H
 
-#include "../modellocator.h"
+#include "model/modellocator.h"
 #include "abstractcommand.h"
 
 class NextFrameCommand : public AbstractCommand

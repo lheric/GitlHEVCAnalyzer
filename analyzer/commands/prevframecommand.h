@@ -1,7 +1,7 @@
 #ifndef PREVFRAMECOMMAND_H
 #define PREVFRAMECOMMAND_H
 
-#include "../modellocator.h"
+#include "model/modellocator.h"
 #include "abstractcommand.h"
 
 class PrevFrameCommand : public AbstractCommand

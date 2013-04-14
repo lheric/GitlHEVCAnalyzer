@@ -19,7 +19,7 @@ public:
 
 private:
     ComMV m_pcMV[2];
-
+	
     ADD_CLASS_FIELD( PredMode, ePredMode, getPredMode, setPredMode)
     ADD_CLASS_FIELD( int, mergeIndex, getMergeIndex, setMergeIndex )
     ADD_CLASS_FIELD( int, iInterDir, getInterDir, setInterDir)

@@ -4,7 +4,7 @@
 #include "gitlevent.h"
 
 //
-#include "modellocator.h"
+#include "model/modellocator.h"
 #include "common/comdef.h"
 #include "appgui/mainwindow.h"
 

@@ -1,5 +1,5 @@
 #include "openyuvcommand.h"
-#include "../modellocator.h"
+#include "model/modellocator.h"
 
 OpenYUVCommand::OpenYUVCommand(QObject *parent) :
     AbstractCommand(parent)

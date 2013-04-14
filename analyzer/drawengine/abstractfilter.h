@@ -46,14 +46,20 @@ public:
      * \param pcContext \see FilterContext
      * \return
      */
-    virtual bool init     (FilterContext* pcContext) = 0;
+    virtual bool init     (FilterContext* pcContext)
+    {
+        return true;
+    }
 
     /*!
      * \brief uninit is called before unload
      * \param pcContext \see FilterContext
      * \return
      */
-    virtual bool uninit    (FilterContext* pcContext) = 0;
+    virtual bool uninit    (FilterContext* pcContext)
+    {
+        return true;
+    }
 
     /*!
      * \brief config is called when user push the 'config' button in user interface (or 'config' command in command line)
@@ -61,7 +67,10 @@ public:
      * \param pcContext \see FilterContext
      * \return
      */
-    virtual bool config   (FilterContext* pcContext) = 0;
+    virtual bool config   (FilterContext* pcContext)
+    {
+        return true;
+    }
 
     /*!
      * \brief drawFrame is called for every frame
@@ -71,7 +80,10 @@ public:
      * \param iPoc the POC of currently displaying frame (begin with 0)
      * \return true - success   false - fail
      */
-    virtual bool drawFrame(QPainter* pcPainter, FilterContext* pcContext, ComSequence* pcSequence, int iPoc) = 0;
+    virtual bool drawFrame(QPainter* pcPainter, FilterContext* pcContext, ComSequence* pcSequence, int iPoc)
+    {
+        return true;
+    }
 
     /*!
      * \brief drawCTU is called for each CTU (Coding Tree Unit, i.e. LCU)
@@ -85,7 +97,10 @@ public:
      * \param iCTUSize size of the CTU
      * \return
      */
-    virtual bool drawCTU(QPainter* pcPainter, FilterContext* pcContext, ComSequence* pcSequence, int iPoc, int iAddr, int iCTUX, int iCTUY, int iCTUSize) = 0;
+    virtual bool drawCTU(QPainter* pcPainter, FilterContext* pcContext, ComSequence* pcSequence, int iPoc, int iAddr, int iCTUX, int iCTUY, int iCTUSize)
+    {
+        return true;
+    }
 
 
     /*!
@@ -102,7 +117,10 @@ public:
      * \param iCUSize size of the CU
      * \return
      */
-    virtual bool drawCU   (QPainter* pcPainter, FilterContext* pcContext, ComSequence* pcSequence, int iPoc, int iAddr, int iZOrder, int iDepth, int iCUX, int iCUY, int iCUSize) = 0;
+    virtual bool drawCU   (QPainter* pcPainter, FilterContext* pcContext, ComSequence* pcSequence, int iPoc, int iAddr, int iZOrder, int iDepth, int iCUX, int iCUY, int iCUSize)
+    {
+        return true;
+    }
 
     /*!
      * \brief drawPU
@@ -122,7 +140,10 @@ public:
      * \param iPUHeight PU height
      * \return
      */
-    virtual bool drawPU   (QPainter* pcPainter, FilterContext* pcContext, ComSequence* pcSequence, ComPU* pcPU, int iPoc, int iAddr, int iZOrder, int iDepth, PartSize ePartSize, int iPUIndex, int iPUX, int iPUY, int iPUWidth, int iPUHeight) = 0;
+    virtual bool drawPU   (QPainter* pcPainter, FilterContext* pcContext, ComSequence* pcSequence, ComPU* pcPU, int iPoc, int iAddr, int iZOrder, int iDepth, PartSize ePartSize, int iPUIndex, int iPUX, int iPUY, int iPUWidth, int iPUHeight)
+    {
+        return true;
+    }
 
     /*! This is the filter name displayed in the user interface
      */

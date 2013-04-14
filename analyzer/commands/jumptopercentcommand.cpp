@@ -1,5 +1,5 @@
 #include "jumptopercentcommand.h"
-#include "modellocator.h"
+#include "model/modellocator.h"
 JumpToPercentCommand::JumpToPercentCommand(QObject *parent) :
     AbstractCommand(parent)
 {
@@ -11,6 +11,8 @@ bool JumpToPercentCommand::execute( CommandRequest& rcRequest, CommandRespond& r
     //TODO
     ModelLocator* pModel = ModelLocator::getInstance();
     QVariant vValue;
+
+
     rcRequest.getParameter("percent", vValue);
     int iPercent = vValue.toInt();
     int iMaxPOC = pModel->getSequenceManager().getCurrentSequence().getTotalFrames()-1;

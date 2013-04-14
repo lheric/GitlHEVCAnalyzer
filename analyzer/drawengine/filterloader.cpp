@@ -2,7 +2,7 @@
 #include "filterloader.h"
 #include "../io/analyzermsgsender.h"
 #include "exceptions/invaildfilterindexexception.h"
-#include "modellocator.h"
+#include "model/modellocator.h"
 #include "events/eventnames.h"
 
 #include <QDir>

@@ -2,7 +2,7 @@
 #define PRINTSCREENCOMMAND_H
 
 #include <QObject>
-#include "../modellocator.h"
+#include "model/modellocator.h"
 #include "abstractcommand.h"
 
 class PrintScreenCommand : public AbstractCommand

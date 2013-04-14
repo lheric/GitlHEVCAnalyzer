@@ -28,16 +28,7 @@
        <property name="spacing">
         <number>0</number>
        </property>
-       <property name="leftMargin">
-        <number>0</number>
-       </property>
-       <property name="topMargin">
-        <number>0</number>
-       </property>
-       <property name="rightMargin">
-        <number>0</number>
-       </property>
-       <property name="bottomMargin">
+       <property name="margin">
         <number>0</number>
        </property>
        <item>
@@ -180,16 +171,7 @@
             <property name="spacing">
              <number>2</number>
             </property>
-            <property name="leftMargin">
-             <number>2</number>
-            </property>
-            <property name="topMargin">
-             <number>2</number>
-            </property>
-            <property name="rightMargin">
-             <number>2</number>
-            </property>
-            <property name="bottomMargin">
+            <property name="margin">
              <number>2</number>
             </property>
             <item>
@@ -323,7 +305,7 @@
               </property>
               <property name="minimumSize">
                <size>
-                <width>20</width>
+                <width>30</width>
                 <height>0</height>
                </size>
               </property>
@@ -383,7 +365,7 @@
      <x>0</x>
      <y>0</y>
      <width>1227</width>
-     <height>23</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuBitstream">

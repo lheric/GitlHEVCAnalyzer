@@ -17,10 +17,6 @@ public:
 protected:
     QMap<QString,QVariant> m_cRespond;
 
-signals:
-
-public slots:
-
 };
 
 Q_DECLARE_METATYPE(CommandRespond)

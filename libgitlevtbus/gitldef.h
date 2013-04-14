@@ -38,4 +38,7 @@
 /// CLIP c BETWEEN a AND b
 #define PIXEL_CLIP(a,b,c) ( ((c)>(b))?((c)=(b)):((c)<(a))?((c)=(a)):(c) )
 
+/// CLIP c BETWEEN a AND b
+#define VALUE_CLIP(a,b,c) ( ((c)>(b))?((c)=(b)):((c)<(a))?((c)=(a)):(c) )
+
 #endif

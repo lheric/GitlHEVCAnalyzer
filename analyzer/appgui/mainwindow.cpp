@@ -4,7 +4,7 @@
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QKeyEvent>
-#include "modellocator.h"
+#include "model/modellocator.h"
 #include "commands/appfrontcontroller.h"
 #include "io/analyzermsgsender.h"
 #include "commandrequest.h"
@@ -14,7 +14,7 @@
 #include "commandrespond.h"
 
 MainWindow::MainWindow(QWidget *parent) :
-    QMainWindow(parent),
+    QMainWindow(parent),    
     ui(new Ui::MainWindow)
 {
 
@@ -123,7 +123,6 @@ void MainWindow::on_nextFrame_clicked()
 
 void MainWindow::on_progressBar_actionTriggered(int action)
 {
-
     int iBarPercent = int(100*double(ui->progressBar->sliderPosition()-ui->progressBar->minimum()) /
                                        (ui->progressBar->maximum()-ui->progressBar->minimum()));
 

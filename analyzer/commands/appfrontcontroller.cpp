@@ -121,15 +121,15 @@ void AppFrontController::run()
         {
             processRequest(cRequest, cRespond);
         }
-        catch( const NoSequenceFoundException& rExp )
+        catch( const NoSequenceFoundException& )
         {
             AnalyzerMsgSender::getInstance()->msgOut("No Video Sequence Found...", GITL_MSG_ERROR);
         }
-        catch( const InvaildFilterIndexException* rExp )
+        catch( const InvaildFilterIndexException* )
         {
             AnalyzerMsgSender::getInstance()->msgOut("Invalid Filter Index...", GITL_MSG_ERROR);
         }
-        catch( const QException& rExp )
+        catch( const QException& )
         {
             AnalyzerMsgSender::getInstance()->msgOut("Unknown Error Happened...", GITL_MSG_ERROR);
         }

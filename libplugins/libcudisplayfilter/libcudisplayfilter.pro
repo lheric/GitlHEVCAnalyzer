@@ -4,7 +4,7 @@ INCLUDEPATH    += ../../analyzer \
                   ../../libgitlevtbus
 HEADERS         = cudisplayfilter.h
 SOURCES         = cudisplayfilter.cpp
-TARGET          = $$qtLibraryTarget(cudisplayfilter)
+TARGET          = $$qtLibraryTarget(libcudisplayfilter)
 DESTDIR         = $${OUT_PWD}/../../plugins
 
 

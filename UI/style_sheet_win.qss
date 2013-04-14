@@ -1,0 +1,10 @@
+/*----------------------------------------------------------------------------*/
+/*----------------------------------------------------------------------------*/
+QComboBox QAbstractItemView{
+    background-color: rgb(150, 150, 150);
+    border: 1px solid black;
+
+    selection-background-color: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 rgb(120, 120, 120), stop:1 rgb(90, 90, 90));
+    selection-color: black;
+}
+

@@ -4,7 +4,7 @@ INCLUDEPATH    += ../../analyzer \
                   ../../libgitlevtbus
 HEADERS         = highlightlcufilter.h
 SOURCES         = highlightlcufilter.cpp
-TARGET          = $$qtLibraryTarget(highlightlcu)
+TARGET          = $$qtLibraryTarget(libhighlightlcufilter)
 DESTDIR         = $${OUT_PWD}/../../plugins
 
 

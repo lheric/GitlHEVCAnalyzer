@@ -1,0 +1,132 @@
+/* fix les debordements bouton toolbar */
+
+*{
+  font-size:10px;
+  font-weight:normal;
+}
+
+/*----------------------------------------------------------------------------*/
+/*----------------------------------------------------------------------------*/
+QToolBar{
+    border-bottom: 1px solid black;
+}
+
+QToolBar QToolButton {
+    margin-bottom: 1px;
+}
+
+QToolBar#UIGroupsView_ToolBar QToolButton {
+   margin-bottom: 0px;  
+   margin-top: 1px; 
+}
+QToolBar#UIPanosView_ToolBar QToolButton {
+   margin-bottom: 0px; 
+   margin-top: 1px;
+}
+
+
+/*----------------------------------------------------------------------------*/
+/*----------------------------------------------------------------------------*/
+QTabBar::tab{
+    padding: 0.6ex 1ex;
+    min-width:3em;
+}
+
+
+/*----------------------------------------------------------------------------*/
+/*----------------------------------------------------------------------------*/
+QGroupBox{
+    color: rgb(200, 200, 200);
+    background-color: rgb(90, 90, 90);
+    border: 1px solid  black;
+
+    margin-top: 5ex; /* leave space at the top for the title */ 
+    margin-bottom: 0em; /* leave space at the top for the title */ 
+
+    font-weight: bold;
+}
+
+QGroupBox::title{
+    border: 0px solid green;
+
+    subcontrol-origin: content;
+    top: -2ex;
+}
+
+/*----------------------------------------------------------------------------*/
+/*----------------------------------------------------------------------------*/
+QPushButton{
+    padding: .6ex 1ex;
+}
+
+
+QDialogButtonBox > QPushButton{
+    margin-Left: 6px; /* leave space at the top for the title */ 
+    margin-right: 6px; /* leave space at the top for the title */ 
+
+    min-width: 4em;
+    min-height: 1.2em;
+}
+
+QDialog > QPushButton{
+    min-width: 4em;
+    min-height: 1.2em;
+}
+
+QPushButton#m_pbFolderTplBrowse, QPushButton#m_pbSoundBrowse, QPushButton#m_pbBrowse{
+    padding: .2ex .3ex;
+    margin-bottom:4px;
+}
+
+QPushButton#m_pbFolderTpl, QPushButton#m_pbFilenameTpl, QPushButton#m_pbSoundPlay
+{
+    padding: 0ex;
+    margin-bottom:4px;
+}
+
+QPushButton#m_pbInfo
+{
+    margin-bottom:2px;
+}
+
+
+/*----------------------------------------------------------------------------*/
+/*----------------------------------------------------------------------------*/
+QTreeView#UIGroup_TreeView{
+    border: 1px solid black;
+}
+
+
+/*----------------------------------------------------------------------------*/
+/*----------------------------------------------------------------------------*/
+QListView#UIGroup_ListView{
+    border: 1px solid black;
+}
+
+
+
+/*----------------------------------------------------------------------------*/
+/*----------------------------------------------------------------------------*/
+QHeaderView{
+    margin-bottom: 3px;
+    border-top: 0px solid red;
+}
+
+QHeaderView::section{
+    border-top: 0px solid red;
+}
+
+QTreeView#UIGroup_TreeView QHeaderView::section:first{
+    border-left: 0px solid black;
+}
+
+
+/*----------------------------------------------------------------------------*/
+/*----------------------------------------------------------------------------*/
+QComboBox{
+    margin-left: 3px;
+    margin-right: 3px;
+
+   selection-background-color: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 rgb(120, 120, 120), stop:1 rgb(90, 90, 90));
+   selection-color: black;
+}

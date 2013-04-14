@@ -1,4 +1,4 @@
-#include "modellocator.h"
+#include "model/modellocator.h"
 
 SINGLETON_PATTERN_IMPLIMENT(ModelLocator)
 

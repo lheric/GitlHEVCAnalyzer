@@ -24,7 +24,7 @@ bool CommandRequest::getParameter(QString strParam, QVariant& rvValue) const
 
 }
 
-bool CommandRequest::setParameter(QString strParam, QVariant rvValue)
+bool CommandRequest::setParameter(QString strParam, const QVariant &rvValue)
 {
     m_cRequest[strParam] = rvValue;
     return true;

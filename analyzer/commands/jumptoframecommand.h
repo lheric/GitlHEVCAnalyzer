@@ -1,7 +1,7 @@
 #ifndef JUMPTOFRAMECOMMAND_H
 #define JUMPTOFRAMECOMMAND_H
 
-#include "../modellocator.h"
+#include "model/modellocator.h"
 #include "abstractcommand.h"
 
 class JumpToFrameCommand : public AbstractCommand
