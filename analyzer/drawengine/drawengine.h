@@ -18,14 +18,15 @@ public:
      * draw one frame
      * \param pcSequence    current sequence
      * \param iPoc          POC of the frame to be draw
-     * \param pcPixmap      picture to draw on
+     * \param pcPixmap      input frame to draw on
      * \param bDrawPU       draw PU info. or not
+     * \return output frame (the drawn & scaled frame)
      */
-    bool drawFrame  ( ComSequence* pcSequence, int iPoc, QPixmap *pcPixmap );
+    QPixmap* drawFrame  ( ComSequence* pcSequence, int iPoc, QPixmap *pcPixmap );
 
-
+protected:
     /*!
-     * \brief drawCU
+     * \brief xDrawCU
      * \param pcSequence
      * \param pcLCU
      * \param piMode
@@ -44,7 +45,7 @@ public:
      * \param iZorder
      * \return
      */
-    bool drawCU     (ComSequence*    pcSequence,
+    bool xDrawCU     (ComSequence*    pcSequence,
                       QVector<int>&   aiMode,
                       QVector<int>&   aiPred,
                       QVector<int>&   aiInterDir,
@@ -72,11 +73,15 @@ public:
 
     int xGetPUNum( PartSize ePartSize );
 
-
     /*!
      * Scale of the frame
      */
-    ADD_CLASS_FIELD(double, iFrameScale, getFrameScale, setFrameScale)
+    ADD_CLASS_FIELD(double, dFrameScale, getFrameScale, setFrameScale)
+
+    /*!
+     * Scaled frame
+     */
+    ADD_CLASS_FIELD_NOSETTER(QPixmap, cDrawnPixmap, getDrawnPixmap)
 
 
     /*!

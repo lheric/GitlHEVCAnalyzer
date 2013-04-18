@@ -8,14 +8,14 @@ MergeDisplayFilter::MergeDisplayFilter(QObject *parent) :
 }
 
 bool MergeDisplayFilter::drawPU   (QPainter* pcPainter,
-                                           FilterContext* pcContext,
-                                           ComSequence* pcSequence,
-                                           ComPU* pcPU,
-                                           int iPoc, int iAddr,
-                                           int iZOrder, int iDepth,
-                                           PartSize ePartSize, int iPUIndex,
-                                           int iPUX, int iPUY,
-                                           int iPUWidth, int iPUHeight)
+                                   FilterContext* pcContext,
+                                   ComSequence* pcSequence,
+                                   ComPU* pcPU,
+                                   int iPoc, int iAddr,
+                                   int iZOrder, int iDepth,
+                                   PartSize ePartSize, int iPUIndex,
+                                   int iPUX, int iPUY,
+                                   int iPUWidth, int iPUHeight, double dScale)
 {
     QRect cPUArea(iPUX,iPUY,iPUWidth,iPUHeight);
     //cPUArea.setRect(iPUX,iPUY,iPUWidth,iPUHeight);

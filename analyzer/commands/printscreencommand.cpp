@@ -12,7 +12,7 @@ bool PrintScreenCommand::execute( CommandRequest& rcRequest, CommandRespond& rcR
     QPixmap* pcFramePixmap = pModel->getFrameBuffer().getFrame(iCurBufPoc);   ///< Read Frame Buffer
     if( pcFramePixmap == NULL )
         return false;
-    pModel->getDrawEngine().drawFrame(&(pModel->getSequenceManager().getCurrentSequence()), iCurBufPoc, pcFramePixmap);  ///< Draw Frame Buffer
+    pcFramePixmap = pModel->getDrawEngine().drawFrame(&(pModel->getSequenceManager().getCurrentSequence()), iCurBufPoc, pcFramePixmap);  ///< Draw Frame Buffer
 
     ///
     return pcFramePixmap->save("snapshot.png");

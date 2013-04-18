@@ -1,11 +1,13 @@
 #include "frameview.h"
 #include <QWheelEvent>
 #include "io/analyzermsgsender.h"
-
+#include "events/eventnames.h"
+#include "commandrequest.h"
 
 FrameView::FrameView(QWidget *parent) :
     QGraphicsView(parent)
 {
+    m_dCurrScale = 1.0;
     m_cGraphicsPixmapItem.setTransformationMode(Qt::FastTransformation);
     m_cGraphicsScene.addItem(&m_cGraphicsPixmapItem);
     setScene(&m_cGraphicsScene);
@@ -14,8 +16,6 @@ void FrameView::wheelEvent ( QWheelEvent * event )
 {
     //AnalyzerMsgSender::getInstance()->msgOut(QString("%1").arg(event->delta()));
     int iDelta = event->delta();
-    double dCurrScale = m_cGraphicsPixmapItem.scale();
-    double dNextScale = dCurrScale;
     double dIncrement = 0;
     if( iDelta < 0 )
     {
@@ -26,13 +26,22 @@ void FrameView::wheelEvent ( QWheelEvent * event )
         dIncrement = 0.2;
     }
 
-    dNextScale = dCurrScale + dIncrement;
+    double dNextScale = m_dCurrScale + dIncrement;
     if( dNextScale < 0.1 )
     {
         /// scale limit
     }
     else
     {
+        //AnalyzerMsgSender::getInstance()->msgOut(QString("%1").arg(dNextScale));
+        CommandRequest cRequest;
+        cRequest.setParameter("command_name", "zoom_frame");
+        cRequest.setParameter("scale", dNextScale);
+        GitlEvent cEvt( g_strCmdSentEvent  );
+        cEvt.getEvtData().setParameter("request", QVariant::fromValue(cRequest));
+        dispatchEvt(&cEvt);
+
+
         int iImgX = m_cGraphicsPixmapItem.scenePos().x();
         int iImgY = m_cGraphicsPixmapItem.scenePos().y();
 
@@ -41,11 +50,11 @@ void FrameView::wheelEvent ( QWheelEvent * event )
 
         //AnalyzerMsgSender::getInstance()->msgOut(QString("%1 %2 %3 %4").arg(iImgX).arg(iImgY).arg(iMouseX).arg(iMouseY));
 
+        m_cGraphicsPixmapItem.moveBy((iImgX-iMouseX)*dIncrement/m_dCurrScale,
+                                     (iImgY-iMouseY)*dIncrement/m_dCurrScale);
 
-        double dCurrentScale = m_cGraphicsPixmapItem.scale();
-        m_cGraphicsPixmapItem.setScale(dNextScale);
-        m_cGraphicsPixmapItem.moveBy((iImgX-iMouseX)*dIncrement/dCurrentScale,
-                                     (iImgY-iMouseY)*dIncrement/dCurrentScale);
+        m_dCurrScale = dNextScale;
+
 
     }
 }

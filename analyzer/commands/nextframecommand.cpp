@@ -16,7 +16,7 @@ bool NextFrameCommand::execute( CommandRequest& rcRequest, CommandRespond& rcRes
         return false;
 
     QPixmap* pcFramePixmap = pModel->getFrameBuffer().getFrame(iNextPoc);   ///< Read Frame Buffer
-    pModel->getDrawEngine().drawFrame(&(pModel->getSequenceManager().getCurrentSequence()), iNextPoc, pcFramePixmap);  ///< Draw Frame Buffer
+    pcFramePixmap = pModel->getDrawEngine().drawFrame(&(pModel->getSequenceManager().getCurrentSequence()), iNextPoc, pcFramePixmap);  ///< Draw Frame Buffer
 
     ///
     rcRespond.setParameter("picture",  QVariant::fromValue((void*)(pcFramePixmap)));

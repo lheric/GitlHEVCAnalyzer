@@ -119,7 +119,7 @@ bool FilterLoader::drawPU  (QPainter* pcPainter, ComSequence* pcSequence, ComPU*
                             int iPoc, int iAddr, int iZOrder, int iDepth,
                             PartSize ePartSize,  int iPUIndex,
                             int iPUX, int iPUY,
-                            int iPUWidth, int iPUHeight)
+                            int iPUWidth, int iPUHeight, double dScale)
 {
     for(int i = 0; i < m_apcFilters.size(); i++)
     {
@@ -129,7 +129,7 @@ bool FilterLoader::drawPU  (QPainter* pcPainter, ComSequence* pcSequence, ComPU*
             pFilter->drawPU(pcPainter, &m_cFilterContext, pcSequence, pcPU,
                             iPoc, iAddr, iZOrder, iDepth,
                             ePartSize, iPUIndex,
-                            iPUX, iPUY, iPUWidth, iPUHeight);
+                            iPUX, iPUY, iPUWidth, iPUHeight, dScale);
         }
     }
     return true;
@@ -137,7 +137,7 @@ bool FilterLoader::drawPU  (QPainter* pcPainter, ComSequence* pcSequence, ComPU*
 
 bool FilterLoader::drawCU  ( QPainter* pcPainter, ComSequence* pcSequence,
                              int iPoc, int iAddr, int iZOrder, int iDepth,
-                             int iCUX, int iCUY,  int iCUSize)
+                             int iCUX, int iCUY,  int iCUSize, double dScale)
 {
     for(int i = 0; i < m_apcFilters.size(); i++)
     {
@@ -145,7 +145,7 @@ bool FilterLoader::drawCU  ( QPainter* pcPainter, ComSequence* pcSequence,
         if( pFilter->getEnable() )
         {
             pFilter->drawCU( pcPainter, &m_cFilterContext, pcSequence,
-                            iPoc, iAddr, iZOrder, iDepth, iCUX, iCUY, iCUSize);
+                            iPoc, iAddr, iZOrder, iDepth, iCUX, iCUY, iCUSize, dScale);
         }
     }
 
@@ -155,7 +155,7 @@ bool FilterLoader::drawCU  ( QPainter* pcPainter, ComSequence* pcSequence,
 
 bool FilterLoader::drawCTU  (QPainter* pcPainter, ComSequence* pcSequence,
                              int iPoc, int iAddr,
-                             int iCTUX, int iCTUY, int iCTUSize)
+                             int iCTUX, int iCTUY, int iCTUSize, double dScale)
 
 {
     for(int i = 0; i < m_apcFilters.size(); i++)
@@ -163,7 +163,7 @@ bool FilterLoader::drawCTU  (QPainter* pcPainter, ComSequence* pcSequence,
         AbstractFilter* pFilter = m_apcFilters[i];
         if( pFilter->getEnable() )
         {
-            pFilter->drawCTU(pcPainter, &m_cFilterContext, pcSequence, iPoc, iAddr, iCTUX, iCTUY, iCTUSize);
+            pFilter->drawCTU(pcPainter, &m_cFilterContext, pcSequence, iPoc, iAddr, iCTUX, iCTUY, iCTUSize, dScale);
         }
     }
     return true;
@@ -172,14 +172,14 @@ bool FilterLoader::drawCTU  (QPainter* pcPainter, ComSequence* pcSequence,
 
 bool FilterLoader::drawFrame(QPainter* pcPainter,
                              ComSequence* pcSequence,
-                             int iPoc)
+                             int iPoc, double dScale)
 {
     for(int i = 0; i < m_apcFilters.size(); i++)
     {
         AbstractFilter* pFilter = m_apcFilters[i];
         if( pFilter->getEnable() )
         {
-            pFilter->drawFrame(pcPainter, &m_cFilterContext, pcSequence, iPoc);
+            pFilter->drawFrame(pcPainter, &m_cFilterContext, pcSequence, iPoc, dScale);
         }
     }
     return true;

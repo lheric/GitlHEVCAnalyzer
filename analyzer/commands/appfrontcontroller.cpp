@@ -15,6 +15,7 @@
 #include "commands/printscreencommand.h"
 #include "commands/switchsequencecommand.h"
 #include "commands/refreshscreencommand.h"
+#include "commands/zoomframecommand.h"
 #include "io/analyzermsgsender.h"
 
 
@@ -22,19 +23,20 @@ SINGLETON_PATTERN_IMPLIMENT(AppFrontController)
 
 static CommandFormat s_sCmdTable[] =
 {
-    { "decode_bitstream", &DecodeBitstreamCommand::staticMetaObject },
-    { "open_yuv",       &OpenYUVCommand::staticMetaObject },
-    { "open_general",   &OpenEncoderGeneralCommand::staticMetaObject },
-    { "open_cupu",      &OpenCUPUCommand::staticMetaObject },
-    { "open_me",        &OpenMECommand::staticMetaObject },
-    { "next_frame",     &NextFrameCommand::staticMetaObject },
-    { "prev_frame",     &PrevFrameCommand::staticMetaObject },
-    { "jumpto_frame",   &JumpToFrameCommand::staticMetaObject },
-    { "jumpto_percent", &JumpToPercentCommand::staticMetaObject },
-    { "switch_sequence",&SwitchSequenceCommand::staticMetaObject },
-    { "print_screen",   &PrintScreenCommand::staticMetaObject },
-    { "refresh_screen", &RefreshScreenCommand::staticMetaObject },
-    { "",               NULL                                      }
+    { "decode_bitstream", &DecodeBitstreamCommand::staticMetaObject    },
+    { "open_yuv",         &OpenYUVCommand::staticMetaObject            },
+    { "open_general",     &OpenEncoderGeneralCommand::staticMetaObject },
+    { "open_cupu",        &OpenCUPUCommand::staticMetaObject           },
+    { "open_me",          &OpenMECommand::staticMetaObject             },
+    { "next_frame",       &NextFrameCommand::staticMetaObject          },
+    { "prev_frame",       &PrevFrameCommand::staticMetaObject          },
+    { "jumpto_frame",     &JumpToFrameCommand::staticMetaObject        },
+    { "jumpto_percent",   &JumpToPercentCommand::staticMetaObject      },
+    { "switch_sequence",  &SwitchSequenceCommand::staticMetaObject     },
+    { "print_screen",     &PrintScreenCommand::staticMetaObject        },
+    { "refresh_screen",   &RefreshScreenCommand::staticMetaObject      },
+    { "zoom_frame",       &ZoomFrameCommand::staticMetaObject          },
+    { "",                 NULL                                         }
 };
 
 

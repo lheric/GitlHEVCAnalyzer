@@ -14,7 +14,7 @@ bool MVDisplayFilter::drawPU   (QPainter* pcPainter,
                                            int iZOrder, int iDepth,
                                            PartSize ePartSize, int iPUIndex,
                                            int iPUX, int iPUY,
-                                           int iPUWidth, int iPUHeight)
+                                           int iPUWidth, int iPUHeight, double dScale)
 {
     int iInterDir = pcPU->getInterDir();
     ComMV *pcMV = NULL;

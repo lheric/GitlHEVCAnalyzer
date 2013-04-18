@@ -29,7 +29,7 @@ bool JumpToPercentCommand::execute( CommandRequest& rcRequest, CommandRespond& r
     }
 
     QPixmap* pcFramePixmap = pModel->getFrameBuffer().getFrame(iPoc);       ///< Read Frame Buffer
-    pModel->getDrawEngine().drawFrame(&(pModel->getSequenceManager().getCurrentSequence()), iPoc, pcFramePixmap);  ///< Draw Frame Buffer
+    pcFramePixmap = pModel->getDrawEngine().drawFrame(&(pModel->getSequenceManager().getCurrentSequence()), iPoc, pcFramePixmap);  ///< Draw Frame Buffer
 
     ///
     rcRespond.setParameter("picture",  QVariant::fromValue((void*)(pcFramePixmap)));

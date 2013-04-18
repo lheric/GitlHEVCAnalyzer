@@ -80,7 +80,8 @@ public:
      * \param iPoc the POC of currently displaying frame (begin with 0)
      * \return true - success   false - fail
      */
-    virtual bool drawFrame(QPainter* pcPainter, FilterContext* pcContext, ComSequence* pcSequence, int iPoc)
+    virtual bool drawFrame(QPainter* pcPainter, FilterContext* pcContext,
+                           ComSequence* pcSequence, int iPoc, double dScale)
     {
         return true;
     }
@@ -97,7 +98,9 @@ public:
      * \param iCTUSize size of the CTU
      * \return
      */
-    virtual bool drawCTU(QPainter* pcPainter, FilterContext* pcContext, ComSequence* pcSequence, int iPoc, int iAddr, int iCTUX, int iCTUY, int iCTUSize)
+    virtual bool drawCTU(QPainter* pcPainter, FilterContext* pcContext,
+                         ComSequence* pcSequence, int iPoc, int iAddr,
+                         int iCTUX, int iCTUY, int iCTUSize, double dScale)
     {
         return true;
     }
@@ -117,7 +120,10 @@ public:
      * \param iCUSize size of the CU
      * \return
      */
-    virtual bool drawCU   (QPainter* pcPainter, FilterContext* pcContext, ComSequence* pcSequence, int iPoc, int iAddr, int iZOrder, int iDepth, int iCUX, int iCUY, int iCUSize)
+    virtual bool drawCU   (QPainter* pcPainter, FilterContext* pcContext,
+                           ComSequence* pcSequence, int iPoc, int iAddr,
+                           int iZOrder, int iDepth, int iCUX, int iCUY,
+                           int iCUSize, double dScale)
     {
         return true;
     }
@@ -140,7 +146,11 @@ public:
      * \param iPUHeight PU height
      * \return
      */
-    virtual bool drawPU   (QPainter* pcPainter, FilterContext* pcContext, ComSequence* pcSequence, ComPU* pcPU, int iPoc, int iAddr, int iZOrder, int iDepth, PartSize ePartSize, int iPUIndex, int iPUX, int iPUY, int iPUWidth, int iPUHeight)
+    virtual bool drawPU   (QPainter* pcPainter, FilterContext* pcContext, ComSequence* pcSequence,
+                           ComPU* pcPU, int iPoc, int iAddr,
+                           int iZOrder, int iDepth,
+                           PartSize ePartSize, int iPUIndex, int iPUX, int iPUY,
+                           int iPUWidth, int iPUHeight, double dScale)
     {
         return true;
     }

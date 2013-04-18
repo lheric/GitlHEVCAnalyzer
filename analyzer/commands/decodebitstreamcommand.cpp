@@ -207,7 +207,7 @@ bool DecodeBitstreamCommand::execute( CommandRequest& rcRequest, CommandRespond&
         dispatchEvt(&cDecodingStageInfo);
         pModel->getFrameBuffer().setYUVFile(strYUVFilename, iWidth, iHeight);
         pcFramePixmap = pModel->getFrameBuffer().getFrame(0);   ///< Read Frame Buffer
-        pModel->getDrawEngine().drawFrame(pcSequence, 0, pcFramePixmap);  ///< Draw Frame Buffer
+        pcFramePixmap = pModel->getDrawEngine().drawFrame(pcSequence, 0, pcFramePixmap);  ///< Draw Frame Buffer
 
     }
 

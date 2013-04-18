@@ -60,7 +60,8 @@ SOURCES += main.cpp \
     appgui/pluginfilteritem.cpp \
     commands/refreshscreencommand.cpp \
     appgui/sequencelist.cpp \
-    appgui/sequencelistitem.cpp
+    appgui/sequencelistitem.cpp \
+    commands/zoomframecommand.cpp
 
 HEADERS += \
     common/comsequence.h \
@@ -112,7 +113,8 @@ HEADERS += \
     common/compu.h \
     commands/refreshscreencommand.h \
     appgui/sequencelist.h \
-    appgui/sequencelistitem.h
+    appgui/sequencelistitem.h \
+    commands/zoomframecommand.h
 
 INCLUDEPATH += . \
                ../libgitlevtbus \

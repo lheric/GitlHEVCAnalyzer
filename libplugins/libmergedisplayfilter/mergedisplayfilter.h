@@ -12,38 +12,6 @@ class MergeDisplayFilter : public QObject, public AbstractFilter
 public:
     MergeDisplayFilter(QObject *parent = 0);
 
-    virtual bool init     (FilterContext* pcContext) {return true;}
-    virtual bool uninit   (FilterContext* pcContext) {return true;}
-    virtual bool config   (FilterContext* pcContext) {return true;}
-    virtual bool drawFrame(QPainter* pcPainter,
-                           FilterContext* pcContext,
-                           ComSequence* pcSequence, int iPoc)
-    {
-        return true;
-    }
-
-    virtual bool drawCTU  (QPainter* pcPainter,
-                           FilterContext* pcContext,
-                           ComSequence* pcSequence,
-                           int iPoc, int iAddr,
-                           int iCTUX, int iCTUY,
-                           int iCTUSize)
-    {
-        return true;
-    }
-
-    virtual bool drawCU   (QPainter* pcPainter,
-                           FilterContext* pcContext,
-                           ComSequence* pcSequence,
-                           int iPoc, int iAddr,
-                           int iZOrder, int iDepth,
-                           int iCUX, int iCUY,
-                           int iCUSize)
-    {
-        return true;
-    }
-
-
     virtual bool drawPU   (QPainter* pcPainter,
                            FilterContext* pcContext,
                            ComSequence* pcSequence,
@@ -52,7 +20,7 @@ public:
                            int iZOrder, int iDepth,
                            PartSize ePartSize, int iPUIndex,
                            int iPUX, int iPUY,
-                           int iPUWidth, int iPUHeight);
+                           int iPUWidth, int iPUHeight, double dScale);
 
 
 };

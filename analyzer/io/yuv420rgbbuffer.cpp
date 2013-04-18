@@ -7,7 +7,7 @@ YUV420RGBBuffer::YUV420RGBBuffer()
 
     m_iBufferWidth = 0;
     m_iBufferHeight = 0;
-    m_iPoc = 0;
+    m_iPoc = -1;
     m_puhYUVBuffer = NULL;
     m_puhRGBBuffer = NULL;
 }
@@ -63,7 +63,7 @@ QPixmap* YUV420RGBBuffer::getFrame(int iPoc)
     if( xReadFrame(iPoc) )
     {
         QImage cFrameImg(m_puhRGBBuffer, m_iBufferWidth, m_iBufferHeight, QImage::Format_RGB888 );
-        m_cFramePixmap = QPixmap::fromImage(cFrameImg.scaled(cFrameImg.size()));
+        m_cFramePixmap = QPixmap::fromImage(cFrameImg);
         pcFramePixmap = &m_cFramePixmap;
     }
     else
@@ -76,6 +76,8 @@ QPixmap* YUV420RGBBuffer::getFrame(int iPoc)
 
 bool YUV420RGBBuffer::xReadFrame(int iPoc)
 {
+    if( iPoc < 0 )
+        return false;
     m_iPoc = iPoc;
     int iFrameSizeInByte = m_iBufferWidth*m_iBufferHeight*3/2;
     if( m_cIOYUV.seekTo(iPoc*iFrameSizeInByte) == false )

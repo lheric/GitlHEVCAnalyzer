@@ -5,11 +5,12 @@
 #include <iostream>
 using namespace std;
 DrawEngine::DrawEngine()
-{    
+{
+    m_dFrameScale = 1.0;
 }
 
 
-bool DrawEngine::drawFrame( ComSequence* pcSequence, int iPoc, QPixmap *pcPixmap )
+QPixmap* DrawEngine::drawFrame( ComSequence* pcSequence, int iPoc, QPixmap *pcPixmap )
 {
 
     ComFrame* pcFrame = pcSequence->getFrames().at(iPoc);
@@ -19,7 +20,8 @@ bool DrawEngine::drawFrame( ComSequence* pcSequence, int iPoc, QPixmap *pcPixmap
     int iMaxCUSize = pcSequence->getMaxCUSize();
     int iCUOneRow = (iSeqWidth+iMaxCUSize-1)/iMaxCUSize;
 
-    QPainter cPainter(pcPixmap);
+    m_cDrawnPixmap = pcPixmap->scaled(pcPixmap->size()*m_dFrameScale, Qt::KeepAspectRatio, Qt::FastTransformation);
+    QPainter cPainter(&m_cDrawnPixmap);
 
 
 
@@ -47,7 +49,7 @@ bool DrawEngine::drawFrame( ComSequence* pcSequence, int iPoc, QPixmap *pcPixmap
         QVector<int> aiMergeIndex = pcLCU->getMergeIndex();
         QVector<int> aiIntraDir = pcLCU->getIntraDir();
 
-        drawCU( pcSequence,
+        xDrawCU( pcSequence,
                 aiMode,
                 aiPred,
                 aiInterDir,
@@ -72,17 +74,20 @@ bool DrawEngine::drawFrame( ComSequence* pcSequence, int iPoc, QPixmap *pcPixmap
         Q_ASSERT( aiIntraDir.empty() );
 
         /// draw CTU
-        m_cFilterLoader.drawCTU(&cPainter, pcSequence, iPoc, iAddr, iPixelX, iPixelY, iMaxCUSize);
+        m_cFilterLoader.drawCTU(&cPainter, pcSequence, iPoc, iAddr, iPixelX, iPixelY, iMaxCUSize, m_dFrameScale);
 
     }///LCU loop end
 
 
     ///Frame Filter
-    m_cFilterLoader.drawFrame(&cPainter, pcSequence, iPoc);
-    return true;
+    m_cFilterLoader.drawFrame(&cPainter, pcSequence, iPoc, m_dFrameScale);
+    return &m_cDrawnPixmap;
 }
 
-bool DrawEngine::drawCU     ( ComSequence*    pcSequence,
+
+
+
+bool DrawEngine::xDrawCU     ( ComSequence*    pcSequence,
                               QVector<int>&   aiMode,
                               QVector<int>&   aiPred,
                               QVector<int>&   aiInterDir,
@@ -116,7 +121,7 @@ bool DrawEngine::drawCU     ( ComSequence*    pcSequence,
         //cout << iDepth << " " << iCUSize << endl;
         /// draw CU
         m_cFilterLoader.drawCU(pcPainter, pcSequence, iPoc, iAddr,
-                               iZOrder, iDepth, iCUX, iCUY, iCUSize);
+                               iZOrder, iDepth, iCUX, iCUY, iCUSize, m_dFrameScale);
 
         /// draw PU
         /// traverse very PU in this Leaf-CU
@@ -184,7 +189,7 @@ bool DrawEngine::drawCU     ( ComSequence*    pcSequence,
             }
 
             m_cFilterLoader.drawPU(pcPainter, pcSequence, &cPU, iPoc, iAddr, iZOrder, iDepth,
-                                   (PartSize)iMode, iPUIdx, iPUX, iPUY, iPUWidth, iPUHeight );
+                                   (PartSize)iMode, iPUIdx, iPUX, iPUY, iPUWidth, iPUHeight, m_dFrameScale );
 
         }
 
@@ -196,7 +201,7 @@ bool DrawEngine::drawCU     ( ComSequence*    pcSequence,
 
             int iSubCUX = iCUX + iSub%2 * (iCUSize/2);
             int iSubCUY = iCUY + iSub/2 * (iCUSize/2);
-            drawCU (   pcSequence,
+            xDrawCU (   pcSequence,
                        aiMode,
                        aiPred,
                        aiInterDir,

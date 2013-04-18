@@ -22,10 +22,10 @@ public:
     virtual bool init     ();
     virtual bool uninit   ();
     virtual bool config   (int iFilterIndex);
-    virtual bool drawPU   (QPainter* pcPainter, ComSequence* pcSequence, ComPU *pcPU, int iPoc, int iAddr, int iZOrder, int iDepth, PartSize ePartSize, int iPUIndex, int iPUX, int iPUY, int iPUWidth, int iPUHeight);
-    virtual bool drawCU   (QPainter* pcPainter, ComSequence* pcSequence, int iPoc, int iAddr, int iZOrder, int iDepth, int iCUX, int iCUY, int iCUSize);
-    virtual bool drawCTU  (QPainter* pcPainter, ComSequence* pcSequence, int iPoc, int iAddr, int iCTUX, int iCTUY, int iCTUSize);
-    virtual bool drawFrame(QPainter* pcPainter, ComSequence* pcSequence, int iPoc);
+    virtual bool drawPU   (QPainter* pcPainter, ComSequence* pcSequence, ComPU *pcPU, int iPoc, int iAddr, int iZOrder, int iDepth, PartSize ePartSize, int iPUIndex, int iPUX, int iPUY, int iPUWidth, int iPUHeight, double dScale);
+    virtual bool drawCU   (QPainter* pcPainter, ComSequence* pcSequence, int iPoc, int iAddr, int iZOrder, int iDepth, int iCUX, int iCUY, int iCUSize, double dScale);
+    virtual bool drawCTU  (QPainter* pcPainter, ComSequence* pcSequence, int iPoc, int iAddr, int iCTUX, int iCTUY, int iCTUSize, double dScale);
+    virtual bool drawFrame(QPainter* pcPainter, ComSequence* pcSequence, int iPoc, double dScale);
 
 
     /*!

@@ -56,7 +56,7 @@ bool MCCDisplayFilter::drawCTU  (QPainter* pcPainter,
                        ComSequence* pcSequence,
                        int iPoc, int iAddr,
                        int iCTUX, int iCTUY,
-                       int iCTUSize)
+                       int iCTUSize, double dScale)
 {
 
 

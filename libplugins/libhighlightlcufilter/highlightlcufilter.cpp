@@ -13,6 +13,8 @@ HighlightLCUFilter::HighlightLCUFilter(QObject *parent) :
 
 bool HighlightLCUFilter::init(FilterContext* pcContext)
 {
+    /// read CU address needed to be hightlighted
+    /// FORMAT <POC,CU_Raster_Order>
     QString strHightlightFilename = "highlightlcu.txt";
     QString strOneLine;
     QRegExp cMatchTarget;
@@ -57,7 +59,7 @@ bool HighlightLCUFilter::drawCTU  (QPainter* pcPainter,
                                    ComSequence* pcSequence,
                                    int iPoc, int iAddr,
                                    int iCTUX, int iCTUY,
-                                   int iCTUSize)
+                                   int iCTUSize, double dScale)
 {
 
 
