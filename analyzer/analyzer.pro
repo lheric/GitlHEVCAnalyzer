@@ -66,7 +66,6 @@ SOURCES += main.cpp \
 HEADERS += \
     common/comsequence.h \
     common/comframe.h \
-    common/comlcu.h \
     common/comdef.h \
     drawengine/drawengine.h \
     appgui/mainwindow.h \
@@ -114,7 +113,8 @@ HEADERS += \
     commands/refreshscreencommand.h \
     appgui/sequencelist.h \
     appgui/sequencelistitem.h \
-    commands/zoomframecommand.h
+    commands/zoomframecommand.h \
+    common/comcu.h
 
 INCLUDEPATH += . \
                ../libgitlevtbus \

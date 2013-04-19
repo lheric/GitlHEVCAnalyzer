@@ -16,7 +16,7 @@ bool MVParser::parseFile(QTextStream* pcInputStream, ComSequence* pcSequence)
     /// <1,1> 1 -3 0 1 -3 0 1 -3 0 1 1 0 1 -3 0
     /// read one LCU
     ComFrame* pcFrame = NULL;
-    ComLCU* pcLCU = NULL;
+    ComCU* pcLCU = NULL;
     cMatchTarget.setPattern("^<([0-9]+),([0-9]+)> (.*) ");
     QTextStream cMVInfoStream;
     while( !pcInputStream->atEnd() )

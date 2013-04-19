@@ -1,17 +1,14 @@
-#include "comlcu.h"
+#include "comcu.h"
 
-ComLCU::ComLCU()
+ComCU::ComCU()
 {
 }
 
-ComLCU::~ComLCU()
+ComCU::~ComCU()
 {
-    for( int i = 0; i < m_cMVs.size(); i++ )
+    while( !m_apcSCUs.empty() )
     {
-        delete m_cMVs.at(i);
+        delete m_apcSCUs.back();
+        m_apcSCUs.pop_back();
     }
-//    for( int i = 0; i < m_cModeTry.size(); i++ )
-//    {
-//        delete m_cModeTry.at(i);
-//    }
 }

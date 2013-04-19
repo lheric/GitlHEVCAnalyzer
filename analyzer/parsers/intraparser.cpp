@@ -15,7 +15,7 @@ bool IntraParser::parseFile(QTextStream* pcInputStream, ComSequence* pcSequence)
     /// <0,8> 8 36 31 36 30 36 31 36 0 36 2 36 1 36 0 36 1 36
     /// read one LCU
     ComFrame* pcFrame = NULL;
-    ComLCU* pcLCU = NULL;
+    ComCU* pcLCU = NULL;
     cMatchTarget.setPattern("^<([0-9]+),([0-9]+)> (.*) ");
     QTextStream cIntraDirInfoStream;
     while( !pcInputStream->atEnd() )

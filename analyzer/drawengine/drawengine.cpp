@@ -28,7 +28,7 @@ QPixmap* DrawEngine::drawFrame( ComSequence* pcSequence, int iPoc, QPixmap *pcPi
     /// for every CU in this frame
     for( int iAddr = 0; iAddr < iLCUTotalNum; iAddr++ )
     {
-        ComLCU* pcLCU = pcFrame->getLCUs().at(iAddr);
+        ComCU* pcLCU = pcFrame->getLCUs().at(iAddr);
         int iPixelX = (pcLCU->getAddr()%iCUOneRow)*iMaxCUSize;
         int iPixelY = (pcLCU->getAddr()/iCUOneRow)*iMaxCUSize;
 

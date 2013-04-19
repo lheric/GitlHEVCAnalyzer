@@ -15,7 +15,7 @@ bool MergeParser::parseFile(QTextStream* pcInputStream, ComSequence* pcSequence)
     /// <1,0> -1 0 0 -1 1
     /// read one LCU
     ComFrame* pcFrame = NULL;
-    ComLCU* pcLCU = NULL;
+    ComCU* pcLCU = NULL;
     cMatchTarget.setPattern("^<([0-9]+),([0-9]+)> (.*) ");
     QTextStream cMergeInfoStream;
     while( !pcInputStream->atEnd() )

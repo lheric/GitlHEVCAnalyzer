@@ -18,7 +18,7 @@ bool MEParser::parseFile(QTextStream* pcInputStream, ComSequence* pcSequence)
     /// <1,1> 0 8694 0 8694 0 8227 0 2459 0 8694
     /// read SP and SAD for one PU
     ComFrame* pcFrame = NULL;
-    ComLCU* pcLCU = NULL;
+    ComCU* pcLCU = NULL;
     ComMV* pcMV = NULL;
     cMatchTarget.setPattern("^<([0-9]+),([0-9]+)> (.*) ");
     QTextStream cMEInfoStream;
