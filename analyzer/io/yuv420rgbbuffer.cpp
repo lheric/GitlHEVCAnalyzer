@@ -144,9 +144,9 @@ void YUV420RGBBuffer::xYuv2rgb(uchar* puhYUV, uchar* puhRGB, int iWidth, int iHe
                     + iU + (iU>>1) + (iU>>2) - 227;
 
 
-            PIXEL_CLIP(0,255,tempR);
-            PIXEL_CLIP(0,255,tempG);
-            PIXEL_CLIP(0,255,tempB);
+            VALUE_CLIP(0,255,tempR);
+            VALUE_CLIP(0,255,tempG);
+            VALUE_CLIP(0,255,tempB);
 
             iCurRgbPixelOffset = puhRGB+3*(iWidth*y+x);
             *(iCurRgbPixelOffset)     = tempR;

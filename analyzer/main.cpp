@@ -5,7 +5,7 @@
 
 //
 #include "model/modellocator.h"
-#include "common/comdef.h"
+#include "common/comanalyzerdef.h"
 #include "appgui/mainwindow.h"
 
 #include "commands/appfrontcontroller.h"

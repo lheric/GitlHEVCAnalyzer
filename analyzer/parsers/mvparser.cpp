@@ -16,7 +16,7 @@ bool MVParser::parseFile(QTextStream* pcInputStream, ComSequence* pcSequence)
     /// <1,1> 1 -3 0 1 -3 0 1 -3 0 1 1 0 1 -3 0
     /// read one LCU
     ComFrame* pcFrame = NULL;
-    ComLCU* pcLCU = NULL;
+    ComCU* pcLCU = NULL;
     cMatchTarget.setPattern("^<([0-9]+),([0-9]+)> (.*) ");
     QTextStream cMVInfoStream;
     while( !pcInputStream->atEnd() )
@@ -37,44 +37,60 @@ bool MVParser::parseFile(QTextStream* pcInputStream, ComSequence* pcSequence)
             QString strMVInfo = cMatchTarget.cap(3);
             cMVInfoStream.setString( &strMVInfo, QIODevice::ReadOnly );
 
-            QVector<ComMV*>& pcMVs = pcLCU->getMVs();
-            QVector<int>& pcInterDir = pcLCU->getInterDir();
 
-            while( !cMVInfoStream.atEnd() )
-            {
-                ComMV* pcReadMV = NULL;
-                int iInterDir, iHor, iVer;
-                cMVInfoStream >> iInterDir;
-                pcInterDir.push_back(iInterDir);
-
-                if( iInterDir == 1 || iInterDir == 2)   //uni-prediction, 1 MV
-                {
-                    cMVInfoStream >> iHor >> iVer;
-                    pcReadMV = new ComMV();
-                    pcReadMV->setHor(iHor);
-                    pcReadMV->setVer(iVer);
-                    pcMVs.push_back(pcReadMV);
-                }
-                else if( iInterDir == 3 )               //bi-prediction, 2 MVs
-                {
-                    cMVInfoStream >> iHor >> iVer;
-                    pcReadMV = new ComMV();
-                    pcReadMV->setHor(iHor);
-                    pcReadMV->setVer(iVer);
-                    pcMVs.push_back(pcReadMV);
-
-                    cMVInfoStream >> iHor >> iVer;
-                    pcReadMV = new ComMV();
-                    pcReadMV->setHor(iHor);
-                    pcReadMV->setVer(iVer);
-                    pcMVs.push_back(pcReadMV);
-                }
-
-
-            }
+            xReadMV(&cMVInfoStream, pcLCU);
 
         }
 
+    }
+    return true;
+}
+bool MVParser::xReadMV(QTextStream* pcMVInfoStream, ComCU* pcCU)
+{
+    if( !pcCU->getSCUs().empty() )
+    {
+        /// non-leaf node : recursive reading for children
+        xReadMV(pcMVInfoStream, pcCU->getSCUs().at(0));
+        xReadMV(pcMVInfoStream, pcCU->getSCUs().at(1));
+        xReadMV(pcMVInfoStream, pcCU->getSCUs().at(2));
+        xReadMV(pcMVInfoStream, pcCU->getSCUs().at(3));
+    }
+    else
+    {
+        /// leaf node : read data
+        int iInterDir;
+        for(int i = 0; i < pcCU->getPUs().size(); i++)
+        {
+            Q_ASSERT(!pcMVInfoStream->atEnd());
+            *pcMVInfoStream >> iInterDir;
+            ComPU* pcPU = pcCU->getPUs().at(i);
+            pcPU->setInterDir(iInterDir);
+
+            int iHor, iVer;
+            ComMV* pcReadMV = NULL;
+            if( iInterDir == 1 || iInterDir == 2)   //uni-prediction, 1 MV
+            {
+                *pcMVInfoStream >> iHor >> iVer;
+                pcReadMV = new ComMV();
+                pcReadMV->setHor(iHor);
+                pcReadMV->setVer(iVer);
+                pcPU->getMVs().push_back(pcReadMV);
+            }
+            else if( iInterDir == 3 )               //bi-prediction, 2 MVs
+            {
+                *pcMVInfoStream >> iHor >> iVer;
+                pcReadMV = new ComMV();
+                pcReadMV->setHor(iHor);
+                pcReadMV->setVer(iVer);
+                pcPU->getMVs().push_back(pcReadMV);
+
+                *pcMVInfoStream >> iHor >> iVer;
+                pcReadMV = new ComMV();
+                pcReadMV->setHor(iHor);
+                pcReadMV->setVer(iVer);
+                pcPU->getMVs().push_back(pcReadMV);
+            }
+        }
     }
     return true;
 }

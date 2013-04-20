@@ -11,6 +11,8 @@ class MVParser : public QObject
 public:
     explicit MVParser(QObject *parent = 0);
     bool parseFile(QTextStream* pcInputStream, ComSequence* pcSequence);
+protected:
+    bool xReadMV(QTextStream* pcCUInfoStream, ComCU* pcCU);
 signals:
 
 public slots:

@@ -3,7 +3,7 @@
 
 
 
-/// AUTO GETTER AND SETTER FOR FIELDS
+/// AUTO GETTER AND SETTER FOR CLASS FIELDS
 #define ADD_CLASS_FIELD(type, name, getter, setter) \
     public: \
         type& getter() { return m_##name; } \
@@ -34,9 +34,6 @@
 #define SINGLETON_PATTERN_IMPLIMENT(classname)\
     classname* classname::m_instance = NULL; \
     QMutex classname::m_cGetInstanceMutex;
-
-/// CLIP c BETWEEN a AND b
-#define PIXEL_CLIP(a,b,c) ( ((c)>(b))?((c)=(b)):((c)<(a))?((c)=(a)):(c) )
 
 /// CLIP c BETWEEN a AND b
 #define VALUE_CLIP(a,b,c) ( ((c)>(b))?((c)=(b)):((c)<(a))?((c)=(a)):(c) )

@@ -1,7 +1,7 @@
 #ifndef COMMV_H
 #define COMMV_H
 
-#include "../common/comdef.h"
+#include "../common/comanalyzerdef.h"
 
 class ComMV
 {

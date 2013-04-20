@@ -66,8 +66,6 @@ SOURCES += main.cpp \
 HEADERS += \
     common/comsequence.h \
     common/comframe.h \
-    common/comlcu.h \
-    common/comdef.h \
     drawengine/drawengine.h \
     appgui/mainwindow.h \
     io/ioyuv.h \
@@ -114,7 +112,12 @@ HEADERS += \
     commands/refreshscreencommand.h \
     appgui/sequencelist.h \
     appgui/sequencelistitem.h \
-    commands/zoomframecommand.h
+    commands/zoomframecommand.h \
+    common/comcu.h \
+    common/comanalyzerdef.h \
+    exceptions/decodernotfoundexception.h \
+    exceptions/decodingfailexception.h \
+    exceptions/bitstreamnotfoundexception.h
 
 INCLUDEPATH += . \
                ../libgitlevtbus \

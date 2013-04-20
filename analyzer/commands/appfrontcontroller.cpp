@@ -1,6 +1,9 @@
 #include "appfrontcontroller.h"
 #include "exceptions/nosequencefoundexception.h"
 #include "exceptions/invaildfilterindexexception.h"
+#include "exceptions/decodernotfoundexception.h"
+#include "exceptions/decodingfailexception.h"
+#include "exceptions/bitstreamnotfoundexception.h"
 #include "events/eventnames.h"
 
 #include "commands/decodebitstreamcommand.h"
@@ -127,9 +130,21 @@ void AppFrontController::run()
         {
             AnalyzerMsgSender::getInstance()->msgOut("No Video Sequence Found...", GITL_MSG_ERROR);
         }
-        catch( const InvaildFilterIndexException* )
+        catch( const InvaildFilterIndexException& )
         {
             AnalyzerMsgSender::getInstance()->msgOut("Invalid Filter Index...", GITL_MSG_ERROR);
+        }
+        catch( const DecoderNotFoundException& )
+        {
+            AnalyzerMsgSender::getInstance()->msgOut("Decoder NOT Found...", GITL_MSG_ERROR);
+        }
+        catch( const DecodingFailException& )
+        {
+            AnalyzerMsgSender::getInstance()->msgOut("Decoding FAIL... (Illegal HEVC Bitstream/Bitstream--Decoder Mismatch?)", GITL_MSG_ERROR);
+        }
+        catch( const BitstreamNotFoundException& )
+        {
+            AnalyzerMsgSender::getInstance()->msgOut("Bitstream NOT Found...", GITL_MSG_ERROR);
         }
         catch( const QException& )
         {

@@ -2,7 +2,7 @@
 #define DECODERGENERALPARSER_H
 
 #include <QObject>
-#include "../common/comdef.h"
+#include "../common/comanalyzerdef.h"
 #include "../common/comsequence.h"
 
 class DecoderGeneralParser : public QObject

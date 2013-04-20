@@ -11,6 +11,8 @@ class MergeParser : public QObject
 public:
     explicit MergeParser(QObject *parent = 0);
     bool parseFile(QTextStream* pcInputStream, ComSequence* pcSequence);
+protected:
+    bool xReadMergeIndex(QTextStream* pcMergeIndexStream, ComCU* pcCU);
 signals:
 
 public slots:

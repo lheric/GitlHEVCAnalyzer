@@ -2,8 +2,8 @@
 #define COMFRAME_H
 
 
-#include "comdef.h"
-#include "comlcu.h"
+#include "comanalyzerdef.h"
+#include "comcu.h"
 class ComSequence;
 class ComFrame
 {
@@ -14,7 +14,7 @@ public:
 
     /*! CUs in one frame
       */
-    ADD_CLASS_FIELD(QVector<ComLCU*>, cLCUs, getLCUs, setLCUs)
+    ADD_CLASS_FIELD(QVector<ComCU*>, cLCUs, getLCUs, setLCUs)
 
     /*! Frame info
       */
