@@ -44,7 +44,7 @@ bool MainWindow::detonate(GitlEvent cEvt )
 
     QVariant vValue;
     cEvt.getEvtData().getParameter("respond", vValue);
-    CommandRespond& cRespond = vValue.value<CommandRespond>();
+    const CommandRespond& cRespond = vValue.value<CommandRespond>();
     xRefreshUIByRespond(cRespond);
     return true;
 }

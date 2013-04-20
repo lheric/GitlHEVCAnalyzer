@@ -145,6 +145,12 @@
         <layout class="QVBoxLayout" name="verticalLayout_4">
          <item>
           <widget class="QSlider" name="progressBar">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>15</height>
+            </size>
+           </property>
            <property name="mouseTracking">
             <bool>true</bool>
            </property>

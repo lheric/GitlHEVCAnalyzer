@@ -18,5 +18,5 @@ Written in C++ using Qt 5.0.
 
 running on windows platform
 
-'decoder' dictory must be put in the same dictory with the EXE.
+'decoders' dictory must be put in the same dictory with the EXE.
 
