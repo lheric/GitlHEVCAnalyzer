@@ -11,4 +11,10 @@ ComCU::~ComCU()
         delete m_apcSCUs.back();
         m_apcSCUs.pop_back();
     }
+
+    while( !m_apcPUs.empty() )
+    {
+        delete m_apcPUs.back();
+        m_apcPUs.pop_back();
+    }
 }

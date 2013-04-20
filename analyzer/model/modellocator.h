@@ -4,7 +4,7 @@
 #include <QDataStream>
 #include <QPixmap>
 #include "gitlmodual.h"
-#include "common/comdef.h"
+#include "common/comanalyzerdef.h"
 #include "io/yuv420rgbbuffer.h"
 #include "drawengine/drawengine.h"
 #include "parsers/encodergeneralparser.h"
@@ -42,10 +42,9 @@ public:
         m_pcCurrentSequence = pcSequence;
     }
 
-    ComSequence& addSequence()
+    void addSequence(ComSequence* pcSequence)
     {
-        m_apSequences.push_back(new ComSequence());
-        return *m_apSequences.back();
+        m_apSequences.push_back(pcSequence);
     }
 
     QVector<ComSequence*>& getAllSequences()

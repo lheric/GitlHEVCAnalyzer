@@ -31,23 +31,37 @@ bool MergeParser::parseFile(QTextStream* pcInputStream, ComSequence* pcSequence)
             int iAddr = cMatchTarget.cap(2).toInt();
             pcLCU = pcFrame->getLCUs().at(iAddr);
 
-
             ///
             QString strMergeInfo = cMatchTarget.cap(3);
             cMergeInfoStream.setString( &strMergeInfo, QIODevice::ReadOnly );
-
-
-            QVector<int>& piMergeIndex = pcLCU->getMergeIndex();
-
-            while( !cMergeInfoStream.atEnd() )
-            {
-                int iMergeIndex;
-                cMergeInfoStream >> iMergeIndex;
-                piMergeIndex.push_back(iMergeIndex);
-            }
+            xReadMergeIndex(&cMergeInfoStream, pcLCU);
 
         }
 
+    }
+    return true;
+}
+
+bool MergeParser::xReadMergeIndex(QTextStream* pcMergeIndexStream, ComCU* pcCU)
+{
+    if( !pcCU->getSCUs().empty() )
+    {
+        /// non-leaf node : recursive reading for children
+        xReadMergeIndex(pcMergeIndexStream, pcCU->getSCUs().at(0));
+        xReadMergeIndex(pcMergeIndexStream, pcCU->getSCUs().at(1));
+        xReadMergeIndex(pcMergeIndexStream, pcCU->getSCUs().at(2));
+        xReadMergeIndex(pcMergeIndexStream, pcCU->getSCUs().at(3));
+    }
+    else
+    {
+        /// leaf node : read data
+        int iMergeIndex;
+        for(int i = 0; i < pcCU->getPUs().size(); i++)
+        {
+            Q_ASSERT(pcCUInfoStream->atEnd() == false);
+            *pcMergeIndexStream >> iMergeIndex;
+            pcCU->getPUs().at(i)->setMergeIndex(iMergeIndex);
+        }
     }
     return true;
 }

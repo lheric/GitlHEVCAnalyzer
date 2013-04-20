@@ -9,7 +9,7 @@ MEParser::MEParser(QObject *parent) :
 
 bool MEParser::parseFile(QTextStream* pcInputStream, ComSequence* pcSequence)
 {
-    Q_ASSERT( pcSequence != NULL );
+    /*Q_ASSERT( pcSequence != NULL );
 
     QString strOneLine;
     QRegExp cMatchTarget;
@@ -59,6 +59,6 @@ bool MEParser::parseFile(QTextStream* pcInputStream, ComSequence* pcSequence)
 
         }
 
-    }
+    }*/
     return true;
 }

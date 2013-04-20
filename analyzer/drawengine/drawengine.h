@@ -28,30 +28,20 @@ protected:
     /*!
      * \brief xDrawCU
      * \param pcSequence
-     * \param pcLCU
-     * \param piMode
-     * \param piPred
-     * \param piInterDir
-     * \param pcMVs
-     * \param piMergeIndex
-     * \param piIntra
+     * \param pcCU
      * \param pcPainter
      * \param iPoc
      * \param iAddr
+     * \param iZOrder
+     * \param iDepth
      * \param iCUX
      * \param iCUY
      * \param iCUSize
-     * \param iDepth
-     * \param iZorder
      * \return
      */
+
     bool xDrawCU     (ComSequence*    pcSequence,
-                      QVector<int>&   aiMode,
-                      QVector<int>&   aiPred,
-                      QVector<int>&   aiInterDir,
-                      QVector<ComMV*>&pcMVs,
-                      QVector<int>&   aiMergeIndex,
-                      QVector<int>&   aiIntraDir,
+                      ComCU *pcCU,
                       QPainter*       pcPainter,
                       int             iPoc,
                       int             iAddr,
@@ -71,7 +61,6 @@ protected:
 
 
 
-    int xGetPUNum( PartSize ePartSize );
 
     /*!
      * Scale of the frame

@@ -10,6 +10,7 @@
 #include "parsers/mergeparser.h"
 #include "parsers/intraparser.h"
 #include "events/eventnames.h"
+#include "exceptions/decodingfailexception.h"
 
 DecodeBitstreamCommand::DecodeBitstreamCommand(QObject *parent) :
     AbstractCommand(parent)
@@ -56,8 +57,9 @@ bool DecodeBitstreamCommand::execute( CommandRequest& rcRequest, CommandRespond&
 //        AnalyzerMsgSender::getInstance()->msgOut("Undefined sequence selector", GITL_MSG_ERROR);
 //        return false;
 //    }
-    ComSequence* pcSequence = &(pModel->getSequenceManager().addSequence());
-    pModel->getSequenceManager().setCurrentSequence(pcSequence);
+
+    //TODO BUG Memory Leaking when exception happens
+    ComSequence* pcSequence = new ComSequence();
     pcSequence->init();
 
     /// *****STEP 1 : Use the special decoder to parse bitstream*****
@@ -74,6 +76,8 @@ bool DecodeBitstreamCommand::execute( CommandRequest& rcRequest, CommandRespond&
                                               strFilename,
                                               strDecoderOutputPath,
                                               pcSequence);
+        if( !bSuccess )
+            throw DecodingFailException();
         AnalyzerMsgSender::getInstance()->msgOut("decoding finished", GITL_MSG_DEBUG);
     }
     else
@@ -96,7 +100,6 @@ bool DecodeBitstreamCommand::execute( CommandRequest& rcRequest, CommandRespond&
         SpsParser cSpsParser;
         bSuccess = cSpsParser.parseFile( &cSPSTextStream, pcSequence );
         cSPSFile.close();
-        //pModel->setHasSPSInfo(true);
         AnalyzerMsgSender::getInstance()->msgOut("SPS file parsing finished", GITL_MSG_DEBUG);
     }
     /// Parse decoder_general.txt
@@ -111,7 +114,6 @@ bool DecodeBitstreamCommand::execute( CommandRequest& rcRequest, CommandRespond&
         DecoderGeneralParser cDecoderGeneralParser;
         bSuccess = cDecoderGeneralParser.parseFile( &cGeneralTextStream, pcSequence );
         cGeneralFile.close();
-        //pModel->setHasDecoderGeneralInfo(true);
         AnalyzerMsgSender::getInstance()->msgOut("Decoder general file parsing finished", GITL_MSG_DEBUG);
     }
 
@@ -127,7 +129,6 @@ bool DecodeBitstreamCommand::execute( CommandRequest& rcRequest, CommandRespond&
         CUPUParser cCUPUParser;
         bSuccess = cCUPUParser.parseFile( &cCUPUTextStream, pcSequence );
         cCUPUFile.close();
-        //pModel->setHasCUPUInfo(true);
         AnalyzerMsgSender::getInstance()->msgOut("CU&PU file parsing finished", GITL_MSG_DEBUG);
     }
 
@@ -143,7 +144,6 @@ bool DecodeBitstreamCommand::execute( CommandRequest& rcRequest, CommandRespond&
         PredParser cPredParser;
         bSuccess = cPredParser.parseFile( &cPredTextStream, pcSequence );
         cPredFile.close();
-        //pModel->setHasPredInfo(true);
         AnalyzerMsgSender::getInstance()->msgOut("Prediction file parsing finished", GITL_MSG_DEBUG);
     }
 
@@ -159,7 +159,6 @@ bool DecodeBitstreamCommand::execute( CommandRequest& rcRequest, CommandRespond&
         MVParser cMVParser;
         bSuccess = cMVParser.parseFile( &cMVTextStream, pcSequence );
         cMVFile.close();
-        //pModel->setHasMVInfo(true);
         AnalyzerMsgSender::getInstance()->msgOut("MV file parsing finished", GITL_MSG_DEBUG);
     }
 
@@ -175,7 +174,6 @@ bool DecodeBitstreamCommand::execute( CommandRequest& rcRequest, CommandRespond&
         MergeParser cMergeParser;
         bSuccess = cMergeParser.parseFile( &cMergeTextStream, pcSequence );
         cMergeFile.close();
-        //pModel->setHasMergeInfo(true);
         AnalyzerMsgSender::getInstance()->msgOut("Merge file parsing finished", GITL_MSG_DEBUG);
     }
 
@@ -191,12 +189,13 @@ bool DecodeBitstreamCommand::execute( CommandRequest& rcRequest, CommandRespond&
         IntraParser cIntraParser;
         bSuccess = cIntraParser.parseFile( &cIntraTextStream, pcSequence );
         cIntraFile.close();
-        //pModel->setHasIntraInfo(true);
         AnalyzerMsgSender::getInstance()->msgOut("Intra file parsing finished", GITL_MSG_DEBUG);
     }
 
     ///*****STEP 3 : Open decoded YUV sequence*****
-    //
+    pModel->getSequenceManager().addSequence(pcSequence);
+    pModel->getSequenceManager().setCurrentSequence(pcSequence);
+
     QString strYUVFilename = strDecoderOutputPath + "/decoder_yuv.yuv";
     int iWidth  = pModel->getSequenceManager().getCurrentSequence().getWidth();
     int iHeight = pModel->getSequenceManager().getCurrentSequence().getHeight();
@@ -218,13 +217,6 @@ bool DecodeBitstreamCommand::execute( CommandRequest& rcRequest, CommandRespond&
     rcRespond.setParameter("picture",    QVariant::fromValue((void*)(pcFramePixmap)) );
     rcRespond.setParameter("current_frame_poc", iCurrentPoc);
     rcRespond.setParameter("total_frame_num", iTotalFrame);
-//    rcRespond.setParameter("sps_info",   true);
-//    rcRespond.setParameter("decoder_general_info", true);
-//    rcRespond.setParameter("cupu_info",  true);
-//    rcRespond.setParameter("pred_info",  true);
-//    rcRespond.setParameter("mv_info",    true);
-//    rcRespond.setParameter("merge_info", true);
-//    rcRespond.setParameter("intra_info", true);
 
 
     /// nofity sequence list to update

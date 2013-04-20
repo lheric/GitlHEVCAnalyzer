@@ -1,4 +1,4 @@
-#include "comdef.h"
+#include "common/comanalyzerdef.h"
 #include "filterloader.h"
 #include "../io/analyzermsgsender.h"
 #include "exceptions/invaildfilterindexexception.h"

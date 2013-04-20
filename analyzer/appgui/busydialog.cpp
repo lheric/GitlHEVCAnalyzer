@@ -42,7 +42,7 @@ bool BusyDialog::detonate(GitlEvent cEvt)
         cEvt.getEvtData().getParameter("request", vValue);
         cRequest = vValue.value<CommandRequest>();
         cRequest.getParameter("command_name", vValue);
-        QString& strCmdName = vValue.toString();
+        const QString& strCmdName = vValue.toString();
 
         if( strCmdName == "decode_bitstream")
             this->show();
@@ -54,7 +54,7 @@ bool BusyDialog::detonate(GitlEvent cEvt)
         cEvt.getEvtData().getParameter("respond", vValue);
         cRespond = vValue.value<CommandRespond>();
         cRespond.getParameter("command_name", vValue);
-        QString& strCmdName = vValue.toString();
+        const QString& strCmdName = vValue.toString();
 
         if( strCmdName == "decode_bitstream")
             this->hide();

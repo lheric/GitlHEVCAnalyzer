@@ -1,6 +1,6 @@
 #ifndef COMPU_H
 #define COMPU_H
-#include "comdef.h"
+#include "comanalyzerdef.h"
 #include "commv.h"
 
 enum PredMode
@@ -15,15 +15,24 @@ class ComPU
 {
 public:
     ComPU(){}    
-    ComMV* getMV(int iIdx) { return m_pcMV+iIdx; }
+    ~ComPU()
+    {
+        while(!m_apcMVs.empty())
+        {
+            delete m_apcMVs.back();
+            m_apcMVs.pop_back();
+        }
+    }
 
 private:
-    ComMV m_pcMV[2];
 	
     ADD_CLASS_FIELD( PredMode, ePredMode, getPredMode, setPredMode)
     ADD_CLASS_FIELD( int, mergeIndex, getMergeIndex, setMergeIndex )
     ADD_CLASS_FIELD( int, iInterDir, getInterDir, setInterDir)
     ADD_CLASS_FIELD( int, iIntraDirLuma, getIntraDirLuma, setIntraDirLuma)
     ADD_CLASS_FIELD( int, iIntraDirChroma, getIntraDirChroma, setIntraDirChroma)
+    ADD_CLASS_FIELD( QVector<ComMV*>, apcMVs, getMVs, setMVs)
+
+
 };
 #endif // COMPU_H

@@ -11,6 +11,9 @@ class IntraParser : public QObject
 public:
     explicit IntraParser(QObject *parent = 0);
     bool parseFile(QTextStream* pcInputStream, ComSequence* pcSequence);
+
+protected:
+    bool xReadIntraMode(QTextStream* pcCUInfoStream, ComCU* pcCU);
 signals:
 
 public slots:

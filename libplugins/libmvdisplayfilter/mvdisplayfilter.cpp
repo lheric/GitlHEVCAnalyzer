@@ -25,7 +25,7 @@ bool MVDisplayFilter::drawPU   (QPainter* pcPainter,
     else if( iInterDir == 1 )  /// uni-directional prediction
     {
         /// Get MV of PU
-        pcMV = pcPU->getMV(0);
+        pcMV = pcPU->getMVs().at(0);
 
         pcPainter->setPen(QColor(Qt::blue));
         pcPainter->drawLine(iPUX  + iPUWidth/2,     iPUY + iPUHeight/2,
@@ -35,7 +35,7 @@ bool MVDisplayFilter::drawPU   (QPainter* pcPainter,
     else if( iInterDir == 2 )  /// uni-directional prediction
     {
         /// Get MV of PU
-        pcMV = pcPU->getMV(1);
+        pcMV = pcPU->getMVs().at(1);
 
         pcPainter->setPen(QColor(Qt::red));
         pcPainter->drawLine(iPUX  + iPUWidth/2,     iPUY + iPUHeight/2,
@@ -45,13 +45,13 @@ bool MVDisplayFilter::drawPU   (QPainter* pcPainter,
     else if( iInterDir == 3 )  /// bi-directional prediction
     {
         /// Get MV of PU
-        pcMV = pcPU->getMV(0);
+        pcMV = pcPU->getMVs().at(0);
 
         pcPainter->setPen(QColor(Qt::blue));
         pcPainter->drawLine(iPUX  + iPUWidth/2,     iPUY + iPUHeight/2,
                           iPUX+iPUWidth/2+pcMV->getHor()/4, iPUY+iPUHeight/2+pcMV->getVer()/4);
         /// Get MV of PU
-        pcMV = pcPU->getMV(1);
+        pcMV = pcPU->getMVs().at(1);
 
         pcPainter->setPen(QColor(Qt::red));
         pcPainter->drawLine(iPUX  + iPUWidth/2,     iPUY + iPUHeight/2,

@@ -1,5 +1,5 @@
 #include "drawengine.h"
-#include "../common/comdef.h"
+#include "../common/comanalyzerdef.h"
 #include "../io/analyzermsgsender.h"
 #include <QPainter>
 #include <iostream>
@@ -42,20 +42,17 @@ QPixmap* DrawEngine::drawFrame( ComSequence* pcSequence, int iPoc, QPixmap *pcPi
 
 
         /// draw CU
-        QVector<int> aiMode = pcLCU->getCUPUMode();
-        QVector<int> aiPred = pcLCU->getPredType();
-        QVector<int> aiInterDir = pcLCU->getInterDir();
-        QVector<ComMV*> apcMVs = pcLCU->getMVs();
-        QVector<int> aiMergeIndex = pcLCU->getMergeIndex();
-        QVector<int> aiIntraDir = pcLCU->getIntraDir();
+//        QVector<int> aiMode = pcLCU->getCUPUMode();
+//        QVector<int> aiPred = pcLCU->getPredType();
+//        QVector<int> aiInterDir = pcLCU->getInterDir();
+//        QVector<ComMV*> apcMVs = pcLCU->getMVs();
+//        QVector<int> aiMergeIndex = pcLCU->getMergeIndex();
+//        QVector<int> aiIntraDir = pcLCU->getIntraDir();
 
-        xDrawCU( pcSequence,
-                aiMode,
-                aiPred,
-                aiInterDir,
-                apcMVs,
-                aiMergeIndex,
-                aiIntraDir,
+
+
+        xDrawCU(pcSequence,
+                pcLCU,
                 &cPainter,
                 iPoc,
                 iAddr,
@@ -66,12 +63,7 @@ QPixmap* DrawEngine::drawFrame( ComSequence* pcSequence, int iPoc, QPixmap *pcPi
                 iMaxCUSize
                 );
 
-        Q_ASSERT( aiMode.empty() );
-        Q_ASSERT( aiPred.empty() );
-        Q_ASSERT( aiInterDir.empty() );
-        Q_ASSERT( apcMVs.empty() );
-        Q_ASSERT( aiMergeIndex.empty() );
-        Q_ASSERT( aiIntraDir.empty() );
+
 
         /// draw CTU
         m_cFilterLoader.drawCTU(&cPainter, pcSequence, iPoc, iAddr, iPixelX, iPixelY, iMaxCUSize, m_dFrameScale);
@@ -87,13 +79,8 @@ QPixmap* DrawEngine::drawFrame( ComSequence* pcSequence, int iPoc, QPixmap *pcPi
 
 
 
-bool DrawEngine::xDrawCU     ( ComSequence*    pcSequence,
-                              QVector<int>&   aiMode,
-                              QVector<int>&   aiPred,
-                              QVector<int>&   aiInterDir,
-                              QVector<ComMV*>&apcMVs,
-                              QVector<int>&   aiMergeIndex,
-                              QVector<int>&   aiIntraDir,
+bool DrawEngine::xDrawCU     ( ComSequence*   pcSequence,
+                              ComCU*          pcCU,
                               QPainter*       pcPainter,
                               int             iPoc,
                               int             iAddr,
@@ -102,7 +89,6 @@ bool DrawEngine::xDrawCU     ( ComSequence*    pcSequence,
                               int             iCUX,
                               int             iCUY,
                               int             iCUSize
-
                               )
 
 {
@@ -110,13 +96,10 @@ bool DrawEngine::xDrawCU     ( ComSequence*    pcSequence,
     int iTotalNumPart = 1 << ( (pcSequence->getMaxCUDepth()-iDepth) << 1 );
 
     //
-    int iMode = aiMode.front();
-    aiMode.pop_front();
 
     //draw CU
-    if( iMode != CU_SLIPT_FLAG )
+    if( pcCU->getSCUs().empty() )
     {
-
 
         //cout << iDepth << " " << iCUSize << endl;
         /// draw CU
@@ -125,70 +108,19 @@ bool DrawEngine::xDrawCU     ( ComSequence*    pcSequence,
 
         /// draw PU
         /// traverse very PU in this Leaf-CU
-        int iPUNum = xGetPUNum((PartSize)iMode);
-        ComPU cPU;
+        int iMode = pcCU->getPartSize();
 
-
-        for( int iPUIdx = 0; iPUIdx < iPUNum; iPUIdx++ )
+        for( int iPUIdx = 0; iPUIdx < pcCU->getPUs().size(); iPUIdx++ )
         {
+            ComPU* pcPU = pcCU->getPUs().at(iPUIdx);
 
             /// Calculate PU position and size
             int iPUOffsetX, iPUOffsetY, iPUWidth, iPUHeight;
             xGetPUOffsetAndSize(iCUSize, (PartSize)iMode, iPUIdx, iPUOffsetX, iPUOffsetY, iPUWidth, iPUHeight);
             int iPUX = iCUX + iPUOffsetX;
-            int iPUY = iCUY + iPUOffsetY;
+            int iPUY = iCUY + iPUOffsetY;            
 
-            int iInterDir = aiInterDir.front();
-            aiInterDir.pop_front();
-            cPU.setInterDir(iInterDir);
-
-            int iIntraDir = aiIntraDir.front();
-            aiIntraDir.pop_front(); // luma
-            cPU.setIntraDirLuma(iIntraDir);
-
-            iIntraDir = aiIntraDir.front();
-            aiIntraDir.pop_front(); // chroma
-            cPU.setIntraDirChroma(iIntraDir);
-
-
-            int iMergeIndex = aiMergeIndex.front();
-            aiMergeIndex.pop_front();
-            cPU.setMergeIndex(iMergeIndex);
-
-            int iPredMode = aiPred.front();
-            aiPred.pop_front();
-            cPU.setPredMode((PredMode)iPredMode);
-
-
-            ComMV* pcMV = NULL;
-            if( iInterDir == 0 )
-            {
-                /// Do nothing
-            }
-            else if( iInterDir == 1 || iInterDir == 2 )  /// uni-directional prediction
-            {
-                /// Get MV of PU
-                pcMV = apcMVs.front();
-                apcMVs.pop_front();
-
-                *cPU.getMV(0) = *pcMV;
-
-            }
-            else if( iInterDir == 3 )                   /// bi-directional prediction
-            {
-                /// Get MV of PU
-                pcMV = apcMVs.front();
-                apcMVs.pop_front();
-                *cPU.getMV(0) = *pcMV;
-
-                /// Get MV of PU
-                pcMV = apcMVs.front();
-                apcMVs.pop_front();
-                *cPU.getMV(1) = *pcMV;
-
-            }
-
-            m_cFilterLoader.drawPU(pcPainter, pcSequence, &cPU, iPoc, iAddr, iZOrder, iDepth,
+            m_cFilterLoader.drawPU(pcPainter, pcSequence, pcPU, iPoc, iAddr, iZOrder, iDepth,
                                    (PartSize)iMode, iPUIdx, iPUX, iPUY, iPUWidth, iPUHeight, m_dFrameScale );
 
         }
@@ -201,13 +133,8 @@ bool DrawEngine::xDrawCU     ( ComSequence*    pcSequence,
 
             int iSubCUX = iCUX + iSub%2 * (iCUSize/2);
             int iSubCUY = iCUY + iSub/2 * (iCUSize/2);
-            xDrawCU (   pcSequence,
-                       aiMode,
-                       aiPred,
-                       aiInterDir,
-                       apcMVs,
-                       aiMergeIndex,
-                       aiIntraDir,
+            xDrawCU (  pcSequence,
+                       pcCU->getSCUs().at(iSub),
                        pcPainter,
                        iPoc,
                        iAddr,
@@ -224,31 +151,7 @@ bool DrawEngine::xDrawCU     ( ComSequence*    pcSequence,
 }
 
 
-int DrawEngine::xGetPUNum( PartSize ePartSize )
-{
-    int iTotalNum = 0;
-    switch ( ePartSize )
-    {
-      case SIZE_2Nx2N:
-        iTotalNum = 1;
-        break;
-      case SIZE_NxN:
-        iTotalNum = 4;
-        break;
-      case SIZE_2NxN:
-      case SIZE_Nx2N:
-      case SIZE_2NxnU:
-      case SIZE_2NxnD:
-      case SIZE_nLx2N:
-      case SIZE_nRx2N:
-        iTotalNum = 2;
-        break;
-      default:
-        AnalyzerMsgSender::getInstance()->msgOut( QString("Invalid PU Partition Flag %1").arg(ePartSize), GITL_MSG_ERROR);
-        break;
-    }
-    return iTotalNum;
-}
+
 
 
 void DrawEngine::xGetPUOffsetAndSize(int        iLeafCUSize,

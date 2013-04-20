@@ -1,7 +1,7 @@
 #ifndef COMCU_H
 #define COMCU_H
 
-#include "comdef.h"
+#include "comanalyzerdef.h"
 #include "compu.h"
 #include "commv.h"
 
@@ -48,6 +48,31 @@ public:
     ADD_CLASS_FIELD(int, iAddr, getAddr, setAddr)                               ///< Raster index of LCU
     ADD_CLASS_FIELD(int, iTotalPartNum, getTotalPartNum, setTotalPartNum)       ///< "Smallest" parts in LCU (same with HM)
 
+public:
+    static int getPUNum( PartSize ePartSize )
+    {
+        int iTotalNum = 0;
+        switch ( ePartSize )
+        {
+          case SIZE_2Nx2N:
+            iTotalNum = 1;
+            break;
+          case SIZE_NxN:
+            iTotalNum = 4;
+            break;
+          case SIZE_2NxN:
+          case SIZE_Nx2N:
+          case SIZE_2NxnU:
+          case SIZE_2NxnD:
+          case SIZE_nLx2N:
+          case SIZE_nRx2N:
+            iTotalNum = 2;
+            break;
+          default:            
+            break;
+        }
+        return iTotalNum;
+    }
 };
 
 #endif // COMCU_H

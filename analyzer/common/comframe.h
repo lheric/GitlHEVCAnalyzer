@@ -2,7 +2,7 @@
 #define COMFRAME_H
 
 
-#include "comdef.h"
+#include "comanalyzerdef.h"
 #include "comcu.h"
 class ComSequence;
 class ComFrame

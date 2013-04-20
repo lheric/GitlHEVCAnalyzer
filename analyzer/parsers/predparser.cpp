@@ -37,17 +37,36 @@ bool PredParser::parseFile(QTextStream* pcInputStream, ComSequence* pcSequence)
             QString strCUInfo = cMatchTarget.cap(3);
             cPredInfoStream.setString(&strCUInfo, QIODevice::ReadOnly );
 
-            QVector<int>& piPredType = pcLCU->getPredType();
-
-            while( !cPredInfoStream.atEnd() )
-            {
-                int iPredType;
-                cPredInfoStream >> iPredType;
-                piPredType.push_back(iPredType);
-            }
+            xReadPredMode(&cPredInfoStream, pcLCU);
 
         }
 
+    }
+    return true;
+}
+
+
+bool PredParser::xReadPredMode(QTextStream* pcPredInfoStream, ComCU* pcCU)
+{
+    if( !pcCU->getSCUs().empty() )
+    {
+        /// non-leaf node : recursive reading for children
+        xReadPredMode(pcPredInfoStream, pcCU->getSCUs().at(0));
+        xReadPredMode(pcPredInfoStream, pcCU->getSCUs().at(1));
+        xReadPredMode(pcPredInfoStream, pcCU->getSCUs().at(2));
+        xReadPredMode(pcPredInfoStream, pcCU->getSCUs().at(3));
+    }
+    else
+    {
+        /// leaf node : read data
+        int iPredMode;
+        for(int i = 0; i < pcCU->getPUs().size(); i++)
+        {
+            Q_ASSERT(pcPredInfoStream->atEnd() == false);
+            *pcPredInfoStream >> iPredMode;
+            ComPU* pcPU = pcCU->getPUs().at(i);
+            pcPU->setPredMode((PredMode)iPredMode);
+        }
     }
     return true;
 }

@@ -13,7 +13,7 @@ public:
     explicit BitstreamParser(QObject *parent = 0);
     bool parseFile(QString strDecoderFolder,
                    int iEncoderVersion,
-                   QString strBitstreamPath,
+                   QString strBitstreamFilePath,
                    QString strTempOutputPath,
                    ComSequence* pcSequence);
 

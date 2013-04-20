@@ -1,7 +1,7 @@
 #ifndef COMSEQUENCE_H
 #define COMSEQUENCE_H
 
-#include "comdef.h"
+#include "comanalyzerdef.h"
 #include "comframe.h"
 
 /*!

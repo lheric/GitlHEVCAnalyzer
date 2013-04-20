@@ -1,6 +1,8 @@
 #include "bitstreamparser.h"
 #include "io/analyzermsgsender.h"
 #include "events/eventnames.h"
+#include "exceptions/decodernotfoundexception.h"
+#include "exceptions/bitstreamnotfoundexception.h"
 #include <QProcess>
 #include <QDir>
 #include <QFileInfo>
@@ -11,28 +13,42 @@ BitstreamParser::BitstreamParser(QObject *parent)
 
 bool BitstreamParser::parseFile(QString strDecoderFolder,
                                 int iEncoderVersion,
-                                QString strBitstreamPath,
-                                QString strTempOutputPath,
+                                QString strBitstreamFilePath,
+                                QString strOutputPath,
                                 ComSequence* pcSequence)
 {
-
-    pcSequence->setFileName(strBitstreamPath);
-    pcSequence->setDecodingFolder(strTempOutputPath);
-
-
-    QDir cOutDir = QDir::current();
-    if(!cOutDir.exists(strTempOutputPath))
+    QDir cCurDir = QDir::current();
+    /// check if decoder exist
+    QString strDecoderFilePath = strDecoderFolder + QString("/HM_%1.exe").arg(iEncoderVersion);
+    if(!cCurDir.exists(strDecoderFilePath))
     {
-        cOutDir.mkdir(strTempOutputPath);
+        throw DecoderNotFoundException();
     }
-    m_cDecoderProcess.setWorkingDirectory(strTempOutputPath);
-    QString strStandardOutputFile = strTempOutputPath+"/decoder_general.txt";
+    /// check if bitstream file exist or
+    if( (!cCurDir.exists(strBitstreamFilePath)) ||
+        (!cCurDir.isAbsolutePath(strBitstreamFilePath)) )
+    {
+        throw BitstreamNotFoundException();
+    }
+
+    /// check if output folder exist
+    if( !cCurDir.exists(strOutputPath) )
+    {
+        cCurDir.mkdir(strOutputPath);
+    }
+
+    m_cDecoderProcess.setWorkingDirectory(strOutputPath);
+    QString strStandardOutputFile = strOutputPath+"/decoder_general.txt";
     m_cStdOutputFile.setFileName(strStandardOutputFile);
     m_cStdOutputFile.open(QIODevice::WriteOnly);
-    QString strDecoderCmd = strDecoderFolder + QString("/HM_%1.exe -b %2 -o decoder_yuv.yuv").arg(iEncoderVersion).arg(strBitstreamPath);
+    QString strDecoderCmd = strDecoderFolder + QString("/HM_%1.exe -b %2 -o decoder_yuv.yuv").arg(iEncoderVersion).arg(strBitstreamFilePath);
     m_cDecoderProcess.start(strDecoderCmd);
     m_cDecoderProcess.waitForFinished(-1);
     m_cStdOutputFile.close();
+
+
+    pcSequence->setFileName(strBitstreamFilePath);
+    pcSequence->setDecodingFolder(strOutputPath);
 
     return (m_cDecoderProcess.exitCode() == 0);
 }
