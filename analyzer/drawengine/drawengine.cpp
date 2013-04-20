@@ -42,15 +42,6 @@ QPixmap* DrawEngine::drawFrame( ComSequence* pcSequence, int iPoc, QPixmap *pcPi
 
 
         /// draw CU
-//        QVector<int> aiMode = pcLCU->getCUPUMode();
-//        QVector<int> aiPred = pcLCU->getPredType();
-//        QVector<int> aiInterDir = pcLCU->getInterDir();
-//        QVector<ComMV*> apcMVs = pcLCU->getMVs();
-//        QVector<int> aiMergeIndex = pcLCU->getMergeIndex();
-//        QVector<int> aiIntraDir = pcLCU->getIntraDir();
-
-
-
         xDrawCU(pcSequence,
                 pcLCU,
                 &cPainter,
@@ -62,7 +53,6 @@ QPixmap* DrawEngine::drawFrame( ComSequence* pcSequence, int iPoc, QPixmap *pcPi
                 iPixelY,
                 iMaxCUSize
                 );
-
 
 
         /// draw CTU
@@ -95,13 +85,10 @@ bool DrawEngine::xDrawCU     ( ComSequence*   pcSequence,
 
     int iTotalNumPart = 1 << ( (pcSequence->getMaxCUDepth()-iDepth) << 1 );
 
-    //
 
-    //draw CU
+
     if( pcCU->getSCUs().empty() )
     {
-
-        //cout << iDepth << " " << iCUSize << endl;
         /// draw CU
         m_cFilterLoader.drawCU(pcPainter, pcSequence, iPoc, iAddr,
                                iZOrder, iDepth, iCUX, iCUY, iCUSize, m_dFrameScale);

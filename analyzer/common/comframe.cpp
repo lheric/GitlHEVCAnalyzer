@@ -1,8 +1,13 @@
 #include "comframe.h"
 
-ComFrame::ComFrame()
+ComFrame::ComFrame(ComSequence* pcParent)
 {
-    init();
+    m_pcSequence = pcParent;
+    m_iPoc = -1;
+    m_dPSNR = -1;
+    m_dBitrate = -1;
+    m_dTotalEncTime = -1;
+    m_dTotalDecTime = -1;
 }
 
 ComFrame::~ComFrame()
@@ -13,20 +18,4 @@ ComFrame::~ComFrame()
     }
 }
 
-void ComFrame::init()
-{
-    /*! CUs in one frame
-      */
-    for( int i = 0; i < m_cLCUs.size(); i++ )
-    {
-        delete m_cLCUs.at(i);
-    }
-    m_cLCUs.clear();
-    /*! Frame info
-      */
-    m_iPoc = -1;
-    m_dPSNR = -1;
-    m_dBitrate = -1;
-    m_dTotalEncTime = -1;
-    m_dTotalDecTime = -1;
-}
+

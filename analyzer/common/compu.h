@@ -14,7 +14,16 @@ enum PredMode
 class ComPU
 {
 public:
-    ComPU(){}    
+    ComPU()
+    {
+        m_iWidth = -1;
+        m_iHeight = -1;
+        m_ePredMode = MODE_NONE;
+        m_mergeIndex = -1;
+        m_iInterDir = -1;
+        m_iIntraDirLuma = -1;
+        m_iIntraDirChroma = -1;
+    }
     ~ComPU()
     {
         while(!m_apcMVs.empty())
@@ -25,8 +34,9 @@ public:
     }
 
 private:
-	
-    ADD_CLASS_FIELD( PredMode, ePredMode, getPredMode, setPredMode)
+    ADD_CLASS_FIELD( int, iWidth, getWidth, setWidth )
+    ADD_CLASS_FIELD( int, iHeight, getHeight, setHeight )
+    ADD_CLASS_FIELD( PredMode, ePredMode, getPredMode, setPredMode )
     ADD_CLASS_FIELD( int, mergeIndex, getMergeIndex, setMergeIndex )
     ADD_CLASS_FIELD( int, iInterDir, getInterDir, setInterDir)
     ADD_CLASS_FIELD( int, iIntraDirLuma, getIntraDirLuma, setIntraDirLuma)

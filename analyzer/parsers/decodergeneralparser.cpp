@@ -41,7 +41,7 @@ bool DecoderGeneralParser::parseFile(QTextStream* pcInputStream, ComSequence* pc
                 break;
         }
         if( cMatchTarget.indexIn(strOneLine) != -1 ) {
-            pcFrame = new ComFrame();
+            pcFrame = new ComFrame(pcSequence);
             pcFrame->setPoc(cMatchTarget.cap(1).toInt());
             pcFrame->setTotalDecTime(cMatchTarget.cap(2).toDouble());
             pcSequence->getFrames().push_back(pcFrame);

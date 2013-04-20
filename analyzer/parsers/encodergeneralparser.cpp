@@ -75,7 +75,7 @@ bool EncoderGeneralParser::parseFile(QTextStream* pcInputStream, ComSequence* pc
 
         strOneLine = pcInputStream->readLine();
         if( cMatchTarget.indexIn(strOneLine) != -1 ) {
-            pcFrame = new ComFrame();
+            pcFrame = new ComFrame(pcSequence);
             pcFrame->setPoc(cMatchTarget.cap(1).toInt());
             pcFrame->setBitrate(cMatchTarget.cap(2).toDouble());
             pcFrame->setPSNR(cMatchTarget.cap(3).toDouble());

@@ -28,7 +28,7 @@ enum PartSize
 class ComCU
 {
 public:
-    explicit ComCU();
+    explicit ComCU(ComFrame* pcParent);
     ~ComCU();
 
     /*!
@@ -45,8 +45,12 @@ public:
     /*!
      * Regular infomations of CU
      */
-    ADD_CLASS_FIELD(int, iAddr, getAddr, setAddr)                               ///< Raster index of LCU
-    ADD_CLASS_FIELD(int, iTotalPartNum, getTotalPartNum, setTotalPartNum)       ///< "Smallest" parts in LCU (same with HM)
+    ADD_CLASS_FIELD(ComFrame*, pcFrame, getFrame, setFrame)
+    ADD_CLASS_FIELD(int, iSize, getSize, setSize)                               ///< CU Size
+    ADD_CLASS_FIELD(int, iAddr, getAddr, setAddr)                               ///< Raster index of LCU (which the sub-CU belongs to)
+    ADD_CLASS_FIELD(int, iZorder, getZorder, setZorder)                         ///< Z-Order of CU
+    ADD_CLASS_FIELD(int, iDepth, getDepth, setDepth)                            ///< Depth of CU
+    //ADD_CLASS_FIELD(int, iTotalPartNum, getTotalPartNum, setTotalPartNum)       ///< "Smallest" parts in CU (same with HM)
 
 public:
     static int getPUNum( PartSize ePartSize )
@@ -73,6 +77,8 @@ public:
         }
         return iTotalNum;
     }
+
+
 };
 
 #endif // COMCU_H

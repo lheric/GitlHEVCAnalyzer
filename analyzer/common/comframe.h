@@ -8,9 +8,8 @@ class ComSequence;
 class ComFrame
 {
 public:
-    explicit ComFrame();
+    explicit ComFrame(ComSequence *pcParent);
     ~ComFrame();
-    void init();
 
     /*! CUs in one frame
       */
@@ -18,6 +17,7 @@ public:
 
     /*! Frame info
       */
+    ADD_CLASS_FIELD(ComSequence*, pcSequence, getSequence, setSequence)
     ADD_CLASS_FIELD(int, iPoc, getPoc, setPoc)
 
     /*! Obsolescent

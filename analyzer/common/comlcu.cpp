@@ -1,7 +1,11 @@
 #include "comcu.h"
 
-ComCU::ComCU()
+ComCU::ComCU(ComFrame *pcParent)
 {
+    m_pcFrame = pcParent;
+    m_iAddr = -1;
+    m_iZorder = -1;
+    m_iDepth = -1;
 }
 
 ComCU::~ComCU()
