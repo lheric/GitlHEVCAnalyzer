@@ -29,6 +29,10 @@ void BitstreamVersionSelector::on_buttonBox_accepted()
     {
         m_iBitstreamVersion = 52;
     }
+    else if(ui->version100->isChecked() )
+    {
+        m_iBitstreamVersion = 100;
+    }
 }
 
 void BitstreamVersionSelector::on_version52_clicked()
@@ -37,3 +41,8 @@ void BitstreamVersionSelector::on_version52_clicked()
 }
 
 
+
+void BitstreamVersionSelector::on_version100_clicked()
+{
+    m_iBitstreamVersion = 100;
+}

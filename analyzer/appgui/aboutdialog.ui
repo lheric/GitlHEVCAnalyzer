@@ -82,7 +82,7 @@
     </font>
    </property>
    <property name="text">
-    <string>&lt;a href=&quot;http://gitl.sysu.edu.cn/&quot;&gt;Intellegent Information Processing Lab&lt;/a&gt;</string>
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://gitl.sysu.edu.cn/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#cacaca;&quot;&gt;Intellegent Information Processing Lab&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
    <property name="openExternalLinks">
     <bool>true</bool>
@@ -109,9 +109,9 @@
   <widget class="QLabel" name="label_5">
    <property name="geometry">
     <rect>
-     <x>100</x>
+     <x>90</x>
      <y>160</y>
-     <width>231</width>
+     <width>241</width>
      <height>16</height>
     </rect>
    </property>
@@ -121,7 +121,7 @@
     </font>
    </property>
    <property name="text">
-    <string>Supervised by Prof. Hongyang CHAO</string>
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-style:italic;&quot;&gt;Supervised by Prof. Hongyang CHAO&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_6">
@@ -139,7 +139,7 @@
     </font>
    </property>
    <property name="text">
-    <string>&lt;a href=&quot;mailto:isschhy@mail.sysu.edu.cn&quot;&gt;Email: isschhy@mail.sysu.edu.cn&lt;/a&gt;</string>
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;mailto:isschhy@mail.sysu.edu.cn&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#a7a7a7;&quot;&gt;Email: isschhy@mail.sysu.edu.cn&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
    <property name="openExternalLinks">
     <bool>true</bool>

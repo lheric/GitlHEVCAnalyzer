@@ -28,7 +28,16 @@
        <property name="spacing">
         <number>0</number>
        </property>
-       <property name="margin">
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
         <number>0</number>
        </property>
        <item>
@@ -148,7 +157,7 @@
            <property name="minimumSize">
             <size>
              <width>0</width>
-             <height>15</height>
+             <height>20</height>
             </size>
            </property>
            <property name="mouseTracking">
@@ -177,7 +186,16 @@
             <property name="spacing">
              <number>2</number>
             </property>
-            <property name="margin">
+            <property name="leftMargin">
+             <number>2</number>
+            </property>
+            <property name="topMargin">
+             <number>2</number>
+            </property>
+            <property name="rightMargin">
+             <number>2</number>
+            </property>
+            <property name="bottomMargin">
              <number>2</number>
             </property>
             <item>
@@ -194,7 +212,7 @@
              </spacer>
             </item>
             <item>
-             <widget class="QPushButton" name="pushButton">
+             <widget class="QPushButton" name="openBitstreamBtn">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
                 <horstretch>0</horstretch>
@@ -213,34 +231,15 @@
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="previousFrame">
+             <widget class="QPushButton" name="printScreenBtn">
               <property name="maximumSize">
                <size>
-                <width>40</width>
+                <width>64</width>
                 <height>16777215</height>
                </size>
               </property>
               <property name="text">
-               <string>&lt;</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="nextFrame">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>40</width>
-                <height>16777215</height>
-               </size>
-              </property>
-              <property name="text">
-               <string>&gt;</string>
+               <string>Snapshot</string>
               </property>
              </widget>
             </item>
@@ -330,15 +329,34 @@
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="printScreenBtn">
+             <widget class="QPushButton" name="previousFrame">
               <property name="maximumSize">
                <size>
-                <width>64</width>
+                <width>40</width>
                 <height>16777215</height>
                </size>
               </property>
               <property name="text">
-               <string>Snapshot</string>
+               <string> &lt; </string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="nextFrame">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>40</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="text">
+               <string> &gt; </string>
               </property>
              </widget>
             </item>
@@ -376,12 +394,11 @@
    </property>
    <widget class="QMenu" name="menuBitstream">
     <property name="title">
-     <string>Open</string>
+     <string>File</string>
     </property>
     <addaction name="actionOpen_bitstream"/>
     <addaction name="separator"/>
-    <addaction name="actionOpen_bitstream_info_folder"/>
-    <addaction name="separator"/>
+    <addaction name="actionExit"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -393,49 +410,9 @@
    <addaction name="menuBitstream"/>
    <addaction name="menuHelp"/>
   </widget>
-  <action name="actionOpen_ori_yuv">
-   <property name="enabled">
-    <bool>true</bool>
-   </property>
-   <property name="text">
-    <string>open_ori_yuv</string>
-   </property>
-  </action>
-  <action name="actionOpen_general">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
-   <property name="text">
-    <string>open_general</string>
-   </property>
-  </action>
-  <action name="actionOpen_me">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
-   <property name="text">
-    <string>open_me</string>
-   </property>
-  </action>
-  <action name="actionOpen_cu">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
-   <property name="text">
-    <string>open_cu</string>
-   </property>
-  </action>
-  <action name="actionOpen_pred">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
-   <property name="text">
-    <string>open_pred</string>
-   </property>
-  </action>
   <action name="actionOpen_bitstream">
    <property name="text">
-    <string>open_bitstream</string>
+    <string>Open HEVC Bitstream</string>
    </property>
   </action>
   <action name="actionHelp">
@@ -448,30 +425,9 @@
     <string>About</string>
    </property>
   </action>
-  <action name="actionOpen_benchmark_bitstream">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
+  <action name="actionExit">
    <property name="text">
-    <string>open_benchmark_bitstream</string>
-   </property>
-  </action>
-  <action name="actionHighlight_lcu">
-   <property name="text">
-    <string>highlight_lcu</string>
-   </property>
-  </action>
-  <action name="actionOpen_bitstream_info_folder">
-   <property name="text">
-    <string>open_bitstream_info_folder(Advance)</string>
-   </property>
-  </action>
-  <action name="actionOpen_benchmark_info_folder">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
-   <property name="text">
-    <string>open_benchmark_info_folder(Advance)</string>
+    <string>Exit</string>
    </property>
   </action>
  </widget>

@@ -67,29 +67,55 @@ void MainWindow::keyPressEvent ( QKeyEvent * event )
 
 
 void MainWindow::xRefreshUIByRespond( const CommandRespond& rcRespond )
-{
+{    
     QVariant vValue;
+
+    /// draw current frame to screen
     if( rcRespond.hasParameter("picture") )
     {
         rcRespond.getParameter("picture",vValue);
-        QPixmap* pPixMap = (QPixmap*)(vValue.value<void *>());
-        xPresentFrameBuffer(pPixMap);
+        QPixmap* pcPixMap = (QPixmap*)(vValue.value<void *>());
+        xPresentFrameBuffer(pcPixMap);
     }
 
-    if( rcRespond.hasParameter("total_frame_num") )
+
+    /// change frame number, total frame number & slide bar position in GUI.
+    if( rcRespond.hasParameter("total_frame_num") || rcRespond.hasParameter("current_frame_poc") )
     {
-        rcRespond.getParameter("total_frame_num",vValue);
-        int iTotalFrameNum = vValue.toInt();
-        ui->totalFrameNum->setText(QString("%1").arg(iTotalFrameNum));
+        static int iTotalFrameNum = -1;
+        static int iCurrentFrameNum = -1;
+
+        /// frame number
+        if( rcRespond.hasParameter("total_frame_num") )
+        {
+            rcRespond.getParameter("total_frame_num",vValue);
+            iTotalFrameNum = vValue.toInt();
+            ui->totalFrameNum->setText(QString("%1").arg(iTotalFrameNum));
+        }
+
+        /// total frame number
+        if( rcRespond.hasParameter("current_frame_poc") )
+        {
+            rcRespond.getParameter("current_frame_poc",vValue);
+            iCurrentFrameNum = vValue.toInt() + 1;
+            ui->currentFrameNum->setText(QString("%1").arg(iCurrentFrameNum));
+        }
+
+        /// slide bar position
+        int iMin = ui->progressBar->minimum();
+        int iMax = ui->progressBar->maximum();
+        int iPos = (iCurrentFrameNum-1)*(iMax-iMin)/(iTotalFrameNum-1);
+        ui->progressBar->setValue(iPos);
+
     }
 
-    if( rcRespond.hasParameter("current_frame_poc") )
+
+    if( rcRespond.hasParameter("snapshot") )
     {
-        rcRespond.getParameter("current_frame_poc",vValue);
-        int iCurrentFrameNum = vValue.toInt() + 1;
-        ui->currentFrameNum->setText(QString("%1").arg(iCurrentFrameNum));
+        rcRespond.getParameter("snapshot",vValue);
+        QPixmap* pcPixMap = (QPixmap*)(vValue.value<void *>());
+        xSaveSnapshot(pcPixMap);
     }
-
 
 
 }
@@ -139,24 +165,23 @@ void MainWindow::on_progressBar_actionTriggered(int action)
 }
 
 
-void MainWindow::xPresentFrameBuffer(QPixmap *pPixmap)
+void MainWindow::xPresentFrameBuffer(QPixmap *pcPixmap)
 {
     /// show frame
-    ui->imageView->getGraphicsPixmapItem().setPixmap(*pPixmap);
+    ui->imageView->getGraphicsPixmapItem().setPixmap(*pcPixmap);
 }
 
+void MainWindow::xSaveSnapshot(QPixmap *pcPixmap)
+{
+    ///
+    QString strFilename;
+    strFilename=QFileDialog::getSaveFileName(this,
+                                          tr("Save Snapshot"),
+                                          ".",
+                                          tr("Images (*.png)"));
 
-
-
-
-
-
-
-
-
-
-
-
+    pcPixmap->save(strFilename);
+}
 
 
 void MainWindow::on_actionOpen_bitstream_triggered()
@@ -165,8 +190,9 @@ void MainWindow::on_actionOpen_bitstream_triggered()
     QString strFilename;
     strFilename=QFileDialog::getOpenFileName(this,
                                           tr("Open Bitstream File"),
-                                          "",
-                                          tr("Text Files (*.*)"));
+                                          ".",
+                                          tr("All Files (*.*)"));
+
     if(strFilename.isEmpty() || !QFileInfo(strFilename).exists() )
     {
         AnalyzerMsgSender::getInstance()->msgOut( "File not found." );
@@ -183,178 +209,23 @@ void MainWindow::on_actionOpen_bitstream_triggered()
     cRequest.setParameter("command_name", "decode_bitstream");
     cRequest.setParameter("filename", strFilename);
     cRequest.setParameter("skip_decode", false);
-    cRequest.setParameter("sequence", "testing_sequence");
     cRequest.setParameter("version", cBitstreamDig.getBitstreamVersion());
     cRequest.setParameter("decoder_folder", "decoders");
-    cRequest.setParameter("output_folder", "testing_sequence");
+    cRequest.setParameter("output_folder", "decoded_sequences");
 
     GitlEvent cEvt( g_strCmdSentEvent  );
     cEvt.getEvtData().setParameter("request", QVariant::fromValue(cRequest));
     dispatchEvt(&cEvt);
-
-
-
-}
-
-void MainWindow::on_actionOpen_benchmark_bitstream_triggered()
-{
-    QString strFilename;
-    strFilename=QFileDialog::getOpenFileName(this,
-                                          tr("Open Bitstream File"),
-                                          "",
-                                          tr("Text Files (*.*)"));
-    if(strFilename.isEmpty() || !QFileInfo(strFilename).exists() )
-    {
-        AnalyzerMsgSender::getInstance()->msgOut( "File not found." );
-        return;
-    }
-
-    //select bitstream version
-    BitstreamVersionSelector cBitstreamDig(this);
-    cBitstreamDig.exec();
-
-    CommandRequest cRequest;
-
-    cRequest.setParameter("command_name", "decode_bitstream");
-    cRequest.setParameter("filename", strFilename);
-    cRequest.setParameter("skip_decode", false);
-    cRequest.setParameter("sequence", "benchmark_sequence");
-    cRequest.setParameter("version", cBitstreamDig.getBitstreamVersion());
-    cRequest.setParameter("decoder_folder", "decoders");
-    cRequest.setParameter("output_folder", "benchmark_sequence");
-
-    GitlEvent cEvt( g_strCmdSentEvent  );
-    cEvt.getEvtData().setParameter("request", QVariant::fromValue(cRequest));
-    dispatchEvt(&cEvt);
-}
-
-
-
-
-
-
-
-
-
-
-
-
-//void MainWindow::on_showTesting_clicked()
-//{
-//    /// invoke command
-//    CommandRequest cRequest;
-//    CommandRespond cRespond;
-//    cRequest.setParameter("command_name", "switch_sequence");
-//    cRequest.setParameter("sequence", "testing_sequence");
-////    if( AppFrontController::getInstance()->processRequest( cRequest, cRespond ) )
-////    {
-////        /// result
-////        xRefreshUIByRespond(cRespond);
-////    }
-//}
-
-//void MainWindow::on_showBenchmark_clicked()
-//{
-//    /// invoke command
-//    CommandRequest cRequest;
-//    CommandRespond cRespond;
-//    cRequest.setParameter("command_name", "switch_sequence");
-//    cRequest.setParameter("sequence", "benchmark_sequence");
-////    if( AppFrontController::getInstance()->processRequest( cRequest, cRespond ) )
-////    {
-////        /// result
-////        xRefreshUIByRespond(cRespond);
-////    }
-//}
-
-
-
-
-
-
-
-void MainWindow::on_actionOpen_bitstream_info_folder_triggered()
-{
-    QString strFilename;
-    strFilename=QFileDialog::getExistingDirectory(this,
-                                          tr("Open Bitstream Sequence Info Folder"),
-                                          "",
-                                          QFileDialog::ShowDirsOnly);
-    if(strFilename.isEmpty() || !QFileInfo(strFilename).exists() )
-    {
-        AnalyzerMsgSender::getInstance()->msgOut( "File not found." );
-        return;
-    }
-
-
-    CommandRequest cRequest;
-    CommandRespond cRespond;
-    cRequest.setParameter("command_name", "decode_bitstream");
-    cRequest.setParameter("filename", strFilename);
-    cRequest.setParameter("skip_decode", true);
-    cRequest.setParameter("sequence", "testing_sequence");
-    cRequest.setParameter("version", -1);
-    cRequest.setParameter("decoder_folder", "decoders");
-    cRequest.setParameter("output_folder", strFilename);
-
-//    if( AppFrontController::getInstance()->processRequest( cRequest, cRespond ) )
-//    {
-//        /// result
-//        xRefreshUIByRespond(cRespond);
-//        this->ui->actionOpen_benchmark_bitstream->setEnabled(true);
-//        this->ui->actionOpen_benchmark_info_folder->setEnabled(true);
-//    }
-
-}
-
-void MainWindow::on_actionOpen_benchmark_info_folder_triggered()
-{
-    QString strFilename;
-    strFilename=QFileDialog::getExistingDirectory(this,
-                                          tr("Open Benchmark Sequence Info Folder"),
-                                          "",
-                                          QFileDialog::ShowDirsOnly);
-    if(strFilename.isEmpty() || !QFileInfo(strFilename).exists() )
-    {
-        AnalyzerMsgSender::getInstance()->msgOut( "File not found." );
-        return;
-    }
-
-
-    CommandRequest cRequest;
-    CommandRespond cRespond;
-    cRequest.setParameter("command_name", "decode_bitstream");
-    cRequest.setParameter("filename", strFilename);
-    cRequest.setParameter("skip_decode", true);
-    cRequest.setParameter("sequence", "benchmark_sequence");
-    cRequest.setParameter("version", -1);
-    cRequest.setParameter("decoder_folder", "decoders");
-    cRequest.setParameter("output_folder", strFilename);
-
-//    if( AppFrontController::getInstance()->processRequest( cRequest, cRespond ) )
-//    {
-//        /// result
-//        xRefreshUIByRespond(cRespond);
-//        this->ui->showTesting->setEnabled(true);
-//        this->ui->showBenchmark->setEnabled(true);
-//        this->ui->showDiff->setEnabled(true);
-//        this->ui->showDifferDetail->setEnabled(true);
-//    }
 }
 
 
 void MainWindow::on_printScreenBtn_clicked()
 {
-
     CommandRequest cRequest;
-    CommandRespond cRespond;
     cRequest.setParameter("command_name", "print_screen");
-
-//    if( AppFrontController::getInstance()->processRequest( cRequest, cRespond ) )
-//    {
-//        /// result
-//        xRefreshUIByRespond(cRespond);
-//    }
+    GitlEvent cEvt( g_strCmdSentEvent  );
+    cEvt.getEvtData().setParameter("request", QVariant::fromValue(cRequest));
+    dispatchEvt(&cEvt);
 }
 
 
@@ -372,3 +243,37 @@ void MainWindow::on_actionAbout_triggered()
 
 
 
+void MainWindow::on_openBitstreamBtn_clicked()
+{
+    on_actionOpen_bitstream_triggered();
+}
+
+
+
+void MainWindow::on_actionOpen_bitstream_info_folder_triggered()
+{
+    QString strFilename;
+    strFilename=QFileDialog::getExistingDirectory(this,
+                                          tr("Open Bitstream Sequence Info Folder"),
+                                          ".",
+                                          QFileDialog::ShowDirsOnly);
+    if(strFilename.isEmpty() || !QFileInfo(strFilename).exists() )
+    {
+        AnalyzerMsgSender::getInstance()->msgOut( "File not found." );
+        return;
+    }
+
+    CommandRequest cRequest;
+    cRequest.setParameter("command_name", "decode_bitstream");
+    cRequest.setParameter("filename", strFilename);
+    cRequest.setParameter("skip_decode", true);
+    cRequest.setParameter("sequence", "testing_sequence");
+    cRequest.setParameter("version", -1);
+    cRequest.setParameter("decoder_folder", "decoders");
+    cRequest.setParameter("output_folder", strFilename);
+}
+
+void MainWindow::on_actionExit_triggered()
+{
+    exit(0);
+}

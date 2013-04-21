@@ -1,5 +1,7 @@
 #include "printscreencommand.h"
-
+#include <QFileDialog>
+#include <QSettings>
+#include <QMessageBox>
 PrintScreenCommand::PrintScreenCommand()
 {
 }
@@ -13,7 +15,8 @@ bool PrintScreenCommand::execute( CommandRequest& rcRequest, CommandRespond& rcR
     if( pcFramePixmap == NULL )
         return false;
     pcFramePixmap = pModel->getDrawEngine().drawFrame(&(pModel->getSequenceManager().getCurrentSequence()), iCurBufPoc, pcFramePixmap);  ///< Draw Frame Buffer
+    rcRespond.setParameter("snapshot",  QVariant::fromValue((void*)(pcFramePixmap)));
+    return true;
 
-    ///
-    return pcFramePixmap->save("snapshot.png");
+
 }

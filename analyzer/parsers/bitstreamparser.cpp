@@ -6,6 +6,7 @@
 #include <QProcess>
 #include <QDir>
 #include <QFileInfo>
+#include <iostream>
 BitstreamParser::BitstreamParser(QObject *parent)
 {
     connect(&m_cDecoderProcess, SIGNAL(readyRead()), this, SLOT(displayDecoderOutput()));
@@ -34,7 +35,7 @@ bool BitstreamParser::parseFile(QString strDecoderFolder,
     /// check if output folder exist
     if( !cCurDir.exists(strOutputPath) )
     {
-        cCurDir.mkdir(strOutputPath);
+        cCurDir.mkpath(strOutputPath);
     }
 
     m_cDecoderProcess.setWorkingDirectory(strOutputPath);

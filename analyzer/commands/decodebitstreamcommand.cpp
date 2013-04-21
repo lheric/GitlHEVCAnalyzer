@@ -11,6 +11,7 @@
 #include "parsers/intraparser.h"
 #include "events/eventnames.h"
 #include "exceptions/decodingfailexception.h"
+#include <QDir>
 
 DecodeBitstreamCommand::DecodeBitstreamCommand(QObject *parent) :
     AbstractCommand(parent)
@@ -25,8 +26,6 @@ bool DecodeBitstreamCommand::execute( CommandRequest& rcRequest, CommandRespond&
     QVariant vValue;
     rcRequest.getParameter("filename", vValue);
     QString strFilename = vValue.toString();
-    rcRequest.getParameter("sequence", vValue);
-    QString strSequenceSelector = vValue.toString();
     rcRequest.getParameter("version", vValue);
     int iVersion = vValue.toInt();
     rcRequest.getParameter("skip_decode", vValue);

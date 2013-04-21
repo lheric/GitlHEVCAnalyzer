@@ -133,7 +133,7 @@ QHeaderView::section:pressed{
 
  /* style the sort indicator */
 QHeaderView::down-arrow {
-    image: url("UI:arrow_down_V2.png");
+    image: url("arrow_down_V2.png");
 
     width: 10px;
     height: 10px;
@@ -142,7 +142,7 @@ QHeaderView::down-arrow {
 }
 
 QHeaderView::up-arrow {
-    image: url("UI:arrow_up_V2.png");
+    image: url("arrow_up_V2.png");
 
     width: 10px;
     height: 10px;
@@ -275,22 +275,22 @@ QScrollBar::sub-line:vertical:pressed{
 }
 
 QScrollBar::left-arrow:horizontal{
-    background-image: url("UI:arrow_left_V2.png");
+    background-image: url("arrow_left_V2.png");
     background-position: center;
 } 
 
 QScrollBar::right-arrow{
-    background-image: url("UI:arrow_right_V2.png");
+    background-image: url("arrow_right_V2.png");
     background-position: center;
 }
 
 QScrollBar::up-arrow:vertical{
-    background-image: url("UI:arrow_up_V2.png");
+    background-image: url("arrow_up_V2.png");
     background-position: center;
 }
 
 QScrollBar::down-arrow:vertical{
-    background-image: url("UI:arrow_down_V2.png");
+    background-image: url("arrow_down_V2.png");
     background-position: center;
 }
 
@@ -352,11 +352,11 @@ QTreeView::item:hover{
 }
 
 QTreeView::branch:closed:has-children:!has-siblings, QTreeView::branch:closed:has-children:has-siblings{
-    image: url(UI:treeview_arrow_right.png);
+    image: url(treeview_arrow_right.png);
 }
 
 QTreeView::branch:open:has-children:!has-siblings, QTreeView::branch:open:has-children:has-siblings{
-    image: url(UI:treeview_arrow_down.png);
+    image: url(treeview_arrow_down.png);
 }
 
 QTreeView::indicator{
@@ -366,19 +366,19 @@ QTreeView::indicator{
 }
 
 QTreeView::indicator:unchecked{
-     image: url(UI:checkbox_unchecked.png);
+     image: url(checkbox_unchecked.png);
  }
 
 QTreeView::indicator:unchecked:disabled{
-     image: url(UI:checkbox_unchecked_disabled.png);
+     image: url(checkbox_unchecked_disabled.png);
  }
 
 QTreeView::indicator:checked{
-     image: url(UI:checkbox_checked.png);
+     image: url(checkbox_checked.png);
  }
 
 QTreeView::indicator:checked:disabled{
-     image: url(UI:checkbox_checked_disabled.png);
+     image: url(checkbox_checked_disabled.png);
 }
 
 QTreeView#UIGroup_TreeView{
@@ -722,7 +722,7 @@ QSlider::handle:horizontal {
 
     border: 1px solid rgb(60, 60, 60);
     width: 8px;
-    margin: -2px 0; /* handle is placed by default on the contents rect of the groove. Expand outside the groove */
+    margin: -6px 0; /* handle is placed by default on the contents rect of the groove. Expand outside the groove */
     border-radius: 2px;
  }
 
@@ -829,12 +829,12 @@ QSpinBox::down-button, QDoubleSpinBox::down-button {
 }
 
 QSpinBox::up-arrow, QDoubleSpinBox::up-arrow {
-     border-image: url(UI:spinbox_up.png);
+     border-image: url(spinbox_up.png);
      height:7px;
  }
 
 QSpinBox::down-arrow, QDoubleSpinBox::down-arrow {
-     border-image: url(UI:spinbox_down.png);
+     border-image: url(spinbox_down.png);
      height:7px;
 }
 
@@ -842,37 +842,37 @@ QSpinBox::down-arrow, QDoubleSpinBox::down-arrow {
 /*----------------------------------------------------------------------------*/
 /*----------------------------------------------------------------------------*/
 QCheckBox::indicator:unchecked{
-     image: url(UI:checkbox_unchecked.png);
+     image: url(checkbox_unchecked.png);
  }
 
 QCheckBox::indicator:unchecked:disabled{
-     image: url(UI:checkbox_unchecked_disabled.png);
+     image: url(checkbox_unchecked_disabled.png);
  }
 
 QCheckBox::indicator:checked{
-     image: url(UI:checkbox_checked.png);
+     image: url(checkbox_checked.png);
  }
 
 QCheckBox::indicator:checked:disabled{
-     image: url(UI:checkbox_checked_disabled.png);
+     image: url(checkbox_checked_disabled.png);
  }
 
 /*----------------------------------------------------------------------------*/
 /*----------------------------------------------------------------------------*/
 QRadioButton::indicator:unchecked{
-     image: url(UI:radiobutton_unchecked.png);
+     image: url(radiobutton_unchecked.png);
  }
 
 QRadioButton::indicator:unchecked:disabled{
-     image: url(UI:radiobutton_unchecked_disabled.png);
+     image: url(radiobutton_unchecked_disabled.png);
  }
 
 QRadioButton::indicator:checked{
-     image: url(UI:radiobutton_checked.png);
+     image: url(radiobutton_checked.png);
  }
 
 QRadioButton::indicator:checked:disabled{
-     image: url(UI:radiobutton_checked_disabled.png);
+     image: url(radiobutton_checked_disabled.png);
  }
 
 /*----------------------------------------------------------------------------*/
@@ -885,6 +885,15 @@ QLineEdit{
 
    selection-background-color: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 rgb(120, 120, 120), stop:1 rgb(90, 90, 90));
    selection-color: black;
+}
+
+
+QListWidget{
+    background-color: rgb(90, 90, 90);
+}
+
+QGraphicsView{
+    background-color: rgb(90, 90, 90);
 }
 
 /*----------------------------------------------------------------------------*/
@@ -917,7 +926,7 @@ QComboBox::drop-down{
 }
 
 QComboBox::down-arrow{
-     image: url(UI:dropdown_arrow.png);
+     image: url(dropdown_arrow.png);
 }
 
 
@@ -1013,4 +1022,14 @@ ActionPanelItem {
 
 ActionPanelItem .QLabel{
 	color: black; 
+}
+
+/*----------------Windows Only------------------------------------------------*/
+/*----------------------------------------------------------------------------*/
+QComboBox QAbstractItemView{
+    background-color: rgb(150, 150, 150);
+    border: 1px solid black;
+
+    selection-background-color: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 rgb(120, 120, 120), stop:1 rgb(90, 90, 90));
+    selection-color: black;
 }

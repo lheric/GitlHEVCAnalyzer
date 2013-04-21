@@ -25,6 +25,8 @@ public:
 
     void on_version52_clicked();
 
+    void on_version100_clicked();
+
 private:
     Ui::BitstreamVersionSelector *ui;
 };

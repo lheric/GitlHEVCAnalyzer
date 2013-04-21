@@ -30,7 +30,9 @@ protected:
 protected:
     void xRefreshUIByRespond( const CommandRespond& rcRespond );
 
-    void xPresentFrameBuffer(QPixmap *pPixmap);
+    void xPresentFrameBuffer(QPixmap *pcPixmap);
+
+    void xSaveSnapshot(QPixmap* pcPixmap);
 
 private slots:
 
@@ -42,15 +44,18 @@ private slots:
 
     void on_actionOpen_bitstream_triggered();
 
-    void on_actionOpen_benchmark_bitstream_triggered();
-
     void on_actionOpen_bitstream_info_folder_triggered();
 
-    void on_actionOpen_benchmark_info_folder_triggered();
+
 
     void on_printScreenBtn_clicked();
 
     void on_actionAbout_triggered();
+
+
+    void on_openBitstreamBtn_clicked();
+
+    void on_actionExit_triggered();
 
 private:
     Ui::MainWindow *ui;
