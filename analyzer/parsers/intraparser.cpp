@@ -1,9 +1,11 @@
 #include "intraparser.h"
+#include <QRegExp>
 
 IntraParser::IntraParser(QObject *parent) :
     QObject(parent)
 {
 }
+
 bool IntraParser::parseFile(QTextStream* pcInputStream, ComSequence* pcSequence)
 {
     Q_ASSERT( pcSequence != NULL );

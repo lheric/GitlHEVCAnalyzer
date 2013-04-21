@@ -1,4 +1,5 @@
 #include "predparser.h"
+#include <QRegExp>
 
 PredParser::PredParser(QObject *parent) :
     QObject(parent)

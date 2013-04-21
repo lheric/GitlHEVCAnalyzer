@@ -4,7 +4,6 @@
 #include <QDataStream>
 #include <QPixmap>
 #include "gitlmodual.h"
-#include "common/comanalyzerdef.h"
 #include "io/yuv420rgbbuffer.h"
 #include "drawengine/drawengine.h"
 #include "parsers/encodergeneralparser.h"

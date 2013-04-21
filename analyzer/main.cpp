@@ -5,7 +5,6 @@
 
 //
 #include "model/modellocator.h"
-#include "common/comanalyzerdef.h"
 #include "appgui/mainwindow.h"
 
 #include "commands/appfrontcontroller.h"
@@ -73,7 +72,7 @@ int main(int argc, char *argv[])
 
 
     //
-#if ENABLE_GUI
+
 
     QApplication cApp(argc, argv);
     MainWindow cMainWin;
@@ -83,7 +82,6 @@ int main(int argc, char *argv[])
     cApp.exec();
 
 
-#endif
 
     return EXIT_SUCCESS;
 /*

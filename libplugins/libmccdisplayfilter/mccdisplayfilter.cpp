@@ -2,9 +2,15 @@
 #include <QRect>
 #include <QColor>
 #include <QBrush>
-#include <iostream>
 #include <QFont>
+#include <QFile>
+#include <QTextStream>
+#include <QRegExp>
+#include <QString>
+
+#include <iostream>
 using namespace std;
+
 MCCDisplayFilter::MCCDisplayFilter(QObject *parent) :
     QObject(parent)
 {

@@ -2,7 +2,7 @@
 #define ENCODERGENERALPARSER_H
 
 #include <QObject>
-#include "../common/comanalyzerdef.h"
+#include <QTextStream>
 #include "../common/comsequence.h"
 
 class EncoderGeneralParser : public QObject

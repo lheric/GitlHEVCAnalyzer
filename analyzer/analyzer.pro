@@ -114,7 +114,6 @@ HEADERS += \
     appgui/sequencelistitem.h \
     commands/zoomframecommand.h \
     common/comcu.h \
-    common/comanalyzerdef.h \
     exceptions/decodernotfoundexception.h \
     exceptions/decodingfailexception.h \
     exceptions/bitstreamnotfoundexception.h

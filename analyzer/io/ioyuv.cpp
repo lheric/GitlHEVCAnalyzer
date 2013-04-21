@@ -1,5 +1,4 @@
 #include "ioyuv.h"
-#include "../common/comanalyzerdef.h"
 #include "../io/analyzermsgsender.h"
 
 

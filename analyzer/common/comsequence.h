@@ -1,11 +1,11 @@
 #ifndef COMSEQUENCE_H
 #define COMSEQUENCE_H
+#include <QString>
 
-#include "comanalyzerdef.h"
 #include "comframe.h"
 
 /*!
- * @brief This class represents a video sequence
+ * \brief This class represents a video sequence
  */
 
 class ComSequence

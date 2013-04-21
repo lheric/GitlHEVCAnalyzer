@@ -1,7 +1,6 @@
 #ifndef COMCU_H
 #define COMCU_H
 
-#include "comanalyzerdef.h"
 #include "compu.h"
 #include "commv.h"
 

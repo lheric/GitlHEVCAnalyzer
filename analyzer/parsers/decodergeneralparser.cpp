@@ -1,4 +1,5 @@
 #include "decodergeneralparser.h"
+#include <QRegExp>
 
 DecoderGeneralParser::DecoderGeneralParser(QObject *parent) :
     QObject(parent)

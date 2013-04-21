@@ -1,4 +1,5 @@
 #include "mvparser.h"
+#include <QRegExp>
 
 MVParser::MVParser(QObject *parent) :
     QObject(parent)

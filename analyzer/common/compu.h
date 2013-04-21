@@ -1,6 +1,7 @@
 #ifndef COMPU_H
 #define COMPU_H
-#include "comanalyzerdef.h"
+
+#include <QVector>
 #include "commv.h"
 
 enum PredMode

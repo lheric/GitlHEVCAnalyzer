@@ -1,4 +1,5 @@
 #include "mergeparser.h"
+#include <QRegExp>
 
 MergeParser::MergeParser(QObject *parent) :
     QObject(parent)

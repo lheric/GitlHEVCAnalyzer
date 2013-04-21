@@ -1,8 +1,6 @@
 #ifndef COMFRAME_H
 #define COMFRAME_H
 
-
-#include "comanalyzerdef.h"
 #include "comcu.h"
 class ComSequence;
 class ComFrame

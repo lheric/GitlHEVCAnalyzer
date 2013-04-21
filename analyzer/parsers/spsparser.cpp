@@ -1,4 +1,5 @@
 #include "spsparser.h"
+#include <QRegExp>
 
 SpsParser::SpsParser(QObject *parent) :
     QObject(parent)

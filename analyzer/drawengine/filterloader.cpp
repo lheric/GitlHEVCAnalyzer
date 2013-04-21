@@ -1,4 +1,3 @@
-#include "common/comanalyzerdef.h"
 #include "filterloader.h"
 #include "../io/analyzermsgsender.h"
 #include "exceptions/invaildfilterindexexception.h"
@@ -6,6 +5,9 @@
 #include "events/eventnames.h"
 
 #include <QDir>
+
+
+#define PLUGIN_DIRECTORY "plugins" ///< plugin directory
 
 FilterLoader::FilterLoader()
 {

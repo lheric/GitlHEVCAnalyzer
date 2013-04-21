@@ -1,8 +1,10 @@
 #include "cupuparser.h"
 #include "io/analyzermsgsender.h"
 #include <QTextStream>
-#include <iostream>
-using namespace std;
+#include <QRegExp>
+
+#define CU_SLIPT_FLAG 99      ///< CU splitting flag in file
+
 
 CUPUParser::CUPUParser(QObject *parent) :
     QObject(parent)
