@@ -51,26 +51,21 @@ bool MCCDisplayFilter::init(FilterContext *pcContext)
     return true;
 }
 
-bool MCCDisplayFilter::drawCTU  (QPainter* pcPainter,
-                       FilterContext* pcContext,
-                       ComSequence* pcSequence,
-                       int iPoc, int iAddr,
-                       int iCTUX, int iCTUY,
-                       int iCTUSize, double dScale)
+bool MCCDisplayFilter::drawCTU  (FilterContext* pcContext, QPainter* pcPainter,
+                                 ComCU *pcCTU, double dScale, QRect* pcScaledArea)
 {
-
-
+    int iPoc  = pcCTU->getFrame()->getPoc();
+    int iAddr = pcCTU->getAddr();
 
     int mcc = m_ccLCU[iPoc][iAddr];
     //cout << iAddr << " " << iPoc << " " << mcc << endl;
     pcPainter->setBrush(Qt::NoBrush);
     pcPainter->setPen(QColor(255,0,0));
-    QRect cCTURect(iCTUX, iCTUY, iCTUSize, iCTUSize);
     QFont cFont = pcPainter->font();
     pcPainter->setPen(QColor(0,0,255));
     cFont.setPointSize(18);
     pcPainter->setFont(cFont);
-    pcPainter->drawText(cCTURect,Qt::AlignCenter, QString("%1").arg(mcc));
+    pcPainter->drawText(*pcScaledArea,Qt::AlignCenter, QString("%1").arg(mcc));
 
 
     //if(mcc>6)
@@ -80,7 +75,7 @@ bool MCCDisplayFilter::drawCTU  (QPainter* pcPainter,
     iAlpha=((iAlpha>175)?(175):(iAlpha));
     pcPainter->setPen(Qt::NoPen);
     pcPainter->setBrush(QColor(0,0,0,iAlpha));
-    pcPainter->drawRect(cCTURect);
+    pcPainter->drawRect(*pcScaledArea);
     //}
 //    else if(mcc == 0)
 //    {

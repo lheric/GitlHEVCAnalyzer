@@ -45,38 +45,24 @@ public:
     /*!
      * Regular infomations of CU
      */
-    ADD_CLASS_FIELD(ComFrame*, pcFrame, getFrame, setFrame)
+    ADD_CLASS_FIELD(ComFrame*, pcFrame, getFrame, setFrame)                     ///< parent frame that holds this CU
+    ADD_CLASS_FIELD(int, iX, getX, setX)                                        ///< X Position in frame
+    ADD_CLASS_FIELD(int, iY, getY, setY)                                        ///< Y Position in frame
     ADD_CLASS_FIELD(int, iSize, getSize, setSize)                               ///< CU Size
     ADD_CLASS_FIELD(int, iAddr, getAddr, setAddr)                               ///< Raster index of LCU (which the sub-CU belongs to)
     ADD_CLASS_FIELD(int, iZorder, getZorder, setZorder)                         ///< Z-Order of CU
     ADD_CLASS_FIELD(int, iDepth, getDepth, setDepth)                            ///< Depth of CU
-    //ADD_CLASS_FIELD(int, iTotalPartNum, getTotalPartNum, setTotalPartNum)       ///< "Smallest" parts in CU (same with HM)
 
 public:
-    static int getPUNum( PartSize ePartSize )
-    {
-        int iTotalNum = 0;
-        switch ( ePartSize )
-        {
-          case SIZE_2Nx2N:
-            iTotalNum = 1;
-            break;
-          case SIZE_NxN:
-            iTotalNum = 4;
-            break;
-          case SIZE_2NxN:
-          case SIZE_Nx2N:
-          case SIZE_2NxnU:
-          case SIZE_2NxnD:
-          case SIZE_nLx2N:
-          case SIZE_nRx2N:
-            iTotalNum = 2;
-            break;
-          default:            
-            break;
-        }
-        return iTotalNum;
-    }
+    static int getPUNum( PartSize ePartSize );
+    static void getPUOffsetAndSize( int        iLeafCUSize,
+                                    PartSize   ePartSize,
+                                    int        uiPUIdx,
+                                    int&       riXOffset,
+                                    int&       riYOffset,
+                                    int&       riWidth,
+                                    int&       riHeight );
+
 
 
 };

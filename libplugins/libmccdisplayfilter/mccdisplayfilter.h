@@ -26,12 +26,8 @@ public:
     virtual bool init     (FilterContext* pcContext);
 
 
-    virtual bool drawCTU  (QPainter* pcPainter,
-                           FilterContext* pcContext,
-                           ComSequence* pcSequence,
-                           int iPoc, int iAddr,
-                           int iCTUX, int iCTUY,
-                           int iCTUSize, double dScale);
+    virtual bool drawCTU  (FilterContext* pcContext, QPainter* pcPainter,
+                           ComCU *pcCTU, double dScale, QRect* pcScaledArea);
 
 
 protected:

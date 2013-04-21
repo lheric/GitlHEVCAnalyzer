@@ -13,7 +13,7 @@ class FilterLoader;
 
 /*!
  * \brief The FilterContext class
- * Parameters that will be sent to the filter plgins in AbstractFilter Interface
+ * Parameters which will be sent to the filter plgins in AbstractFilter Interface
  * Basically it is just pointers to the objects in model, indicating the state of the system.
  */
 struct FilterContext
@@ -74,33 +74,29 @@ public:
 
     /*!
      * \brief drawFrame is called for every frame
-     * \param pcPainter the QPainter of the QPixmap object which is being displayed on screen
      * \param pcContext \see FilterContext
+     * \param pcPainter the QPainter of the QPixmap object which is being displayed on screen
      * \param pcSequence sequence which is selected as the currently displaying one
      * \param iPoc the POC of currently displaying frame (begin with 0)
      * \return true - success   false - fail
      */
-    virtual bool drawFrame(QPainter* pcPainter, FilterContext* pcContext,
-                           ComSequence* pcSequence, int iPoc, double dScale)
+    virtual bool drawFrame(FilterContext* pcContext, QPainter* pcPainter,
+                           ComFrame *pcFrame, double dScale, QRect* pcScaledArea)
     {
         return true;
     }
 
     /*!
      * \brief drawCTU is called for each CTU (Coding Tree Unit, i.e. LCU)
-     * \param pcPainter the QPainter of the QPixmap object which is being displayed on screen
      * \param pcContext \see FilterContext
-     * \param pcSequence sequence which is selected as the currently displaying one
-     * \param iPoc the POC of currently displaying frame (begin with 0)
-     * \param iAddr CTU in raster order (begin with 0)
-     * \param iCTUX CTU x coordinate in this frame
-     * \param iCTUY CTU y coordinate in this frame
-     * \param iCTUSize size of the CTU
+     * \param pcPainter the QPainter of the QPixmap object which is being displayed on screen
+     * \param pcCU the CTU(i.e. LCU) to be draw
+     * \param dScale the scale of current display
+     * \param pcScaledArea the scaled size of current PU
      * \return
      */
-    virtual bool drawCTU(QPainter* pcPainter, FilterContext* pcContext,
-                         ComSequence* pcSequence, int iPoc, int iAddr,
-                         int iCTUX, int iCTUY, int iCTUSize, double dScale)
+    virtual bool drawCTU(FilterContext* pcContext, QPainter* pcPainter,
+                         ComCU *pcCTU, double dScale, QRect* pcScaledArea)
     {
         return true;
     }
@@ -108,49 +104,30 @@ public:
 
     /*!
      * \brief drawCU is called for each leaf CU (each leaf node of the Coding Tree Unit )
-     * \param pcPainter the QPainter of the QPixmap object which is being displayed on screen
      * \param pcContext \see FilterContext
-     * \param pcSequence sequence which is selected as the currently displaying one
-     * \param iPoc the POC of currently displaying frame (begin with 0)
-     * \param iAddr parent CTU in raster order (begin with 0)
-     * \param iZOrder CU in z-order in this CTU
-     * \param iDepth CU depth
-     * \param iCUX CU x coordinate in this frame
-     * \param iCUY CU y coordinate in this frame
-     * \param iCUSize size of the CU
+     * \param pcPainter the QPainter of the QPixmap object which is being displayed on screen     
+     * \param pcCU the CU to be draw
+     * \param dScale the scale of current display
+     * \param pcScaledArea the scaled size of current PU
      * \return
      */
-    virtual bool drawCU   (QPainter* pcPainter, FilterContext* pcContext,
-                           ComSequence* pcSequence, int iPoc, int iAddr,
-                           int iZOrder, int iDepth, int iCUX, int iCUY,
-                           int iCUSize, double dScale)
+    virtual bool drawCU   (FilterContext* pcContext, QPainter* pcPainter,
+                           ComCU *pcCU, double dScale,  QRect* pcScaledArea)
     {
         return true;
     }
 
     /*!
      * \brief drawPU
-     * \param pcPainter the QPainter of the QPixmap object which is being displayed on screen
      * \param pcContext \see FilterContext
-     * \param pcSequence sequence which is selected as the currently displaying one
+     * \param pcPainter the QPainter of the QPixmap object which is being displayed on screen
      * \param pcPU the PU to be draw
-     * \param iPoc the POC of currently displaying frame (begin with 0)
-     * \param iAddr parent CTU in raster order (begin with 0)
-     * \param iZOrder parent CU in z-order in this CTU
-     * \param iDepth parent CU depth
-     * \param ePartSize \see PartSize
-     * \param iPUIndex PU in raster order in parent CU
-     * \param iPUX PU x coordinate in this frame
-     * \param iPUY PU y coordinate in this frame
-     * \param iPUWidth PU width
-     * \param iPUHeight PU height
+     * \param dScale the scale of current display
+     * \param pcScaledArea the scaled size of current PU
      * \return
      */
-    virtual bool drawPU   (QPainter* pcPainter, FilterContext* pcContext, ComSequence* pcSequence,
-                           ComPU* pcPU, int iPoc, int iAddr,
-                           int iZOrder, int iDepth,
-                           PartSize ePartSize, int iPUIndex, int iPUX, int iPUY,
-                           int iPUWidth, int iPUHeight, double dScale)
+    virtual bool drawPU   (FilterContext* pcContext, QPainter* pcPainter,
+                           ComPU *pcPU, double dScale,  QRect* pcScaledArea)
     {
         return true;
     }

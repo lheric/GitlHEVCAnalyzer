@@ -12,15 +12,9 @@ class MVDisplayFilter : public QObject, public AbstractFilter
 public:
     explicit MVDisplayFilter(QObject *parent = 0);
 
-    virtual bool drawPU   (QPainter* pcPainter,
-                           FilterContext* pcContext,
-                           ComSequence* pcSequence,
-                           ComPU* pcPU,
-                           int iPoc, int iAddr,
-                           int iZOrder, int iDepth,
-                           PartSize ePartSize, int iPUIndex,
-                           int iPUX, int iPUY,
-                           int iPUWidth, int iPUHeight, double dScale);
+    virtual bool drawPU   (FilterContext* pcContext, QPainter* pcPainter,
+                           ComPU* pcPU, double dScale,
+                           QRect *pcScaledArea);
 
 
 signals:

@@ -11,13 +11,8 @@ class CUDisplayFilter : public QObject, public AbstractFilter
 public:
     explicit CUDisplayFilter(QObject *parent = 0);
 
-    virtual bool drawCU   (QPainter* pcPainter,
-                           FilterContext* pcContext,
-                           ComSequence* pcSequence,
-                           int iPoc, int iAddr,
-                           int iZOrder, int iDepth,
-                           int iCUX, int iCUY,
-                           int iCUSize, double dScale);
+    virtual bool drawCU   (FilterContext* pcContext, QPainter* pcPainter,
+                           ComCU *pcCU, double dScale,  QRect* pcScaledArea);
 
 signals:
     

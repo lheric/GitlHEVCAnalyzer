@@ -6,17 +6,11 @@ MVDisplayFilter::MVDisplayFilter(QObject *parent) :
     setName("MV Display Filter");
 }
 
-bool MVDisplayFilter::drawPU   (QPainter* pcPainter,
-                                           FilterContext* pcContext,
-                                           ComSequence* pcSequence,
-                                           ComPU* pcPU,
-                                           int iPoc, int iAddr,
-                                           int iZOrder, int iDepth,
-                                           PartSize ePartSize, int iPUIndex,
-                                           int iPUX, int iPUY,
-                                           int iPUWidth, int iPUHeight, double dScale)
+bool MVDisplayFilter::drawPU  (FilterContext* pcContext, QPainter* pcPainter,
+                               ComPU *pcPU, double dScale,  QRect* pcScaledArea)
 {
     int iInterDir = pcPU->getInterDir();
+    QPoint cCenter = pcScaledArea->center();
     ComMV *pcMV = NULL;
     if( iInterDir == 0 )
     {
@@ -28,8 +22,7 @@ bool MVDisplayFilter::drawPU   (QPainter* pcPainter,
         pcMV = pcPU->getMVs().at(0);
 
         pcPainter->setPen(QColor(Qt::blue));
-        pcPainter->drawLine(iPUX  + iPUWidth/2,     iPUY + iPUHeight/2,
-                          iPUX+iPUWidth/2+pcMV->getHor()/4, iPUY+iPUHeight/2+pcMV->getVer()/4);
+        pcPainter->drawLine(cCenter, cCenter+QPoint(pcMV->getHor(),pcMV->getVer())*dScale/4);
 
     }
     else if( iInterDir == 2 )  /// uni-directional prediction
@@ -38,8 +31,7 @@ bool MVDisplayFilter::drawPU   (QPainter* pcPainter,
         pcMV = pcPU->getMVs().at(1);
 
         pcPainter->setPen(QColor(Qt::red));
-        pcPainter->drawLine(iPUX  + iPUWidth/2,     iPUY + iPUHeight/2,
-                          iPUX+iPUWidth/2+pcMV->getHor()/4, iPUY+iPUHeight/2+pcMV->getVer()/4);
+        pcPainter->drawLine(cCenter, cCenter+QPoint(pcMV->getHor(),pcMV->getVer())*dScale/4);
 
     }
     else if( iInterDir == 3 )  /// bi-directional prediction
@@ -48,14 +40,12 @@ bool MVDisplayFilter::drawPU   (QPainter* pcPainter,
         pcMV = pcPU->getMVs().at(0);
 
         pcPainter->setPen(QColor(Qt::blue));
-        pcPainter->drawLine(iPUX  + iPUWidth/2,     iPUY + iPUHeight/2,
-                          iPUX+iPUWidth/2+pcMV->getHor()/4, iPUY+iPUHeight/2+pcMV->getVer()/4);
+        pcPainter->drawLine(cCenter, cCenter+QPoint(pcMV->getHor(),pcMV->getVer())*dScale/4);
         /// Get MV of PU
         pcMV = pcPU->getMVs().at(1);
 
         pcPainter->setPen(QColor(Qt::red));
-        pcPainter->drawLine(iPUX  + iPUWidth/2,     iPUY + iPUHeight/2,
-                          iPUX+iPUWidth/2+pcMV->getHor()/4, iPUY+iPUHeight/2+pcMV->getVer()/4);
+        pcPainter->drawLine(cCenter, cCenter+QPoint(pcMV->getHor(),pcMV->getVer())*dScale/4);
     }
     return true;
 

@@ -18,7 +18,7 @@ bool ZoomFrameCommand::execute( CommandRequest& rcRequest, CommandRespond& rcRes
         return false;
     }
     ModelLocator* pModel = ModelLocator::getInstance();
-    pModel->getDrawEngine().setFrameScale(dScale);
+    pModel->getDrawEngine().setScale(dScale);
     int iPoc = pModel->getFrameBuffer().getPoc();
     QPixmap* pcFramePixmap = pModel->getFrameBuffer().getFrame(iPoc);
     pcFramePixmap = pModel->getDrawEngine().drawFrame(&(pModel->getSequenceManager().getCurrentSequence()), iPoc, pcFramePixmap);  ///< Draw Frame Buffer

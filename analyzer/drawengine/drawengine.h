@@ -26,46 +26,24 @@ public:
 
 protected:
     /*!
-     * \brief xDrawCU
-     * \param pcSequence
-     * \param pcCU
+     * \brief xDrawCU draw CU recursively
      * \param pcPainter
-     * \param iPoc
-     * \param iAddr
-     * \param iZOrder
-     * \param iDepth
-     * \param iCUX
-     * \param iCUY
-     * \param iCUSize
+     * \param pcCU
      * \return
      */
-
-    bool xDrawCU     (ComSequence*    pcSequence,
-                      ComCU *pcCU,
-                      QPainter*       pcPainter,
-                      int             iPoc,
-                      int             iAddr,
-                      int             iZOrder,
-                      int             iDepth,
-                      int             iCUX,
-                      int             iCUY,
-                      int             iCUSize);
-
-    void xGetPUOffsetAndSize(int        iLeafCUSize,
-                             PartSize   ePartSize,
-                             int        uiPUIdx,
-                             int&       riXOffset,
-                             int&       riYOffset,
-                             int&       riWidth,
-                             int&       riHeight );
-
-
+    bool xDrawCU( QPainter* pcPainter,  ComCU* pcCU );
 
 
     /*!
+     * \brief xScaleRect scale the (CU/PU) rect area accodring to zooming in/out
+     * \param rcUnscaled
+     * \param rcScaled
+     */
+    void xScaleRect(QRect *rcUnscaled, QRect *rcScaled );
+    /*!
      * Scale of the frame
      */
-    ADD_CLASS_FIELD(double, dFrameScale, getFrameScale, setFrameScale)
+    ADD_CLASS_FIELD(double, dScale, getScale, setScale)
 
     /*!
      * Scaled frame

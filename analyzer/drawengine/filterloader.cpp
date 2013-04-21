@@ -115,37 +115,32 @@ bool FilterLoader::config(int iFilterIndex)
     m_apcFilters[iFilterIndex]->config(&m_cFilterContext);
     return true;
 }
-bool FilterLoader::drawPU  (QPainter* pcPainter, ComSequence* pcSequence, ComPU* pcPU,
-                            int iPoc, int iAddr, int iZOrder, int iDepth,
-                            PartSize ePartSize,  int iPUIndex,
-                            int iPUX, int iPUY,
-                            int iPUWidth, int iPUHeight, double dScale)
+
+
+
+
+
+bool FilterLoader::drawPU  (QPainter* pcPainter, ComPU *pcPU,  double dScale, QRect* pcScaledArea)
 {
     for(int i = 0; i < m_apcFilters.size(); i++)
     {
         AbstractFilter* pFilter = m_apcFilters[i];
         if( pFilter->getEnable() )
         {
-            pFilter->drawPU(pcPainter, &m_cFilterContext, pcSequence, pcPU,
-                            iPoc, iAddr, iZOrder, iDepth,
-                            ePartSize, iPUIndex,
-                            iPUX, iPUY, iPUWidth, iPUHeight, dScale);
+            pFilter->drawPU(&m_cFilterContext, pcPainter, pcPU, dScale, pcScaledArea);
         }
     }
     return true;
 }
 
-bool FilterLoader::drawCU  ( QPainter* pcPainter, ComSequence* pcSequence,
-                             int iPoc, int iAddr, int iZOrder, int iDepth,
-                             int iCUX, int iCUY,  int iCUSize, double dScale)
+bool FilterLoader::drawCU  (QPainter* pcPainter, ComCU *pcCU, double dScale, QRect* pcScaledArea)
 {
     for(int i = 0; i < m_apcFilters.size(); i++)
     {
         AbstractFilter* pFilter = m_apcFilters[i];
         if( pFilter->getEnable() )
         {
-            pFilter->drawCU( pcPainter, &m_cFilterContext, pcSequence,
-                            iPoc, iAddr, iZOrder, iDepth, iCUX, iCUY, iCUSize, dScale);
+            pFilter->drawCU(&m_cFilterContext, pcPainter, pcCU, dScale, pcScaledArea);
         }
     }
 
@@ -153,9 +148,7 @@ bool FilterLoader::drawCU  ( QPainter* pcPainter, ComSequence* pcSequence,
     return true;
 }
 
-bool FilterLoader::drawCTU  (QPainter* pcPainter, ComSequence* pcSequence,
-                             int iPoc, int iAddr,
-                             int iCTUX, int iCTUY, int iCTUSize, double dScale)
+bool FilterLoader::drawCTU  (QPainter* pcPainter, ComCU *pcCU, double dScale, QRect* pcScaledArea)
 
 {
     for(int i = 0; i < m_apcFilters.size(); i++)
@@ -163,23 +156,21 @@ bool FilterLoader::drawCTU  (QPainter* pcPainter, ComSequence* pcSequence,
         AbstractFilter* pFilter = m_apcFilters[i];
         if( pFilter->getEnable() )
         {
-            pFilter->drawCTU(pcPainter, &m_cFilterContext, pcSequence, iPoc, iAddr, iCTUX, iCTUY, iCTUSize, dScale);
+            pFilter->drawCTU(&m_cFilterContext, pcPainter, pcCU, dScale, pcScaledArea);
         }
     }
     return true;
 }
 
 
-bool FilterLoader::drawFrame(QPainter* pcPainter,
-                             ComSequence* pcSequence,
-                             int iPoc, double dScale)
+bool FilterLoader::drawFrame(QPainter* pcPainter, ComFrame *pcFrame, double dScale, QRect* pcScaledArea)
 {
     for(int i = 0; i < m_apcFilters.size(); i++)
     {
         AbstractFilter* pFilter = m_apcFilters[i];
         if( pFilter->getEnable() )
         {
-            pFilter->drawFrame(pcPainter, &m_cFilterContext, pcSequence, iPoc, dScale);
+            pFilter->drawFrame(&m_cFilterContext, pcPainter, pcFrame, dScale, pcScaledArea);
         }
     }
     return true;

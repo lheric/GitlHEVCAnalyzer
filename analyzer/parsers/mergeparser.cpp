@@ -58,7 +58,7 @@ bool MergeParser::xReadMergeIndex(QTextStream* pcMergeIndexStream, ComCU* pcCU)
         int iMergeIndex;
         for(int i = 0; i < pcCU->getPUs().size(); i++)
         {
-            Q_ASSERT(pcCUInfoStream->atEnd() == false);
+            Q_ASSERT(pcMergeIndexStream->atEnd() == false);
             *pcMergeIndexStream >> iMergeIndex;
             pcCU->getPUs().at(i)->setMergeIndex(iMergeIndex);
         }

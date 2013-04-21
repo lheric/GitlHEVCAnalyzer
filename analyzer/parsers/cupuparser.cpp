@@ -14,6 +14,15 @@ bool CUPUParser::parseFile(QTextStream* pcInputStream, ComSequence* pcSequence)
 {
     Q_ASSERT( pcSequence != NULL );
 
+    ///
+    int iSeqWidth = pcSequence->getWidth();
+    int iMaxCUSize = pcSequence->getMaxCUSize();
+    int iCUOneRow = (iSeqWidth+iMaxCUSize-1)/iMaxCUSize;
+
+
+
+
+    ////
     QString strOneLine;
     QRegExp cMatchTarget;
 
@@ -22,6 +31,7 @@ bool CUPUParser::parseFile(QTextStream* pcInputStream, ComSequence* pcSequence)
     /// read one LCU
     ComFrame* pcFrame = NULL;
     ComCU* pcLCU = NULL;
+    int iLCUSize = pcSequence->getMaxCUSize();
     cMatchTarget.setPattern("^<([0-9]+),([0-9]+)> (.*) ");
     QTextStream cCUInfoStream;
     while( !pcInputStream->atEnd() )
@@ -40,6 +50,11 @@ bool CUPUParser::parseFile(QTextStream* pcInputStream, ComSequence* pcSequence)
             pcLCU->setFrame(pcFrame);
             pcLCU->setDepth(0);
             pcLCU->setZorder(0);
+            pcLCU->setSize(iLCUSize);
+            int iPixelX = (pcLCU->getAddr()%iCUOneRow)*iMaxCUSize;
+            int iPixelY = (pcLCU->getAddr()/iCUOneRow)*iMaxCUSize;
+            pcLCU->setX(iPixelX);
+            pcLCU->setY(iPixelY);
 
             /// recursively parse the CU&PU quard-tree structure
             QString strCUInfo = cMatchTarget.cap(3);
@@ -67,7 +82,8 @@ bool CUPUParser::xReadInCUMode(QTextStream* pcCUInfoStream, ComCU* pcCU)
 
     if( iCUMode == CU_SLIPT_FLAG )
     {
-        int iTotalNumPart = 1 << ((pcCU->getFrame()->getSequence()->getMaxCUDepth()-pcCU->getDepth()) << 1);
+        int iMaxDepth = pcCU->getFrame()->getSequence()->getMaxCUDepth();
+        int iTotalNumPart = 1 << ( (iMaxDepth-pcCU->getDepth()) << 1 );
         /// non-leaf node : add 4 children CUs
         for(int i = 0; i < 4; i++)
         {
@@ -75,6 +91,11 @@ bool CUPUParser::xReadInCUMode(QTextStream* pcCUInfoStream, ComCU* pcCU)
             pcChildNode->setAddr(pcCU->getAddr());
             pcChildNode->setDepth(pcCU->getDepth()+1);
             pcChildNode->setZorder( pcCU->getZorder() + (iTotalNumPart/4)*i );
+            pcChildNode->setSize(pcCU->getSize()/2);
+            int iSubCUX = pcCU->getX() + i%2 * (pcCU->getSize()/2);
+            int iSubCUY = pcCU->getY() + i/2 * (pcCU->getSize()/2);
+            pcChildNode->setX(iSubCUX);
+            pcChildNode->setY(iSubCUY);
             pcCU->getSCUs().push_back(pcChildNode);
             xReadInCUMode(pcCUInfoStream, pcChildNode);
         }
@@ -87,7 +108,16 @@ bool CUPUParser::xReadInCUMode(QTextStream* pcCUInfoStream, ComCU* pcCU)
         int iPUCount = ComCU::getPUNum((PartSize)iCUMode);
         for(int i = 0; i < iPUCount; i++)
         {
-            pcCU->getPUs().push_back(new ComPU());
+            ComPU* pcPU = new ComPU(pcCU);
+            int iPUOffsetX, iPUOffsetY, iPUWidth, iPUHeight;
+            ComCU::getPUOffsetAndSize(pcCU->getSize(), (PartSize)iCUMode, i, iPUOffsetX, iPUOffsetY, iPUWidth, iPUHeight);
+            int iPUX = pcCU->getX() + iPUOffsetX;
+            int iPUY = pcCU->getY() + iPUOffsetY;
+            pcPU->setX(iPUX);
+            pcPU->setY(iPUY);
+            pcPU->setWidth(iPUWidth);
+            pcPU->setHeight(iPUHeight);
+            pcCU->getPUs().push_back(pcPU);
         }
 
     }

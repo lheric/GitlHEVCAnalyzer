@@ -9,12 +9,8 @@ HighlightDiffFilter::HighlightDiffFilter(QObject *parent) :
 
 
 
-bool HighlightDiffFilter::drawCTU  (QPainter* pcPainter,
-                                    FilterContext* pcContext,
-                                    ComSequence* pcSequence,
-                                    int iPoc, int iAddr,
-                                    int iCTUX, int iCTUY,
-                                    int iCTUSize, double dScale)
+bool HighlightDiffFilter::drawCTU  (FilterContext* pcContext, QPainter* pcPainter,
+                                    ComCU *pcCTU, double dScale, QRect *pcScaledArea)
 {
 
 //        ModelLocator* pModel = ModelLocator::getInstance();

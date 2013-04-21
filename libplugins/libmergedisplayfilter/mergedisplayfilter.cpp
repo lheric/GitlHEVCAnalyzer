@@ -7,18 +7,9 @@ MergeDisplayFilter::MergeDisplayFilter(QObject *parent) :
     setName("Merge Display Filter");
 }
 
-bool MergeDisplayFilter::drawPU   (QPainter* pcPainter,
-                                   FilterContext* pcContext,
-                                   ComSequence* pcSequence,
-                                   ComPU* pcPU,
-                                   int iPoc, int iAddr,
-                                   int iZOrder, int iDepth,
-                                   PartSize ePartSize, int iPUIndex,
-                                   int iPUX, int iPUY,
-                                   int iPUWidth, int iPUHeight, double dScale)
+bool MergeDisplayFilter::drawPU   (FilterContext* pcContext, QPainter* pcPainter,
+                                   ComPU *pcPU, double dScale,  QRect* pcScaledArea)
 {
-    QRect cPUArea(iPUX,iPUY,iPUWidth,iPUHeight);
-    //cPUArea.setRect(iPUX,iPUY,iPUWidth,iPUHeight);
     int iMergeIndex = pcPU->getMergeIndex();
     QColor cPUColor;
 
@@ -37,7 +28,7 @@ bool MergeDisplayFilter::drawPU   (QPainter* pcPainter,
             pcPainter->setPen(Qt::NoPen);
             pcPainter->setBrush(QBrush(cPUColor));
 
-            pcPainter->drawRect(cPUArea);
+            pcPainter->drawRect(*pcScaledArea);
         }
 
     }

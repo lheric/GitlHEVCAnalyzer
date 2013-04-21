@@ -54,14 +54,12 @@ bool HighlightLCUFilter::init(FilterContext* pcContext)
 
 
 
-bool HighlightLCUFilter::drawCTU  (QPainter* pcPainter,
-                                   FilterContext* pcContext,
-                                   ComSequence* pcSequence,
-                                   int iPoc, int iAddr,
-                                   int iCTUX, int iCTUY,
-                                   int iCTUSize, double dScale)
+bool HighlightLCUFilter::drawCTU (FilterContext* pcContext, QPainter* pcPainter,
+                                  ComCU *pcCTU, double dScale, QRect* pcScaledArea)
 {
 
+    int iPoc  = pcCTU->getFrame()->getPoc();
+    int iAddr = pcCTU->getAddr();
 
     if( m_cTargetLCU.contains(iPoc, iAddr))
     {
@@ -70,7 +68,7 @@ bool HighlightLCUFilter::drawCTU  (QPainter* pcPainter,
         cPen.setColor(QColor(Qt::red));
         pcPainter->setPen(cPen);
         pcPainter->setBrush(Qt::NoBrush);
-        pcPainter->drawRect(iCTUX, iCTUY, iCTUSize, iCTUSize);
+        pcPainter->drawRect(*pcScaledArea);
     }
 
 
