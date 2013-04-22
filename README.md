@@ -34,23 +34,23 @@ Sun Yat-sen University, Guangzhou, P.R.China
 
 Supervised by Prof. Hongyang CHAO
 
-Hongyang Chao (³¯ºìÑô)
+Hongyang Chao (æœçº¢é˜³)
 isschhy@mail.sysu.edu.cn
 
 
 Students:
 
-Huang Li (Àîè«)
+Huang Li (æç’œ)
 lihuang55555@gmail.com
 
-Yihao Zhang (ÕÅÒĞºÀ)
+Yihao Zhang (å¼ å€šè±ª)
 zhyihao66@gmail.com
 
-Shichao Huang (»ÆÊ¿³¬)
+Shichao Huang (é»„å£«è¶…)
 huangshichao2009@gmail.com
 
-Zixin Liao (ÁÎè÷öÎ)
+Zixin Liao (å»–æ¢“é‘«)
 460672158@qq.com
 
-Jianhua Huang (»Æê¯æè)
+Jianhua Huang (é»„æˆ¬éª…)
 419991390@qq.com
