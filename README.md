@@ -1,12 +1,17 @@
-GitlHEVCAnalyzer
-================
+Gitl HEVC Analyzer
+==================
 
-GitlHEVCAnalyzer is a tool for bitstream analysis for HEVC.
+Gitl HEVC Analyzer is a tool for bitstream analysis for HEVC.
 
 <ul>
+	<li>Custom Plugins Support</li>
     <li>Zoom In/Out Details</li>
-    <li>Bitsteam Compare</li>
-    <li>Custom Plugins Support</li>
+    <li>Bitsteam Compare (Under Development)</li> 
+    <li>Coding Unit Display</li>
+    <li>Prediton Type Display</li>
+    <li>Predition Unit Display</li>
+    <li>Transform Unit Display (Under Development)</li>
+    <li>Motion Vectors Display</li>    
 </ul>
 
 <a href="http://gitl.sysu.edu.cn">Intelligent Information Processing Lab</a> 
@@ -14,9 +19,38 @@ GitlHEVCAnalyzer is a tool for bitstream analysis for HEVC.
 How To Build
 ============
 
-Written in C++ using Qt 5.0.
+Written in C++ using Qt 5.0.2 with Qt Creator
 
-running on windows platform
+Supposed to run on windows platform
+(Untested on other platforms)
 
-'decoders' dictory must be put in the same dictory with the EXE.
 
+Contact Us
+============
+Intellegent Information Processing Lab
+
+Sun Yat-sen University, Guangzhou, P.R.China
+
+
+Supervised by Prof. Hongyang CHAO
+
+Hongyang Chao
+isschhy@mail.sysu.edu.cn
+
+
+Students:
+
+Huang Li (李璜)
+lihuang55555@gmail.com
+
+Yihao Zhang (张倚豪)
+zhyihao66@gmail.com
+
+Shichao Huang (黄士超)
+huangshichao2009@gmail.com
+
+Zixin Liao (廖梓鑫)
+460672158@qq.com
+
+Jianhua Huang (黄戬骅)
+419991390@qq.com
