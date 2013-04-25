@@ -13,10 +13,8 @@ QPixmap* DrawEngine::drawFrame( ComSequence* pcSequence, int iPoc, QPixmap *pcPi
 {
 
     ComFrame* pcFrame = pcSequence->getFrames().at(iPoc);
-    int iSeqWidth = pcSequence->getWidth();
-    int iSeqHeight = pcSequence->getHeight();
     int iLCUTotalNum = pcFrame->getLCUs().size();
-    int iMaxCUSize = pcSequence->getMaxCUSize();
+
 
     m_cDrawnPixmap = pcPixmap->scaled(pcPixmap->size()*m_dScale, Qt::KeepAspectRatio, Qt::FastTransformation);
     QPainter cPainter(&m_cDrawnPixmap);
@@ -30,12 +28,6 @@ QPixmap* DrawEngine::drawFrame( ComSequence* pcSequence, int iPoc, QPixmap *pcPi
         int iPixelX = pcLCU->getX();
         int iPixelY = pcLCU->getY();
 
-        /// skip the LCU acrossing the frame boundary
-        if( (iPixelX + iMaxCUSize > iSeqWidth) ||
-            (iPixelY + iMaxCUSize > iSeqHeight) )
-        {
-            continue;
-        }
 
         /// draw CU
         xDrawCU( &cPainter, pcLCU );

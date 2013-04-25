@@ -36,14 +36,13 @@ bool MVDisplayFilter::drawPU  (FilterContext* pcContext, QPainter* pcPainter,
     }
     else if( iInterDir == 3 )  /// bi-directional prediction
     {
-        /// Get MV of PU
+        /// Get MV of PU ( first direction )
         pcMV = pcPU->getMVs().at(0);
-
         pcPainter->setPen(QColor(Qt::blue));
         pcPainter->drawLine(cCenter, cCenter+QPoint(pcMV->getHor(),pcMV->getVer())*dScale/4);
-        /// Get MV of PU
-        pcMV = pcPU->getMVs().at(1);
 
+        /// Get MV of PU ( second direction)
+        pcMV = pcPU->getMVs().at(1);
         pcPainter->setPen(QColor(Qt::red));
         pcPainter->drawLine(cCenter, cCenter+QPoint(pcMV->getHor(),pcMV->getVer())*dScale/4);
     }
