@@ -394,7 +394,7 @@
    </property>
    <widget class="QMenu" name="menuBitstream">
     <property name="title">
-     <string>File</string>
+     <string>FILE</string>
     </property>
     <addaction name="actionOpen_bitstream"/>
     <addaction name="separator"/>
@@ -402,7 +402,7 @@
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
-     <string>Help</string>
+     <string>HELP</string>
     </property>
     <addaction name="actionHelp"/>
     <addaction name="actionAbout"/>

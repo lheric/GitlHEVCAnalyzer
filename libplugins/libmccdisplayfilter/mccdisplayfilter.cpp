@@ -27,6 +27,8 @@ bool MCCDisplayFilter::init(FilterContext *pcContext)
     QFile cFile;
     QTextStream cInputStream;
 
+    memset(m_ccLCU, 0, 200*30*sizeof(int));
+
     cFile.setFileName(strHightlightFilename);
     if( !(cFile.open(QIODevice::ReadOnly)) )
         return false;
@@ -47,13 +49,12 @@ bool MCCDisplayFilter::init(FilterContext *pcContext)
             int iAddr = cMatchTarget.cap(2).toInt();
 
             int mcc = cMatchTarget.cap(3).toInt();
-             m_ccLCU[iPoc][iAddr] = mcc;
+            m_ccLCU[iPoc][iAddr] = mcc;
         }
 
     }
 
     cFile.close();
-    //AnalyzerMsgSender::getInstance()->msgOut(QString("%1 LCU(s) Skipped").arg(m_cTargetLCU.size()));
     return true;
 }
 

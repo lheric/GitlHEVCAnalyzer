@@ -138,3 +138,6 @@ FORMS += \
 
 #icon
 RC_FILE = icons/appicon.rc
+
+RESOURCES += \
+    resources/resources.qrc
