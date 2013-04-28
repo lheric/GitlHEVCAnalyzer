@@ -180,7 +180,11 @@ void MainWindow::xSaveSnapshot(QPixmap *pcPixmap)
                                           ".",
                                           tr("Images (*.png)"));
 
-    pcPixmap->save(strFilename);
+    if( pcPixmap->save(strFilename) )
+        AnalyzerMsgSender::getInstance()->msgOut(QString("Snapshot Has Been Saved to %1 !").arg(strFilename));
+    else
+        AnalyzerMsgSender::getInstance()->msgOut(QString("Snapshot Saving Failed !"));
+
 }
 
 
@@ -227,11 +231,6 @@ void MainWindow::on_printScreenBtn_clicked()
     cEvt.getEvtData().setParameter("request", QVariant::fromValue(cRequest));
     dispatchEvt(&cEvt);
 }
-
-
-
-
-
 
 
 

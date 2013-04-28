@@ -77,12 +77,12 @@ bool DecodeBitstreamCommand::execute( CommandRequest& rcRequest, CommandRespond&
                                               pcSequence);
         if( !bSuccess )
             throw DecodingFailException();
-        AnalyzerMsgSender::getInstance()->msgOut("decoding finished", GITL_MSG_DEBUG);
+        qDebug() << "decoding finished";
     }
     else
     {
         bSuccess = true;
-        AnalyzerMsgSender::getInstance()->msgOut("decoding skiped", GITL_MSG_DEBUG);
+        qDebug() << "decoding skiped";
     }
 
 
@@ -99,7 +99,7 @@ bool DecodeBitstreamCommand::execute( CommandRequest& rcRequest, CommandRespond&
         SpsParser cSpsParser;
         bSuccess = cSpsParser.parseFile( &cSPSTextStream, pcSequence );
         cSPSFile.close();
-        AnalyzerMsgSender::getInstance()->msgOut("SPS file parsing finished", GITL_MSG_DEBUG);
+        qDebug() << "SPS file parsing finished";
     }
     /// Parse decoder_general.txt
     QString strGeneralFilename = strDecoderOutputPath + "/decoder_general.txt";
@@ -113,7 +113,7 @@ bool DecodeBitstreamCommand::execute( CommandRequest& rcRequest, CommandRespond&
         DecoderGeneralParser cDecoderGeneralParser;
         bSuccess = cDecoderGeneralParser.parseFile( &cGeneralTextStream, pcSequence );
         cGeneralFile.close();
-        AnalyzerMsgSender::getInstance()->msgOut("Decoder general file parsing finished", GITL_MSG_DEBUG);
+        qDebug() << "Decoder general file parsing finished";
     }
 
     /// Parse decoder_cupu.txt
@@ -128,7 +128,7 @@ bool DecodeBitstreamCommand::execute( CommandRequest& rcRequest, CommandRespond&
         CUPUParser cCUPUParser;
         bSuccess = cCUPUParser.parseFile( &cCUPUTextStream, pcSequence );
         cCUPUFile.close();
-        AnalyzerMsgSender::getInstance()->msgOut("CU&PU file parsing finished", GITL_MSG_DEBUG);
+        qDebug() << "CU&PU file parsing finished";
     }
 
     /// Parse decoder_pred.txt
@@ -143,7 +143,7 @@ bool DecodeBitstreamCommand::execute( CommandRequest& rcRequest, CommandRespond&
         PredParser cPredParser;
         bSuccess = cPredParser.parseFile( &cPredTextStream, pcSequence );
         cPredFile.close();
-        AnalyzerMsgSender::getInstance()->msgOut("Prediction file parsing finished", GITL_MSG_DEBUG);
+        qDebug() << "Prediction file parsing finished";
     }
 
     /// Parse decoder_mv.txt
@@ -158,7 +158,7 @@ bool DecodeBitstreamCommand::execute( CommandRequest& rcRequest, CommandRespond&
         MVParser cMVParser;
         bSuccess = cMVParser.parseFile( &cMVTextStream, pcSequence );
         cMVFile.close();
-        AnalyzerMsgSender::getInstance()->msgOut("MV file parsing finished", GITL_MSG_DEBUG);
+        qDebug() << "MV file parsing finished";
     }
 
     /// Parse decoder_merge.txt
@@ -173,7 +173,7 @@ bool DecodeBitstreamCommand::execute( CommandRequest& rcRequest, CommandRespond&
         MergeParser cMergeParser;
         bSuccess = cMergeParser.parseFile( &cMergeTextStream, pcSequence );
         cMergeFile.close();
-        AnalyzerMsgSender::getInstance()->msgOut("Merge file parsing finished", GITL_MSG_DEBUG);
+        qDebug() << "Merge file parsing finished";
     }
 
     /// Parse decoder_intra.txt
@@ -188,7 +188,7 @@ bool DecodeBitstreamCommand::execute( CommandRequest& rcRequest, CommandRespond&
         IntraParser cIntraParser;
         bSuccess = cIntraParser.parseFile( &cIntraTextStream, pcSequence );
         cIntraFile.close();
-        AnalyzerMsgSender::getInstance()->msgOut("Intra file parsing finished", GITL_MSG_DEBUG);
+        qDebug() << "Intra file parsing finished";
     }
 
     ///*****STEP 3 : Open decoded YUV sequence*****

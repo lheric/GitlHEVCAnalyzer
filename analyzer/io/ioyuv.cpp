@@ -27,13 +27,13 @@ bool IOYUV::setYUVFilePath(const QString& strYUVFilePath)
         }
         else
         {
-            AnalyzerMsgSender::getInstance()->msgOut("YUV File Open Error", GITL_MSG_ERROR);
+            qWarning() << "YUV File Open Error";
 
         }
     }
     else
     {
-        AnalyzerMsgSender::getInstance()->msgOut("YUV File Not Found", GITL_MSG_ERROR);
+        qWarning() << "YUV File Not Found";
     }
 
 

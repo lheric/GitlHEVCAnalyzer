@@ -1,5 +1,5 @@
 #include "gitleventbus.h"
-#include "gitliomsg.h"
+
 
 SINGLETON_PATTERN_IMPLIMENT(GitlEventBus)
 
@@ -18,7 +18,8 @@ bool GitlEventBus::registerModual(GitlModualDelegate* pcModual)
 {
     QMutexLocker cModualLocker(&m_cModualQueMutex);
     qRegisterMetaType<GitlEvent>("GitlEvent");
-    connect(&m_cBlockEvtDispatcher,    SIGNAL(eventTriggered(GitlEvent)), pcModual, SLOT(detonate(GitlEvent)), Qt::QueuedConnection );
+    connect(&m_cBlockEvtDispatcher, SIGNAL(eventTriggered(GitlEvent)),
+            pcModual, SLOT(detonate(GitlEvent)), Qt::QueuedConnection );
 
     return true;
 }

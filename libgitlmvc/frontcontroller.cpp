@@ -1,7 +1,7 @@
 #include "frontcontroller.h"
 #include "abstractcommand.h"
-#include "gitliomsg.h"
 
+#include <QDebug>
 
 
 FrontController::FrontController()
@@ -12,7 +12,7 @@ FrontController::FrontController()
 bool FrontController::addCommand(CommandFormat cComandFormat)
 {
     m_cCommandTable.push_back(cComandFormat);
-    GitlIOMsg::getInstance()->msgOut(QString("%1 Register Success!").arg(cComandFormat.pMetaObject->className()), GITL_MSG_DEBUG);
+    qDebug() << QString("%1 Register Success!").arg(cComandFormat.pMetaObject->className());
     return true;
 }
 
@@ -23,7 +23,7 @@ bool FrontController::processRequest( CommandRequest& rcRequest, CommandRespond&
     QVariant vValue;
     if( !rcRequest.getParameter("command_name", vValue) )
     {
-        GitlIOMsg::getInstance()->msgOut(QString("No command name in request!"), GITL_MSG_ERROR);
+        qWarning() << QString("No command name in request!");
         return false;
     }
     QString strCommandName = vValue.toString();
@@ -42,18 +42,18 @@ bool FrontController::processRequest( CommandRequest& rcRequest, CommandRespond&
             //execute command
             if( pCmd->execute(rcRequest, rcRespond) == false )
             {
-                GitlIOMsg::getInstance()->msgOut(QString("%1 Execution Failed!").arg(pMetaObj->className()), GITL_MSG_ERROR);
+                qDebug() << QString("%1 Execution Failed!").arg(pMetaObj->className());
                 delete pCmd;
                 return false;
             }else
             {
-                GitlIOMsg::getInstance()->msgOut(QString("%1 Execution Success!").arg(pMetaObj->className()), GITL_MSG_DEBUG);
+                qDebug() << QString("%1 Execution Success!").arg(pMetaObj->className());
                 delete pCmd;
                 return true;
             }
         }
     }
-    GitlIOMsg::getInstance()->msgOut(QString("No matched command name found. %1").arg(strCommandName));
+    qWarning() << QString("No matched command name found. %1");
     return false;
 }
 

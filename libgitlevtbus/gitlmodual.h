@@ -6,7 +6,7 @@
 
 #include "gitldef.h"
 #include "gitlevent.h"
-#include "gitliomsg.h"
+
 #include "gitlmodualdelegate.h"
 
 class GitlEventBus;

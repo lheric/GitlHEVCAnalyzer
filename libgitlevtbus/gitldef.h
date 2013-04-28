@@ -1,6 +1,7 @@
 #ifndef GITLDEF_H
 #define GITLDEF_H
-
+#include <QMutex>
+#include <QMutexLocker>
 
 
 /// AUTO GETTER AND SETTER FOR CLASS FIELDS

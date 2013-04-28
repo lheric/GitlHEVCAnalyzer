@@ -77,7 +77,7 @@ bool CUPUParser::xReadInCUMode(QTextStream* pcCUInfoStream, ComCU* pcCU)
     int iCUMode;
     if( pcCUInfoStream->atEnd() )
     {
-        AnalyzerMsgSender::getInstance()->msgOut("CUPUParser Error! Illegal CU/PU Mode!", GITL_MSG_FATAL);
+        qCritical() << "CUPUParser Error! Illegal CU/PU Mode!";
         return false;
     }
     *pcCUInfoStream >> iCUMode;

@@ -1,14 +1,14 @@
 #ifndef ANALYZERMSGSENDER_H
 #define ANALYZERMSGSENDER_H
-#include "gitliomsg.h"
 #include "gitldef.h"
 #include "gitlmodual.h"
+#include <QDebug>
 
-class AnalyzerMsgSender : public GitlIOMsg, public GitlModual
+class AnalyzerMsgSender : public GitlModual
 {
 public:
     AnalyzerMsgSender();
-    void msgOut( const QString& msg , GITL_MSG_LEVEL eMsgLevel = GITL_MSG_INFO );
+    void msgOut(const QString& strMsg, QtMsgType eMsgLevel = QtDebugMsg);
 
     ///SINGLETON
     SINGLETON_PATTERN_DECLARE(AnalyzerMsgSender)
