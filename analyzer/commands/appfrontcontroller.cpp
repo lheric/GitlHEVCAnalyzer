@@ -72,9 +72,9 @@ bool AppFrontController::detonate( GitlEvent cEvt )
     m_cEvtQueMutex.lock();
     if( m_cEvtQue.size() >= m_iMaxEvtInQue )
     {
-        AnalyzerMsgSender::getInstance()->msgOut(QString("Too Many Events Pending...Waiting..."), GITL_MSG_DEBUG);
+        qCritical() << QString("Too Many Events Pending...Waiting...");
         m_cEvtQueNotFull.wait(&m_cEvtQueMutex);
-        AnalyzerMsgSender::getInstance()->msgOut(QString("Event Queue Not Full...Moving on..."), GITL_MSG_DEBUG);
+        qCritical() << QString("Event Queue Not Full...Moving on...");
     }
     m_cEvtQue.push_back(cEvt);
     m_cEvtQueMutex.unlock();
@@ -106,7 +106,7 @@ void AppFrontController::run()
             ///check if has request parameter
         if( !cEvt.getEvtData().hasParameter("request") )
         {
-            AnalyzerMsgSender::getInstance()->msgOut(QString("Front Controller Received Command Event Without \"Request\", Command Exit!"), GITL_MSG_ERROR);
+            qCritical() << QString("Front Controller Received Command Event Without \"Request\", Command Exit!");
             continue;
         }
 
@@ -128,27 +128,27 @@ void AppFrontController::run()
         }
         catch( const NoSequenceFoundException& )
         {
-            AnalyzerMsgSender::getInstance()->msgOut("No Video Sequence Found...", GITL_MSG_ERROR);
+            qWarning() << "No Video Sequence Found...";
         }
         catch( const InvaildFilterIndexException& )
         {
-            AnalyzerMsgSender::getInstance()->msgOut("Invalid Filter Index...", GITL_MSG_ERROR);
+            qWarning() << "Invalid Filter Index...";
         }
         catch( const DecoderNotFoundException& )
         {
-            AnalyzerMsgSender::getInstance()->msgOut("Decoder NOT Found...", GITL_MSG_ERROR);
+            qWarning() << "Decoder NOT Found...";
         }
         catch( const DecodingFailException& )
         {
-            AnalyzerMsgSender::getInstance()->msgOut("Decoding FAIL... (Illegal HEVC Bitstream/Bitstream--Decoder Mismatch?)", GITL_MSG_ERROR);
+            qWarning() << "Decoding FAIL... (Illegal HEVC Bitstream/Bitstream--Decoder Mismatch?)";
         }
         catch( const BitstreamNotFoundException& )
         {
-            AnalyzerMsgSender::getInstance()->msgOut("Bitstream NOT Found...", GITL_MSG_ERROR);
+            qWarning() << "Bitstream NOT Found...";
         }
         catch( const QException& )
         {
-            AnalyzerMsgSender::getInstance()->msgOut("Unknown Error Happened...", GITL_MSG_ERROR);
+            qWarning() << "Unknown Error Happened...";
         }
 
         GitlEvent cCmdEndEvt( g_strCmdEndEvent );                                       ///

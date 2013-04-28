@@ -47,7 +47,7 @@ bool YUV420RGBBuffer::setYUVFile( const QString& strYUVPath, int iWidth, int iHe
     /// set YUV file reader
     if( !m_cIOYUV.setYUVFilePath(strYUVPath) )
     {
-        AnalyzerMsgSender::getInstance()->msgOut("YUV Buffer Initialization Fail", GITL_MSG_ERROR);
+        qCritical() << "YUV Buffer Initialization Fail";
         return false;
     }
 
@@ -68,7 +68,7 @@ QPixmap* YUV420RGBBuffer::getFrame(int iPoc)
     }
     else
     {
-        AnalyzerMsgSender::getInstance()->msgOut("Read YUV File Failure.", GITL_MSG_ERROR);
+        qCritical() << "Read YUV File Failure.";
     }
 
     return pcFramePixmap;
@@ -85,7 +85,7 @@ bool YUV420RGBBuffer::xReadFrame(int iPoc)
     int iReadBytes = m_cIOYUV.readOneFrame(m_puhYUVBuffer, (uint)iFrameSizeInByte);   ///read
     if( iReadBytes != iFrameSizeInByte )
     {
-        AnalyzerMsgSender::getInstance()->msgOut("Read YUV Frame Error", GITL_MSG_ERROR);
+        qCritical() << "Read YUV Frame Error";
         return false;
     }
     else

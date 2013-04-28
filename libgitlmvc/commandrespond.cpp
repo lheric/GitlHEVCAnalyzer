@@ -1,6 +1,6 @@
 #include "commandrespond.h"
-#include "gitliomsg.h"
 
+#include <QDebug>
 
 CommandRespond::CommandRespond()
 {
@@ -18,7 +18,7 @@ bool CommandRespond::getParameter(QString strParam, QVariant& rvValue) const
         rvValue = m_cRespond[strParam];
         return true;
     }
-    GitlIOMsg::getInstance()->msgOut(QString("Respond Parameter %1 NOT found.").arg(strParam));
+    qWarning() << QString("Respond Parameter %1 NOT found.").arg(strParam);
 
     return false;
 }

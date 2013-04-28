@@ -180,7 +180,11 @@ void MainWindow::xSaveSnapshot(QPixmap *pcPixmap)
                                           ".",
                                           tr("Images (*.png)"));
 
-    pcPixmap->save(strFilename);
+    if( pcPixmap->save(strFilename) )
+        qDebug() << QString("Snapshot Has Been Saved to %1 !").arg(strFilename);
+    else
+        qWarning() <<"Snapshot Saving Failed !";
+
 }
 
 
@@ -195,7 +199,7 @@ void MainWindow::on_actionOpen_bitstream_triggered()
 
     if(strFilename.isEmpty() || !QFileInfo(strFilename).exists() )
     {
-        AnalyzerMsgSender::getInstance()->msgOut( "File not found." );
+        qWarning() << "File not found.";
         return;
     }
 
@@ -230,11 +234,6 @@ void MainWindow::on_printScreenBtn_clicked()
 
 
 
-
-
-
-
-
 void MainWindow::on_actionAbout_triggered()
 {
     m_cAboutDialog.show();
@@ -259,7 +258,7 @@ void MainWindow::on_actionOpen_bitstream_info_folder_triggered()
                                           QFileDialog::ShowDirsOnly);
     if(strFilename.isEmpty() || !QFileInfo(strFilename).exists() )
     {
-        AnalyzerMsgSender::getInstance()->msgOut( "File not found." );
+        qWarning() << "File not found.";
         return;
     }
 

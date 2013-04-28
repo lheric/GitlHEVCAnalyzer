@@ -1,5 +1,5 @@
 #include "gitlblockevtdispatcher.h"
-#include "gitliomsg.h"
+
 GitlBlockEvtDispatcher::GitlBlockEvtDispatcher()
 {
 }

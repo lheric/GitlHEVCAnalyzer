@@ -32,7 +32,7 @@ bool FilterLoader::init()
     /// try to load each file as plugin in the directory
     foreach(QString strPluginFileName, cPluginsDir.entryList(cFilters, QDir::Files))
     {
-        AnalyzerMsgSender::getInstance()->msgOut(QString("Trying to Load Plugin Filter %1 ...").arg(strPluginFileName));
+        qDebug() << QString("Trying to Load Plugin Filter %1 ...").arg(strPluginFileName);
         QPluginLoader* pLoader = new QPluginLoader(cPluginsDir.absoluteFilePath(strPluginFileName));
         AbstractFilter *pPlugin =  qobject_cast<AbstractFilter*>(pLoader->instance());
         /// success or fail
@@ -40,7 +40,7 @@ bool FilterLoader::init()
         {
             m_apcPluginLoaders.push_back(pLoader);
             m_apcFilters.push_back(pPlugin);
-            AnalyzerMsgSender::getInstance()->msgOut(QString("Plugin Filter %1 Loading Succeeded!").arg(strPluginFileName));
+            qDebug() << QString("Plugin Filter %1 Loading Succeeded!").arg(strPluginFileName);
 
             GitlEvent cEvt( g_strPluginFilterLoaded );                                      ///
             cEvt.getEvtData().setParameter("filter", QVariant::fromValue((void*)pPlugin));  /// plugin loaded event
@@ -50,7 +50,7 @@ bool FilterLoader::init()
         else
         {
             delete pLoader;
-            AnalyzerMsgSender::getInstance()->msgOut(QString("Plugin Filter %1 Loading Failed!").arg(strPluginFileName));
+            qWarning() << QString("Plugin Filter %1 Loading Failed!");
         }
     }
 

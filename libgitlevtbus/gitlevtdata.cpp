@@ -1,6 +1,6 @@
 #include "gitlevtdata.h"
-#include "gitliomsg.h"
 
+#include <QDebug>
 
 GitlEvtData::GitlEvtData()
 {
@@ -18,7 +18,7 @@ bool GitlEvtData::getParameter(const QString& strParam, QVariant& rvValue) const
         rvValue = m_cRequest[strParam];
         return true;
     }
-    GitlIOMsg::getInstance()->msgOut(QString("Respond Parameter %1 NOT found.").arg(strParam));
+    qWarning() << QString("Respond Parameter %1 NOT found.").arg(strParam);
     return false;
 
 

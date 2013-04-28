@@ -22,7 +22,6 @@ TEMPLATE = lib
 SOURCES += \
     gitlevent.cpp \
     gitleventbus.cpp \
-    gitliomsg.cpp \
     gitlevtdata.cpp \
     gitlblockevtdispatcher.cpp \
     gitlmodualdelegate.cpp \
@@ -33,7 +32,6 @@ HEADERS += \
     gitlevent.h \
     gitleventbus.h \
     gitlmodual.h \
-    gitliomsg.h \
     gitlevtdata.h \
     gitlblockevtdispatcher.h \
     gitlmodualdelegate.h
