@@ -1,6 +1,7 @@
 #include <QtCore/QCoreApplication>
 #include <QApplication>
 #include <QLayout>
+#include <QDir>
 #include <iostream>
 
 #include "gitlevent.h"
@@ -11,6 +12,20 @@
 #include "io/analyzermsgsender.h"
 using namespace std;
 
+//static bool xSetLibPath()
+//{
+//    QStringList paths = QCoreApplication::instance()->libraryPaths();
+//    QDir cAppDir = QDir(QCoreApplication::instance()->applicationDirPath());
+
+//    if( !cAppDir.cd("runtime") )
+//    {
+//        qCritical() << "Runtime libraries missing..Some function may not work!";
+//        return false;
+//    }
+//    paths << cAppDir.absolutePath();
+//    QCoreApplication::instance()->setLibraryPaths(paths);
+//    return true;
+//}
 
 static bool xReadStylesheet()
 {
@@ -48,13 +63,14 @@ static void xMessageOutput(QtMsgType type, const QMessageLogContext &context, co
 
 int main(int argc, char *argv[])
 {
+//    /// set run-time dynamic linked library (dll) path
+//    xSetLibPath();
+
     /// intall message handler
     qInstallMessageHandler(xMessageOutput);
 
-
     /// Register Commands
     AppFrontController::getInstance();
-
 
     /// Stylesheet
     QApplication cApp(argc, argv);

@@ -6,5 +6,4 @@ SUBDIRS = libhighlightlcufilter \
           libmergedisplayfilter \
           libmvdisplayfilter \
           libmccdisplayfilter \
-          libnzmvdisplayfilter \
-          libcustomjsfilter
+          libnzmvdisplayfilter

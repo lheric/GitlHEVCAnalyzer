@@ -50,7 +50,7 @@ bool FilterLoader::init()
         else
         {
             delete pLoader;
-            qWarning() << QString("Plugin Filter %1 Loading Failed!");
+            qWarning() << QString("Plugin Filter %1 Loading Failed!").arg(strPluginFileName);
         }
     }
 
