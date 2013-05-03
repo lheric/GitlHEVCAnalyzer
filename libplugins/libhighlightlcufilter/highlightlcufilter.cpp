@@ -7,7 +7,7 @@
 HighlightLCUFilter::HighlightLCUFilter(QObject *parent) :
     QObject(parent)
 {
-    setName("Hightlight LCU Filter");
+    setName("Hightlight LCU");
 }
 
 

@@ -118,7 +118,22 @@ bool FilterLoader::config(int iFilterIndex)
     return true;
 }
 
+bool FilterLoader::config(AbstractFilter* pcFilter)
+{
+    if(pcFilter == NULL)
+        throw InvaildFilterIndexException();
 
+    // prepare filter context
+    ModelLocator* pModel = ModelLocator::getInstance();
+    m_cFilterContext.pcBuffer = &pModel->getFrameBuffer();
+    m_cFilterContext.pcDrawEngine = &pModel->getDrawEngine();
+    m_cFilterContext.pcSequenceManager = &pModel->getSequenceManager();
+    m_cFilterContext.pcFilterLoader = this;
+
+    // config filter
+    pcFilter->config(&m_cFilterContext);
+    return true;
+}
 
 
 

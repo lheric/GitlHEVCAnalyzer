@@ -61,7 +61,8 @@ SOURCES += main.cpp \
     commands/refreshscreencommand.cpp \
     appgui/sequencelist.cpp \
     appgui/sequencelistitem.cpp \
-    commands/zoomframecommand.cpp
+    commands/zoomframecommand.cpp \
+    commands/configfiltercommand.cpp
 
 HEADERS += \
     common/comsequence.h \
@@ -116,7 +117,8 @@ HEADERS += \
     common/comcu.h \
     exceptions/decodernotfoundexception.h \
     exceptions/decodingfailexception.h \
-    exceptions/bitstreamnotfoundexception.h
+    exceptions/bitstreamnotfoundexception.h \
+    commands/configfiltercommand.h
 
 INCLUDEPATH += . \
                ../libgitlevtbus \

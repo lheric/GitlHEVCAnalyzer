@@ -4,7 +4,7 @@
 MergeDisplayFilter::MergeDisplayFilter(QObject *parent) :
     QObject(parent)
 {
-    setName("Merge Display Filter");
+    setName("Merge Mode Display");
 }
 
 bool MergeDisplayFilter::drawPU   (FilterContext* pcContext, QPainter* pcPainter,

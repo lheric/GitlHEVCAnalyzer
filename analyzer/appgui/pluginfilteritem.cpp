@@ -32,5 +32,10 @@ void PluginFilterItem::on_enableCheckBox_clicked()
 
 void PluginFilterItem::on_configBtn_clicked()
 {
-
+    CommandRequest cRequest;
+    cRequest.setParameter("command_name", "config_filter");
+    cRequest.setParameter("filter", QVariant::fromValue((void*)(m_pcFilter)));
+    GitlEvent cEvt( g_strCmdSentEvent  );
+    cEvt.getEvtData().setParameter("request", QVariant::fromValue(cRequest));
+    dispatchEvt(&cEvt);
 }

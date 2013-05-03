@@ -14,7 +14,7 @@ using namespace std;
 MCCDisplayFilter::MCCDisplayFilter(QObject *parent) :
     QObject(parent)
 {
-    setName("MCC Display Filter");
+    setName("MCC Display");
     ///read file
 }
 

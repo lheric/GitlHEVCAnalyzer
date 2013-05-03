@@ -53,7 +53,7 @@ bool FrontController::processRequest( CommandRequest& rcRequest, CommandRespond&
             }
         }
     }
-    qWarning() << QString("No matched command name found. %1");
+    qWarning() << QString("No matched command name found. %1").arg(strCommandName);
     return false;
 }
 

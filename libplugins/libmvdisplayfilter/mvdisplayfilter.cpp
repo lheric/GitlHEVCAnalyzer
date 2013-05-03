@@ -3,7 +3,7 @@
 MVDisplayFilter::MVDisplayFilter(QObject *parent) :
     QObject(parent)
 {
-    setName("MV Display Filter");
+    setName("MV Display");
 }
 
 bool MVDisplayFilter::drawPU  (FilterContext* pcContext, QPainter* pcPainter,

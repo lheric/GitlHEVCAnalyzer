@@ -19,6 +19,7 @@
 #include "commands/switchsequencecommand.h"
 #include "commands/refreshscreencommand.h"
 #include "commands/zoomframecommand.h"
+#include "commands/configfiltercommand.h"
 #include "io/analyzermsgsender.h"
 
 
@@ -39,6 +40,7 @@ static CommandFormat s_sCmdTable[] =
     { "print_screen",     &PrintScreenCommand::staticMetaObject        },
     { "refresh_screen",   &RefreshScreenCommand::staticMetaObject      },
     { "zoom_frame",       &ZoomFrameCommand::staticMetaObject          },
+    { "config_filter",    &ConfigFilterCommand::staticMetaObject       },
     { "",                 NULL                                         }
 };
 

@@ -54,9 +54,14 @@ static void xMessageOutput(QtMsgType type, const QMessageLogContext &context, co
         fprintf(stderr, "[Crit]: %s\n", localMsg.constData());
         break;
     case QtFatalMsg:
-        fprintf(stderr, "[Fata]: %s\n", localMsg.constData());
-        abort();
+        fprintf(stderr, "[Fata]: %s\n", localMsg.constData());        
     }
+    fflush(stdout);
+    fflush(stderr);
+
+    if(type == QtFatalMsg)
+        abort();
+
     AnalyzerMsgSender::getInstance()->msgOut(strMsg);
 }
 

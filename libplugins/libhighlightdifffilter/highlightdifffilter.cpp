@@ -4,7 +4,7 @@
 HighlightDiffFilter::HighlightDiffFilter(QObject *parent) :
     QObject(parent)
 {
-    setName("HighlightDiffFilter");
+    setName("Highlight Different");
 }
 
 

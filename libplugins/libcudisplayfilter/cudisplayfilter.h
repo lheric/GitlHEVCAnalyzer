@@ -10,11 +10,13 @@ class CUDisplayFilter : public QObject, public AbstractFilter
     Q_INTERFACES(AbstractFilter)
 public:
     explicit CUDisplayFilter(QObject *parent = 0);
+    virtual bool config   (FilterContext* pcContext);
 
     virtual bool drawCU   (FilterContext* pcContext, QPainter* pcPainter,
                            ComCU *pcCU, double dScale,  QRect* pcScaledArea);
 
 signals:
+    ADD_CLASS_FIELD_PRIVATE(bool, bShowPU)
     
 public slots:
     

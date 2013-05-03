@@ -8,7 +8,6 @@ JumpToPercentCommand::JumpToPercentCommand(QObject *parent) :
 
 bool JumpToPercentCommand::execute( CommandRequest& rcRequest, CommandRespond& rcRespond )
 {
-    //TODO
     ModelLocator* pModel = ModelLocator::getInstance();
     QVariant vValue;
 

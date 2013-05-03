@@ -3,7 +3,7 @@
 NZMVDisplayFilter::NZMVDisplayFilter(QObject *parent) :
     QObject(parent)
 {
-    setName("Non-Zero FMV Display Filter");
+    setName("Non-Zero FMV Display");
 }
 
 bool NZMVDisplayFilter::drawPU  (FilterContext* pcContext, QPainter* pcPainter,

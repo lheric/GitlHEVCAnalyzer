@@ -23,6 +23,7 @@ public:
     virtual bool init     ();
     virtual bool uninit   ();
     virtual bool config   (int iFilterIndex);
+    virtual bool config   (AbstractFilter* pcFilter);
     virtual bool drawPU   (QPainter* pcPainter, ComPU *pcPU,       double dScale,  QRect* pcScaledArea);
     virtual bool drawCU   (QPainter* pcPainter, ComCU *pcCU,       double dScale,  QRect* pcScaledArea);
     virtual bool drawCTU  (QPainter* pcPainter, ComCU *pcCU,       double dScale,  QRect* pcScaledArea);
