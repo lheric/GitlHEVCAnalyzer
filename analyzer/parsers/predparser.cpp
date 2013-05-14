@@ -1,5 +1,6 @@
 #include "predparser.h"
 #include <QRegExp>
+#include <QDebug>
 
 PredParser::PredParser(QObject *parent) :
     QObject(parent)
@@ -18,7 +19,7 @@ bool PredParser::parseFile(QTextStream* pcInputStream, ComSequence* pcSequence)
     /// read one LCU
     ComFrame* pcFrame = NULL;
     ComCU* pcLCU = NULL;
-    cMatchTarget.setPattern("^<([0-9]+),([0-9]+)> (.*) ");
+    cMatchTarget.setPattern("^<([0-9]+),([0-9]+)> (.*)");
     QTextStream cPredInfoStream;
     while( !pcInputStream->atEnd() )
     {
@@ -36,6 +37,7 @@ bool PredParser::parseFile(QTextStream* pcInputStream, ComSequence* pcSequence)
 
             ///
             QString strCUInfo = cMatchTarget.cap(3);
+
             cPredInfoStream.setString(&strCUInfo, QIODevice::ReadOnly );
 
             xReadPredMode(&cPredInfoStream, pcLCU);
@@ -63,7 +65,10 @@ bool PredParser::xReadPredMode(QTextStream* pcPredInfoStream, ComCU* pcCU)
         int iPredMode;
         for(int i = 0; i < pcCU->getPUs().size(); i++)
         {
+
+
             Q_ASSERT(pcPredInfoStream->atEnd() == false);
+
             *pcPredInfoStream >> iPredMode;
             ComPU* pcPU = pcCU->getPUs().at(i);
             pcPU->setPredMode((PredMode)iPredMode);

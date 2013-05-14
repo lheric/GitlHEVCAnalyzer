@@ -248,7 +248,7 @@ void MainWindow::on_openBitstreamBtn_clicked()
 }
 
 
-
+/*
 void MainWindow::on_actionOpen_bitstream_info_folder_triggered()
 {
     QString strFilename;
@@ -271,7 +271,7 @@ void MainWindow::on_actionOpen_bitstream_info_folder_triggered()
     cRequest.setParameter("decoder_folder", "decoders");
     cRequest.setParameter("output_folder", strFilename);
 }
-
+*/
 void MainWindow::on_actionExit_triggered()
 {
     exit(0);

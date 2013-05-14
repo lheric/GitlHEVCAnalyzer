@@ -7,6 +7,7 @@
 #include <QTextStream>
 #include <QRegExp>
 #include <QString>
+#include <QDebug>
 
 #include <iostream>
 using namespace std;
@@ -15,7 +16,6 @@ MCCDisplayFilter::MCCDisplayFilter(QObject *parent) :
     QObject(parent)
 {
     setName("MCC Display");
-    ///read file
 }
 
 bool MCCDisplayFilter::init(FilterContext *pcContext)
@@ -26,8 +26,9 @@ bool MCCDisplayFilter::init(FilterContext *pcContext)
 
     QFile cFile;
     QTextStream cInputStream;
+    LCUAddr cLCUAddr;
 
-    memset(m_ccLCU, 0, 200*30*sizeof(int));
+    m_cLCUMCC.clear();
 
     cFile.setFileName(strHightlightFilename);
     if( !(cFile.open(QIODevice::ReadOnly)) )
@@ -48,8 +49,10 @@ bool MCCDisplayFilter::init(FilterContext *pcContext)
             int iPoc = cMatchTarget.cap(1).toInt();
             int iAddr = cMatchTarget.cap(2).toInt();
 
-            int mcc = cMatchTarget.cap(3).toInt();
-            m_ccLCU[iPoc][iAddr] = mcc;
+            int iMCC = cMatchTarget.cap(3).toInt();
+            cLCUAddr.iPoc  = iPoc;
+            cLCUAddr.iAddr = iAddr;
+            m_cLCUMCC.insert(cLCUAddr, iMCC);
         }
 
     }
@@ -63,32 +66,27 @@ bool MCCDisplayFilter::drawCTU  (FilterContext* pcContext, QPainter* pcPainter,
 {
     int iPoc  = pcCTU->getFrame()->getPoc();
     int iAddr = pcCTU->getAddr();
+    LCUAddr cLCUAddr;
+    cLCUAddr.iPoc = iPoc;
+    cLCUAddr.iAddr = iAddr;
+    int iMCC = m_cLCUMCC.find(cLCUAddr).value();
 
-    int mcc = m_ccLCU[iPoc][iAddr];
-    //cout << iAddr << " " << iPoc << " " << mcc << endl;
     pcPainter->setBrush(Qt::NoBrush);
     pcPainter->setPen(QColor(255,0,0));
     QFont cFont = pcPainter->font();
     pcPainter->setPen(QColor(0,0,255));
     cFont.setPointSize(18);
     pcPainter->setFont(cFont);
-    pcPainter->drawText(*pcScaledArea,Qt::AlignCenter, QString("%1").arg(mcc));
+    pcPainter->drawText(*pcScaledArea,Qt::AlignCenter, QString("%1").arg(iMCC));
 
 
-    //if(mcc>6)
-    //{
-    int iAlpha = 255-mcc*15;
+    int iAlpha = 255-iMCC*15;
     iAlpha=((iAlpha<0)?(0):(iAlpha));
     iAlpha=((iAlpha>175)?(175):(iAlpha));
     pcPainter->setPen(Qt::NoPen);
     pcPainter->setBrush(QColor(0,0,0,iAlpha));
     pcPainter->drawRect(*pcScaledArea);
-    //}
-//    else if(mcc == 0)
-//    {
-//        pcPainter->setPen(QColor(0,255,0));
-//        pcPainter->drawRect(cCTURect);
-//    }
+
 
 
     return true;

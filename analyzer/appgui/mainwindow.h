@@ -44,7 +44,7 @@ private slots:
 
     void on_actionOpen_bitstream_triggered();
 
-    void on_actionOpen_bitstream_info_folder_triggered();
+    //void on_actionOpen_bitstream_info_folder_triggered();
 
 
 

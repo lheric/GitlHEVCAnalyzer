@@ -30,6 +30,10 @@ public:
     explicit ComCU(ComFrame* pcParent);
     ~ComCU();
 
+    bool operator < (const ComCU& cOther) const
+    {
+        return (m_iAddr < cOther.m_iAddr);
+    }
     /*!
      * Sub-CUs (four at most)
      */
