@@ -18,7 +18,7 @@ bool MVParser::parseFile(QTextStream* pcInputStream, ComSequence* pcSequence)
     /// read one LCU
     ComFrame* pcFrame = NULL;
     ComCU* pcLCU = NULL;
-    cMatchTarget.setPattern("^<([0-9]+),([0-9]+)> (.*) ");
+    cMatchTarget.setPattern("^<([0-9]+),([0-9]+)> (.*)");
     QTextStream cMVInfoStream;
     while( !pcInputStream->atEnd() )
     {
@@ -67,26 +67,30 @@ bool MVParser::xReadMV(QTextStream* pcMVInfoStream, ComCU* pcCU)
             ComPU* pcPU = pcCU->getPUs().at(i);
             pcPU->setInterDir(iInterDir);
 
+            int iRefPOC;
             int iHor, iVer;
             ComMV* pcReadMV = NULL;
             if( iInterDir == 1 || iInterDir == 2)   //uni-prediction, 1 MV
             {
-                *pcMVInfoStream >> iHor >> iVer;
+                *pcMVInfoStream >> iRefPOC >> iHor >> iVer;
                 pcReadMV = new ComMV();
+                pcReadMV->setRefPOC(iRefPOC);
                 pcReadMV->setHor(iHor);
                 pcReadMV->setVer(iVer);
                 pcPU->getMVs().push_back(pcReadMV);
             }
             else if( iInterDir == 3 )               //bi-prediction, 2 MVs
             {
-                *pcMVInfoStream >> iHor >> iVer;
+                *pcMVInfoStream >> iRefPOC >> iHor >> iVer;
                 pcReadMV = new ComMV();
+                pcReadMV->setRefPOC(iRefPOC);
                 pcReadMV->setHor(iHor);
                 pcReadMV->setVer(iVer);
                 pcPU->getMVs().push_back(pcReadMV);
 
-                *pcMVInfoStream >> iHor >> iVer;
+                *pcMVInfoStream >> iRefPOC >> iHor >> iVer;
                 pcReadMV = new ComMV();
+                pcReadMV->setRefPOC(iRefPOC);
                 pcReadMV->setHor(iHor);
                 pcReadMV->setVer(iVer);
                 pcPU->getMVs().push_back(pcReadMV);

@@ -9,6 +9,11 @@ public:
     explicit ComFrame(ComSequence *pcParent);
     ~ComFrame();
 
+    bool operator < (const ComFrame& cOther) const
+    {
+        return (m_iPoc < cOther.m_iPoc);
+    }
+
     /*! CUs in one frame
       */
     ADD_CLASS_FIELD(QVector<ComCU*>, cLCUs, getLCUs, setLCUs)

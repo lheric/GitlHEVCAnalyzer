@@ -1,6 +1,13 @@
 #include "decodergeneralparser.h"
 #include <QRegExp>
 
+/// for frame sorting in POC ascending order
+static bool xFrameSortingOrder(const ComFrame* pcFrameFirst, const ComFrame* pcFrameSecond)
+{
+    return (*pcFrameFirst < *pcFrameSecond);
+}
+
+
 DecoderGeneralParser::DecoderGeneralParser(QObject *parent) :
     QObject(parent)
 {
@@ -69,6 +76,9 @@ bool DecoderGeneralParser::parseFile(QTextStream* pcInputStream, ComSequence* pc
 
     }
 
+
+    /// sort frames in POC ascending order
+    qSort(pcSequence->getFrames().begin(), pcSequence->getFrames().end(), xFrameSortingOrder);
 
 
     return true;

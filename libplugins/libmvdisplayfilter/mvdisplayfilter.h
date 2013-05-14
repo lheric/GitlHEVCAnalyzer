@@ -12,6 +12,8 @@ class MVDisplayFilter : public QObject, public AbstractFilter
 public:
     explicit MVDisplayFilter(QObject *parent = 0);
 
+    virtual bool config(FilterContext *pcContext);
+
     virtual bool drawPU   (FilterContext* pcContext, QPainter* pcPainter,
                            ComPU* pcPU, double dScale,
                            QRect *pcScaledArea);
@@ -20,6 +22,9 @@ public:
 signals:
     
 public slots:
+
+
+    ADD_CLASS_FIELD_PRIVATE(bool, bShowRefPOC)  ///< show reference POC or not
     
 };
 

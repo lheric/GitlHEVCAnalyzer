@@ -3,15 +3,19 @@
 
 #include "drawengine/abstractfilter.h"
 #include <QObject>
+#include <QMap>
 
-struct MccVal
+struct LCUAddr
 {
-    int Addr;
-    int Poc;
-
-    bool operator < (const MccVal& other) const
+    int iPoc;
+    int iAddr;
+    bool operator < (const LCUAddr& other) const
     {
-        return (Poc < other.Poc) || (Addr < other.Addr);
+        if(iPoc < other.iPoc)
+            return true;
+        if(iPoc == other.iPoc)
+            return iAddr < other.iAddr;
+        return false;
     }
 };
 
@@ -31,8 +35,7 @@ public:
 
 
 protected:
-    int m_ccLCU[30][200];
-
+    QMultiMap<LCUAddr, int> m_cLCUMCC;
 
 
 

@@ -57,7 +57,8 @@ bool FilterLoader::init()
     /// init each filter
     for(int i = 0; i < m_apcFilters.size(); i++)
     {
-        m_apcFilters[i]->init(&m_cFilterContext);
+        if( m_apcFilters[i]->init(&m_cFilterContext) == false )
+            qWarning() << QString("Plugin Filter %1 Init Failed!").arg(m_apcFilters[i]->getName());
     }
 
 

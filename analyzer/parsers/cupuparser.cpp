@@ -2,9 +2,15 @@
 #include "io/analyzermsgsender.h"
 #include <QTextStream>
 #include <QRegExp>
+#include <QtAlgorithms>
 
 #define CU_SLIPT_FLAG 99      ///< CU splitting flag in file
 
+/// for CU sorting in Addr ascending order
+static bool xCUSortingOrder(const ComCU* pcCUFirst, const ComCU* pcCUSecond)
+{
+    return (*pcCUFirst < *pcCUSecond);
+}
 
 CUPUParser::CUPUParser(QObject *parent) :
     QObject(parent)
@@ -20,9 +26,6 @@ bool CUPUParser::parseFile(QTextStream* pcInputStream, ComSequence* pcSequence)
     int iSeqWidth = pcSequence->getWidth();
     int iMaxCUSize = pcSequence->getMaxCUSize();
     int iCUOneRow = (iSeqWidth+iMaxCUSize-1)/iMaxCUSize;
-
-
-
 
     ////
     QString strOneLine;
@@ -67,6 +70,9 @@ bool CUPUParser::parseFile(QTextStream* pcInputStream, ComSequence* pcSequence)
         }
 
     }
+
+    qSort(pcFrame->getLCUs().begin(), pcFrame->getLCUs().end(), xCUSortingOrder);
+
     return true;
 }
 
