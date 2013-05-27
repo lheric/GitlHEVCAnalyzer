@@ -14,6 +14,7 @@ TARGET = analyzer
 
 CONFIG -= app_bundle
 CONFIG -= console
+CONFIG += static
 
 TEMPLATE = app
 
@@ -62,7 +63,8 @@ SOURCES += main.cpp \
     appgui/sequencelist.cpp \
     appgui/sequencelistitem.cpp \
     commands/zoomframecommand.cpp \
-    commands/configfiltercommand.cpp
+    commands/configfiltercommand.cpp \
+    common/comrom.cpp
 
 HEADERS += \
     common/comsequence.h \
@@ -118,15 +120,19 @@ HEADERS += \
     exceptions/decodernotfoundexception.h \
     exceptions/decodingfailexception.h \
     exceptions/bitstreamnotfoundexception.h \
-    commands/configfiltercommand.h
+    commands/configfiltercommand.h \
+    common/comrom.h
 
+#include & libs
 INCLUDEPATH += . \
                ../libgitlevtbus \
-               ../libgitlmvc
+               ../libgitlmvc    \
+               ../3rdparty/WinSparkle-0.3/include
 
-# libs
-Debug:   LIBS += -L$${OUT_PWD}/../libs -lGitlMVCd -lGitlEvtBusd
-Release: LIBS += -L$${OUT_PWD}/../libs -lGitlMVC  -lGitlEvtBus
+LIBS += -L$${OUT_PWD}/../libs -L$${PWD}/../3rdparty/WinSparkle-0.3/lib
+
+Debug:   LIBS += -lGitlMVCd -lGitlEvtBusd -lWinSparkle
+Release: LIBS += -lGitlMVC  -lGitlEvtBus  -lWinSparkle
 
 
 FORMS += \

@@ -12,6 +12,7 @@
 #include "events/eventnames.h"
 #include "io/analyzermsgsender.h"
 #include "commandrespond.h"
+#include "common/comrom.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),    
@@ -175,15 +176,18 @@ void MainWindow::xSaveSnapshot(QPixmap *pcPixmap)
 {
     ///
     QString strFilename;
+    QString strLastPath = g_cAppSetting.value("snapshot_saving_path",".").toString();
     strFilename=QFileDialog::getSaveFileName(this,
                                           tr("Save Snapshot"),
-                                          ".",
+                                          strLastPath,
                                           tr("Images (*.png)"));
-
+    if(!strFilename.isEmpty())
+        g_cAppSetting.setValue("snapshot_saving_path",strFilename);
     if( pcPixmap->save(strFilename) )
         qDebug() << QString("Snapshot Has Been Saved to %1 !").arg(strFilename);
     else
         qWarning() <<"Snapshot Saving Failed !";
+
 
 }
 
@@ -192,10 +196,13 @@ void MainWindow::on_actionOpen_bitstream_triggered()
 {
     /// select file path
     QString strFilename;
+    QString strLastPath = g_cAppSetting.value("open_bitstream_path",".").toString();
     strFilename=QFileDialog::getOpenFileName(this,
                                           tr("Open Bitstream File"),
-                                          ".",
+                                          strLastPath,
                                           tr("All Files (*.*)"));
+    if(!strFilename.isEmpty())
+        g_cAppSetting.setValue("open_bitstream_path",strFilename);
 
     if(strFilename.isEmpty() || !QFileInfo(strFilename).exists() )
     {

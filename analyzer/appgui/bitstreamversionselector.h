@@ -26,6 +26,9 @@ public:
     void on_version52_clicked();
 
     void on_version100_clicked();
+protected:
+    virtual void showEvent(QShowEvent * event);
+    virtual void hideEvent(QHideEvent * event);
 
 private:
     Ui::BitstreamVersionSelector *ui;

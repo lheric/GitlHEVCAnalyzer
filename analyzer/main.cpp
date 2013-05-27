@@ -3,15 +3,15 @@
 #include <QLayout>
 #include <QDir>
 #include <iostream>
-
+#include <winsparkle.h>
 #include "gitlevent.h"
 #include "model/modellocator.h"
 #include "appgui/mainwindow.h"
 #include "commands/appfrontcontroller.h"
 #include "exceptions/nosequencefoundexception.h"
 #include "io/analyzermsgsender.h"
+#include "common/comrom.h"
 using namespace std;
-
 //static bool xSetLibPath()
 //{
 //    QStringList paths = QCoreApplication::instance()->libraryPaths();
@@ -65,6 +65,16 @@ static void xMessageOutput(QtMsgType type, const QMessageLogContext &context, co
     AnalyzerMsgSender::getInstance()->msgOut(strMsg);
 }
 
+void xCheckUpdate()
+{
+    win_sparkle_set_appcast_url("http://winsparkle.org/example/appcast.xml");
+    win_sparkle_init();
+}
+
+void xCleanUpdate()
+{
+    win_sparkle_cleanup();
+}
 
 int main(int argc, char *argv[])
 {
@@ -73,6 +83,9 @@ int main(int argc, char *argv[])
 
     /// intall message handler
     qInstallMessageHandler(xMessageOutput);
+
+    /// check update
+    xCheckUpdate();
 
     /// Register Commands
     AppFrontController::getInstance();
@@ -88,6 +101,9 @@ int main(int argc, char *argv[])
     cMainWin.show();
     ModelLocator::getInstance();
     cApp.exec();
+
+    /// clean update
+    xCleanUpdate();
 
     return EXIT_SUCCESS;
 
