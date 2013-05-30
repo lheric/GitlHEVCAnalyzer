@@ -1,12 +1,12 @@
 #include "nextframecommand.h"
 
 NextFrameCommand::NextFrameCommand(QObject *parent) :
-    AbstractCommand(parent)
+    GitlAbstractCommand(parent)
 {
 
 }
 
-bool NextFrameCommand::execute( CommandRequest& rcRequest, CommandRespond& rcRespond )
+bool NextFrameCommand::execute( GitlCommandRequest& rcRequest, GitlCommandRespond& rcRespond )
 {
     ModelLocator* pModel = ModelLocator::getInstance();
 

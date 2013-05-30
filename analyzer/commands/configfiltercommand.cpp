@@ -2,15 +2,14 @@
 #include "model/modellocator.h"
 
 ConfigFilterCommand::ConfigFilterCommand(QObject *parent) :
-    AbstractCommand(parent)
+    GitlAbstractCommand(parent)
 {
 }
 
-bool ConfigFilterCommand::execute( CommandRequest& rcRequest, CommandRespond& rcRespond )
+bool ConfigFilterCommand::execute( GitlCommandRequest& rcRequest, GitlCommandRespond& rcRespond )
 {
     ModelLocator* pModel = ModelLocator::getInstance();
-    QVariant vValue;
-    rcRequest.getParameter("filter", vValue);
+    QVariant vValue = rcRequest.getParameter("filter");
     AbstractFilter* pcFilter = (AbstractFilter*)(vValue.value<void*>());
     pModel->getDrawEngine().getFilterLoader().config(pcFilter);
 

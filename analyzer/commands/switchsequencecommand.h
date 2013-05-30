@@ -1,14 +1,14 @@
 #ifndef SWITCHSEQUENCECOMMAND_H
 #define SWITCHSEQUENCECOMMAND_H
-#include "abstractcommand.h"
+#include "gitlabstractcommand.h"
 
-class SwitchSequenceCommand : public AbstractCommand
+class SwitchSequenceCommand : public GitlAbstractCommand
 {
     Q_OBJECT
 public:
     Q_INVOKABLE explicit SwitchSequenceCommand(QObject *parent = 0);
 
-    Q_INVOKABLE virtual bool execute( CommandRequest& rcRequest, CommandRespond& rcRespond );
+    Q_INVOKABLE virtual bool execute( GitlCommandRequest& rcRequest, GitlCommandRespond& rcRespond );
 
 signals:
 

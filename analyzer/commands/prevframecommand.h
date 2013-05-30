@@ -2,15 +2,15 @@
 #define PREVFRAMECOMMAND_H
 
 #include "model/modellocator.h"
-#include "abstractcommand.h"
+#include "gitlabstractcommand.h"
 
-class PrevFrameCommand : public AbstractCommand
+class PrevFrameCommand : public GitlAbstractCommand
 {
     Q_OBJECT
 public:
     Q_INVOKABLE explicit PrevFrameCommand(QObject *parent = 0);
 
-    Q_INVOKABLE bool execute( CommandRequest& rcRequest, CommandRespond& rcRespond );
+    Q_INVOKABLE bool execute( GitlCommandRequest& rcRequest, GitlCommandRespond& rcRespond );
 
 signals:
 

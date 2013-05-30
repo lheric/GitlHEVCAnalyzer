@@ -3,14 +3,13 @@
 #include "model/modellocator.h"
 
 SwitchSequenceCommand::SwitchSequenceCommand(QObject *parent) :
-    AbstractCommand(parent)
+    GitlAbstractCommand(parent)
 {
 }
 
-bool SwitchSequenceCommand::execute( CommandRequest& rcRequest, CommandRespond& rcRespond )
+bool SwitchSequenceCommand::execute( GitlCommandRequest& rcRequest, GitlCommandRespond& rcRespond )
 {
-    QVariant vValue;
-    rcRequest.getParameter("sequence", vValue);
+    QVariant vValue = rcRequest.getParameter("sequence");
     ComSequence* pcSequence = (ComSequence*)vValue.value<void*>();
     ModelLocator* pModel = ModelLocator::getInstance();
     pModel->getSequenceManager().setCurrentSequence(pcSequence);

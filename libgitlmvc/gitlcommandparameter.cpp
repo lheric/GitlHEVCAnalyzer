@@ -9,16 +9,15 @@ bool GitlCommandParameter::hasParameter(QString strParam) const
     return m_cParameters.contains(strParam);
 }
 
-bool GitlCommandParameter::getParameter(QString strParam, QVariant& rvValue) const
+QVariant GitlCommandParameter::getParameter(QString strParam) const
 {
     if( m_cParameters.contains(strParam) )
     {
-        rvValue = m_cParameters[strParam];
-        return true;
+        return m_cParameters[strParam];
     }
     qWarning() << QString("Respond Parameter %1 NOT found.").arg(strParam);
 
-    return false;
+    return QVariant();
 }
 
 bool GitlCommandParameter::setParameter(QString strParam, const QVariant& rvValue)

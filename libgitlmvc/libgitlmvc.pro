@@ -14,15 +14,17 @@ DESTDIR = $${OUT_PWD}/../libs
 TEMPLATE = lib
 CONFIG += staticlib
 
-SOURCES += abstractcommand.cpp \
-    frontcontroller.cpp \
-    commandparameter.cpp
+SOURCES += \
+    gitlabstractcommand.cpp \
+    gitlcommandparameter.cpp \
+    gitlfrontcontroller.cpp
 
-HEADERS += abstractcommand.h \
-    commandrequest.h \
-    commandrespond.h \
-    frontcontroller.h \
-    commandparameter.h
+HEADERS += \
+    gitlabstractcommand.h \
+    gitlcommandparameter.h \
+    gitlcommandrequest.h \
+    gitlcommandrespond.h \
+    gitlfrontcontroller.h
 
 unix:!symbian {
     maemo5 {

@@ -3,11 +3,11 @@
 #include "model/modellocator.h"
 
 OpenCUPUCommand::OpenCUPUCommand(QObject *parent) :
-    AbstractCommand(parent)
+    GitlAbstractCommand(parent)
 {
 }
 
-bool OpenCUPUCommand::execute( CommandRequest& rcRequest, CommandRespond& rcRespond )
+bool OpenCUPUCommand::execute( GitlCommandRequest& rcRequest, GitlCommandRespond& rcRespond )
 {
     /*QVariant vValue;
     rcRequest.getParameter("filename", vValue);

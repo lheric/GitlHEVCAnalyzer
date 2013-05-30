@@ -1,15 +1,15 @@
 #ifndef OPENMECOMMAND_H
 #define OPENMECOMMAND_H
 
-#include "abstractcommand.h"
+#include "gitlabstractcommand.h"
 
-class OpenMECommand : public AbstractCommand
+class OpenMECommand : public GitlAbstractCommand
 {
     Q_OBJECT
 public:
     Q_INVOKABLE OpenMECommand();
 
-    Q_INVOKABLE bool execute( CommandRequest& rcRequest, CommandRespond& rcRespond );
+    Q_INVOKABLE bool execute( GitlCommandRequest& rcRequest, GitlCommandRespond& rcRespond );
 };
 
 #endif // OPENMECOMMAND_H

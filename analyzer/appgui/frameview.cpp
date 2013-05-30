@@ -2,7 +2,7 @@
 #include <QWheelEvent>
 #include "io/analyzermsgsender.h"
 #include "events/eventnames.h"
-#include "commandrequest.h"
+#include "gitlcommandrequest.h"
 
 FrameView::FrameView(QWidget *parent) :
     QGraphicsView(parent)
@@ -34,7 +34,7 @@ void FrameView::wheelEvent ( QWheelEvent * event )
     else
     {
         //AnalyzerMsgSender::getInstance()->msgOut(QString("%1").arg(dNextScale));
-        CommandRequest cRequest;
+        GitlCommandRequest cRequest;
         cRequest.setParameter("command_name", "zoom_frame");
         cRequest.setParameter("scale", dNextScale);
         GitlEvent cEvt( g_strCmdSentEvent  );

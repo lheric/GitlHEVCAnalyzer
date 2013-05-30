@@ -14,25 +14,25 @@
 #include <QDir>
 
 DecodeBitstreamCommand::DecodeBitstreamCommand(QObject *parent) :
-    AbstractCommand(parent)
+    GitlAbstractCommand(parent)
 {
 }
 
-bool DecodeBitstreamCommand::execute( CommandRequest& rcRequest, CommandRespond& rcRespond )
+bool DecodeBitstreamCommand::execute( GitlCommandRequest& rcRequest, GitlCommandRespond& rcRespond )
 {
     ModelLocator* pModel = ModelLocator::getInstance();
 
     /// *****STEP 0 : Request*****
     QVariant vValue;
-    rcRequest.getParameter("filename", vValue);
+    vValue = rcRequest.getParameter("filename");
     QString strFilename = vValue.toString();
-    rcRequest.getParameter("version", vValue);
+    vValue = rcRequest.getParameter("version");
     int iVersion = vValue.toInt();
-    rcRequest.getParameter("skip_decode", vValue);
+    vValue = rcRequest.getParameter("skip_decode");
     bool bSkipDecode = vValue.toBool();
-    rcRequest.getParameter("decoder_folder", vValue);
+    vValue = rcRequest.getParameter("decoder_folder");
     QString strDecoderPath = vValue.toString();
-    rcRequest.getParameter("output_folder", vValue);
+    vValue = rcRequest.getParameter("output_folder");
     QString strDecoderOutputPath = vValue.toString();
     int iSequenceIndex = pModel->getSequenceManager().getAllSequences().size();
     strDecoderOutputPath += QString("/%1").arg(iSequenceIndex);

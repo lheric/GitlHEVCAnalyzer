@@ -2,15 +2,15 @@
 #define NEXTFRAMECOMMAND_H
 
 #include "model/modellocator.h"
-#include "abstractcommand.h"
+#include "gitlabstractcommand.h"
 
-class NextFrameCommand : public AbstractCommand
+class NextFrameCommand : public GitlAbstractCommand
 {
     Q_OBJECT
 public:
     Q_INVOKABLE explicit NextFrameCommand(QObject *parent = 0);
 
-    Q_INVOKABLE bool execute( CommandRequest& rcRequest, CommandRespond& rcRespond );
+    Q_INVOKABLE bool execute( GitlCommandRequest& rcRequest, GitlCommandRespond& rcRespond );
 
 signals:
 

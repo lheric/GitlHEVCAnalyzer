@@ -1,10 +1,10 @@
 #include "opendecodergeneralcommand.h"
 #include "model/modellocator.h"
 OpenDecoderGeneralCommand::OpenDecoderGeneralCommand(QObject *parent) :
-    AbstractCommand(parent)
+    GitlAbstractCommand(parent)
 {
 }
-bool OpenDecoderGeneralCommand::execute( CommandRequest& rcRequest, CommandRespond& rcRespond )
+bool OpenDecoderGeneralCommand::execute( GitlCommandRequest& rcRequest, GitlCommandRespond& rcRespond )
 {
     /*QVariant vValue;
     rcRequest.getParameter("filename", vValue);

@@ -1,16 +1,17 @@
 #include "zoomframecommand.h"
 #include "model/modellocator.h"
 ZoomFrameCommand::ZoomFrameCommand(QObject *parent) :
-    AbstractCommand(parent)
+    GitlAbstractCommand(parent)
 {
 }
 
-bool ZoomFrameCommand::execute( CommandRequest& rcRequest, CommandRespond& rcRespond )
+bool ZoomFrameCommand::execute( GitlCommandRequest& rcRequest, GitlCommandRespond& rcRespond )
 {
     QVariant vValue;
     double dScale = 0.0;
-    if( rcRequest.getParameter("scale", vValue) )
+    if( rcRequest.hasParameter("scale") )
     {
+        vValue = rcRequest.getParameter("scale");
         dScale = vValue.toDouble();
     }
     else

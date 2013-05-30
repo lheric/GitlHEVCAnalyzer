@@ -10,7 +10,7 @@ class GitlCommandParameter
 public:
     explicit GitlCommandParameter();
     bool hasParameter(QString strParam) const;
-    bool getParameter(QString strParam, QVariant& rvValue) const;
+    QVariant getParameter(QString strParam) const;
     bool setParameter(QString strParam, const QVariant& rvValue);
 
 protected:

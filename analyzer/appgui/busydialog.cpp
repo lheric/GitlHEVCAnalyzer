@@ -2,8 +2,8 @@
 #include "ui_busydialog.h"
 #include "io/analyzermsgsender.h"
 #include "events/eventnames.h"
-#include "commandrequest.h"
-#include "commandrespond.h"
+#include "gitlcommandrequest.h"
+#include "gitlcommandrespond.h"
 
 BusyDialog::BusyDialog(QWidget *parent) :
     QDialog(parent),
@@ -36,11 +36,11 @@ bool BusyDialog::detonate(GitlEvent cEvt)
     QString& strEvtName = cEvt.getEvtName();
     if(strEvtName == g_strCmdStartEvent)
     {
-        CommandRequest cRequest;
+        GitlCommandRequest cRequest;
 
         QVariant vValue = cEvt.getEvtData().getParameter("request");
-        cRequest = vValue.value<CommandRequest>();
-        cRequest.getParameter("command_name", vValue);
+        cRequest = vValue.value<GitlCommandRequest>();
+        vValue = cRequest.getParameter("command_name");
         const QString& strCmdName = vValue.toString();
 
         if( strCmdName == "decode_bitstream")
@@ -48,10 +48,10 @@ bool BusyDialog::detonate(GitlEvent cEvt)
     }
     else if(strEvtName == g_strCmdEndEvent)
     {
-        CommandRespond cRespond;
+        GitlCommandRespond cRespond;
         QVariant vValue = cEvt.getEvtData().getParameter("respond");
-        cRespond = vValue.value<CommandRespond>();
-        cRespond.getParameter("command_name", vValue);
+        cRespond = vValue.value<GitlCommandRespond>();
+        vValue = cRespond.getParameter("command_name");
         const QString& strCmdName = vValue.toString();
 
         if( strCmdName == "decode_bitstream")

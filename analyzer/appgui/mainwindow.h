@@ -3,7 +3,7 @@
 
 #include <QMainWindow>
 #include <QThread>
-#include "commandrespond.h"
+#include "gitlcommandrespond.h"
 #include "gitlmodual.h"
 #include "busydialog.h"
 #include "aboutdialog.h"
@@ -28,7 +28,7 @@ protected:
 
 
 protected:
-    void xRefreshUIByRespond( const CommandRespond& rcRespond );
+    void xRefreshUIByRespond( const GitlCommandRespond& rcRespond );
 
     void xPresentFrameBuffer(QPixmap *pcPixmap);
 

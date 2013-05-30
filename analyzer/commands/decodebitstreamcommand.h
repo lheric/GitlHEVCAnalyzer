@@ -1,14 +1,14 @@
 #ifndef DECODEBITSTREAMCOMMAND_H
 #define DECODEBITSTREAMCOMMAND_H
-#include "abstractcommand.h"
+#include "gitlabstractcommand.h"
 #include "gitlmodual.h"
-class DecodeBitstreamCommand : public AbstractCommand, GitlModual
+class DecodeBitstreamCommand : public GitlAbstractCommand, GitlModual
 {
     Q_OBJECT
 public:
     Q_INVOKABLE explicit DecodeBitstreamCommand(QObject *parent = 0);
 
-    Q_INVOKABLE bool execute( CommandRequest& rcRequest, CommandRespond& rcRespond );
+    Q_INVOKABLE bool execute( GitlCommandRequest& rcRequest, GitlCommandRespond& rcRespond );
 signals:
 
 public slots:

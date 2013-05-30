@@ -25,7 +25,7 @@
 
 SINGLETON_PATTERN_IMPLIMENT(AppFrontController)
 
-static CommandFormat s_sCmdTable[] =
+static GitlCommandFormat s_sCmdTable[] =
 {
     { "decode_bitstream", &DecodeBitstreamCommand::staticMetaObject    },
     { "open_yuv",         &OpenYUVCommand::staticMetaObject            },
@@ -58,7 +58,7 @@ bool AppFrontController::xInitCommand()
 {
     /// register commands
 
-    CommandFormat* psCMD = s_sCmdTable;
+    GitlCommandFormat* psCMD = s_sCmdTable;
     while( psCMD->pMetaObject != NULL )
     {
         addCommand(*psCMD);
@@ -113,11 +113,11 @@ void AppFrontController::run()
         }
 
             /// prepare request and respond
-        CommandRequest cRequest;
-        CommandRespond cRespond;
+        GitlCommandRequest cRequest;
+        GitlCommandRespond cRespond;
         QVariant vValue;
         vValue = cEvt.getEvtData().getParameter("request");
-        cRequest = vValue.value<CommandRequest>();
+        cRequest = vValue.value<GitlCommandRequest>();
 
         GitlEvent cCmdStartEvt( g_strCmdStartEvent );               ///
         cCmdStartEvt.getEvtData().setParameter("request", vValue);  /// start command event

@@ -3,25 +3,46 @@
 
 #include <QDebug>
 
+SINGLETON_PATTERN_IMPLIMENT(GitlFrontController)
 
 GitlFrontController::GitlFrontController()
 {
 }
 
 
-bool GitlFrontController::addCommand(GitlCommandFormat cComandFormat)
+bool GitlFrontController::addCommand(GitlCommandFormat cCommandFormat)
 {
-    m_cCommandTable.push_back(cComandFormat);
-    qDebug() << QString("%1 Register Success!").arg(cComandFormat.pMetaObject->className());
+    m_cCommandTable.push_back(cCommandFormat);
+    qDebug() << QString("%1 Register Success!").arg(cCommandFormat.pMetaObject->className());
     return true;
 }
+bool GitlFrontController::addCommand(const QString cCommandName, const QMetaObject* pMetaObject)
+{
+    GitlCommandFormat cCommandFormat;
+    cCommandFormat.cCommandName = cCommandName;
+    cCommandFormat.pMetaObject  = pMetaObject;
+    m_cCommandTable.push_back(cCommandFormat);
+    qDebug() << QString("%1 Register Success!").arg(cCommandFormat.pMetaObject->className());
+    return true;
+}
+
+void GitlFrontController::removeAllCommand()
+{
+    m_cCommandTable.clear();
+}
+
 
 bool GitlFrontController::processRequest( GitlCommandRequest& rcRequest, GitlCommandRespond& rcRespond )
 {
 
     // find command by name
     QVariant vValue;
-    if( !rcRequest.getParameter("command_name", vValue) )
+    if( rcRequest.hasParameter("command_name") )
+    {
+        vValue = rcRequest.getParameter("command_name");
+
+    }
+    else
     {
         qWarning() << QString("No command name in request!");
         return false;
@@ -31,7 +52,7 @@ bool GitlFrontController::processRequest( GitlCommandRequest& rcRequest, GitlCom
 
     for(int i = 0; i < m_cCommandTable.size(); i++) {
         // command name matched
-        if( m_cCommandTable.at(i).cCommandFormat == strCommandName )
+        if( m_cCommandTable.at(i).cCommandName == strCommandName )
         {
 
             //TODO BUG RAII Required for exception

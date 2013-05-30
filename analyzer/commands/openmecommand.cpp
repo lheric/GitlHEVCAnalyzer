@@ -6,7 +6,7 @@ OpenMECommand::OpenMECommand()
 }
 
 
-bool OpenMECommand::execute( CommandRequest& rcRequest, CommandRespond& rcRespond )
+bool OpenMECommand::execute( GitlCommandRequest& rcRequest, GitlCommandRespond& rcRespond )
 {
     /*QVariant vValue;
     rcRequest.getParameter("filename", vValue);

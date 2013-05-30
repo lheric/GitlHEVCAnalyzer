@@ -2,15 +2,14 @@
 
 
 JumpToFrameCommand::JumpToFrameCommand(QObject *parent) :
-    AbstractCommand(parent)
+    GitlAbstractCommand(parent)
 {
 }
 
 
-bool JumpToFrameCommand::execute( CommandRequest& rcRequest, CommandRespond& rcRespond )
+bool JumpToFrameCommand::execute( GitlCommandRequest& rcRequest, GitlCommandRespond& rcRespond )
 {
-    QVariant vValue;
-    rcRequest.getParameter("poc", vValue);
+    QVariant vValue = rcRequest.getParameter("poc");
     int iPoc = vValue.toInt();
     ///
     ModelLocator* pModel = ModelLocator::getInstance();

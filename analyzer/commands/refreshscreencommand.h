@@ -2,15 +2,15 @@
 #define REFRESHSCREENCOMMAND_H
 
 #include <QObject>
-#include "abstractcommand.h"
+#include "gitlabstractcommand.h"
 
-class RefreshScreenCommand : public AbstractCommand
+class RefreshScreenCommand : public GitlAbstractCommand
 {
     Q_OBJECT
 public:
     Q_INVOKABLE explicit RefreshScreenCommand(QObject *parent = 0);
 
-    Q_INVOKABLE bool execute( CommandRequest& rcRequest, CommandRespond& rcRespond );
+    Q_INVOKABLE bool execute( GitlCommandRequest& rcRequest, GitlCommandRespond& rcRespond );
 
 signals:
 

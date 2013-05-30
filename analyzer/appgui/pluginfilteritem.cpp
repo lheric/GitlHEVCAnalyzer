@@ -1,7 +1,7 @@
 #include "pluginfilteritem.h"
 #include "ui_pluginfilteritem.h"
 #include "events/eventnames.h"
-#include "commandrequest.h"
+#include "gitlcommandrequest.h"
 
 PluginFilterItem::PluginFilterItem(AbstractFilter* pcFilter, QWidget *parent) :
     QWidget(parent),
@@ -21,7 +21,7 @@ PluginFilterItem::~PluginFilterItem()
 
 void PluginFilterItem::on_enableCheckBox_clicked()
 {
-    CommandRequest cRequest;
+    GitlCommandRequest cRequest;
     cRequest.setParameter("command_name", "refresh_screen");
     GitlEvent cEvt( g_strCmdSentEvent  );
     cEvt.getEvtData().setParameter("request", QVariant::fromValue(cRequest));
@@ -32,7 +32,7 @@ void PluginFilterItem::on_enableCheckBox_clicked()
 
 void PluginFilterItem::on_configBtn_clicked()
 {
-    CommandRequest cRequest;
+    GitlCommandRequest cRequest;
     cRequest.setParameter("command_name", "config_filter");
     cRequest.setParameter("filter", QVariant::fromValue((void*)(m_pcFilter)));
     GitlEvent cEvt( g_strCmdSentEvent  );

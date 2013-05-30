@@ -1,14 +1,14 @@
 #ifndef ZOOMFRAMECOMMAND_H
 #define ZOOMFRAMECOMMAND_H
-#include "abstractcommand.h"
+#include "gitlabstractcommand.h"
 
-class ZoomFrameCommand : public AbstractCommand
+class ZoomFrameCommand : public GitlAbstractCommand
 {
     Q_OBJECT
 public:
     Q_INVOKABLE explicit ZoomFrameCommand(QObject *parent = 0);
 
-    Q_INVOKABLE virtual bool execute( CommandRequest& rcRequest, CommandRespond& rcRespond );
+    Q_INVOKABLE virtual bool execute( GitlCommandRequest& rcRequest, GitlCommandRespond& rcRespond );
 
 signals:
     

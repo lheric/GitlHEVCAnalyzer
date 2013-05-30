@@ -1,11 +1,11 @@
 #include "prevframecommand.h"
 #include <QPixmap>
 PrevFrameCommand::PrevFrameCommand(QObject *parent) :
-    AbstractCommand(parent)
+    GitlAbstractCommand(parent)
 {
 }
 
-bool PrevFrameCommand::execute( CommandRequest& rcRequest, CommandRespond& rcRespond )
+bool PrevFrameCommand::execute( GitlCommandRequest& rcRequest, GitlCommandRespond& rcRespond )
 {
     ModelLocator* pModel = ModelLocator::getInstance();
 

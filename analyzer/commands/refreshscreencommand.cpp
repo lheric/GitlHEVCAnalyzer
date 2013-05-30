@@ -2,12 +2,12 @@
 #include "model/modellocator.h"
 #include <QPixmap>
 RefreshScreenCommand::RefreshScreenCommand(QObject *parent) :
-    AbstractCommand(parent)
+    GitlAbstractCommand(parent)
 {
 
 }
 
-bool RefreshScreenCommand::execute( CommandRequest& rcRequest, CommandRespond& rcRespond )
+bool RefreshScreenCommand::execute( GitlCommandRequest& rcRequest, GitlCommandRespond& rcRespond )
 {
     ModelLocator* pModel = ModelLocator::getInstance();
     int iPoc = pModel->getFrameBuffer().getPoc();

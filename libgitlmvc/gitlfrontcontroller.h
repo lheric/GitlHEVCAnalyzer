@@ -12,7 +12,7 @@
 
 typedef struct GitlCommandFormat_s
 {
-    QString cCommandFormat;
+    QString cCommandName;
     const QMetaObject* pMetaObject;
 }GitlCommandFormat;
 
@@ -20,14 +20,20 @@ typedef struct GitlCommandFormat_s
 class GitlFrontController
 {
 public:
-    explicit GitlFrontController();
     bool processRequest( GitlCommandRequest& rcRequest, GitlCommandRespond& rcRespond );
-    bool addCommand(GitlCommandFormat cComandFormat);
+    bool addCommand(GitlCommandFormat cCommandFormat);
+    bool addCommand(const QString cCommandFormat, const QMetaObject* pMetaObject);
+    void removeAllCommand();
+
+protected:
+    explicit GitlFrontController();
 
 protected:
 
     /// command table
     ADD_CLASS_FIELD(QVector<GitlCommandFormat>, cCommandTable, getCommandTable, setCommandTable)
+
+    SINGLETON_PATTERN_DECLARE(GitlFrontController)
 
 };
 

@@ -6,7 +6,7 @@ PrintScreenCommand::PrintScreenCommand()
 {
 }
 
-bool PrintScreenCommand::execute( CommandRequest& rcRequest, CommandRespond& rcRespond )
+bool PrintScreenCommand::execute( GitlCommandRequest& rcRequest, GitlCommandRespond& rcRespond )
 {
     ModelLocator* pModel = ModelLocator::getInstance();
 

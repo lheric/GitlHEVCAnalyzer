@@ -2,7 +2,7 @@
 #include "ui_sequencelist.h"
 #include "events/eventnames.h"
 #include "common/comsequence.h"
-#include "commandrequest.h"
+#include "gitlcommandrequest.h"
 #include "io/analyzermsgsender.h"
 #include <QFileInfo>
 
@@ -79,7 +79,7 @@ bool SequenceList::detonate( GitlEvent cEvt )
 void SequenceList::sequenceRadioButtonClicked(ComSequence* pcSequence)
 {
     GitlEvent cEvt( g_strCmdSentEvent  );
-    CommandRequest cRequest;
+    GitlCommandRequest cRequest;
     cRequest.setParameter("command_name", "switch_sequence");
     cRequest.setParameter("sequence", QVariant::fromValue((void*)pcSequence));
     cEvt.getEvtData().setParameter("request", QVariant::fromValue(cRequest));

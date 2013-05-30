@@ -7,11 +7,11 @@
 #include "model/modellocator.h"
 #include "commands/appfrontcontroller.h"
 #include "io/analyzermsgsender.h"
-#include "commandrequest.h"
+#include "gitlcommandrequest.h"
 #include "bitstreamversionselector.h"
 #include "events/eventnames.h"
 #include "io/analyzermsgsender.h"
-#include "commandrespond.h"
+#include "gitlcommandrespond.h"
 #include "common/comrom.h"
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -44,7 +44,7 @@ bool MainWindow::detonate(GitlEvent cEvt )
     }
 
     QVariant vValue = cEvt.getEvtData().getParameter("respond");
-    const CommandRespond& cRespond = vValue.value<CommandRespond>();
+    const GitlCommandRespond& cRespond = vValue.value<GitlCommandRespond>();
     xRefreshUIByRespond(cRespond);
     return true;
 }
@@ -66,14 +66,14 @@ void MainWindow::keyPressEvent ( QKeyEvent * event )
 }
 
 
-void MainWindow::xRefreshUIByRespond( const CommandRespond& rcRespond )
+void MainWindow::xRefreshUIByRespond( const GitlCommandRespond& rcRespond )
 {    
     QVariant vValue;
 
     /// draw current frame to screen
     if( rcRespond.hasParameter("picture") )
     {
-        rcRespond.getParameter("picture",vValue);
+        vValue = rcRespond.getParameter("picture");
         QPixmap* pcPixMap = (QPixmap*)(vValue.value<void *>());
         xPresentFrameBuffer(pcPixMap);
     }
@@ -88,7 +88,7 @@ void MainWindow::xRefreshUIByRespond( const CommandRespond& rcRespond )
         /// frame number
         if( rcRespond.hasParameter("total_frame_num") )
         {
-            rcRespond.getParameter("total_frame_num",vValue);
+            vValue = rcRespond.getParameter("total_frame_num");
             iTotalFrameNum = vValue.toInt();
             ui->totalFrameNum->setText(QString("%1").arg(iTotalFrameNum));
         }
@@ -96,7 +96,7 @@ void MainWindow::xRefreshUIByRespond( const CommandRespond& rcRespond )
         /// total frame number
         if( rcRespond.hasParameter("current_frame_poc") )
         {
-            rcRespond.getParameter("current_frame_poc",vValue);
+            vValue = rcRespond.getParameter("current_frame_poc");
             iCurrentFrameNum = vValue.toInt() + 1;
             ui->currentFrameNum->setText(QString("%1").arg(iCurrentFrameNum));
         }
@@ -112,7 +112,7 @@ void MainWindow::xRefreshUIByRespond( const CommandRespond& rcRespond )
 
     if( rcRespond.hasParameter("snapshot") )
     {
-        rcRespond.getParameter("snapshot",vValue);
+        vValue = rcRespond.getParameter("snapshot");
         QPixmap* pcPixMap = (QPixmap*)(vValue.value<void *>());
         xSaveSnapshot(pcPixMap);
     }
@@ -126,7 +126,7 @@ void MainWindow::xRefreshUIByRespond( const CommandRespond& rcRespond )
 void MainWindow::on_previousFrame_clicked()
 {
     /// invoke command
-    CommandRequest cRequest;
+    GitlCommandRequest cRequest;
 
     cRequest.setParameter("command_name", "prev_frame");
 
@@ -138,7 +138,7 @@ void MainWindow::on_previousFrame_clicked()
 void MainWindow::on_nextFrame_clicked()
 {
     /// invoke command
-    CommandRequest cRequest;
+    GitlCommandRequest cRequest;
 
     cRequest.setParameter("command_name", "next_frame");
 
@@ -153,7 +153,7 @@ void MainWindow::on_progressBar_actionTriggered(int action)
                                        (ui->progressBar->maximum()-ui->progressBar->minimum()));
 
     /// invoke command
-    CommandRequest cRequest;
+    GitlCommandRequest cRequest;
 
     cRequest.setParameter("command_name", "jumpto_percent");
     cRequest.setParameter("percent", iBarPercent);
@@ -216,7 +216,7 @@ void MainWindow::on_actionOpen_bitstream_triggered()
         return;
 
     /// prepare & sent event to bus
-    CommandRequest cRequest;
+    GitlCommandRequest cRequest;
     cRequest.setParameter("command_name", "decode_bitstream");
     cRequest.setParameter("filename", strFilename);
     cRequest.setParameter("skip_decode", false);
@@ -232,7 +232,7 @@ void MainWindow::on_actionOpen_bitstream_triggered()
 
 void MainWindow::on_printScreenBtn_clicked()
 {
-    CommandRequest cRequest;
+    GitlCommandRequest cRequest;
     cRequest.setParameter("command_name", "print_screen");
     GitlEvent cEvt( g_strCmdSentEvent  );
     cEvt.getEvtData().setParameter("request", QVariant::fromValue(cRequest));

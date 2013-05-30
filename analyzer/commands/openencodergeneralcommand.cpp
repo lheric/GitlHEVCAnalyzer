@@ -2,11 +2,11 @@
 #include "model/modellocator.h"
 
 OpenEncoderGeneralCommand::OpenEncoderGeneralCommand(QObject *parent) :
-    AbstractCommand(parent)
+    GitlAbstractCommand(parent)
 {
 }
 
-bool OpenEncoderGeneralCommand::execute( CommandRequest& rcRequest, CommandRespond& rcRespond )
+bool OpenEncoderGeneralCommand::execute( GitlCommandRequest& rcRequest, GitlCommandRespond& rcRespond )
 {
     /*QVariant vValue;
     rcRequest.getParameter("filename", vValue);

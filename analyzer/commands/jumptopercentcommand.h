@@ -1,14 +1,14 @@
 #ifndef JUMPTOPERCENTCOMMAND_H
 #define JUMPTOPERCENTCOMMAND_H
-#include "abstractcommand.h"
+#include "gitlabstractcommand.h"
 
-class JumpToPercentCommand : public AbstractCommand
+class JumpToPercentCommand : public GitlAbstractCommand
 {
     Q_OBJECT
 public:
     Q_INVOKABLE explicit JumpToPercentCommand(QObject *parent = 0);
 
-    Q_INVOKABLE bool execute( CommandRequest& rcRequest, CommandRespond& rcRespond );
+    Q_INVOKABLE bool execute( GitlCommandRequest& rcRequest, GitlCommandRespond& rcRespond );
 
 signals:
 

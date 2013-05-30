@@ -2,11 +2,11 @@
 #include "model/modellocator.h"
 
 OpenYUVCommand::OpenYUVCommand(QObject *parent) :
-    AbstractCommand(parent)
+    GitlAbstractCommand(parent)
 {
 }
 
-bool OpenYUVCommand::execute( CommandRequest& rcRequest, CommandRespond& rcRespond )
+bool OpenYUVCommand::execute( GitlCommandRequest& rcRequest, GitlCommandRespond& rcRespond )
 {
     /*QVariant vValue;
     rcRequest.getParameter("filename", vValue);
