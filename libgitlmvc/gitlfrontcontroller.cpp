@@ -1,22 +1,22 @@
-#include "frontcontroller.h"
-#include "abstractcommand.h"
+#include "gitlfrontcontroller.h"
+#include "gitlabstractcommand.h"
 
 #include <QDebug>
 
 
-FrontController::FrontController()
+GitlFrontController::GitlFrontController()
 {
 }
 
 
-bool FrontController::addCommand(CommandFormat cComandFormat)
+bool GitlFrontController::addCommand(GitlCommandFormat cComandFormat)
 {
     m_cCommandTable.push_back(cComandFormat);
     qDebug() << QString("%1 Register Success!").arg(cComandFormat.pMetaObject->className());
     return true;
 }
 
-bool FrontController::processRequest( CommandRequest& rcRequest, CommandRespond& rcRespond )
+bool GitlFrontController::processRequest( GitlCommandRequest& rcRequest, GitlCommandRespond& rcRespond )
 {
 
     // find command by name
@@ -38,7 +38,7 @@ bool FrontController::processRequest( CommandRequest& rcRequest, CommandRespond&
             //create  command
             const QMetaObject* pMetaObj = m_cCommandTable.at(i).pMetaObject;
             QObject* pObj = pMetaObj->newInstance();
-            AbstractCommand* pCmd = (AbstractCommand *)pObj;
+            GitlAbstractCommand* pCmd = (GitlAbstractCommand *)pObj;
             //execute command
             if( pCmd->execute(rcRequest, rcRespond) == false )
             {

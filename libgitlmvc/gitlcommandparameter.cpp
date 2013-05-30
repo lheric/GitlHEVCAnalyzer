@@ -1,15 +1,15 @@
-#include "commandparameter.h"
+#include "gitlcommandparameter.h"
 #include <QDebug>
-CommandParameter::CommandParameter()
+GitlCommandParameter::GitlCommandParameter()
 {
 }
 
-bool CommandParameter::hasParameter(QString strParam) const
+bool GitlCommandParameter::hasParameter(QString strParam) const
 {
     return m_cParameters.contains(strParam);
 }
 
-bool CommandParameter::getParameter(QString strParam, QVariant& rvValue) const
+bool GitlCommandParameter::getParameter(QString strParam, QVariant& rvValue) const
 {
     if( m_cParameters.contains(strParam) )
     {
@@ -21,7 +21,7 @@ bool CommandParameter::getParameter(QString strParam, QVariant& rvValue) const
     return false;
 }
 
-bool CommandParameter::setParameter(QString strParam, const QVariant& rvValue)
+bool GitlCommandParameter::setParameter(QString strParam, const QVariant& rvValue)
 {
     m_cParameters[strParam] = rvValue;
     return true;

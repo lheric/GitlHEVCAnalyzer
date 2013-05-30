@@ -1,14 +1,14 @@
-#ifndef COMMANDPARAMETER_H
-#define COMMANDPARAMETER_H
+#ifndef GITLCOMMANDPARAMETER_H
+#define GITLCOMMANDPARAMETER_H
 
 #include <QMap>
 #include <QVariant>
 
-class CommandParameter
+class GitlCommandParameter
 {
 
 public:
-    explicit CommandParameter();
+    explicit GitlCommandParameter();
     bool hasParameter(QString strParam) const;
     bool getParameter(QString strParam, QVariant& rvValue) const;
     bool setParameter(QString strParam, const QVariant& rvValue);
@@ -18,4 +18,4 @@ protected:
 
 };
 
-#endif // COMMANDPARAMETER_H
+#endif // GITLCOMMANDPARAMETER_H
