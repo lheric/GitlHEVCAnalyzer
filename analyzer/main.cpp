@@ -3,6 +3,7 @@
 #include <QLayout>
 #include <QDir>
 #include <iostream>
+#include <QTextCodec>
 #include <winsparkle.h>
 #include "gitlevent.h"
 #include "model/modellocator.h"
@@ -26,6 +27,12 @@ using namespace std;
 //    QCoreApplication::instance()->setLibraryPaths(paths);
 //    return true;
 //}
+
+static void xSetStringCodec()
+{
+    ///QTextCodec::setCodecForLocale(QTextCodec::codecForName("System"));
+}
+
 
 static bool xReadStylesheet()
 {
@@ -80,6 +87,9 @@ int main(int argc, char *argv[])
 {
 //    /// set run-time dynamic linked library (dll) path
 //    xSetLibPath();
+
+    /// set codec for QString
+    xSetStringCodec();
 
     /// intall message handler
     qInstallMessageHandler(xMessageOutput);

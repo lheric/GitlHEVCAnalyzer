@@ -26,7 +26,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->pluginFilterListDockWidget->widget()->layout()->setContentsMargins(0,0,0,0);
     ui->sequencesListDockWidget->widget()->layout()->setContentsMargins(0,0,0,0);
 
-    listenToEvtByName(g_strCmdEndEvent);
+    subscribeToEvtByName(g_strCmdEndEvent);
     ModelLocator::getInstance();    ///init filters, etc..
 }
 
@@ -39,12 +39,11 @@ bool MainWindow::detonate(GitlEvent cEvt )
 
     if(!cEvt.getEvtData().hasParameter("respond"))
     {
-        AnalyzerMsgSender::getInstance()->msgOut(QString("MainWindow Received Command Finish Event Without \"Respond\""));
+        qWarning() << QString("MainWindow Received Command Finish Event Without \"Respond\"");
         return false;
     }
 
-    QVariant vValue;
-    cEvt.getEvtData().getParameter("respond", vValue);
+    QVariant vValue = cEvt.getEvtData().getParameter("respond");
     const CommandRespond& cRespond = vValue.value<CommandRespond>();
     xRefreshUIByRespond(cRespond);
     return true;
@@ -133,7 +132,7 @@ void MainWindow::on_previousFrame_clicked()
 
     GitlEvent cEvt( g_strCmdSentEvent  );
     cEvt.getEvtData().setParameter("request", QVariant::fromValue(cRequest));
-    dispatchEvt(&cEvt);
+    dispatchEvt(cEvt);
 }
 
 void MainWindow::on_nextFrame_clicked()
@@ -145,7 +144,7 @@ void MainWindow::on_nextFrame_clicked()
 
     GitlEvent cEvt( g_strCmdSentEvent  );
     cEvt.getEvtData().setParameter("request", QVariant::fromValue(cRequest));
-    dispatchEvt(&cEvt);
+    dispatchEvt(cEvt);
 }
 
 void MainWindow::on_progressBar_actionTriggered(int action)
@@ -161,7 +160,7 @@ void MainWindow::on_progressBar_actionTriggered(int action)
 
     GitlEvent cEvt( g_strCmdSentEvent  );
     cEvt.getEvtData().setParameter("request", QVariant::fromValue(cRequest));
-    dispatchEvt(&cEvt);
+    dispatchEvt(cEvt);
 
 }
 
@@ -201,6 +200,7 @@ void MainWindow::on_actionOpen_bitstream_triggered()
                                           tr("Open Bitstream File"),
                                           strLastPath,
                                           tr("All Files (*.*)"));
+
     if(!strFilename.isEmpty())
         g_cAppSetting.setValue("open_bitstream_path",strFilename);
 
@@ -226,7 +226,7 @@ void MainWindow::on_actionOpen_bitstream_triggered()
 
     GitlEvent cEvt( g_strCmdSentEvent  );
     cEvt.getEvtData().setParameter("request", QVariant::fromValue(cRequest));
-    dispatchEvt(&cEvt);
+    dispatchEvt(cEvt);
 }
 
 
@@ -236,7 +236,7 @@ void MainWindow::on_printScreenBtn_clicked()
     cRequest.setParameter("command_name", "print_screen");
     GitlEvent cEvt( g_strCmdSentEvent  );
     cEvt.getEvtData().setParameter("request", QVariant::fromValue(cRequest));
-    dispatchEvt(&cEvt);
+    dispatchEvt(cEvt);
 }
 
 

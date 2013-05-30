@@ -14,23 +14,39 @@ class GitlEventBus;
 class GitlModualDelegate : public QObject
 {
     Q_OBJECT
-public:
+    friend class GitlModual;
+private:
     explicit GitlModualDelegate(GitlModual *pcDelegator);
 
+public:
+    /*!
+     * \brief subscribeToEvtByName listening to an event by name
+     * \param strEvtName event name
+     */
+    void subscribeToEvtByName( const QString& strEvtName );
+
+    /*!
+     * \brief subscribeToEvtByName not listening to an event by name
+     * \param strEvtName event name
+     */
+    void unsubscribeToEvtByName( const QString& strEvtName );
+
+    /*!
+     * \brief dispatchEvt dispatch an event to subscribers
+     * \param pcEvt event
+     */
+    void dispatchEvt( GitlEvent* pcEvt );
+
 public slots:
-    /*! Event Bus Listener
+    /*!
+     * \brief detonate notifyed by event bus
+     * \param cEvt
+     * \return
      */
     bool detonate( GitlEvent cEvt );
 
-public:
-    bool listenToEvtByName( const QString& strEvtName );
-    bool dispatchEvt( GitlEvent* pcEvt );
-
 protected:
     bool xIsListenToEvt( const QString& strEvtName );
-
-
-
 
     ADD_CLASS_FIELD( QString, strModualName, getModualName, setModualName )
     ADD_CLASS_FIELD_PRIVATE( QVector<QString>, cListeningEvts )

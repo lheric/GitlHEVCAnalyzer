@@ -42,11 +42,12 @@ bool BitstreamParser::parseFile(QString strDecoderFolder,
     QString strStandardOutputFile = strOutputPath+"/decoder_general.txt";
     m_cStdOutputFile.setFileName(strStandardOutputFile);
     m_cStdOutputFile.open(QIODevice::WriteOnly);
-    QString strDecoderCmd = strDecoderFolder + QString("/HM_%1.exe -b %2 -o decoder_yuv.yuv").arg(iEncoderVersion).arg(strBitstreamFilePath);
+    QString strDecoderCmd = strDecoderFolder + QString("\"/HM_%1.exe\" -b %2 -o decoder_yuv.yuv").arg(iEncoderVersion).arg(strBitstreamFilePath);
+
+
     m_cDecoderProcess.start(strDecoderCmd);
     m_cDecoderProcess.waitForFinished(-1);
     m_cStdOutputFile.close();
-
 
     pcSequence->setFileName(strBitstreamFilePath);
     pcSequence->setDecodingFolder(strOutputPath);
@@ -77,7 +78,7 @@ void BitstreamParser::displayDecoderOutput()
             QString strText = QString("%1 Frame Decoded").arg(iPoc);
             evt.getEvtData().setParameter("message", strText);
 
-            dispatchEvt(&evt);
+            dispatchEvt(evt);
 
         }
     }

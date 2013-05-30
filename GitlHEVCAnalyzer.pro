@@ -1,6 +1,7 @@
 TEMPLATE = subdirs
 CONFIG += ordered
 SUBDIRS = libgitlevtbus \
-          libgitlmvc \
-          libplugins \
-          analyzer
+    libgitlmvc \
+    libplugins \
+    analyzer \
+    tests

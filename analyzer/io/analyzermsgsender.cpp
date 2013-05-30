@@ -14,5 +14,5 @@ void AnalyzerMsgSender::msgOut( const QString& strMsg , QtMsgType eMsgLevel)
     GitlEvent cEvt(g_strStatusMsgEvent);
     cEvt.getEvtData().setParameter("msg_detail", strMsg);
     cEvt.getEvtData().setParameter("msg_level",eMsgLevel);
-    dispatchEvt(&cEvt);
+    dispatchEvt(cEvt);
 }

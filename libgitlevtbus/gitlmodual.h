@@ -17,9 +17,10 @@ public:
     GitlModual();
     /*! The virtual function to deal with specific event
       */
-    virtual bool detonate( GitlEvent cEvt ){return false;}
-    bool listenToEvtByName( const QString& strEvtName );
-    bool dispatchEvt( GitlEvent* pcEvt );
+    virtual bool detonate( GitlEvent cEvt ) {return true;}
+    void subscribeToEvtByName( const QString& strEvtName );
+    void unsubscribeToEvtByName( const QString& strEvtName );
+    void dispatchEvt( GitlEvent& pcEvt );
     void setModualName(QString strModualName );
 
     ADD_CLASS_FIELD_PRIVATE( GitlModualDelegate, cDelegate )

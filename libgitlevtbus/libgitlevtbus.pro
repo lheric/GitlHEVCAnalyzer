@@ -23,7 +23,6 @@ SOURCES += \
     gitlevent.cpp \
     gitleventbus.cpp \
     gitlevtdata.cpp \
-    gitlblockevtdispatcher.cpp \
     gitlmodualdelegate.cpp \
     gitlmodual.cpp
 
@@ -33,5 +32,4 @@ HEADERS += \
     gitleventbus.h \
     gitlmodual.h \
     gitlevtdata.h \
-    gitlblockevtdispatcher.h \
     gitlmodualdelegate.h

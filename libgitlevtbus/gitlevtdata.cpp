@@ -8,24 +8,32 @@ GitlEvtData::GitlEvtData()
 
 bool GitlEvtData::hasParameter(QString strParam) const
 {
-    return m_cRequest.contains(strParam);
+    return m_cParameters.contains(strParam);
 }
 
-bool GitlEvtData::getParameter(const QString& strParam, QVariant& rvValue) const
+QVariant GitlEvtData::getParameter(const QString& strParam ) const
 {
-    if( m_cRequest.contains(strParam) )
+    QVariant rvValue;
+    if( m_cParameters.contains(strParam) )
     {
-        rvValue = m_cRequest[strParam];
-        return true;
+        rvValue = m_cParameters[strParam];
     }
-    qWarning() << QString("Respond Parameter %1 NOT found.").arg(strParam);
-    return false;
-
-
+    else
+    {
+        qWarning() << QString("Respond Parameter %1 NOT found.").arg(strParam);
+    }
+    return rvValue;
 }
 
-bool GitlEvtData::setParameter(QString strParam, QVariant rvValue)
+bool GitlEvtData::setParameter(const QString& strParam, const QVariant& rvValue)
 {
-    m_cRequest[strParam] = rvValue;
+    m_cParameters[strParam] = rvValue;
     return true;
 }
+
+QMap<QString, QVariant> GitlEvtData::cRequest() const
+{
+    return m_cParameters;
+}
+
+

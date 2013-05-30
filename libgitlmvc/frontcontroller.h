@@ -26,7 +26,7 @@ public:
 
 protected:
 
-    ///< command table
+    /// command table
     ADD_CLASS_FIELD(QVector<CommandFormat>, cCommandTable, getCommandTable, setCommandTable)
 
 };

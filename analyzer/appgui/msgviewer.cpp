@@ -4,13 +4,12 @@
 MsgViewer::MsgViewer(QWidget *parent ) :
     QTextBrowser(parent)
 {
-    listenToEvtByName(g_strStatusMsgEvent);
+    subscribeToEvtByName(g_strStatusMsgEvent);
 }
 
 bool MsgViewer::detonate( GitlEvent cEvt )
 {
-    QVariant vValue;
-    cEvt.getEvtData().getParameter("msg_detail", vValue);
+    QVariant vValue = cEvt.getEvtData().getParameter("msg_detail");
     QString strMsg = vValue.toString();
     this->append(strMsg);
     return true;

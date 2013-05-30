@@ -63,8 +63,9 @@ void BitstreamVersionSelector::showEvent(QShowEvent * event)
         ui->version100->setChecked(true);
         break;
     default:
-        qWarning() << "Invalid Bitstream Version!";
-        Q_ASSERT(0);
+        ui->version100->setChecked(true);
+        break;
+
     }
     QDialog::showEvent(event);
 }

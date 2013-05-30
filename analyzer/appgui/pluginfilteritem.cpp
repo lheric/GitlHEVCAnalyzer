@@ -25,7 +25,7 @@ void PluginFilterItem::on_enableCheckBox_clicked()
     cRequest.setParameter("command_name", "refresh_screen");
     GitlEvent cEvt( g_strCmdSentEvent  );
     cEvt.getEvtData().setParameter("request", QVariant::fromValue(cRequest));
-    dispatchEvt(&cEvt);
+    dispatchEvt(cEvt);
 
     m_pcFilter->setEnable(ui->enableCheckBox->isChecked());
 }
@@ -37,5 +37,5 @@ void PluginFilterItem::on_configBtn_clicked()
     cRequest.setParameter("filter", QVariant::fromValue((void*)(m_pcFilter)));
     GitlEvent cEvt( g_strCmdSentEvent  );
     cEvt.getEvtData().setParameter("request", QVariant::fromValue(cRequest));
-    dispatchEvt(&cEvt);
+    dispatchEvt(cEvt);
 }

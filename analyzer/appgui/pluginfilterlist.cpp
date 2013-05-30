@@ -8,8 +8,8 @@ PluginFilterList::PluginFilterList(QWidget *parent) :
     QListWidget(parent)
 {
     setModualName("plugin_filter_list");
-    listenToEvtByName(g_strPluginFilterLoaded);
-    listenToEvtByName(g_strPluginFilterUnloaded);
+    subscribeToEvtByName(g_strPluginFilterLoaded);
+    subscribeToEvtByName(g_strPluginFilterUnloaded);
 }
 
 bool PluginFilterList::detonate( GitlEvent cEvt )
@@ -19,8 +19,7 @@ bool PluginFilterList::detonate( GitlEvent cEvt )
     if( strEvtName == g_strPluginFilterLoaded )     ///< filter loaded
     {
 
-        QVariant vValue;
-        cEvt.getEvtData().getParameter("filter", vValue);
+        QVariant vValue = cEvt.getEvtData().getParameter("filter");
         AbstractFilter* pFilter = (AbstractFilter*)vValue.value<void*>();
         /// make checkable & init status
         QListWidgetItem* pcItem = new QListWidgetItem();
@@ -31,8 +30,7 @@ bool PluginFilterList::detonate( GitlEvent cEvt )
     }
     else if( strEvtName == g_strPluginFilterUnloaded )  ///< filter unloaded
     {
-        QVariant vValue;
-        cEvt.getEvtData().getParameter("filter_name", vValue);
+        QVariant vValue = cEvt.getEvtData().getParameter("filter_name");
 
         /// find and remove
         QString strFilterName = vValue.toString();

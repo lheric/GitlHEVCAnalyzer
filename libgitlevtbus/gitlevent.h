@@ -14,7 +14,7 @@ public:
     GitlEvent( const QString& strEvtName );
     GitlEvent();
 
-    ADD_CLASS_FIELD_NOSETTER(QString, strEvtName, getEvtName)
+    ADD_CLASS_FIELD(QString, strEvtName, getEvtName, setEvtName)
     ADD_CLASS_FIELD_NOSETTER(GitlEvtData, cEvtData, getEvtData)
 };
 

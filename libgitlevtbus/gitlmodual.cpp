@@ -7,14 +7,19 @@ GitlModual::GitlModual() :
 {    
 }
 
-bool GitlModual::listenToEvtByName( const QString& strEvtName )
+void GitlModual::subscribeToEvtByName( const QString& strEvtName )
 {
-    return m_cDelegate.listenToEvtByName(strEvtName);
+    return m_cDelegate.subscribeToEvtByName(strEvtName);
 }
 
-bool GitlModual::dispatchEvt( GitlEvent* pcEvt )
+void GitlModual::unsubscribeToEvtByName( const QString& strEvtName )
 {
-    return m_cDelegate.dispatchEvt(pcEvt);
+    return m_cDelegate.unsubscribeToEvtByName(strEvtName);
+}
+
+void GitlModual::dispatchEvt( GitlEvent& pcEvt )
+{
+    m_cDelegate.dispatchEvt(&pcEvt);
 }
 
 void GitlModual::setModualName( QString strModualName )

@@ -15,6 +15,7 @@ TARGET = analyzer
 CONFIG -= app_bundle
 CONFIG -= console
 CONFIG += static
+CONFIG += c++11
 
 TEMPLATE = app
 

@@ -15,9 +15,9 @@ BusyDialog::BusyDialog(QWidget *parent) :
     this->setWindowFlags(Qt::CustomizeWindowHint|Qt::WindowTitleHint);
 
     setModualName("busy_dialog");
-    listenToEvtByName(g_strCmdStartEvent);
-    listenToEvtByName(g_strCmdInfoEvent);
-    listenToEvtByName(g_strCmdEndEvent);
+    subscribeToEvtByName(g_strCmdStartEvent);
+    subscribeToEvtByName(g_strCmdInfoEvent);
+    subscribeToEvtByName(g_strCmdEndEvent);
 }
 
 BusyDialog::~BusyDialog()
@@ -38,8 +38,7 @@ bool BusyDialog::detonate(GitlEvent cEvt)
     {
         CommandRequest cRequest;
 
-        QVariant vValue;
-        cEvt.getEvtData().getParameter("request", vValue);
+        QVariant vValue = cEvt.getEvtData().getParameter("request");
         cRequest = vValue.value<CommandRequest>();
         cRequest.getParameter("command_name", vValue);
         const QString& strCmdName = vValue.toString();
@@ -50,8 +49,7 @@ bool BusyDialog::detonate(GitlEvent cEvt)
     else if(strEvtName == g_strCmdEndEvent)
     {
         CommandRespond cRespond;
-        QVariant vValue;
-        cEvt.getEvtData().getParameter("respond", vValue);
+        QVariant vValue = cEvt.getEvtData().getParameter("respond");
         cRespond = vValue.value<CommandRespond>();
         cRespond.getParameter("command_name", vValue);
         const QString& strCmdName = vValue.toString();
@@ -61,8 +59,7 @@ bool BusyDialog::detonate(GitlEvent cEvt)
     }
     else if(strEvtName == g_strCmdInfoEvent)
     {
-        QVariant cVariant;
-        cEvt.getEvtData().getParameter("message",cVariant);
+        QVariant cVariant = cEvt.getEvtData().getParameter("message");
         this->ui->busyDynamicText->setText(cVariant.toString());
     }
     return true;

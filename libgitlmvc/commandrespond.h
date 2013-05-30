@@ -1,21 +1,11 @@
 #ifndef COMMANDRESPOND_H
 #define COMMANDRESPOND_H
 
-#include <QObject>
-#include <QMap>
-#include <QVariant>
 #include "gitldef.h"
+#include "commandparameter.h"
 
-class CommandRespond
+class CommandRespond : public CommandParameter
 {
-public:
-    explicit CommandRespond();
-    bool hasParameter(QString strParam) const;
-    bool getParameter(QString strParam, QVariant& rvValue) const;
-    bool setParameter(QString strParam, const QVariant& rvValue);
-
-protected:
-    QMap<QString,QVariant> m_cRespond;
 
 };
 

@@ -15,14 +15,14 @@ TEMPLATE = lib
 CONFIG += staticlib
 
 SOURCES += abstractcommand.cpp \
-    commandrequest.cpp \
-    commandrespond.cpp \
-    frontcontroller.cpp
+    frontcontroller.cpp \
+    commandparameter.cpp
 
 HEADERS += abstractcommand.h \
     commandrequest.h \
     commandrespond.h \
-    frontcontroller.h
+    frontcontroller.h \
+    commandparameter.h
 
 unix:!symbian {
     maemo5 {

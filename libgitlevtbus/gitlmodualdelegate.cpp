@@ -1,6 +1,8 @@
 #include "gitlmodualdelegate.h"
 #include "gitleventbus.h"
-
+#include <QDebug>
+#include <iostream>
+using namespace std;
 GitlModualDelegate::GitlModualDelegate(GitlModual *pcDelegator)
 {
     m_pcDelegator = pcDelegator;
@@ -12,10 +14,25 @@ GitlModualDelegate::GitlModualDelegate(GitlModual *pcDelegator)
 
 
 
-bool GitlModualDelegate::listenToEvtByName( const QString& strEvtName )
+void GitlModualDelegate::subscribeToEvtByName( const QString& strEvtName )
 {
     m_cListeningEvts.push_back(strEvtName);
-    return true;
+    return;
+}
+
+
+void GitlModualDelegate::unsubscribeToEvtByName( const QString& strEvtName )
+{
+    for(int i = 0; i < m_cListeningEvts.size(); i++)
+    {
+        if(m_cListeningEvts.at(i) == strEvtName)
+        {
+            m_cListeningEvts.remove(i);
+            return;
+        }
+    }
+
+    return;
 }
 
 bool GitlModualDelegate::detonate(GitlEvent cEvt )
@@ -39,8 +56,7 @@ bool GitlModualDelegate::xIsListenToEvt( const QString& strEvtName )
     return false;
 }
 
-bool GitlModualDelegate::dispatchEvt( GitlEvent* pcEvt )
+void GitlModualDelegate::dispatchEvt( GitlEvent* pcEvt )
 {
     m_pcGitlEvtBus->post(pcEvt);
-    return true;
 }

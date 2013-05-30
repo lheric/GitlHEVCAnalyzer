@@ -50,7 +50,7 @@ AppFrontController::AppFrontController()
     m_iMaxEvtInQue = 1000;
     xInitCommand();
     setModualName("app_front_controller");
-    listenToEvtByName(g_strCmdSentEvent);
+    subscribeToEvtByName(g_strCmdSentEvent);
     this->start();
 }
 
@@ -116,12 +116,12 @@ void AppFrontController::run()
         CommandRequest cRequest;
         CommandRespond cRespond;
         QVariant vValue;
-        cEvt.getEvtData().getParameter("request", vValue);
+        vValue = cEvt.getEvtData().getParameter("request");
         cRequest = vValue.value<CommandRequest>();
 
         GitlEvent cCmdStartEvt( g_strCmdStartEvent );               ///
         cCmdStartEvt.getEvtData().setParameter("request", vValue);  /// start command event
-        dispatchEvt(&cCmdStartEvt);                                 ///
+        dispatchEvt(cCmdStartEvt);                                 ///
 
         /// do command & exception handling
         try
@@ -155,7 +155,7 @@ void AppFrontController::run()
 
         GitlEvent cCmdEndEvt( g_strCmdEndEvent );                                       ///
         cCmdEndEvt.getEvtData().setParameter("respond", QVariant::fromValue(cRespond)); /// end command event
-        dispatchEvt(&cCmdEndEvt);                                                       ///
+        dispatchEvt(cCmdEndEvt);                                                       ///
 
     }
 

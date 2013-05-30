@@ -68,7 +68,7 @@ bool DecodeBitstreamCommand::execute( CommandRequest& rcRequest, CommandRespond&
     if( !bSkipDecode )
     {
         cDecodingStageInfo.getEvtData().setParameter("message", "(1/9)Start Decoding Bitstream...");
-        dispatchEvt(&cDecodingStageInfo);
+        dispatchEvt(cDecodingStageInfo);
         BitstreamParser cBitstreamParser;
         bSuccess = cBitstreamParser.parseFile(strDecoderPath,
                                               iVersion,
@@ -92,7 +92,7 @@ bool DecodeBitstreamCommand::execute( CommandRequest& rcRequest, CommandRespond&
     if( bSuccess )
     {
         cDecodingStageInfo.getEvtData().setParameter("message", "(2/9)Start Parsing Sequence Parameter Set...");
-        dispatchEvt(&cDecodingStageInfo);
+        dispatchEvt(cDecodingStageInfo);
         QFile cSPSFile(strSPSFilename);
         cSPSFile.open(QIODevice::ReadOnly);
         QTextStream cSPSTextStream(&cSPSFile);
@@ -106,7 +106,7 @@ bool DecodeBitstreamCommand::execute( CommandRequest& rcRequest, CommandRespond&
     if( bSuccess )
     {
         cDecodingStageInfo.getEvtData().setParameter("message", "(3/9)Start Parsing Decoder Std Output File...");
-        dispatchEvt(&cDecodingStageInfo);
+        dispatchEvt(cDecodingStageInfo);
         QFile cGeneralFile(strGeneralFilename);
         cGeneralFile.open(QIODevice::ReadOnly);
         QTextStream cGeneralTextStream(&cGeneralFile);
@@ -121,7 +121,7 @@ bool DecodeBitstreamCommand::execute( CommandRequest& rcRequest, CommandRespond&
     if( bSuccess )
     {
         cDecodingStageInfo.getEvtData().setParameter("message", "(4/9)Start Parsing CU & PU Structure...");
-        dispatchEvt(&cDecodingStageInfo);
+        dispatchEvt(cDecodingStageInfo);
         QFile cCUPUFile(strCUPUFilename);
         cCUPUFile.open(QIODevice::ReadOnly);
         QTextStream cCUPUTextStream(&cCUPUFile);
@@ -136,7 +136,7 @@ bool DecodeBitstreamCommand::execute( CommandRequest& rcRequest, CommandRespond&
     if( bSuccess )
     {
         cDecodingStageInfo.getEvtData().setParameter("message", "(5/9)Start Parsing Predction Mode...");
-        dispatchEvt(&cDecodingStageInfo);
+        dispatchEvt(cDecodingStageInfo);
         QFile cPredFile(strPredFilename);
         cPredFile.open(QIODevice::ReadOnly);
         QTextStream cPredTextStream(&cPredFile);
@@ -151,7 +151,7 @@ bool DecodeBitstreamCommand::execute( CommandRequest& rcRequest, CommandRespond&
     if( bSuccess )
     {
         cDecodingStageInfo.getEvtData().setParameter("message", "(6/9)Start Parsing Motion Vectors...");
-        dispatchEvt(&cDecodingStageInfo);
+        dispatchEvt(cDecodingStageInfo);
         QFile cMVFile(strMVFilename);
         cMVFile.open(QIODevice::ReadOnly);
         QTextStream cMVTextStream(&cMVFile);
@@ -166,7 +166,7 @@ bool DecodeBitstreamCommand::execute( CommandRequest& rcRequest, CommandRespond&
     if( bSuccess )
     {
         cDecodingStageInfo.getEvtData().setParameter("message", "(7/9)Start Parsing Motion Merge Info...");
-        dispatchEvt(&cDecodingStageInfo);
+        dispatchEvt(cDecodingStageInfo);
         QFile cMergeFile(strMergeFilename);
         cMergeFile.open(QIODevice::ReadOnly);
         QTextStream cMergeTextStream(&cMergeFile);
@@ -181,7 +181,7 @@ bool DecodeBitstreamCommand::execute( CommandRequest& rcRequest, CommandRespond&
     if( bSuccess )
     {
         cDecodingStageInfo.getEvtData().setParameter("message", "(8/9)Start Parsing Intra Info...");
-        dispatchEvt(&cDecodingStageInfo);
+        dispatchEvt(cDecodingStageInfo);
         QFile cIntraFile(strIntraFilename);
         cIntraFile.open(QIODevice::ReadOnly);
         QTextStream cIntraTextStream(&cIntraFile);
@@ -202,7 +202,7 @@ bool DecodeBitstreamCommand::execute( CommandRequest& rcRequest, CommandRespond&
     if( bSuccess )
     {
         cDecodingStageInfo.getEvtData().setParameter("message", "(9/9)Reding & Drawing Reconstructed YUV...");
-        dispatchEvt(&cDecodingStageInfo);
+        dispatchEvt(cDecodingStageInfo);
         pModel->getFrameBuffer().setYUVFile(strYUVFilename, iWidth, iHeight);
         pcFramePixmap = pModel->getFrameBuffer().getFrame(0);   ///< Read Frame Buffer
         pcFramePixmap = pModel->getDrawEngine().drawFrame(pcSequence, 0, pcFramePixmap);  ///< Draw Frame Buffer
@@ -224,7 +224,7 @@ bool DecodeBitstreamCommand::execute( CommandRequest& rcRequest, CommandRespond&
     cSequenceChangedEvt.getEvtData().setParameter("sequences",QVariant::fromValue((void*)ppcSequences));
     cSequenceChangedEvt.getEvtData().setParameter("current_sequence",QVariant::fromValue((void*)pcSequence));
 
-    dispatchEvt(&cSequenceChangedEvt);
+    dispatchEvt(cSequenceChangedEvt);
 
 
 

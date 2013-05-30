@@ -12,11 +12,13 @@ class GitlEvtData
 public:
     GitlEvtData();
     bool hasParameter(QString strParam) const;
-    bool getParameter(const QString& strParam, QVariant& rvValue) const;
-    bool setParameter(QString strParam, QVariant rvValue);
+    QVariant getParameter(const QString& strParam ) const;
+    bool setParameter(const QString& strParam, const QVariant& rvValue);
+
+    QMap<QString, QVariant> cRequest() const;
 
 protected:
-    QMap<QString,QVariant> m_cRequest;
+    QMap<QString,QVariant> m_cParameters;  //TODO rename
 signals:
 
 public slots:

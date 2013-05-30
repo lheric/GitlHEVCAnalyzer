@@ -44,7 +44,7 @@ bool FilterLoader::init()
 
             GitlEvent cEvt( g_strPluginFilterLoaded );                                      ///
             cEvt.getEvtData().setParameter("filter", QVariant::fromValue((void*)pPlugin));  /// plugin loaded event
-            dispatchEvt(&cEvt);                                                             ///
+            dispatchEvt(cEvt);                                                             ///
 
         }
         else
@@ -85,7 +85,7 @@ bool FilterLoader::uninit()
 
         GitlEvent cEvt( g_strPluginFilterUnloaded );                   ///
         cEvt.getEvtData().setParameter("filter_name", strFilterName);  /// plugin unloaded event
-        dispatchEvt(&cEvt);                                            ///
+        dispatchEvt(cEvt);                                            ///
     }
 
     while( !m_apcPluginLoaders.empty() )

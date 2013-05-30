@@ -39,7 +39,7 @@ void FrameView::wheelEvent ( QWheelEvent * event )
         cRequest.setParameter("scale", dNextScale);
         GitlEvent cEvt( g_strCmdSentEvent  );
         cEvt.getEvtData().setParameter("request", QVariant::fromValue(cRequest));
-        dispatchEvt(&cEvt);
+        dispatchEvt(cEvt);
 
 
         int iImgX = m_cGraphicsPixmapItem.scenePos().x();

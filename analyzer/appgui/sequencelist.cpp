@@ -11,7 +11,7 @@ SequenceList::SequenceList(QWidget *parent) :
     ui(new Ui::SequenceList)
 {
     ui->setupUi(this);
-    listenToEvtByName(g_strSquencesListChanged);
+    subscribeToEvtByName(g_strSquencesListChanged);
 }
 
 SequenceList::~SequenceList()
@@ -42,9 +42,9 @@ bool SequenceList::detonate( GitlEvent cEvt )
     QVariant vValue;
     if(cEvt.getEvtData().hasParameter("sequences"))
     {
-        cEvt.getEvtData().getParameter("sequences",vValue);
+        vValue = cEvt.getEvtData().getParameter("sequences");
         QVector<ComSequence*>* ppcSequences = (QVector<ComSequence*>*)vValue.value<void*>();
-        cEvt.getEvtData().getParameter("current_sequence",vValue);
+        vValue = cEvt.getEvtData().getParameter("current_sequence");
         ComSequence* pcCurrentSequence = (ComSequence*)vValue.value<void*>();
         if(ppcSequences->size() != 0)
         {
@@ -83,5 +83,5 @@ void SequenceList::sequenceRadioButtonClicked(ComSequence* pcSequence)
     cRequest.setParameter("command_name", "switch_sequence");
     cRequest.setParameter("sequence", QVariant::fromValue((void*)pcSequence));
     cEvt.getEvtData().setParameter("request", QVariant::fromValue(cRequest));
-    dispatchEvt(&cEvt);
+    dispatchEvt(cEvt);
 }

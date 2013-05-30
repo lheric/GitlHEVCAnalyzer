@@ -8,7 +8,6 @@
 #include "GitlDef.h"
 #include "gitlevent.h"
 #include "gitlmodual.h"
-#include "gitlblockevtdispatcher.h"
 
 
 class GitlModualDelegate;
@@ -17,9 +16,10 @@ using namespace std;
 class GitlEventBus : public QObject
 {
     Q_OBJECT
-public:
+private:
     GitlEventBus();
-    ~GitlEventBus();
+
+public:
     /*! connect a modual to the event bus
       */
     bool registerModual(GitlModualDelegate *pcModual);
@@ -30,15 +30,16 @@ public slots:
       */
     void post(GitlEvent* pcEvt);
 
-
+signals:
+    /*! message to send
+     */
+    void eventTriggered(GitlEvent pcEvt);
 
 private:
 
     ADD_CLASS_FIELD_PRIVATE( QList<GitlModual*>, cModuals )
     ADD_CLASS_FIELD_PRIVATE( QMutex, cModualQueMutex )
     ADD_CLASS_FIELD_PRIVATE( QMutex, cModualDispMutex )
-
-    ADD_CLASS_FIELD_PRIVATE( GitlBlockEvtDispatcher, cBlockEvtDispatcher )
 
     ///SINGLETON
     SINGLETON_PATTERN_DECLARE(GitlEventBus)
