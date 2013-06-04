@@ -127,10 +127,10 @@ HEADERS += \
 #include & libs
 INCLUDEPATH += . \
                ../libgitlevtbus/src \
-               ../libgitlmvc    \
+               ../libgitlmvc/src    \
                ../3rdparty/WinSparkle-0.3/include
 
-LIBS += -L$${OUT_PWD}/../libs -L$${OUT_PWD}/../libgitlevtbus  -L$${PWD}/../3rdparty/WinSparkle-0.3/lib
+LIBS += -L$${OUT_PWD}/../libgitlevtbus -L$${OUT_PWD}/../libgitlmvc -L$${PWD}/../3rdparty/WinSparkle-0.3/lib
 
 Debug:   LIBS += -lGitlMVCd -lGitlEvtBusd -lWinSparkle
 Release: LIBS += -lGitlMVC  -lGitlEvtBus  -lWinSparkle
