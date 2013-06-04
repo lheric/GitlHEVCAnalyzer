@@ -4,3 +4,6 @@
 [submodule "libgitlmvc"]
 	path = libgitlmvc
 	url = https://github.com/lheric/libgitlmvc.git
+[submodule "mvc"]
+	path = mvc
+	url = https://github.com/lheric/libgitlmvc.git
