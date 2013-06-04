@@ -3,4 +3,4 @@
 	url = https://github.com/lheric/libgitlevtbus.git
 [submodule "libgitlmvc"]
 	path = libgitlmvc
-	url = https://github.com/lheric/libgitlevtbus.git
+	url = https://github.com/lheric/libgitlmvc.git
