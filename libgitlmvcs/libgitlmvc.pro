@@ -36,7 +36,7 @@ unix:!symbian {
 }
 
 
-INCLUDEPATH += ../libgitlevtbus/
+INCLUDEPATH += ../libgitlevtbus/src
 
 # libs
 #debug:   LIBS += -L$${PWD}/lib -lGitlEvtBusd

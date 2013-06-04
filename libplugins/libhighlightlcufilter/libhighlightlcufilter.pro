@@ -1,7 +1,7 @@
 TEMPLATE        = lib
 CONFIG         += plugin
 INCLUDEPATH    += ../../analyzer \
-                  ../../libgitlevtbus
+                  ../../libgitlevtbus/src
 HEADERS         = highlightlcufilter.h
 SOURCES         = highlightlcufilter.cpp
 TARGET          = $$qtLibraryTarget(libhighlightlcufilter)

@@ -1,7 +1,7 @@
 TEMPLATE        = lib
 CONFIG         += plugin
 INCLUDEPATH    += ../../analyzer \
-                  ../../libgitlevtbus
+                  ../../libgitlevtbus/src
 HEADERS         = highlightdifffilter.h
 SOURCES         = highlightdifffilter.cpp
 TARGET          = $$qtLibraryTarget(libhighlightdifffilter)

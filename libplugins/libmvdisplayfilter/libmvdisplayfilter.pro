@@ -1,7 +1,7 @@
 TEMPLATE        = lib
 CONFIG         += plugin
 INCLUDEPATH    += ../../analyzer \
-                  ../../libgitlevtbus
+                  ../../libgitlevtbus/src
 HEADERS         = mvdisplayfilter.h
 SOURCES         = mvdisplayfilter.cpp
 TARGET          = $$qtLibraryTarget(libmvdisplayfilter)

@@ -1,7 +1,7 @@
 TEMPLATE        = lib
 CONFIG         += plugin
 INCLUDEPATH    += ../../analyzer \
-                  ../../libgitlevtbus
+                  ../../libgitlevtbus/src
 HEADERS         = rdgaindisplayfilter.h
 SOURCES         = rdgaindisplayfilter.cpp
 TARGET          = $$qtLibraryTarget(librdgaindisplayfilter)
