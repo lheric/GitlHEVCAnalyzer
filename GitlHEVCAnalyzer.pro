@@ -4,4 +4,3 @@ SUBDIRS = libgitlevtbus \
     libgitlmvc \
     analyzer \
     libplugins
-
