@@ -3,7 +3,7 @@
 #include "exceptions/invaildfilterindexexception.h"
 #include "model/modellocator.h"
 #include "events/eventnames.h"
-
+#include "common/comrom.h"
 #include <QDir>
 
 
@@ -53,6 +53,9 @@ bool FilterLoader::init()
             qWarning() << QString("Plugin Filter %1 Loading Failed!").arg(strPluginFileName);
         }
     }
+
+    /// sort
+    xSortFilters();
 
     /// init each filter
     for(int i = 0; i < m_apcFilters.size(); i++)
@@ -207,4 +210,38 @@ AbstractFilter* FilterLoader::getFitlerByName(QString strFilterName)
         }
     }
     return pFilter;
+}
+void FilterLoader::xSortFilters()
+{
+    ///read last setting
+    QVector<QString> cLastOrder;
+    g_cAppSetting.beginGroup("Filters");
+    int iSize = g_cAppSetting.beginReadArray("filter_order");
+    for (int i = 0; i < iSize; ++i)
+    {
+        cLastOrder.push_back(g_cAppSetting.value("filter_name").toString());
+    }
+    g_cAppSetting.endArray();
+    g_cAppSetting.endGroup();
+
+
+    /// sorting
+    for (int i = 0; i < cLastOrder.size(); ++i)
+    {
+        for(int j = 0; j < m_apcFilters.size(); j++)
+        {
+            if(m_apcFilters.at(j)->getName() == cLastOrder.at(i))
+            {
+                /// swap position i & j
+                AbstractFilter* tempFilter = m_apcFilters.at(i);
+                m_apcFilters.replace(i, m_apcFilters.at(j));
+                m_apcFilters.replace(j, tempFilter);
+
+                QPluginLoader* tempLoader = m_apcPluginLoaders.at(i);
+                m_apcPluginLoaders.replace(i, m_apcPluginLoaders.at(j));
+                m_apcPluginLoaders.replace(j, tempLoader);
+            }
+        }
+    }
+
 }

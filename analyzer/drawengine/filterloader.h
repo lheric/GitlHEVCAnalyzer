@@ -37,6 +37,12 @@ public:
      */
     AbstractFilter* getFitlerByName(QString strFilterName);
 
+
+protected:
+    void xSortFilters();
+
+
+
     /*!
      * Plugin Directory
      */

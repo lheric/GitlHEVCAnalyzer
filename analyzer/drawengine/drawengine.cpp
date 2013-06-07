@@ -15,42 +15,47 @@ QPixmap* DrawEngine::drawFrame( ComSequence* pcSequence, int iPoc, QPixmap *pcPi
     ComFrame* pcFrame = pcSequence->getFrames().at(iPoc);
     int iLCUTotalNum = pcFrame->getLCUs().size();
 
-
+    /// draw original pic
     m_cDrawnPixmap = pcPixmap->scaled(pcPixmap->size()*m_dScale, Qt::KeepAspectRatio, Qt::FastTransformation);
     QPainter cPainter(&m_cDrawnPixmap);
 
+    /***********************************************************************
+     *               Following is for drawing filters                      *
+     ***********************************************************************/
 
-    /// for every CU in this frame
+    /// draw PU
+    for( int iAddr = 0; iAddr < iLCUTotalNum; iAddr++ )
+    {
+        ComCU* pcLCU = pcFrame->getLCUs().at(iAddr);        
+        xDrawPU( &cPainter, pcLCU );
+    }
+
+    /// draw CU
     QRect cScaledCUArea;
+    for( int iAddr = 0; iAddr < iLCUTotalNum; iAddr++ )
+    {
+        ComCU* pcLCU = pcFrame->getLCUs().at(iAddr);
+        xDrawCU( &cPainter, pcLCU );
+    }
+
+    /// draw CTU (i.e. LCU)
     for( int iAddr = 0; iAddr < iLCUTotalNum; iAddr++ )
     {
         ComCU* pcLCU = pcFrame->getLCUs().at(iAddr);
         int iPixelX = pcLCU->getX();
         int iPixelY = pcLCU->getY();
-
-
-        /// draw CU
-        xDrawCU( &cPainter, pcLCU );
-
-
-        /// draw CTU (i.e. LCU)
         cScaledCUArea.setCoords( iPixelX, iPixelY, (iPixelX+pcLCU->getSize())-1, (iPixelY+pcLCU->getSize())-1 );
         xScaleRect(&cScaledCUArea,&cScaledCUArea);
         m_cFilterLoader.drawCTU(&cPainter, pcLCU, m_dScale, &cScaledCUArea);
+    }
 
-    }///LCU loop end
-
-
-    ///Frame Filter
+    ///draw Frame
     QRect cScaledFrameArea(QPoint(0,0), m_cDrawnPixmap.size());
     m_cFilterLoader.drawFrame(&cPainter, pcFrame, m_dScale, &cScaledFrameArea);
     return &m_cDrawnPixmap;
 }
 
-
-
-
-bool DrawEngine::xDrawCU( QPainter* pcPainter,  ComCU* pcCU )
+bool DrawEngine::xDrawPU( QPainter* pcPainter,  ComCU* pcCU )
 {
 
     if( pcCU->getSCUs().empty() )
@@ -66,6 +71,25 @@ bool DrawEngine::xDrawCU( QPainter* pcPainter,  ComCU* pcCU )
             xScaleRect(&cScaledPUArea, &cScaledPUArea);
             m_cFilterLoader.drawPU(pcPainter, pcPU, m_dScale, &cScaledPUArea);
         }
+
+    }
+    else
+    {
+        for(int iSub = 0; iSub < 4; iSub++)
+        {
+            xDrawPU ( pcPainter, pcCU->getSCUs().at(iSub) );
+        }
+    }
+    return true;
+
+}
+
+
+bool DrawEngine::xDrawCU( QPainter* pcPainter,  ComCU* pcCU )
+{
+
+    if( pcCU->getSCUs().empty() )
+    {
 
         /// draw CU
         QRect cScaledCUArea;

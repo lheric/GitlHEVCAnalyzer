@@ -65,7 +65,9 @@ SOURCES += main.cpp \
     appgui/sequencelistitem.cpp \
     commands/zoomframecommand.cpp \
     commands/configfiltercommand.cpp \
-    common/comrom.cpp
+    common/comrom.cpp \
+    commands/filterorderupcommand.cpp \
+    commands/filterorderdowncommand.cpp
 
 HEADERS += \
     common/comsequence.h \
@@ -122,7 +124,9 @@ HEADERS += \
     exceptions/decodingfailexception.h \
     exceptions/bitstreamnotfoundexception.h \
     commands/configfiltercommand.h \
-    common/comrom.h
+    common/comrom.h \
+    commands/filterorderupcommand.h \
+    commands/filterorderdowncommand.h
 
 #include & libs
 INCLUDEPATH += . \

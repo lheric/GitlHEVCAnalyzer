@@ -25,6 +25,17 @@ public:
     QPixmap* drawFrame  ( ComSequence* pcSequence, int iPoc, QPixmap *pcPixmap );
 
 protected:
+
+    /*!
+     * \brief xDrawPU draw PU recursively
+     * \param pcPainter
+     * \param pcCU
+     * \return
+     */
+    bool xDrawPU( QPainter* pcPainter,  ComCU* pcCU );
+
+
+
     /*!
      * \brief xDrawCU draw CU recursively
      * \param pcPainter
