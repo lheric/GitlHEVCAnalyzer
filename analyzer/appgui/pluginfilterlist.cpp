@@ -20,7 +20,7 @@ bool PluginFilterList::detonate( GitlEvent cEvt )
     if( strEvtName == g_strPluginFilterLoaded )     ///< filter loaded
     {
 
-        QVariant vValue = cEvt.getEvtData().getParameter("filter");
+        QVariant vValue = cEvt.getParameter("filter");
         AbstractFilter* pFilter = (AbstractFilter*)vValue.value<void*>();
         /// make checkable & init status
         QListWidgetItem* pcItem = new QListWidgetItem();
@@ -31,7 +31,7 @@ bool PluginFilterList::detonate( GitlEvent cEvt )
     }
     else if( strEvtName == g_strPluginFilterUnloaded )  ///< filter unloaded
     {
-        QVariant vValue = cEvt.getEvtData().getParameter("filter_name");
+        QVariant vValue = cEvt.getParameter("filter_name");
 
         /// find and remove
         QString strFilterName = vValue.toString();
@@ -44,11 +44,11 @@ bool PluginFilterList::detonate( GitlEvent cEvt )
         }
 
     }
-    else if (strEvtName == g_strCmdEndEvent )   ///< filter order changed, refresh list
+    /*else if (strEvtName == g_strCmdEndEvent )   ///< filter order changed, refresh list
     {
         this->clear();
 
-        QVariant vValue = cEvt.getEvtData().getParameter("respond").value<GitlCommandRespond>().getParameter("filters");
+        QVariant vValue = cEvt.getParameter("respond").value<GitlCommandRespond>().getParameter("filters");
         QVector<AbstractFilter*> *papcFilter = (QVector<AbstractFilter*>*)vValue.value<void*>();
 
         for(int i = 0; i < papcFilter->size(); i++)
@@ -61,6 +61,6 @@ bool PluginFilterList::detonate( GitlEvent cEvt )
             setItemWidget(pcItem, pItemWidget);
         }
 
-    }
+    }*/
     return true;
 }

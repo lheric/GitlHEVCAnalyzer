@@ -40,11 +40,11 @@ bool SequenceList::detonate( GitlEvent cEvt )
     clearAllRadioBtn();
 
     QVariant vValue;
-    if(cEvt.getEvtData().hasParameter("sequences"))
+    if(cEvt.hasParameter("sequences"))
     {
-        vValue = cEvt.getEvtData().getParameter("sequences");
+        vValue = cEvt.getParameter("sequences");
         QVector<ComSequence*>* ppcSequences = (QVector<ComSequence*>*)vValue.value<void*>();
-        vValue = cEvt.getEvtData().getParameter("current_sequence");
+        vValue = cEvt.getParameter("current_sequence");
         ComSequence* pcCurrentSequence = (ComSequence*)vValue.value<void*>();
         if(ppcSequences->size() != 0)
         {
@@ -82,6 +82,6 @@ void SequenceList::sequenceRadioButtonClicked(ComSequence* pcSequence)
     GitlCommandRequest cRequest;
     cRequest.setParameter("command_name", "switch_sequence");
     cRequest.setParameter("sequence", QVariant::fromValue((void*)pcSequence));
-    cEvt.getEvtData().setParameter("request", QVariant::fromValue(cRequest));
+    cEvt.setParameter("request", QVariant::fromValue(cRequest));
     dispatchEvt(cEvt);
 }

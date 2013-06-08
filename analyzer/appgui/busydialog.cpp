@@ -38,7 +38,7 @@ bool BusyDialog::detonate(GitlEvent cEvt)
     {
         GitlCommandRequest cRequest;
 
-        QVariant vValue = cEvt.getEvtData().getParameter("request");
+        QVariant vValue = cEvt.getParameter("request");
         cRequest = vValue.value<GitlCommandRequest>();
         vValue = cRequest.getParameter("command_name");
         const QString& strCmdName = vValue.toString();
@@ -49,7 +49,7 @@ bool BusyDialog::detonate(GitlEvent cEvt)
     else if(strEvtName == g_strCmdEndEvent)
     {
         GitlCommandRespond cRespond;
-        QVariant vValue = cEvt.getEvtData().getParameter("respond");
+        QVariant vValue = cEvt.getParameter("respond");
         cRespond = vValue.value<GitlCommandRespond>();
         vValue = cRespond.getParameter("command_name");
         const QString& strCmdName = vValue.toString();
@@ -59,7 +59,7 @@ bool BusyDialog::detonate(GitlEvent cEvt)
     }
     else if(strEvtName == g_strCmdInfoEvent)
     {
-        QVariant cVariant = cEvt.getEvtData().getParameter("message");
+        QVariant cVariant = cEvt.getParameter("message");
         this->ui->busyDynamicText->setText(cVariant.toString());
     }
     return true;

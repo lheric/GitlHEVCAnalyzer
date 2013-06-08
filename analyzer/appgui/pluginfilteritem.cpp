@@ -12,7 +12,7 @@ PluginFilterItem::PluginFilterItem(AbstractFilter* pcFilter, QWidget *parent) :
     m_pcFilter = pcFilter;
 
     ui->filterNameLabel->setText(pcFilter->getName());
-    ui->enableCheckBox->setEnabled(pcFilter->getEnable());
+    ui->enableCheckBox->setChecked(pcFilter->getEnable());
 }
 
 PluginFilterItem::~PluginFilterItem()
@@ -25,7 +25,7 @@ void PluginFilterItem::on_enableCheckBox_clicked()
     GitlCommandRequest cRequest;
     cRequest.setParameter("command_name", "refresh_screen");
     GitlEvent cEvt( g_strCmdSentEvent  );
-    cEvt.getEvtData().setParameter("request", QVariant::fromValue(cRequest));
+    cEvt.setParameter("request", QVariant::fromValue(cRequest));
     dispatchEvt(cEvt);
 
     m_pcFilter->setEnable(ui->enableCheckBox->isChecked());
@@ -37,7 +37,7 @@ void PluginFilterItem::on_configBtn_clicked()
     cRequest.setParameter("command_name", "config_filter");
     cRequest.setParameter("filter", QVariant::fromValue((void*)(m_pcFilter)));
     GitlEvent cEvt( g_strCmdSentEvent  );
-    cEvt.getEvtData().setParameter("request", QVariant::fromValue(cRequest));
+    cEvt.setParameter("request", QVariant::fromValue(cRequest));
     dispatchEvt(cEvt);
 }
 
@@ -48,6 +48,6 @@ void PluginFilterItem::on_upBtn_clicked()
     cRequest.setParameter("filter_name", m_pcFilter->getName());
     cRequest.setParameter("filter", QVariant::fromValue((void*)(m_pcFilter)));
     GitlEvent cEvt( g_strCmdSentEvent  );
-    cEvt.getEvtData().setParameter("request", QVariant::fromValue(cRequest));
+    cEvt.setParameter("request", QVariant::fromValue(cRequest));
     dispatchEvt(cEvt);
 }

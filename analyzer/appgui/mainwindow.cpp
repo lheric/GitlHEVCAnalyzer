@@ -37,13 +37,13 @@ MainWindow::~MainWindow()
 bool MainWindow::detonate(GitlEvent cEvt )
 {
 
-    if(!cEvt.getEvtData().hasParameter("respond"))
+    if(!cEvt.hasParameter("respond"))
     {
         qWarning() << QString("MainWindow Received Command Finish Event Without \"Respond\"");
         return false;
     }
 
-    QVariant vValue = cEvt.getEvtData().getParameter("respond");
+    QVariant vValue = cEvt.getParameter("respond");
     const GitlCommandRespond& cRespond = vValue.value<GitlCommandRespond>();
     xRefreshUIByRespond(cRespond);
     return true;
@@ -131,7 +131,7 @@ void MainWindow::on_previousFrame_clicked()
     cRequest.setParameter("command_name", "prev_frame");
 
     GitlEvent cEvt( g_strCmdSentEvent  );
-    cEvt.getEvtData().setParameter("request", QVariant::fromValue(cRequest));
+    cEvt.setParameter("request", QVariant::fromValue(cRequest));
     dispatchEvt(cEvt);
 }
 
@@ -143,7 +143,7 @@ void MainWindow::on_nextFrame_clicked()
     cRequest.setParameter("command_name", "next_frame");
 
     GitlEvent cEvt( g_strCmdSentEvent  );
-    cEvt.getEvtData().setParameter("request", QVariant::fromValue(cRequest));
+    cEvt.setParameter("request", QVariant::fromValue(cRequest));
     dispatchEvt(cEvt);
 }
 
@@ -159,7 +159,7 @@ void MainWindow::on_progressBar_actionTriggered(int action)
     cRequest.setParameter("percent", iBarPercent);
 
     GitlEvent cEvt( g_strCmdSentEvent  );
-    cEvt.getEvtData().setParameter("request", QVariant::fromValue(cRequest));
+    cEvt.setParameter("request", QVariant::fromValue(cRequest));
     dispatchEvt(cEvt);
 
 }
@@ -225,7 +225,7 @@ void MainWindow::on_actionOpen_bitstream_triggered()
     cRequest.setParameter("output_folder", "decoded_sequences");
 
     GitlEvent cEvt( g_strCmdSentEvent  );
-    cEvt.getEvtData().setParameter("request", QVariant::fromValue(cRequest));
+    cEvt.setParameter("request", QVariant::fromValue(cRequest));
     dispatchEvt(cEvt);
 }
 
@@ -235,7 +235,7 @@ void MainWindow::on_printScreenBtn_clicked()
     GitlCommandRequest cRequest;
     cRequest.setParameter("command_name", "print_screen");
     GitlEvent cEvt( g_strCmdSentEvent  );
-    cEvt.getEvtData().setParameter("request", QVariant::fromValue(cRequest));
+    cEvt.setParameter("request", QVariant::fromValue(cRequest));
     dispatchEvt(cEvt);
 }
 
@@ -289,6 +289,6 @@ void MainWindow::on_actionCheckUpdate_triggered()
     GitlCommandRequest cRequest;
     cRequest.setParameter("command_name", "check_update");
     GitlEvent cEvt( g_strCmdSentEvent  );
-    cEvt.getEvtData().setParameter("request", QVariant::fromValue(cRequest));
+    cEvt.setParameter("request", QVariant::fromValue(cRequest));
     dispatchEvt(cEvt);
 }

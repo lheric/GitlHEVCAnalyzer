@@ -38,7 +38,7 @@ void FrameView::wheelEvent ( QWheelEvent * event )
         cRequest.setParameter("command_name", "zoom_frame");
         cRequest.setParameter("scale", dNextScale);
         GitlEvent cEvt( g_strCmdSentEvent  );
-        cEvt.getEvtData().setParameter("request", QVariant::fromValue(cRequest));
+        cEvt.setParameter("request", QVariant::fromValue(cRequest));
         dispatchEvt(cEvt);
 
 
