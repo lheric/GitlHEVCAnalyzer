@@ -57,6 +57,8 @@ private slots:
 
     void on_actionExit_triggered();
 
+    void on_actionCheckUpdate_triggered();
+
 private:
     Ui::MainWindow *ui;
 

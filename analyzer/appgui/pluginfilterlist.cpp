@@ -3,11 +3,12 @@
 #include "drawengine/abstractfilter.h"
 #include "io/analyzermsgsender.h"
 #include "appgui/pluginfilteritem.h"
-
+#include "gitlcommandrespond.h"
 PluginFilterList::PluginFilterList(QWidget *parent) :
     QListWidget(parent)
 {
     setModualName("plugin_filter_list");
+    subscribeToEvtByName(g_strCmdEndEvent);
     subscribeToEvtByName(g_strPluginFilterLoaded);
     subscribeToEvtByName(g_strPluginFilterUnloaded);
 }
@@ -40,6 +41,24 @@ bool PluginFilterList::detonate( GitlEvent cEvt )
         {
             QListWidgetItem* pcItem = apcFound.at(i);
             delete this->takeItem(row(pcItem));
+        }
+
+    }
+    else if (strEvtName == g_strCmdEndEvent )   ///< filter order changed, refresh list
+    {
+        this->clear();
+
+        QVariant vValue = cEvt.getEvtData().getParameter("respond").value<GitlCommandRespond>().getParameter("filters");
+        QVector<AbstractFilter*> *papcFilter = (QVector<AbstractFilter*>*)vValue.value<void*>();
+
+        for(int i = 0; i < papcFilter->size(); i++)
+        {
+            QListWidgetItem* pcItem = new QListWidgetItem();
+            this->addItem(pcItem);
+            AbstractFilter* pFilter = papcFilter->at(i);
+            PluginFilterItem *pItemWidget = new PluginFilterItem(pFilter);
+            pcItem->setSizeHint(pItemWidget->sizeHint());
+            setItemWidget(pcItem, pItemWidget);
         }
 
     }

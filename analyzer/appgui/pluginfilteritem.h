@@ -25,6 +25,8 @@ private slots:
 
 void on_configBtn_clicked();
 
+void on_upBtn_clicked();
+
 private:
     Ui::PluginFilterItem *ui;
 

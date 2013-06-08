@@ -55,7 +55,7 @@ bool FilterLoader::init()
     }
 
     /// sort
-    xSortFilters();
+    readFilterOrderAndSort();
 
     /// init each filter
     for(int i = 0; i < m_apcFilters.size(); i++)
@@ -211,9 +211,9 @@ AbstractFilter* FilterLoader::getFitlerByName(QString strFilterName)
     }
     return pFilter;
 }
-void FilterLoader::xSortFilters()
+void FilterLoader::readFilterOrderAndSort()
 {
-    ///read last setting
+    ///read filter order
     QVector<QString> cLastOrder;
     g_cAppSetting.beginGroup("Filters");
     int iSize = g_cAppSetting.beginReadArray("filter_order");
@@ -244,4 +244,19 @@ void FilterLoader::xSortFilters()
         }
     }
 
+}
+
+void FilterLoader::saveFilterOrder()
+{
+    ///save filter order
+    g_cAppSetting.beginGroup("Filters");
+    g_cAppSetting.beginWriteArray("filter_order");
+    for (int i = 0; i < m_apcFilters.size(); ++i)
+    {
+        g_cAppSetting.setArrayIndex(i);
+        g_cAppSetting.setValue("filter_name", m_apcFilters.at(i)->getName());
+    }
+    g_cAppSetting.endArray();
+    g_cAppSetting.endGroup();
+    g_cAppSetting.sync();
 }

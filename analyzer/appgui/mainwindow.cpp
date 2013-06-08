@@ -283,3 +283,12 @@ void MainWindow::on_actionExit_triggered()
 {
     exit(0);
 }
+
+void MainWindow::on_actionCheckUpdate_triggered()
+{
+    GitlCommandRequest cRequest;
+    cRequest.setParameter("command_name", "check_update");
+    GitlEvent cEvt( g_strCmdSentEvent  );
+    cEvt.getEvtData().setParameter("request", QVariant::fromValue(cRequest));
+    dispatchEvt(cEvt);
+}

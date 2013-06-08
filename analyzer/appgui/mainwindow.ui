@@ -404,6 +404,7 @@
     <property name="title">
      <string>HELP</string>
     </property>
+    <addaction name="actionCheckUpdate"/>
     <addaction name="actionHelp"/>
     <addaction name="actionAbout"/>
    </widget>
@@ -428,6 +429,11 @@
   <action name="actionExit">
    <property name="text">
     <string>Exit</string>
+   </property>
+  </action>
+  <action name="actionCheckUpdate">
+   <property name="text">
+    <string>Check for update</string>
    </property>
   </action>
  </widget>

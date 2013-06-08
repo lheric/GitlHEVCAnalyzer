@@ -38,10 +38,15 @@ public:
     AbstractFilter* getFitlerByName(QString strFilterName);
 
 
-protected:
-    void xSortFilters();
+    /*!
+     * \brief xReadAndSortFilters sort filters according to loaded configurations (previous saved qsettings)
+     */
+    void readFilterOrderAndSort();
 
-
+    /*!
+     * \brief xSaveFilterOrder save filter orders to file
+     */
+    void saveFilterOrder();
 
     /*!
      * Plugin Directory

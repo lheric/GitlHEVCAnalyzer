@@ -18,6 +18,9 @@
 #include "commands/printscreencommand.h"
 #include "commands/switchsequencecommand.h"
 #include "commands/refreshscreencommand.h"
+#include "commands/checkupdatecommand.h"
+#include "commands/filterorderdowncommand.h"
+#include "commands/filterorderupcommand.h"
 #include "commands/zoomframecommand.h"
 #include "commands/configfiltercommand.h"
 #include "io/analyzermsgsender.h"
@@ -41,6 +44,9 @@ static GitlCommandFormat s_sCmdTable[] =
     { "refresh_screen",   &RefreshScreenCommand::staticMetaObject      },
     { "zoom_frame",       &ZoomFrameCommand::staticMetaObject          },
     { "config_filter",    &ConfigFilterCommand::staticMetaObject       },
+    { "moveup_filter",    &FilterOrderUpCommand::staticMetaObject       },
+    { "movedown_filter",  &FilterOrderDownCommand::staticMetaObject       },
+    { "check_update",     &CheckUpdateCommand::staticMetaObject       },
     { "",                 NULL                                         }
 };
 

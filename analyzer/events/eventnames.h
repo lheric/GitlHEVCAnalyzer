@@ -13,6 +13,7 @@ const QString g_strCmdEndEvent    = "CMD_END_EVENT";        ///< a command finis
 
 const QString g_strPluginFilterLoaded   = "PLUGIN_FILTER_LOADED_EVENT";     ///< plugin filter loaded
 const QString g_strPluginFilterUnloaded = "PLUGIN_FILTER_UNLOADED_EVENT";   ///< plugin filter unloaded
+const QString g_strPluginFilterChanged  = "PLUGIN_FILTER_CHANGED_EVENT";    ///< plugin filter order changed
 
 const QString g_strSquencesListChanged = "SQUENCES_LIST_CHANGED_EVENT";  ///< Sequence added or removed
 
