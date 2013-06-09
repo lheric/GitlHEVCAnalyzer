@@ -23,6 +23,7 @@
 #include "commands/filterorderupcommand.h"
 #include "commands/zoomframecommand.h"
 #include "commands/configfiltercommand.h"
+#include "commands/reloadfilterscommand.h"
 #include "io/analyzermsgsender.h"
 
 
@@ -43,10 +44,11 @@ static GitlCommandFormat s_sCmdTable[] =
     { "print_screen",     &PrintScreenCommand::staticMetaObject        },
     { "refresh_screen",   &RefreshScreenCommand::staticMetaObject      },
     { "zoom_frame",       &ZoomFrameCommand::staticMetaObject          },
+    { "reload_filter",    &ReloadFiltersCommand::staticMetaObject      },
     { "config_filter",    &ConfigFilterCommand::staticMetaObject       },
-    { "moveup_filter",    &FilterOrderUpCommand::staticMetaObject       },
-    { "movedown_filter",  &FilterOrderDownCommand::staticMetaObject       },
-    { "check_update",     &CheckUpdateCommand::staticMetaObject       },
+    { "moveup_filter",    &FilterOrderUpCommand::staticMetaObject      },
+    { "movedown_filter",  &FilterOrderDownCommand::staticMetaObject    },
+    { "check_update",     &CheckUpdateCommand::staticMetaObject        },
     { "",                 NULL                                         }
 };
 
@@ -112,7 +114,7 @@ void AppFrontController::run()
         //AnalyzerMsgSender::getInstance()->msgOut(QString("Next Event Fetched!"), GITL_MSG_DEBUG);
 
             ///check if has request parameter
-        if( !cEvt.getEvtData().hasParameter("request") )
+        if( !cEvt.hasParameter("request") )
         {
             qCritical() << QString("Front Controller Received Command Event Without \"Request\", Command Exit!");
             continue;
@@ -122,11 +124,11 @@ void AppFrontController::run()
         GitlCommandRequest cRequest;
         GitlCommandRespond cRespond;
         QVariant vValue;
-        vValue = cEvt.getEvtData().getParameter("request");
+        vValue = cEvt.getParameter("request");
         cRequest = vValue.value<GitlCommandRequest>();
 
         GitlEvent cCmdStartEvt( g_strCmdStartEvent );               ///
-        cCmdStartEvt.getEvtData().setParameter("request", vValue);  /// start command event
+        cCmdStartEvt.setParameter("request", vValue);  /// start command event
         dispatchEvt(cCmdStartEvt);                                 ///
 
         /// do command & exception handling
@@ -160,7 +162,7 @@ void AppFrontController::run()
         }
 
         GitlEvent cCmdEndEvt( g_strCmdEndEvent );                                       ///
-        cCmdEndEvt.getEvtData().setParameter("respond", QVariant::fromValue(cRespond)); /// end command event
+        cCmdEndEvt.setParameter("respond", QVariant::fromValue(cRespond)); /// end command event
         dispatchEvt(cCmdEndEvt);                                                       ///
 
     }

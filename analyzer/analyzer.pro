@@ -68,7 +68,8 @@ SOURCES += main.cpp \
     common/comrom.cpp \
     commands/filterorderupcommand.cpp \
     commands/filterorderdowncommand.cpp \
-    commands/checkupdatecommand.cpp
+    commands/checkupdatecommand.cpp \
+    commands/reloadfilterscommand.cpp
 
 HEADERS += \
     common/comsequence.h \
@@ -128,7 +129,8 @@ HEADERS += \
     common/comrom.h \
     commands/filterorderupcommand.h \
     commands/filterorderdowncommand.h \
-    commands/checkupdatecommand.h
+    commands/checkupdatecommand.h \
+    commands/reloadfilterscommand.h
 
 #include & libs
 INCLUDEPATH += . \

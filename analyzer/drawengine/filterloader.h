@@ -20,8 +20,8 @@ public:
     /*!
      * Bacially it is a waper of filter interface \see AbstractFilter
      */
-    virtual bool init     ();
-    virtual bool uninit   ();
+    virtual bool reloadAllFilters     ();
+    virtual bool unloadAllFilters   ();
     virtual bool config   (int iFilterIndex);
     virtual bool config   (AbstractFilter* pcFilter);
     virtual bool drawPU   (QPainter* pcPainter, ComPU *pcPU,       double dScale,  QRect* pcScaledArea);

@@ -181,11 +181,13 @@ void MainWindow::xSaveSnapshot(QPixmap *pcPixmap)
                                           strLastPath,
                                           tr("Images (*.png)"));
     if(!strFilename.isEmpty())
+    {
         g_cAppSetting.setValue("snapshot_saving_path",strFilename);
-    if( pcPixmap->save(strFilename) )
-        qDebug() << QString("Snapshot Has Been Saved to %1 !").arg(strFilename);
-    else
-        qWarning() <<"Snapshot Saving Failed !";
+        if( pcPixmap->save(strFilename) )
+            qDebug() << QString("Snapshot Has Been Saved to %1 !").arg(strFilename);
+        else
+            qWarning() <<"Snapshot Saving Failed!";
+    }
 
 
 }
@@ -288,6 +290,15 @@ void MainWindow::on_actionCheckUpdate_triggered()
 {
     GitlCommandRequest cRequest;
     cRequest.setParameter("command_name", "check_update");
+    GitlEvent cEvt( g_strCmdSentEvent  );
+    cEvt.setParameter("request", QVariant::fromValue(cRequest));
+    dispatchEvt(cEvt);
+}
+
+void MainWindow::on_actionReloadPluginsFilters_triggered()
+{
+    GitlCommandRequest cRequest;
+    cRequest.setParameter("command_name", "reload_filter");
     GitlEvent cEvt( g_strCmdSentEvent  );
     cEvt.setParameter("request", QVariant::fromValue(cRequest));
     dispatchEvt(cEvt);

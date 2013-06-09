@@ -67,7 +67,7 @@ bool DecodeBitstreamCommand::execute( GitlCommandRequest& rcRequest, GitlCommand
     bool bSuccess = false;
     if( !bSkipDecode )
     {
-        cDecodingStageInfo.getEvtData().setParameter("message", "(1/9)Start Decoding Bitstream...");
+        cDecodingStageInfo.setParameter("message", "(1/9)Start Decoding Bitstream...");
         dispatchEvt(cDecodingStageInfo);
         BitstreamParser cBitstreamParser;
         bSuccess = cBitstreamParser.parseFile(strDecoderPath,
@@ -91,7 +91,7 @@ bool DecodeBitstreamCommand::execute( GitlCommandRequest& rcRequest, GitlCommand
     QString strSPSFilename = strDecoderOutputPath + "/decoder_sps.txt";
     if( bSuccess )
     {
-        cDecodingStageInfo.getEvtData().setParameter("message", "(2/9)Start Parsing Sequence Parameter Set...");
+        cDecodingStageInfo.setParameter("message", "(2/9)Start Parsing Sequence Parameter Set...");
         dispatchEvt(cDecodingStageInfo);
         QFile cSPSFile(strSPSFilename);
         cSPSFile.open(QIODevice::ReadOnly);
@@ -105,7 +105,7 @@ bool DecodeBitstreamCommand::execute( GitlCommandRequest& rcRequest, GitlCommand
     QString strGeneralFilename = strDecoderOutputPath + "/decoder_general.txt";
     if( bSuccess )
     {
-        cDecodingStageInfo.getEvtData().setParameter("message", "(3/9)Start Parsing Decoder Std Output File...");
+        cDecodingStageInfo.setParameter("message", "(3/9)Start Parsing Decoder Std Output File...");
         dispatchEvt(cDecodingStageInfo);
         QFile cGeneralFile(strGeneralFilename);
         cGeneralFile.open(QIODevice::ReadOnly);
@@ -120,7 +120,7 @@ bool DecodeBitstreamCommand::execute( GitlCommandRequest& rcRequest, GitlCommand
     QString strCUPUFilename = strDecoderOutputPath + "/decoder_cupu.txt";
     if( bSuccess )
     {
-        cDecodingStageInfo.getEvtData().setParameter("message", "(4/9)Start Parsing CU & PU Structure...");
+        cDecodingStageInfo.setParameter("message", "(4/9)Start Parsing CU & PU Structure...");
         dispatchEvt(cDecodingStageInfo);
         QFile cCUPUFile(strCUPUFilename);
         cCUPUFile.open(QIODevice::ReadOnly);
@@ -135,7 +135,7 @@ bool DecodeBitstreamCommand::execute( GitlCommandRequest& rcRequest, GitlCommand
     QString strPredFilename = strDecoderOutputPath + "/decoder_pred.txt";
     if( bSuccess )
     {
-        cDecodingStageInfo.getEvtData().setParameter("message", "(5/9)Start Parsing Predction Mode...");
+        cDecodingStageInfo.setParameter("message", "(5/9)Start Parsing Predction Mode...");
         dispatchEvt(cDecodingStageInfo);
         QFile cPredFile(strPredFilename);
         cPredFile.open(QIODevice::ReadOnly);
@@ -150,7 +150,7 @@ bool DecodeBitstreamCommand::execute( GitlCommandRequest& rcRequest, GitlCommand
     QString strMVFilename = strDecoderOutputPath + "/decoder_mv.txt";
     if( bSuccess )
     {
-        cDecodingStageInfo.getEvtData().setParameter("message", "(6/9)Start Parsing Motion Vectors...");
+        cDecodingStageInfo.setParameter("message", "(6/9)Start Parsing Motion Vectors...");
         dispatchEvt(cDecodingStageInfo);
         QFile cMVFile(strMVFilename);
         cMVFile.open(QIODevice::ReadOnly);
@@ -165,7 +165,7 @@ bool DecodeBitstreamCommand::execute( GitlCommandRequest& rcRequest, GitlCommand
     QString strMergeFilename = strDecoderOutputPath + "/decoder_merge.txt";
     if( bSuccess )
     {
-        cDecodingStageInfo.getEvtData().setParameter("message", "(7/9)Start Parsing Motion Merge Info...");
+        cDecodingStageInfo.setParameter("message", "(7/9)Start Parsing Motion Merge Info...");
         dispatchEvt(cDecodingStageInfo);
         QFile cMergeFile(strMergeFilename);
         cMergeFile.open(QIODevice::ReadOnly);
@@ -180,7 +180,7 @@ bool DecodeBitstreamCommand::execute( GitlCommandRequest& rcRequest, GitlCommand
     QString strIntraFilename = strDecoderOutputPath + "/decoder_intra.txt";
     if( bSuccess )
     {
-        cDecodingStageInfo.getEvtData().setParameter("message", "(8/9)Start Parsing Intra Info...");
+        cDecodingStageInfo.setParameter("message", "(8/9)Start Parsing Intra Info...");
         dispatchEvt(cDecodingStageInfo);
         QFile cIntraFile(strIntraFilename);
         cIntraFile.open(QIODevice::ReadOnly);
@@ -201,7 +201,7 @@ bool DecodeBitstreamCommand::execute( GitlCommandRequest& rcRequest, GitlCommand
     QPixmap* pcFramePixmap = NULL;
     if( bSuccess )
     {
-        cDecodingStageInfo.getEvtData().setParameter("message", "(9/9)Reding & Drawing Reconstructed YUV...");
+        cDecodingStageInfo.setParameter("message", "(9/9)Reding & Drawing Reconstructed YUV...");
         dispatchEvt(cDecodingStageInfo);
         pModel->getFrameBuffer().setYUVFile(strYUVFilename, iWidth, iHeight);
         pcFramePixmap = pModel->getFrameBuffer().getFrame(0);   ///< Read Frame Buffer
@@ -221,8 +221,8 @@ bool DecodeBitstreamCommand::execute( GitlCommandRequest& rcRequest, GitlCommand
     /// nofity sequence list to update
     GitlEvent cSequenceChangedEvt(g_strSquencesListChanged);
     QVector<ComSequence*>* ppcSequences = &(pModel->getSequenceManager().getAllSequences());
-    cSequenceChangedEvt.getEvtData().setParameter("sequences",QVariant::fromValue((void*)ppcSequences));
-    cSequenceChangedEvt.getEvtData().setParameter("current_sequence",QVariant::fromValue((void*)pcSequence));
+    cSequenceChangedEvt.setParameter("sequences",QVariant::fromValue((void*)ppcSequences));
+    cSequenceChangedEvt.setParameter("current_sequence",QVariant::fromValue((void*)pcSequence));
 
     dispatchEvt(cSequenceChangedEvt);
 

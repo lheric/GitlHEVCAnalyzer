@@ -76,7 +76,7 @@ void BitstreamParser::displayDecoderOutput()
             GitlEvent evt( g_strCmdInfoEvent );
             int iPoc = cMatchTarget.cap(1).toInt();
             QString strText = QString("%1 Frame Decoded").arg(iPoc);
-            evt.getEvtData().setParameter("message", strText);
+            evt.setParameter("message", strText);
 
             dispatchEvt(evt);
 

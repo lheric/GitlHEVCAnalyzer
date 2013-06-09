@@ -6,25 +6,20 @@
 #include "common/comrom.h"
 #include <QDir>
 
-
 #define PLUGIN_DIRECTORY "plugins" ///< plugin directory
 
 FilterLoader::FilterLoader()
 {
     this->m_strPluginDir = PLUGIN_DIRECTORY;
-
-    /// load filters
-    init();
 }
 
 FilterLoader::~FilterLoader()
 {
-    /// unload filters
-    uninit();
 }
 
-bool FilterLoader::init()
+bool FilterLoader::reloadAllFilters()
 {
+    unloadAllFilters();
 
     QDir cPluginsDir(m_strPluginDir);
     QStringList cFilters;
@@ -41,10 +36,6 @@ bool FilterLoader::init()
             m_apcPluginLoaders.push_back(pLoader);
             m_apcFilters.push_back(pPlugin);
             qDebug() << QString("Plugin Filter %1 Loading Succeeded!").arg(strPluginFileName);
-
-            GitlEvent cEvt( g_strPluginFilterLoaded );                                      ///
-            cEvt.getEvtData().setParameter("filter", QVariant::fromValue((void*)pPlugin));  /// plugin loaded event
-            dispatchEvt(cEvt);                                                             ///
 
         }
         else
@@ -69,7 +60,7 @@ bool FilterLoader::init()
 }
 
 
-bool FilterLoader::uninit()
+bool FilterLoader::unloadAllFilters()
 {
     /// uninit each filter
     for(int i = 0; i < m_apcFilters.size(); i++)
@@ -86,9 +77,6 @@ bool FilterLoader::uninit()
         delete pFilter;
         m_apcFilters.pop_back();
 
-        GitlEvent cEvt( g_strPluginFilterUnloaded );                   ///
-        cEvt.getEvtData().setParameter("filter_name", strFilterName);  /// plugin unloaded event
-        dispatchEvt(cEvt);                                            ///
     }
 
     while( !m_apcPluginLoaders.empty() )
@@ -97,9 +85,6 @@ bool FilterLoader::uninit()
         delete pLoader;
         m_apcPluginLoaders.pop_back();
     }
-
-
-
 
     return true;
 }

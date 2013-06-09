@@ -408,8 +408,15 @@
     <addaction name="actionHelp"/>
     <addaction name="actionAbout"/>
    </widget>
+   <widget class="QMenu" name="menuPlugins">
+    <property name="title">
+     <string>PLGINS</string>
+    </property>
+    <addaction name="actionReloadPluginsFilters"/>
+   </widget>
    <addaction name="menuBitstream"/>
    <addaction name="menuHelp"/>
+   <addaction name="menuPlugins"/>
   </widget>
   <action name="actionOpen_bitstream">
    <property name="text">
@@ -434,6 +441,11 @@
   <action name="actionCheckUpdate">
    <property name="text">
     <string>Check for update</string>
+   </property>
+  </action>
+  <action name="actionReloadPluginsFilters">
+   <property name="text">
+    <string>Reload Plugins Filters</string>
    </property>
   </action>
  </widget>

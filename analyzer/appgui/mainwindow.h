@@ -59,6 +59,8 @@ private slots:
 
     void on_actionCheckUpdate_triggered();
 
+    void on_actionReloadPluginsFilters_triggered();
+
 private:
     Ui::MainWindow *ui;
 
