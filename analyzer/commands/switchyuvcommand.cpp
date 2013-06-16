@@ -1,12 +1,13 @@
-#include "switchsequencecommand.h"
+#include "switchyuvcommand.h"
 #include "model/modellocator.h"
-
-SwitchSequenceCommand::SwitchSequenceCommand(QObject *parent) :
+#include <QDebug>
+SwitchYUVCommand::SwitchYUVCommand(QObject *parent) :
     GitlAbstractCommand(parent)
 {
 }
 
-bool SwitchSequenceCommand::execute( GitlCommandRequest& rcRequest, GitlCommandRespond& rcRespond )
+
+bool SwitchYUVCommand::execute( GitlCommandRequest& rcRequest, GitlCommandRespond& rcRespond )
 {
     bool bIs16Bit = false;
     if(rcRequest.hasParameter("is_16_bit"))
@@ -15,9 +16,13 @@ bool SwitchSequenceCommand::execute( GitlCommandRequest& rcRequest, GitlCommandR
     }
 
     QString strYUVFilename = rcRequest.getParameter("YUV_filename").toString();
-    ComSequence* pcSequence = (ComSequence*)(rcRequest.getParameter("sequence").value<void*>());
+    ComSequence* pcSequence = (ComSequence*)rcRequest.getParameter("sequence").value<void*>();
     ModelLocator* pModel = ModelLocator::getInstance();
-    pModel->getSequenceManager().setCurrentSequence(pcSequence);
+    if( pcSequence != &(pModel->getSequenceManager().getCurrentSequence()) )
+    {
+        qWarning() << "Not current displaying sequence, cannot switch to residual";
+        return false;
+    }
 
     //
     int iWidth = pcSequence->getWidth();

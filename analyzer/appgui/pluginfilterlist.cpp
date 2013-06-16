@@ -11,6 +11,9 @@ PluginFilterList::PluginFilterList(QWidget *parent) :
     setModualName("plugin_filter_list");
     subscribeToEvtByName(g_strCmdEndEvent);
 
+//    setDragDropMode(QAbstractItemView::InternalMove);
+//    setDropIndicatorShown(false);
+
     // load filters command
     GitlCommandRequest cRequest;
     cRequest.setParameter("command_name", "reload_filter");

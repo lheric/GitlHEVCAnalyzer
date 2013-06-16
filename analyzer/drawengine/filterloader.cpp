@@ -51,6 +51,7 @@ bool FilterLoader::reloadAllFilters()
     /// init each filter
     for(int i = 0; i < m_apcFilters.size(); i++)
     {
+
         if( m_apcFilters[i]->init(&m_cFilterContext) == false )
             qWarning() << QString("Plugin Filter %1 Init Failed!").arg(m_apcFilters[i]->getName());
     }
@@ -204,10 +205,13 @@ void FilterLoader::readFilterOrderAndSort()
     int iSize = g_cAppSetting.beginReadArray("filter_order");
     for (int i = 0; i < iSize; ++i)
     {
-        cLastOrder.push_back(g_cAppSetting.value("filter_name").toString());
+        g_cAppSetting.setArrayIndex(i);
+        QString& strFilterName = g_cAppSetting.value("filter_name").toString();
+        cLastOrder.push_back(strFilterName);
     }
     g_cAppSetting.endArray();
     g_cAppSetting.endGroup();
+
 
 
     /// sorting

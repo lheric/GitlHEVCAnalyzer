@@ -17,6 +17,7 @@
 #include "commands/jumptopercentcommand.h"
 #include "commands/printscreencommand.h"
 #include "commands/switchsequencecommand.h"
+#include "commands/switchyuvcommand.h"
 #include "commands/refreshscreencommand.h"
 #include "commands/checkupdatecommand.h"
 #include "commands/filterorderdowncommand.h"
@@ -41,6 +42,7 @@ static GitlCommandFormat s_sCmdTable[] =
     { "jumpto_frame",     &JumpToFrameCommand::staticMetaObject        },
     { "jumpto_percent",   &JumpToPercentCommand::staticMetaObject      },
     { "switch_sequence",  &SwitchSequenceCommand::staticMetaObject     },
+    { "switch_yuv",       &SwitchYUVCommand::staticMetaObject          },
     { "print_screen",     &PrintScreenCommand::staticMetaObject        },
     { "refresh_screen",   &RefreshScreenCommand::staticMetaObject      },
     { "zoom_frame",       &ZoomFrameCommand::staticMetaObject          },
@@ -138,7 +140,7 @@ void AppFrontController::run()
         }
         catch( const NoSequenceFoundException& )
         {
-            qWarning() << "No Video Sequence Found...";
+            qCritical() << "No Video Sequence Found...";
         }
         catch( const InvaildFilterIndexException& )
         {
@@ -146,11 +148,15 @@ void AppFrontController::run()
         }
         catch( const DecoderNotFoundException& )
         {
-            qWarning() << "Decoder NOT Found...";
+            qCritical() << "Decoder NOT Found...";
         }
         catch( const DecodingFailException& )
         {
-            qWarning() << "Decoding FAIL... (Illegal HEVC Bitstream/Bitstream--Decoder Mismatch?)";
+            qCritical() << "Bitstream decoding FAILED!\n"
+                           "Following may be the reasons for this failure:\n"
+                           "1. Corrupted HEVC bitstream?\n"
+                           "2. Bitstream-decoder version mismatch?\n"
+                           "3. Non-English characters in bitstream path or analyzer path?\n";
         }
         catch( const BitstreamNotFoundException& )
         {
@@ -158,7 +164,7 @@ void AppFrontController::run()
         }
         catch( const QException& )
         {
-            qWarning() << "Unknown Error Happened...";
+            qCritical() << "Unknown Error Happened... :(";
         }
 
         GitlEvent cCmdEndEvt( g_strCmdEndEvent );                                       ///

@@ -5,6 +5,7 @@
 IOYUV::IOYUV(QObject *parent) :
     QObject(parent)
 {
+
 }
 
 IOYUV::~IOYUV()
@@ -12,7 +13,7 @@ IOYUV::~IOYUV()
     m_cYUVFile.close();
 }
 
-bool IOYUV::setYUVFilePath(const QString& strYUVFilePath)
+bool IOYUV::openYUVFilePath(const QString& strYUVFilePath)
 {
     m_cYUVFile.close();
     m_cYUVStream.setDevice(NULL);

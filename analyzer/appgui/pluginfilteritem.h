@@ -27,6 +27,8 @@ void on_configBtn_clicked();
 
 void on_upBtn_clicked();
 
+void on_downBtn_clicked();
+
 private:
     Ui::PluginFilterItem *ui;
 

@@ -415,8 +415,8 @@
     <addaction name="actionReloadPluginsFilters"/>
    </widget>
    <addaction name="menuBitstream"/>
-   <addaction name="menuHelp"/>
    <addaction name="menuPlugins"/>
+   <addaction name="menuHelp"/>
   </widget>
   <action name="actionOpen_bitstream">
    <property name="text">

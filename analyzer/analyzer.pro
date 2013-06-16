@@ -69,7 +69,8 @@ SOURCES += main.cpp \
     commands/filterorderupcommand.cpp \
     commands/filterorderdowncommand.cpp \
     commands/checkupdatecommand.cpp \
-    commands/reloadfilterscommand.cpp
+    commands/reloadfilterscommand.cpp \
+    commands/switchyuvcommand.cpp
 
 HEADERS += \
     common/comsequence.h \
@@ -130,7 +131,8 @@ HEADERS += \
     commands/filterorderupcommand.h \
     commands/filterorderdowncommand.h \
     commands/checkupdatecommand.h \
-    commands/reloadfilterscommand.h
+    commands/reloadfilterscommand.h \
+    commands/switchyuvcommand.h
 
 #include & libs
 INCLUDEPATH += . \

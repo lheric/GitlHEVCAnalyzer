@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>190</width>
-    <height>31</height>
+    <width>255</width>
+    <height>36</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -52,6 +52,9 @@
       </size>
      </property>
     </spacer>
+   </item>
+   <item>
+    <widget class="QComboBox" name="yuvSelectionBox"/>
    </item>
   </layout>
  </widget>

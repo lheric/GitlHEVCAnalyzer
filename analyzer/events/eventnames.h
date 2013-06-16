@@ -11,6 +11,7 @@ const QString g_strCmdStartEvent  = "CMD_START_EVENT";      ///< a command start
 const QString g_strCmdInfoEvent   = "CMD_INFO_EVENT";       ///< informations during running a command
 const QString g_strCmdEndEvent    = "CMD_END_EVENT";        ///< a command finished
 
+//TODO refactor: remove this
 const QString g_strSquencesListChanged = "SQUENCES_LIST_CHANGED_EVENT";  ///< Sequence added or removed
 
 #endif // EVENTNAMES_H

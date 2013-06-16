@@ -192,8 +192,8 @@ bool RDGainDisplayFilter::drawCTU  (FilterContext* pcContext, QPainter* pcPainte
 
 
     long lMaxRDGainDraw = 200000; /// draw max rd-gain
-    VALUE_CLIP(-lMaxRDGainDraw,lMaxRDGainDraw,lMDGain);
-    VALUE_CLIP(-lMaxRDGainDraw,lMaxRDGainDraw,lFMEGain);
+    lMDGain  = VALUE_CLIP(-lMaxRDGainDraw,lMaxRDGainDraw,lMDGain);
+    lFMEGain = VALUE_CLIP(-lMaxRDGainDraw,lMaxRDGainDraw,lFMEGain);
 
     cPen.setWidth(1);
     /// draw MD Gain Rect

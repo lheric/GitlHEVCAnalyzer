@@ -8,8 +8,10 @@ YUV420RGBBuffer::YUV420RGBBuffer()
     m_iBufferWidth = 0;
     m_iBufferHeight = 0;
     m_iPoc = -1;
+    m_puh16BitYUVBuffer = NULL;
     m_puhYUVBuffer = NULL;
     m_puhRGBBuffer = NULL;
+    m_bIs16Bit = false;
 }
 
 YUV420RGBBuffer::~YUV420RGBBuffer()
@@ -20,32 +22,38 @@ YUV420RGBBuffer::~YUV420RGBBuffer()
 
     delete[] m_puhRGBBuffer;
     m_puhRGBBuffer = NULL;
+
+    delete[] m_puh16BitYUVBuffer;
+    m_puh16BitYUVBuffer = NULL;
 }
 
 
-bool YUV420RGBBuffer::setYUVFile( const QString& strYUVPath, int iWidth, int iHeight )
+bool YUV420RGBBuffer::openYUVFile( const QString& strYUVPath, int iWidth, int iHeight, bool bIs16Bit)
 {
-    /// if new size dosen't match current size, delete old one and create new one
-    if( iWidth != m_iBufferWidth || iHeight != m_iBufferHeight )
-    {
 
+
+
+    /// if new size dosen't match current size, delete old one and create new one
+    if( iWidth != m_iBufferWidth || iHeight != m_iBufferHeight || m_bIs16Bit != bIs16Bit)
+    {
+        int i16BitMulti = bIs16Bit?2:1;
 
         delete[] m_puhYUVBuffer;
-        m_puhYUVBuffer = new uchar[(iWidth * iHeight * 3) / 2];
+        m_puhYUVBuffer = new uchar[((iWidth * iHeight * 3) / 2) * i16BitMulti];
 
 
         delete[] m_puhRGBBuffer;
-        m_puhRGBBuffer = new uchar[iWidth * iHeight * 3];
-
-
+        m_puhRGBBuffer = new uchar[iWidth * iHeight * 3];        
 
     }
 
 
     m_iBufferWidth = iWidth;
     m_iBufferHeight = iHeight;
+    m_bIs16Bit = bIs16Bit;
+
     /// set YUV file reader
-    if( !m_cIOYUV.setYUVFilePath(strYUVPath) )
+    if( !m_cIOYUV.openYUVFilePath(strYUVPath) )
     {
         qCritical() << "YUV Buffer Initialization Fail";
         return false;
@@ -76,13 +84,24 @@ QPixmap* YUV420RGBBuffer::getFrame(int iPoc)
 
 bool YUV420RGBBuffer::xReadFrame(int iPoc)
 {
+    int i16BitMultiplier = ( m_bIs16Bit ? 2 : 1 );
+
     if( iPoc < 0 )
         return false;
     m_iPoc = iPoc;
-    int iFrameSizeInByte = m_iBufferWidth*m_iBufferHeight*3/2;
+    int iFrameSizeInByte = (m_iBufferWidth*m_iBufferHeight*3/2)*i16BitMultiplier;
     if( m_cIOYUV.seekTo(iPoc*iFrameSizeInByte) == false )
         return false;
-    int iReadBytes = m_cIOYUV.readOneFrame(m_puhYUVBuffer, (uint)iFrameSizeInByte);   ///read
+    int iReadBytes = 0;   ///read
+
+    iReadBytes = m_cIOYUV.readOneFrame(m_puhYUVBuffer, (uint)iFrameSizeInByte);
+    if(m_bIs16Bit)
+    {
+        x16to8BitClip(m_puhYUVBuffer, m_puhYUVBuffer, iReadBytes/i16BitMultiplier);
+    }
+
+
+
     if( iReadBytes != iFrameSizeInByte )
     {
         qCritical() << "Read YUV Frame Error";
@@ -135,18 +154,26 @@ void YUV420RGBBuffer::xYuv2rgb(uchar* puhYUV, uchar* puhRGB, int iWidth, int iHe
             iU = puhU[lUVOffset];
             iV = puhV[lUVOffset];
 
+//            tempR = iY
+//                    + iV + (iV>>2) + (iV>>3) + (iV>>6)- 179;
+//            tempG = iY
+//                    - (iU>>2) - (iU>>4) - (iU>>5) + 44
+//                    - (iV>>1) - (iV>>3) - (iV>>4) - (iV>>6) + 91;
+//            tempB = iY
+//                    + iU + (iU>>1) + (iU>>2) - 227;
+
             tempR = iY
-                    + iV + (iV>>2) + (iV>>3) + (iV>>6)- 179;
+                    + 1.402 * iV - 179;
             tempG = iY
-                    - (iU>>2) - (iU>>4) - (iU>>5) + 44
-                    - (iV>>1) - (iV>>3) - (iV>>4) - (iV>>6) + 91;
+                    - 0.34414 * iU + 44
+                    - 0.71414 * iV + 91;
             tempB = iY
-                    + iU + (iU>>1) + (iU>>2) - 227;
+                    + 1.772 * iU - 227;
 
 
-            VALUE_CLIP(0,255,tempR);
-            VALUE_CLIP(0,255,tempG);
-            VALUE_CLIP(0,255,tempB);
+            tempR = VALUE_CLIP(0,255,tempR);
+            tempG = VALUE_CLIP(0,255,tempG);
+            tempB = VALUE_CLIP(0,255,tempB);
 
             iCurRgbPixelOffset = puhRGB+3*(iWidth*y+x);
             *(iCurRgbPixelOffset)     = tempR;
@@ -155,5 +182,16 @@ void YUV420RGBBuffer::xYuv2rgb(uchar* puhYUV, uchar* puhRGB, int iWidth, int iHe
 
 
         }
+    }
+}
+
+
+void YUV420RGBBuffer::x16to8BitClip(uchar* puh8BitYUV, const uchar* puh16BitYUV,const long lSizeInUnitCount)
+{
+    qint16* pi16BitPelValue = NULL;
+    for(int i = 0; i < lSizeInUnitCount; i++)
+    {
+        pi16BitPelValue = (qint16*)(puh16BitYUV+2*i);
+        puh8BitYUV[i] = VALUE_CLIP(0,255,(*pi16BitPelValue)+128);
     }
 }

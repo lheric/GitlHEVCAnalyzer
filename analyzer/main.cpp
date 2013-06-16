@@ -61,10 +61,12 @@ static void xMessageOutput(QtMsgType type, const QMessageLogContext &context, co
     fflush(stdout);
     fflush(stderr);
 
+    AnalyzerMsgSender::getInstance()->msgOut(strMsg, type);
+
     if(type == QtFatalMsg)
         abort();
 
-    AnalyzerMsgSender::getInstance()->msgOut(strMsg);
+
 }
 
 void xCheckUpdate()

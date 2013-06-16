@@ -27,8 +27,8 @@ public:
     void clearAllRadioBtn();
     
 private slots:
-    void sequenceRadioButtonClicked(ComSequence* pcSequence);
-
+    void sequenceRadioButtonClicked(ComSequence* pcSequence, QString, bool);
+    void yuvSelectionBoxChanged(ComSequence*, QString, bool);
 private:
     Ui::SequenceList *ui;
     ADD_CLASS_FIELD_PRIVATE(QButtonGroup, cButtonGroup)

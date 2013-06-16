@@ -203,7 +203,7 @@ bool DecodeBitstreamCommand::execute( GitlCommandRequest& rcRequest, GitlCommand
     {
         cDecodingStageInfo.setParameter("message", "(9/9)Reding & Drawing Reconstructed YUV...");
         dispatchEvt(cDecodingStageInfo);
-        pModel->getFrameBuffer().setYUVFile(strYUVFilename, iWidth, iHeight);
+        pModel->getFrameBuffer().openYUVFile(strYUVFilename, iWidth, iHeight);
         pcFramePixmap = pModel->getFrameBuffer().getFrame(0);   ///< Read Frame Buffer
         pcFramePixmap = pModel->getDrawEngine().drawFrame(pcSequence, 0, pcFramePixmap);  ///< Draw Frame Buffer
 
@@ -219,12 +219,12 @@ bool DecodeBitstreamCommand::execute( GitlCommandRequest& rcRequest, GitlCommand
 
 
     /// nofity sequence list to update
-    GitlEvent cSequenceChangedEvt(g_strSquencesListChanged);
+//    GitlEvent cSequenceChangedEvt(g_strSquencesListChanged);
     QVector<ComSequence*>* ppcSequences = &(pModel->getSequenceManager().getAllSequences());
-    cSequenceChangedEvt.setParameter("sequences",QVariant::fromValue((void*)ppcSequences));
-    cSequenceChangedEvt.setParameter("current_sequence",QVariant::fromValue((void*)pcSequence));
+    rcRespond.setParameter("sequences",QVariant::fromValue((void*)ppcSequences));
+    rcRespond.setParameter("current_sequence",QVariant::fromValue((void*)pcSequence));
 
-    dispatchEvt(cSequenceChangedEvt);
+//    dispatchEvt(cSequenceChangedEvt);
 
 
 

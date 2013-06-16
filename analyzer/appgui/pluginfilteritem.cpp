@@ -51,3 +51,14 @@ void PluginFilterItem::on_upBtn_clicked()
     cEvt.setParameter("request", QVariant::fromValue(cRequest));
     dispatchEvt(cEvt);
 }
+
+void PluginFilterItem::on_downBtn_clicked()
+{
+    GitlCommandRequest cRequest;
+    cRequest.setParameter("command_name", "movedown_filter");
+    cRequest.setParameter("filter_name", m_pcFilter->getName());
+    cRequest.setParameter("filter", QVariant::fromValue((void*)(m_pcFilter)));
+    GitlEvent cEvt( g_strCmdSentEvent  );
+    cEvt.setParameter("request", QVariant::fromValue(cRequest));
+    dispatchEvt(cEvt);
+}

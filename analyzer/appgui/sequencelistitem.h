@@ -16,15 +16,21 @@ public:
     explicit SequenceListItem(const QString& strText, QButtonGroup& rcGroup, QWidget *parent = 0);
     ~SequenceListItem();
     void setChecked(bool bCheck);
+    void setYUVSelectorVisible(bool bVisible);
 protected:
     virtual void mouseReleaseEvent ( QMouseEvent * e );
 
 
 signals:
-    void sequenceRadioButtonClicked(ComSequence*);
+    void sequenceRadioButtonClicked(ComSequence*, QString, bool);
+    void yuvSelectionBoxChanged(ComSequence*, QString, bool);
     ADD_CLASS_FIELD(ComSequence*, pcSequence, getSequence, setSequence)
 
     
+private slots:
+
+    void on_yuvSelectionBox_currentIndexChanged(int index);
+
 private:
     Ui::SequenceListItem *ui;
 };
