@@ -11,7 +11,7 @@ MsgViewer::MsgViewer(QWidget *parent ) :
     m_cWarningBox.setIcon(QMessageBox::Warning);
 }
 
-bool MsgViewer::detonate( GitlEvent cEvt )
+bool MsgViewer::detonate( GitlEvent& cEvt )
 {
     QVariant vValue = cEvt.getParameter("msg_detail");
     QString strMsg = vValue.toString();

@@ -17,7 +17,7 @@ public:
 
 public slots:
     void setHintText(QString& str);
-    virtual bool detonate(GitlEvent cEvt);
+    virtual bool detonate(GitlEvent& cEvt);
     
 private:
     Ui::BusyDialog *ui;

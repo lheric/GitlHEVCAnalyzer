@@ -79,9 +79,12 @@ void xCleanUpdate()
 {
     win_sparkle_cleanup();
 }
-
+#include <QSharedPointer>
+#include "gitlevent.h"
+//Q_DECLARE_METATYPE( QSharedPointer<GitlEvent> )
 int main(int argc, char *argv[])
 {
+//    qRegisterMetaType< QSharedPointer<GitlEvent> >();
 //    /// set run-time dynamic linked library (dll) path
 //    xSetLibPath();
 

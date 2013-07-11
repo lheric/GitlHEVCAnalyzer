@@ -34,7 +34,7 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
-bool MainWindow::detonate(GitlEvent cEvt )
+bool MainWindow::detonate(GitlEvent &cEvt )
 {
 
     if(!cEvt.hasParameter("respond"))

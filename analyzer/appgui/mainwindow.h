@@ -21,7 +21,7 @@ public:
     ~MainWindow();
 
 public:
-    bool detonate( GitlEvent cEvt );
+    bool detonate( GitlEvent&  cEvt );
 
 protected:
     virtual void keyPressEvent ( QKeyEvent * event );

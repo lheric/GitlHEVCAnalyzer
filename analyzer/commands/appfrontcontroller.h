@@ -14,7 +14,7 @@ public:
     AppFrontController();
     /*! The concrete action to deal with specific event
       */
-    virtual bool detonate( GitlEvent cEvt );
+    virtual bool detonate( GitlEvent& cEvt );
 
 protected:
     bool xInitCommand();

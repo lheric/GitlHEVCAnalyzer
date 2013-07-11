@@ -20,7 +20,7 @@ class SequenceList : public QListWidget, public GitlModual
     
 public:
     explicit SequenceList(QWidget *parent = 0);
-    bool detonate( GitlEvent cEvt );
+    bool detonate( GitlEvent& cEvt );
     ~SequenceList();
 
     void addNoSquenceRadioBtn();

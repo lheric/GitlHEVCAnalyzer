@@ -31,7 +31,7 @@ void BusyDialog::setHintText(QString& str)
 }
 
 
-bool BusyDialog::detonate(GitlEvent cEvt)
+bool BusyDialog::detonate(GitlEvent& cEvt)
 {
     QString& strEvtName = cEvt.getEvtName();
     if(strEvtName == g_strCmdStartEvent)

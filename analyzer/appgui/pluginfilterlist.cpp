@@ -22,7 +22,7 @@ PluginFilterList::PluginFilterList(QWidget *parent) :
     dispatchEvt(cEvt);
 }
 
-bool PluginFilterList::detonate( GitlEvent cEvt )
+bool PluginFilterList::detonate( GitlEvent& cEvt )
 {
 
     if(!cEvt.hasParameter("respond"))

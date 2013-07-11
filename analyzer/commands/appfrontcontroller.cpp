@@ -78,7 +78,7 @@ bool AppFrontController::xInitCommand()
 }
 
 
-bool AppFrontController::detonate( GitlEvent cEvt )
+bool AppFrontController::detonate(GitlEvent &cEvt )
 {    
 
     m_cEvtQueMutex.lock();

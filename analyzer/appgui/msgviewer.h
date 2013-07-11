@@ -11,7 +11,7 @@ class MsgViewer : public QTextBrowser, public GitlModual
 {
 public:
     MsgViewer(QWidget *parent = 0);
-    virtual bool detonate( GitlEvent cEvt );
+    virtual bool detonate( GitlEvent& cEvt );
 
     ADD_CLASS_FIELD_PRIVATE(QMessageBox, cWarningBox)
 };

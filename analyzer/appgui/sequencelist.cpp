@@ -42,7 +42,7 @@ void SequenceList::clearAllRadioBtn()
 
 }
 
-bool SequenceList::detonate( GitlEvent cEvt )
+bool SequenceList::detonate(GitlEvent &cEvt )
 {
     if(!cEvt.hasParameter("respond"))
     {

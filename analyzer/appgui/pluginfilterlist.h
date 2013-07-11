@@ -8,7 +8,7 @@ class PluginFilterList : public QListWidget, public GitlModual
     Q_OBJECT
 public:
     explicit PluginFilterList( QWidget *parent = 0 );
-    virtual bool detonate( GitlEvent cEvt );
+    virtual bool detonate( GitlEvent& cEvt );
 
 protected:
     void xRefreshListByRespond(const GitlCommandRespond &rcRespond);
