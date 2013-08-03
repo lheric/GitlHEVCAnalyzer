@@ -1,9 +1,10 @@
 #include "frameview.h"
 #include <QWheelEvent>
+#include <QMimeData>
 #include "io/analyzermsgsender.h"
 #include "events/eventnames.h"
 #include "gitlcommandrequest.h"
-
+#include <QDebug>
 FrameView::FrameView(QWidget *parent) :
     QGraphicsView(parent)
 {
@@ -11,6 +12,7 @@ FrameView::FrameView(QWidget *parent) :
     m_cGraphicsPixmapItem.setTransformationMode(Qt::FastTransformation);
     m_cGraphicsScene.addItem(&m_cGraphicsPixmapItem);
     setScene(&m_cGraphicsScene);
+    setAcceptDrops(false); //avoid blocking drop event to QMainWindow
 }
 void FrameView::wheelEvent ( QWheelEvent * event )
 {
@@ -74,3 +76,6 @@ void FrameView::mouseMoveEvent ( QMouseEvent * event )
     m_cGraphicsPixmapItem.setPos(m_iMousePressImageX+iTransX,
                                  m_iMousePressImageY+iTransY);
 }
+
+
+

@@ -135,8 +135,7 @@ HEADERS += \
     commands/switchyuvcommand.h
 
 #include & libs
-INCLUDEPATH += . \
-               ../libgitlevtbus/src \
+INCLUDEPATH += ../libgitlmvc/libgitlevtbus/src \
                ../libgitlmvc/src    \
                ../3rdparty/WinSparkle-0.3/include
 

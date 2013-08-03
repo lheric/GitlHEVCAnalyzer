@@ -1,7 +1,7 @@
 TEMPLATE        = lib
 CONFIG         += plugin
 INCLUDEPATH    += ../../analyzer \
-                  ../../libgitlevtbus/src
+                  ../../libgitlmvc/libgitlevtbus/src
 HEADERS         = mergedisplayfilter.h
 SOURCES         = mergedisplayfilter.cpp
 TARGET          = $$qtLibraryTarget(libmergedisplayfilter)

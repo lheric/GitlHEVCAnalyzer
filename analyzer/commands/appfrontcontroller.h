@@ -8,7 +8,7 @@
 #include <QWaitCondition>
 #include "gitlmodual.h"
 
-class AppFrontController : public QThread, protected GitlFrontController, public GitlModual
+class AppFrontController : public QThread, protected GitlFrontController
 {
 public:
     AppFrontController();

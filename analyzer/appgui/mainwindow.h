@@ -25,7 +25,9 @@ public:
 
 protected:
     virtual void keyPressEvent ( QKeyEvent * event );
-
+    virtual void dragEnterEvent(QDragEnterEvent *event);
+    virtual void dragMoveEvent(QDragMoveEvent *event);
+    virtual void dropEvent(QDropEvent *event);
 
 protected:
     void xRefreshUIByRespond( const GitlCommandRespond& rcRespond );

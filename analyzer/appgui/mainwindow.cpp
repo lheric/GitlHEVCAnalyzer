@@ -4,6 +4,7 @@
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QKeyEvent>
+#include <QMimeData>
 #include "model/modellocator.h"
 #include "commands/appfrontcontroller.h"
 #include "io/analyzermsgsender.h"
@@ -26,6 +27,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->pluginFilterListDockWidget->widget()->layout()->setContentsMargins(0,0,0,0);
     ui->sequencesListDockWidget->widget()->layout()->setContentsMargins(0,0,0,0);
 
+    setAcceptDrops(true);
     subscribeToEvtByName(g_strCmdEndEvent);
     ModelLocator::getInstance();    ///init filters, etc..
 }
@@ -104,7 +106,11 @@ void MainWindow::xRefreshUIByRespond( const GitlCommandRespond& rcRespond )
         /// slide bar position
         int iMin = ui->progressBar->minimum();
         int iMax = ui->progressBar->maximum();
-        int iPos = (iCurrentFrameNum-1)*(iMax-iMin)/(iTotalFrameNum-1);
+        int iPos = 0;
+        if(iTotalFrameNum != 1)
+        {
+            iPos = (iCurrentFrameNum-1)*(iMax-iMin)/(iTotalFrameNum-1);
+        }
         ui->progressBar->setValue(iPos);
 
     }
@@ -299,6 +305,54 @@ void MainWindow::on_actionReloadPluginsFilters_triggered()
 {
     GitlCommandRequest cRequest;
     cRequest.setParameter("command_name", "reload_filter");
+    GitlEvent cEvt( g_strCmdSentEvent  );
+    cEvt.setParameter("request", QVariant::fromValue(cRequest));
+    dispatchEvt(cEvt);
+}
+
+void MainWindow::dragEnterEvent(QDragEnterEvent *event)
+{
+    event->acceptProposedAction();
+}
+
+void MainWindow::dragMoveEvent(QDragMoveEvent *event)
+ {
+     event->acceptProposedAction();
+ }
+
+void MainWindow::dropEvent(QDropEvent *event)
+{
+
+    event->acceptProposedAction();
+
+    if(event->mimeData()->urls().empty())
+        return;
+
+    QString strFilename = event->mimeData()->urls().at(0).toLocalFile();
+
+    if(!strFilename.isEmpty())
+        g_cAppSetting.setValue("open_bitstream_path",strFilename);
+
+    if(strFilename.isEmpty() || !QFileInfo(strFilename).exists() )
+    {
+        qWarning() << "File not found.";
+        return;
+    }
+
+    /// select HM version
+    BitstreamVersionSelector cBitstreamDig(this);
+    if( cBitstreamDig.exec() == QDialog::Rejected )
+        return;
+
+    /// prepare & sent event to bus
+    GitlCommandRequest cRequest;
+    cRequest.setParameter("command_name", "decode_bitstream");
+    cRequest.setParameter("filename", strFilename);
+    cRequest.setParameter("skip_decode", false);
+    cRequest.setParameter("version", cBitstreamDig.getBitstreamVersion());
+    cRequest.setParameter("decoder_folder", "decoders");
+    cRequest.setParameter("output_folder", "decoded_sequences");
+
     GitlEvent cEvt( g_strCmdSentEvent  );
     cEvt.setParameter("request", QVariant::fromValue(cRequest));
     dispatchEvt(cEvt);
