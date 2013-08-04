@@ -3,15 +3,15 @@
 
 #include <QTextBrowser>
 #include <QMessageBox>
-#include <gitlmodual.h>
-#include <gitlevent.h>
-#include <gitldef.h>
+#include "gitlview.h"
+#include "gitlevent.h"
+#include "gitldef.h"
 
-class MsgViewer : public QTextBrowser, public GitlModual
+class MsgViewer : public QTextBrowser, public GitlView
 {
 public:
     MsgViewer(QWidget *parent = 0);
-    virtual bool detonate( GitlEvent& cEvt );
+    virtual void onUIUpdate(GitlUpdateUIEvt &rcEvt);
 
     ADD_CLASS_FIELD_PRIVATE(QMessageBox, cWarningBox)
 };

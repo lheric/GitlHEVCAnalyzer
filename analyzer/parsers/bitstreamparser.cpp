@@ -3,10 +3,11 @@
 #include "events/eventnames.h"
 #include "exceptions/decodernotfoundexception.h"
 #include "exceptions/bitstreamnotfoundexception.h"
+#include "gitlupdateuievt.h"
 #include <QProcess>
 #include <QDir>
 #include <QFileInfo>
-#include <iostream>
+
 BitstreamParser::BitstreamParser(QObject *parent)
 {
     connect(&m_cDecoderProcess, SIGNAL(readyRead()), this, SLOT(displayDecoderOutput()));
@@ -44,7 +45,6 @@ bool BitstreamParser::parseFile(QString strDecoderFolder,
     m_cStdOutputFile.open(QIODevice::WriteOnly);
     QString strDecoderCmd = strDecoderFolder + QString("\"/HM_%1.exe\" -b %2 -o decoder_yuv.yuv").arg(iEncoderVersion).arg(strBitstreamFilePath);
 
-
     m_cDecoderProcess.start(strDecoderCmd);
     m_cDecoderProcess.waitForFinished(-1);
     m_cStdOutputFile.close();
@@ -73,13 +73,11 @@ void BitstreamParser::displayDecoderOutput()
 
         if( cMatchTarget.indexIn(strLine) != -1 )
         {
-            GitlEvent evt( g_strCmdInfoEvent );
+            GitlUpdateUIEvt evt;
             int iPoc = cMatchTarget.cap(1).toInt();
             QString strText = QString("%1 Frame Decoded").arg(iPoc);
-            evt.setParameter("message", strText);
-
+            evt.setParameter("decoding_progress", strText);
             dispatchEvt(evt);
-
         }
     }
 

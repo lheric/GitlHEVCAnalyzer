@@ -11,6 +11,7 @@
 #include "parsers/intraparser.h"
 #include "events/eventnames.h"
 #include "exceptions/decodingfailexception.h"
+#include "gitlupdateuievt.h"
 #include <QDir>
 
 DecodeBitstreamCommand::DecodeBitstreamCommand(QObject *parent) :
@@ -40,22 +41,10 @@ bool DecodeBitstreamCommand::execute( GitlCommandRequest& rcRequest, GitlCommand
 
 
 
-    /// Init Sequence
-
-//    ComSequence* pcSequence = NULL;
-//    if(strSequenceSelector == "testing_sequence")
-//    {
-//        pModel->getSequenceManager().setSequenceSelector(SEQUENCE_0);
-//    }
-//    else if(strSequenceSelector == "benchmark_sequence")
-//    {
-//        pModel->getSequenceManager().setSequenceSelector(SEQUENCE_1);
-//    }
-//    else
-//    {
-//        AnalyzerMsgSender::getInstance()->msgOut("Undefined sequence selector", GITL_MSG_ERROR);
-//        return false;
-//    }
+    /// show busy dialog
+    GitlUpdateUIEvt evt;
+    evt.setParameter("busy_dialog_visible", true);
+    evt.dispatch();
 
     //TODO BUG Memory Leaking when exception happens
     ComSequence* pcSequence = new ComSequence();
@@ -63,11 +52,11 @@ bool DecodeBitstreamCommand::execute( GitlCommandRequest& rcRequest, GitlCommand
 
     /// *****STEP 1 : Use the special decoder to parse bitstream*****
     /// call decoder process to decode bitstream to YUV and output text info
-    GitlEvent cDecodingStageInfo(g_strCmdInfoEvent);
+    GitlUpdateUIEvt cDecodingStageInfo;
     bool bSuccess = false;
     if( !bSkipDecode )
     {
-        cDecodingStageInfo.setParameter("message", "(1/9)Start Decoding Bitstream...");
+        cDecodingStageInfo.setParameter("decoding_progress", "(1/9)Start Decoding Bitstream...");
         dispatchEvt(cDecodingStageInfo);
         BitstreamParser cBitstreamParser;
         bSuccess = cBitstreamParser.parseFile(strDecoderPath,
@@ -91,7 +80,7 @@ bool DecodeBitstreamCommand::execute( GitlCommandRequest& rcRequest, GitlCommand
     QString strSPSFilename = strDecoderOutputPath + "/decoder_sps.txt";
     if( bSuccess )
     {
-        cDecodingStageInfo.setParameter("message", "(2/9)Start Parsing Sequence Parameter Set...");
+        cDecodingStageInfo.setParameter("decoding_progress", "(2/9)Start Parsing Sequence Parameter Set...");
         dispatchEvt(cDecodingStageInfo);
         QFile cSPSFile(strSPSFilename);
         cSPSFile.open(QIODevice::ReadOnly);
@@ -120,7 +109,7 @@ bool DecodeBitstreamCommand::execute( GitlCommandRequest& rcRequest, GitlCommand
     QString strCUPUFilename = strDecoderOutputPath + "/decoder_cupu.txt";
     if( bSuccess )
     {
-        cDecodingStageInfo.setParameter("message", "(4/9)Start Parsing CU & PU Structure...");
+        cDecodingStageInfo.setParameter("decoding_progress", "(4/9)Start Parsing CU & PU Structure...");
         dispatchEvt(cDecodingStageInfo);
         QFile cCUPUFile(strCUPUFilename);
         cCUPUFile.open(QIODevice::ReadOnly);
@@ -135,7 +124,7 @@ bool DecodeBitstreamCommand::execute( GitlCommandRequest& rcRequest, GitlCommand
     QString strPredFilename = strDecoderOutputPath + "/decoder_pred.txt";
     if( bSuccess )
     {
-        cDecodingStageInfo.setParameter("message", "(5/9)Start Parsing Predction Mode...");
+        cDecodingStageInfo.setParameter("decoding_progress", "(5/9)Start Parsing Predction Mode...");
         dispatchEvt(cDecodingStageInfo);
         QFile cPredFile(strPredFilename);
         cPredFile.open(QIODevice::ReadOnly);
@@ -150,7 +139,7 @@ bool DecodeBitstreamCommand::execute( GitlCommandRequest& rcRequest, GitlCommand
     QString strMVFilename = strDecoderOutputPath + "/decoder_mv.txt";
     if( bSuccess )
     {
-        cDecodingStageInfo.setParameter("message", "(6/9)Start Parsing Motion Vectors...");
+        cDecodingStageInfo.setParameter("decoding_progress", "(6/9)Start Parsing Motion Vectors...");
         dispatchEvt(cDecodingStageInfo);
         QFile cMVFile(strMVFilename);
         cMVFile.open(QIODevice::ReadOnly);
@@ -165,7 +154,7 @@ bool DecodeBitstreamCommand::execute( GitlCommandRequest& rcRequest, GitlCommand
     QString strMergeFilename = strDecoderOutputPath + "/decoder_merge.txt";
     if( bSuccess )
     {
-        cDecodingStageInfo.setParameter("message", "(7/9)Start Parsing Motion Merge Info...");
+        cDecodingStageInfo.setParameter("decoding_progress", "(7/9)Start Parsing Motion Merge Info...");
         dispatchEvt(cDecodingStageInfo);
         QFile cMergeFile(strMergeFilename);
         cMergeFile.open(QIODevice::ReadOnly);
@@ -180,7 +169,7 @@ bool DecodeBitstreamCommand::execute( GitlCommandRequest& rcRequest, GitlCommand
     QString strIntraFilename = strDecoderOutputPath + "/decoder_intra.txt";
     if( bSuccess )
     {
-        cDecodingStageInfo.setParameter("message", "(8/9)Start Parsing Intra Info...");
+        cDecodingStageInfo.setParameter("decoding_progress", "(8/9)Start Parsing Intra Info...");
         dispatchEvt(cDecodingStageInfo);
         QFile cIntraFile(strIntraFilename);
         cIntraFile.open(QIODevice::ReadOnly);
@@ -201,7 +190,7 @@ bool DecodeBitstreamCommand::execute( GitlCommandRequest& rcRequest, GitlCommand
     QPixmap* pcFramePixmap = NULL;
     if( bSuccess )
     {
-        cDecodingStageInfo.setParameter("message", "(9/9)Reding & Drawing Reconstructed YUV...");
+        cDecodingStageInfo.setParameter("decoding_progress", "(9/9)Reding & Drawing Reconstructed YUV...");
         dispatchEvt(cDecodingStageInfo);
         pModel->getFrameBuffer().openYUVFile(strYUVFilename, iWidth, iHeight);
         pcFramePixmap = pModel->getFrameBuffer().getFrame(0);   ///< Read Frame Buffer
@@ -218,15 +207,15 @@ bool DecodeBitstreamCommand::execute( GitlCommandRequest& rcRequest, GitlCommand
     rcRespond.setParameter("total_frame_num", iTotalFrame);
 
 
+    /// hide busy dialog
+    evt.setParameter("busy_dialog_visible", false);
+    evt.dispatch();
+
+
     /// nofity sequence list to update
-//    GitlEvent cSequenceChangedEvt(g_strSquencesListChanged);
     QVector<ComSequence*>* ppcSequences = &(pModel->getSequenceManager().getAllSequences());
     rcRespond.setParameter("sequences",QVariant::fromValue((void*)ppcSequences));
     rcRespond.setParameter("current_sequence",QVariant::fromValue((void*)pcSequence));
-
-//    dispatchEvt(cSequenceChangedEvt);
-
-
 
     return bSuccess;
 }

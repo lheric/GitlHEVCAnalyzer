@@ -60,7 +60,6 @@ AppFrontController::AppFrontController()
     m_iMaxEvtInQue = 1000;
     xInitCommand();
     setModualName("app_front_controller");
-    subscribeToEvtByName(g_strCmdSentEvent);
     this->start();
 }
 
@@ -82,13 +81,13 @@ bool AppFrontController::detonate(GitlEvent &cEvt )
 {    
 
     m_cEvtQueMutex.lock();
-    if( m_cEvtQue.size() >= m_iMaxEvtInQue )
+    if( m_pcEvtQue.size() >= m_iMaxEvtInQue )
     {
         qCritical() << QString("Too Many Events Pending...Waiting...");
         m_cEvtQueNotFull.wait(&m_cEvtQueMutex);
-        qCritical() << QString("Event Queue Not Full...Moving on...");
+        qDebug() << QString("Event Queue Not Full...Moving on...");
     }
-    m_cEvtQue.push_back(cEvt);
+    m_pcEvtQue.push_back(cEvt.clone());
     m_cEvtQueMutex.unlock();
     m_cEvtQueNotEmpty.wakeAll();
     return true;
@@ -103,40 +102,21 @@ void AppFrontController::run()
     {
         /// get one event from the waiting queue
         m_cEvtQueMutex.lock();
-        if( m_cEvtQue.empty() )
+        if( m_pcEvtQue.empty() )
         {
             m_cEvtQueNotEmpty.wait(&m_cEvtQueMutex);
         }
-        GitlEvent cEvt = m_cEvtQue.front();
-        m_cEvtQue.pop_front();
+        GitlEvent* pcEvt = m_pcEvtQue.front();
+        m_pcEvtQue.pop_front();
         m_cEvtQueMutex.unlock();
         m_cEvtQueNotFull.wakeAll();
 
-        /// deal with the event
-        //AnalyzerMsgSender::getInstance()->msgOut(QString("Next Event Fetched!"), GITL_MSG_DEBUG);
-
-            ///check if has request parameter
-        if( !cEvt.hasParameter("request") )
-        {
-            qCritical() << QString("Front Controller Received Command Event Without \"Request\", Command Exit!");
-            continue;
-        }
-
-            /// prepare request and respond
-        GitlCommandRequest cRequest;
-        GitlCommandRespond cRespond;
-        QVariant vValue;
-        vValue = cEvt.getParameter("request");
-        cRequest = vValue.value<GitlCommandRequest>();
-
-        GitlEvent cCmdStartEvt( g_strCmdStartEvent );               ///
-        cCmdStartEvt.setParameter("request", vValue);  /// start command event
-        dispatchEvt(cCmdStartEvt);                                 ///
 
         /// do command & exception handling
         try
         {
-            processRequest(cRequest, cRespond);
+            GitlFrontController::detonate(*pcEvt);
+            delete pcEvt;
         }
         catch( const NoSequenceFoundException& )
         {
@@ -166,10 +146,6 @@ void AppFrontController::run()
         {
             qCritical() << "Unknown Error Happened... :(";
         }
-
-        GitlEvent cCmdEndEvt( g_strCmdEndEvent );                                       ///
-        cCmdEndEvt.setParameter("respond", QVariant::fromValue(cRespond)); /// end command event
-        dispatchEvt(cCmdEndEvt);                                                       ///
 
     }
 

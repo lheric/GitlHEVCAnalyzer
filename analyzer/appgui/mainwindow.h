@@ -8,11 +8,12 @@
 #include "busydialog.h"
 #include "aboutdialog.h"
 #include "sequencelist.h"
+#include "gitlview.h"
 namespace Ui {
     class MainWindow;
 }
 
-class MainWindow :  public QMainWindow, public GitlModual
+class MainWindow :  public QMainWindow, public GitlView
 {
     Q_OBJECT
 
@@ -21,7 +22,8 @@ public:
     ~MainWindow();
 
 public:
-    bool detonate( GitlEvent&  cEvt );
+    void onUIUpdate(GitlUpdateUIEvt& rcEvt);
+    //bool detonate( GitlEvent&  cEvt );
 
 protected:
     virtual void keyPressEvent ( QKeyEvent * event );
@@ -30,7 +32,6 @@ protected:
     virtual void dropEvent(QDropEvent *event);
 
 protected:
-    void xRefreshUIByRespond( const GitlCommandRespond& rcRespond );
 
     void xPresentFrameBuffer(QPixmap *pcPixmap);
 

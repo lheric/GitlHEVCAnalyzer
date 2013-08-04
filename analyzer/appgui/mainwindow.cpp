@@ -14,6 +14,7 @@
 #include "io/analyzermsgsender.h"
 #include "gitlcommandrespond.h"
 #include "common/comrom.h"
+#include "gitlivkcmdevt.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),    
@@ -28,7 +29,6 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->sequencesListDockWidget->widget()->layout()->setContentsMargins(0,0,0,0);
 
     setAcceptDrops(true);
-    subscribeToEvtByName(g_strCmdEndEvent);
     ModelLocator::getInstance();    ///init filters, etc..
 }
 
@@ -36,69 +36,38 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
-bool MainWindow::detonate(GitlEvent &cEvt )
+void MainWindow::onUIUpdate(GitlUpdateUIEvt& rcEvt)
 {
 
-    if(!cEvt.hasParameter("respond"))
-    {
-        qWarning() << QString("MainWindow Received Command Finish Event Without \"Respond\"");
-        return false;
-    }
-
-    QVariant vValue = cEvt.getParameter("respond");
-    const GitlCommandRespond& cRespond = vValue.value<GitlCommandRespond>();
-    xRefreshUIByRespond(cRespond);
-    return true;
-}
-
-/// Keyboard Event
-void MainWindow::keyPressEvent ( QKeyEvent * event )
-{
-    if(event->key() == Qt::Key_Comma)
-    {
-        /// Next Frame
-        on_previousFrame_clicked();
-    }
-    else if(event->key() == Qt::Key_Period )
-    {
-        /// Previous Frame
-        on_nextFrame_clicked();
-    }
-
-}
-
-
-void MainWindow::xRefreshUIByRespond( const GitlCommandRespond& rcRespond )
-{    
     QVariant vValue;
 
     /// draw current frame to screen
-    if( rcRespond.hasParameter("picture") )
+    if( rcEvt.hasParameter("picture") )
     {
-        vValue = rcRespond.getParameter("picture");
+        vValue = rcEvt.getParameter("picture");
         QPixmap* pcPixMap = (QPixmap*)(vValue.value<void *>());
         xPresentFrameBuffer(pcPixMap);
     }
 
 
     /// change frame number, total frame number & slide bar position in GUI.
-    if( rcRespond.hasParameter("total_frame_num") || rcRespond.hasParameter("current_frame_poc") )
+    if( rcEvt.hasParameter("total_frame_num") || rcEvt.hasParameter("current_frame_poc") )
     {
         static int iTotalFrameNum = -1;
         static int iCurrentFrameNum = -1;
 
         /// frame number
-        if( rcRespond.hasParameter("total_frame_num") )
+        if( rcEvt.hasParameter("total_frame_num") )
         {
-            vValue = rcRespond.getParameter("total_frame_num");
+            vValue = rcEvt.getParameter("total_frame_num");
             iTotalFrameNum = vValue.toInt();
             ui->totalFrameNum->setText(QString("%1").arg(iTotalFrameNum));
         }
 
         /// total frame number
-        if( rcRespond.hasParameter("current_frame_poc") )
+        if( rcEvt.hasParameter("current_frame_poc") )
         {
-            vValue = rcRespond.getParameter("current_frame_poc");
+            vValue = rcEvt.getParameter("current_frame_poc");
             iCurrentFrameNum = vValue.toInt() + 1;
             ui->currentFrameNum->setText(QString("%1").arg(iCurrentFrameNum));
         }
@@ -116,41 +85,43 @@ void MainWindow::xRefreshUIByRespond( const GitlCommandRespond& rcRespond )
     }
 
 
-    if( rcRespond.hasParameter("snapshot") )
+    if( rcEvt.hasParameter("snapshot") )
     {
-        vValue = rcRespond.getParameter("snapshot");
+        vValue = rcEvt.getParameter("snapshot");
         QPixmap* pcPixMap = (QPixmap*)(vValue.value<void *>());
         xSaveSnapshot(pcPixMap);
     }
-
-
 }
 
+/// Keyboard Event
+void MainWindow::keyPressEvent ( QKeyEvent * event )
+{
+    if(event->key() == Qt::Key_Comma || event->key() == Qt::LeftArrow )
+    {
+        /// Next Frame
+        on_previousFrame_clicked();
+    }
+    else if(event->key() == Qt::Key_Period || event->key() == Qt::RightArrow )
+    {
+        /// Previous Frame
+        on_nextFrame_clicked();
+    }
 
+}
 
 
 void MainWindow::on_previousFrame_clicked()
 {
     /// invoke command
-    GitlCommandRequest cRequest;
-
-    cRequest.setParameter("command_name", "prev_frame");
-
-    GitlEvent cEvt( g_strCmdSentEvent  );
-    cEvt.setParameter("request", QVariant::fromValue(cRequest));
-    dispatchEvt(cEvt);
+    GitlIvkCmdEvt cEvt("prev_frame");
+    cEvt.dispatch();
 }
 
 void MainWindow::on_nextFrame_clicked()
 {
     /// invoke command
-    GitlCommandRequest cRequest;
-
-    cRequest.setParameter("command_name", "next_frame");
-
-    GitlEvent cEvt( g_strCmdSentEvent  );
-    cEvt.setParameter("request", QVariant::fromValue(cRequest));
-    dispatchEvt(cEvt);
+    GitlIvkCmdEvt cEvt("next_frame");
+    cEvt.dispatch();
 }
 
 void MainWindow::on_progressBar_actionTriggered(int action)
@@ -159,15 +130,9 @@ void MainWindow::on_progressBar_actionTriggered(int action)
                                        (ui->progressBar->maximum()-ui->progressBar->minimum()));
 
     /// invoke command
-    GitlCommandRequest cRequest;
-
-    cRequest.setParameter("command_name", "jumpto_percent");
-    cRequest.setParameter("percent", iBarPercent);
-
-    GitlEvent cEvt( g_strCmdSentEvent  );
-    cEvt.setParameter("request", QVariant::fromValue(cRequest));
-    dispatchEvt(cEvt);
-
+    GitlIvkCmdEvt cEvt("jumpto_percent");
+    cEvt.setParameter("percent", iBarPercent);
+    cEvt.dispatch();
 }
 
 
@@ -224,27 +189,22 @@ void MainWindow::on_actionOpen_bitstream_triggered()
         return;
 
     /// prepare & sent event to bus
-    GitlCommandRequest cRequest;
-    cRequest.setParameter("command_name", "decode_bitstream");
-    cRequest.setParameter("filename", strFilename);
-    cRequest.setParameter("skip_decode", false);
-    cRequest.setParameter("version", cBitstreamDig.getBitstreamVersion());
-    cRequest.setParameter("decoder_folder", "decoders");
-    cRequest.setParameter("output_folder", "decoded_sequences");
+    GitlIvkCmdEvt cEvt("decode_bitstream");
+    cEvt.setParameter("filename", strFilename);
+    cEvt.setParameter("skip_decode", false);
+    cEvt.setParameter("version", cBitstreamDig.getBitstreamVersion());
+    cEvt.setParameter("decoder_folder", "decoders");
+    cEvt.setParameter("output_folder", "decoded_sequences");
+    cEvt.dispatch();
 
-    GitlEvent cEvt( g_strCmdSentEvent  );
-    cEvt.setParameter("request", QVariant::fromValue(cRequest));
-    dispatchEvt(cEvt);
 }
 
 
 void MainWindow::on_printScreenBtn_clicked()
 {
-    GitlCommandRequest cRequest;
-    cRequest.setParameter("command_name", "print_screen");
-    GitlEvent cEvt( g_strCmdSentEvent  );
-    cEvt.setParameter("request", QVariant::fromValue(cRequest));
-    dispatchEvt(cEvt);
+    /// invoke command
+    GitlIvkCmdEvt cEvt("print_screen");
+    cEvt.dispatch();
 }
 
 
@@ -263,30 +223,6 @@ void MainWindow::on_openBitstreamBtn_clicked()
 }
 
 
-/*
-void MainWindow::on_actionOpen_bitstream_info_folder_triggered()
-{
-    QString strFilename;
-    strFilename=QFileDialog::getExistingDirectory(this,
-                                          tr("Open Bitstream Sequence Info Folder"),
-                                          ".",
-                                          QFileDialog::ShowDirsOnly);
-    if(strFilename.isEmpty() || !QFileInfo(strFilename).exists() )
-    {
-        qWarning() << "File not found.";
-        return;
-    }
-
-    CommandRequest cRequest;
-    cRequest.setParameter("command_name", "decode_bitstream");
-    cRequest.setParameter("filename", strFilename);
-    cRequest.setParameter("skip_decode", true);
-    cRequest.setParameter("sequence", "testing_sequence");
-    cRequest.setParameter("version", -1);
-    cRequest.setParameter("decoder_folder", "decoders");
-    cRequest.setParameter("output_folder", strFilename);
-}
-*/
 void MainWindow::on_actionExit_triggered()
 {
     exit(0);
@@ -294,20 +230,16 @@ void MainWindow::on_actionExit_triggered()
 
 void MainWindow::on_actionCheckUpdate_triggered()
 {
-    GitlCommandRequest cRequest;
-    cRequest.setParameter("command_name", "check_update");
-    GitlEvent cEvt( g_strCmdSentEvent  );
-    cEvt.setParameter("request", QVariant::fromValue(cRequest));
-    dispatchEvt(cEvt);
+    /// invoke command
+    GitlIvkCmdEvt cEvt("check_update");
+    cEvt.dispatch();
 }
 
 void MainWindow::on_actionReloadPluginsFilters_triggered()
 {
-    GitlCommandRequest cRequest;
-    cRequest.setParameter("command_name", "reload_filter");
-    GitlEvent cEvt( g_strCmdSentEvent  );
-    cEvt.setParameter("request", QVariant::fromValue(cRequest));
-    dispatchEvt(cEvt);
+    /// invoke command
+    GitlIvkCmdEvt cEvt("reload_filter");
+    cEvt.dispatch();
 }
 
 void MainWindow::dragEnterEvent(QDragEnterEvent *event)
@@ -345,15 +277,13 @@ void MainWindow::dropEvent(QDropEvent *event)
         return;
 
     /// prepare & sent event to bus
-    GitlCommandRequest cRequest;
-    cRequest.setParameter("command_name", "decode_bitstream");
-    cRequest.setParameter("filename", strFilename);
-    cRequest.setParameter("skip_decode", false);
-    cRequest.setParameter("version", cBitstreamDig.getBitstreamVersion());
-    cRequest.setParameter("decoder_folder", "decoders");
-    cRequest.setParameter("output_folder", "decoded_sequences");
-
-    GitlEvent cEvt( g_strCmdSentEvent  );
-    cEvt.setParameter("request", QVariant::fromValue(cRequest));
-    dispatchEvt(cEvt);
+    /// invoke command
+    GitlIvkCmdEvt cEvt("reload_filter");
+    cEvt.setParameter("command_name", "decode_bitstream");
+    cEvt.setParameter("filename", strFilename);
+    cEvt.setParameter("skip_decode", false);
+    cEvt.setParameter("version", cBitstreamDig.getBitstreamVersion());
+    cEvt.setParameter("decoder_folder", "decoders");
+    cEvt.setParameter("output_folder", "decoded_sequences");
+    cEvt.dispatch();
 }

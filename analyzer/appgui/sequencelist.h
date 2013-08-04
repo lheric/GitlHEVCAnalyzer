@@ -5,7 +5,7 @@
 #include <QListWidget>
 #include <QButtonGroup>
 #include <QListWidgetItem>
-#include "gitlmodual.h"
+#include "gitlview.h"
 #include "common/comsequence.h"
 #include "sequencelistitem.h"
 namespace Ui {
@@ -14,13 +14,13 @@ class SequenceList;
 
 
 
-class SequenceList : public QListWidget, public GitlModual
+class SequenceList : public QListWidget, public GitlView
 {
     Q_OBJECT
     
 public:
     explicit SequenceList(QWidget *parent = 0);
-    bool detonate( GitlEvent& cEvt );
+    void onUIUpdate(GitlUpdateUIEvt &rcEvt);
     ~SequenceList();
 
     void addNoSquenceRadioBtn();

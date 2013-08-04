@@ -3,7 +3,7 @@
 #include <QMimeData>
 #include "io/analyzermsgsender.h"
 #include "events/eventnames.h"
-#include "gitlcommandrequest.h"
+#include "gitlivkcmdevt.h"
 #include <QDebug>
 FrameView::FrameView(QWidget *parent) :
     QGraphicsView(parent)
@@ -35,13 +35,11 @@ void FrameView::wheelEvent ( QWheelEvent * event )
     }
     else
     {
+
         //AnalyzerMsgSender::getInstance()->msgOut(QString("%1").arg(dNextScale));
-        GitlCommandRequest cRequest;
-        cRequest.setParameter("command_name", "zoom_frame");
-        cRequest.setParameter("scale", dNextScale);
-        GitlEvent cEvt( g_strCmdSentEvent  );
-        cEvt.setParameter("request", QVariant::fromValue(cRequest));
-        dispatchEvt(cEvt);
+        GitlIvkCmdEvt cEvt("zoom_frame");
+        cEvt.setParameter("scale", dNextScale);
+        cEvt.dispatch();
 
 
         int iImgX = m_cGraphicsPixmapItem.scenePos().x();

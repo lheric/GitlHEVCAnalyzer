@@ -4,13 +4,12 @@
 #include <QWidget>
 #include "gitldef.h"
 #include "drawengine/abstractfilter.h"
-#include "gitlmodual.h"
 
 namespace Ui {
 class PluginFilterItem;
 }
 
-class PluginFilterItem : public QWidget, public GitlModual
+class PluginFilterItem : public QWidget
 {
     Q_OBJECT
     
@@ -23,16 +22,15 @@ public:
 private slots:
     void on_enableCheckBox_clicked();
 
-void on_configBtn_clicked();
+    void on_configBtn_clicked();
 
-void on_upBtn_clicked();
+    void on_upBtn_clicked();
 
-void on_downBtn_clicked();
+    void on_downBtn_clicked();
 
 private:
     Ui::PluginFilterItem *ui;
 
-    //ADD_CLASS_FIELD(AbstractFilter*, pFilter, getFilter, setFilter)
 };
 
 #endif // PLUGINFILTERITEM_H

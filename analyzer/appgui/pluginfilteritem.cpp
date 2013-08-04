@@ -2,6 +2,7 @@
 #include "ui_pluginfilteritem.h"
 #include "events/eventnames.h"
 #include "gitlcommandrequest.h"
+#include "gitlivkcmdevt.h"
 
 PluginFilterItem::PluginFilterItem(AbstractFilter* pcFilter, QWidget *parent) :
     QWidget(parent),
@@ -22,43 +23,30 @@ PluginFilterItem::~PluginFilterItem()
 
 void PluginFilterItem::on_enableCheckBox_clicked()
 {
-    GitlCommandRequest cRequest;
-    cRequest.setParameter("command_name", "refresh_screen");
-    GitlEvent cEvt( g_strCmdSentEvent  );
-    cEvt.setParameter("request", QVariant::fromValue(cRequest));
-    dispatchEvt(cEvt);
-
+    GitlIvkCmdEvt cRequest("refresh_screen");
+    cRequest.dispatch();
     m_pcFilter->setEnable(ui->enableCheckBox->isChecked());
 }
 
 void PluginFilterItem::on_configBtn_clicked()
 {
-    GitlCommandRequest cRequest;
-    cRequest.setParameter("command_name", "config_filter");
-    cRequest.setParameter("filter", QVariant::fromValue((void*)(m_pcFilter)));
-    GitlEvent cEvt( g_strCmdSentEvent  );
-    cEvt.setParameter("request", QVariant::fromValue(cRequest));
-    dispatchEvt(cEvt);
+    GitlIvkCmdEvt cRequest("config_filter");
+    cRequest.dispatch();
 }
 
 void PluginFilterItem::on_upBtn_clicked()
 {
-    GitlCommandRequest cRequest;
-    cRequest.setParameter("command_name", "moveup_filter");
+    GitlIvkCmdEvt cRequest("moveup_filter");
     cRequest.setParameter("filter_name", m_pcFilter->getName());
     cRequest.setParameter("filter", QVariant::fromValue((void*)(m_pcFilter)));
-    GitlEvent cEvt( g_strCmdSentEvent  );
-    cEvt.setParameter("request", QVariant::fromValue(cRequest));
-    dispatchEvt(cEvt);
+    cRequest.dispatch();
+
 }
 
 void PluginFilterItem::on_downBtn_clicked()
 {
-    GitlCommandRequest cRequest;
-    cRequest.setParameter("command_name", "movedown_filter");
+    GitlIvkCmdEvt cRequest("movedown_filter");
     cRequest.setParameter("filter_name", m_pcFilter->getName());
     cRequest.setParameter("filter", QVariant::fromValue((void*)(m_pcFilter)));
-    GitlEvent cEvt( g_strCmdSentEvent  );
-    cEvt.setParameter("request", QVariant::fromValue(cRequest));
-    dispatchEvt(cEvt);
+    cRequest.dispatch();
 }

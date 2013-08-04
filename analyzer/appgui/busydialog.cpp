@@ -11,13 +11,8 @@ BusyDialog::BusyDialog(QWidget *parent) :
 {
 
     ui->setupUi(this);
-
     this->setWindowFlags(Qt::CustomizeWindowHint|Qt::WindowTitleHint);
-
     setModualName("busy_dialog");
-    subscribeToEvtByName(g_strCmdStartEvent);
-    subscribeToEvtByName(g_strCmdInfoEvent);
-    subscribeToEvtByName(g_strCmdEndEvent);
 }
 
 BusyDialog::~BusyDialog()
@@ -31,37 +26,18 @@ void BusyDialog::setHintText(QString& str)
 }
 
 
-bool BusyDialog::detonate(GitlEvent& cEvt)
+void BusyDialog::onUIUpdate(GitlUpdateUIEvt &rcEvt)
 {
-    QString& strEvtName = cEvt.getEvtName();
-    if(strEvtName == g_strCmdStartEvent)
+    if( rcEvt.hasParameter("busy_dialog_visible") )
     {
-        GitlCommandRequest cRequest;
-
-        QVariant vValue = cEvt.getParameter("request");
-        cRequest = vValue.value<GitlCommandRequest>();
-        vValue = cRequest.getParameter("command_name");
-        const QString& strCmdName = vValue.toString();
-
-        if( strCmdName == "decode_bitstream")
-            this->show();
+        /// show or hide this dialog
+        this->setVisible(rcEvt.getParameter("busy_dialog_visible").toBool());
     }
-    else if(strEvtName == g_strCmdEndEvent)
+    else if( rcEvt.hasParameter("decoding_progress") )
     {
-        GitlCommandRespond cRespond;
-        QVariant vValue = cEvt.getParameter("respond");
-        cRespond = vValue.value<GitlCommandRespond>();
-        vValue = cRespond.getParameter("command_name");
-        const QString& strCmdName = vValue.toString();
-
-        if( strCmdName == "decode_bitstream")
-            this->hide();
-    }
-    else if(strEvtName == g_strCmdInfoEvent)
-    {
-        QVariant cVariant = cEvt.getParameter("message");
+        /// update info
+        QVariant cVariant = rcEvt.getParameter("decoding_progress");
         this->ui->busyDynamicText->setText(cVariant.toString());
     }
-    return true;
 
 }

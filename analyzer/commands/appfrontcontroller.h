@@ -23,7 +23,7 @@ protected:
     SINGLETON_PATTERN_DECLARE(AppFrontController)
 
 
-    ADD_CLASS_FIELD_PRIVATE(QList<GitlEvent>, cEvtQue)
+    ADD_CLASS_FIELD_PRIVATE(QList<GitlEvent*>, pcEvtQue)
     ADD_CLASS_FIELD_PRIVATE(QMutex, cEvtQueMutex)
     ADD_CLASS_FIELD_PRIVATE(QWaitCondition, cEvtQueNotEmpty)
     ADD_CLASS_FIELD_PRIVATE(QWaitCondition, cEvtQueNotFull)

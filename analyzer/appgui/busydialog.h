@@ -2,12 +2,12 @@
 #define BUSYDIALOG_H
 
 #include <QDialog>
-#include <gitlmodual.h>
+#include "gitlview.h"
 namespace Ui {
 class BusyDialog;
 }
 
-class BusyDialog : public QDialog, public GitlModual
+class BusyDialog : public QDialog, public GitlView
 {
     Q_OBJECT
     
@@ -17,7 +17,7 @@ public:
 
 public slots:
     void setHintText(QString& str);
-    virtual bool detonate(GitlEvent& cEvt);
+    virtual void onUIUpdate(GitlUpdateUIEvt &rcEvt);
     
 private:
     Ui::BusyDialog *ui;

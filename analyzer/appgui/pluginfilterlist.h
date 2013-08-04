@@ -1,22 +1,16 @@
 #ifndef PLUGINFILTERLIST_H
 #define PLUGINFILTERLIST_H
-#include "gitlmodual.h"
+#include "gitlview.h"
 #include <QListWidget>
 #include <gitlcommandrespond.h>
-class PluginFilterList : public QListWidget, public GitlModual
+class PluginFilterList : public QListWidget, public GitlView
 {
     Q_OBJECT
 public:
     explicit PluginFilterList( QWidget *parent = 0 );
-    virtual bool detonate( GitlEvent& cEvt );
+    virtual void onUIUpdate(GitlUpdateUIEvt &rcEvt);
 
-protected:
-    void xRefreshListByRespond(const GitlCommandRespond &rcRespond);
 
-signals:
-    
-public slots:
-    
 };
 
 #endif // PLUGINFILTERLIST_H
