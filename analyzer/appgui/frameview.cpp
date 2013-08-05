@@ -2,7 +2,6 @@
 #include <QWheelEvent>
 #include <QMimeData>
 #include "io/analyzermsgsender.h"
-#include "events/eventnames.h"
 #include "gitlivkcmdevt.h"
 #include <QDebug>
 FrameView::FrameView(QWidget *parent) :

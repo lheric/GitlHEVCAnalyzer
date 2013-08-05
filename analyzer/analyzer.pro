@@ -108,7 +108,6 @@ HEADERS += \
     commands/printscreencommand.h \
     appgui/busydialog.h \
     io/analyzermsgsender.h \
-    events/eventnames.h \
     appgui/msgviewer.h \
     appgui/aboutdialog.h \
     drawengine/abstractfilter.h \

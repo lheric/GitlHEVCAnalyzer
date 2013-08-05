@@ -1,5 +1,4 @@
 #include "pluginfilterlist.h"
-#include "events/eventnames.h"
 #include "drawengine/abstractfilter.h"
 #include "io/analyzermsgsender.h"
 #include "appgui/pluginfilteritem.h"

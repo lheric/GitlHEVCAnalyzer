@@ -4,8 +4,6 @@
 #include "exceptions/decodernotfoundexception.h"
 #include "exceptions/decodingfailexception.h"
 #include "exceptions/bitstreamnotfoundexception.h"
-#include "events/eventnames.h"
-
 #include "commands/decodebitstreamcommand.h"
 #include "commands/openencodergeneralcommand.h"
 #include "commands/openyuvcommand.h"

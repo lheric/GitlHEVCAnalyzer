@@ -1,5 +1,4 @@
 #include "msgviewer.h"
-#include "events/eventnames.h"
 #include "QVariant"
 
 MsgViewer::MsgViewer(QWidget *parent ) :

@@ -1,6 +1,5 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QKeyEvent>
@@ -10,7 +9,6 @@
 #include "io/analyzermsgsender.h"
 #include "gitlcommandrequest.h"
 #include "bitstreamversionselector.h"
-#include "events/eventnames.h"
 #include "io/analyzermsgsender.h"
 #include "gitlcommandrespond.h"
 #include "common/comrom.h"

@@ -1,6 +1,5 @@
 #include "pluginfilteritem.h"
 #include "ui_pluginfilteritem.h"
-#include "events/eventnames.h"
 #include "gitlcommandrequest.h"
 #include "gitlivkcmdevt.h"
 

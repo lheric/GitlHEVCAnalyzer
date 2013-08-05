@@ -1,6 +1,5 @@
 #include "bitstreamparser.h"
 #include "io/analyzermsgsender.h"
-#include "events/eventnames.h"
 #include "exceptions/decodernotfoundexception.h"
 #include "exceptions/bitstreamnotfoundexception.h"
 #include "gitlupdateuievt.h"

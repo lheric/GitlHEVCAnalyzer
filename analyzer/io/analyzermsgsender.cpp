@@ -1,5 +1,4 @@
 #include "analyzermsgsender.h"
-#include "events/eventnames.h"
 #include "gitlupdateuievt.h"
 
 ///SINGLETON

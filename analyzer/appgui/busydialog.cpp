@@ -1,7 +1,6 @@
 #include "busydialog.h"
 #include "ui_busydialog.h"
 #include "io/analyzermsgsender.h"
-#include "events/eventnames.h"
 #include "gitlcommandrequest.h"
 #include "gitlcommandrespond.h"
 

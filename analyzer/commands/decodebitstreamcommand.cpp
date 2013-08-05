@@ -9,7 +9,6 @@
 #include "parsers/mvparser.h"
 #include "parsers/mergeparser.h"
 #include "parsers/intraparser.h"
-#include "events/eventnames.h"
 #include "exceptions/decodingfailexception.h"
 #include "gitlupdateuievt.h"
 #include <QDir>

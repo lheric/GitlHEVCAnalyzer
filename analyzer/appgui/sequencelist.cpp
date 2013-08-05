@@ -1,6 +1,5 @@
 #include "sequencelist.h"
 #include "ui_sequencelist.h"
-#include "events/eventnames.h"
 #include "common/comsequence.h"
 #include "gitlcommandrequest.h"
 #include "io/analyzermsgsender.h"

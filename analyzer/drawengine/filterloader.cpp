@@ -2,7 +2,6 @@
 #include "../io/analyzermsgsender.h"
 #include "exceptions/invaildfilterindexexception.h"
 #include "model/modellocator.h"
-#include "events/eventnames.h"
 #include "common/comrom.h"
 #include <QDir>
 
