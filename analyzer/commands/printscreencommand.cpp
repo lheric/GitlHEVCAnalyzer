@@ -6,7 +6,7 @@ PrintScreenCommand::PrintScreenCommand()
 {
 }
 
-bool PrintScreenCommand::execute( GitlCommandRequest& rcRequest, GitlCommandRespond& rcRespond )
+bool PrintScreenCommand::execute( GitlCommandParameter& rcInputArg, GitlCommandParameter& rcOutputArg )
 {
     ModelLocator* pModel = ModelLocator::getInstance();
 
@@ -15,7 +15,7 @@ bool PrintScreenCommand::execute( GitlCommandRequest& rcRequest, GitlCommandResp
     if( pcFramePixmap == NULL )
         return false;
     pcFramePixmap = pModel->getDrawEngine().drawFrame(&(pModel->getSequenceManager().getCurrentSequence()), iCurBufPoc, pcFramePixmap);  ///< Draw Frame Buffer
-    rcRespond.setParameter("snapshot",  QVariant::fromValue((void*)(pcFramePixmap)));
+    rcOutputArg.setParameter("snapshot",  QVariant::fromValue((void*)(pcFramePixmap)));
     return true;
 
 

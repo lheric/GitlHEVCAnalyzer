@@ -18,21 +18,21 @@ DecodeBitstreamCommand::DecodeBitstreamCommand(QObject *parent) :
 {
 }
 
-bool DecodeBitstreamCommand::execute( GitlCommandRequest& rcRequest, GitlCommandRespond& rcRespond )
+bool DecodeBitstreamCommand::execute( GitlCommandParameter& rcInputArg, GitlCommandParameter& rcOutputArg )
 {
     ModelLocator* pModel = ModelLocator::getInstance();
 
     /// *****STEP 0 : Request*****
     QVariant vValue;
-    vValue = rcRequest.getParameter("filename");
+    vValue = rcInputArg.getParameter("filename");
     QString strFilename = vValue.toString();
-    vValue = rcRequest.getParameter("version");
+    vValue = rcInputArg.getParameter("version");
     int iVersion = vValue.toInt();
-    vValue = rcRequest.getParameter("skip_decode");
+    vValue = rcInputArg.getParameter("skip_decode");
     bool bSkipDecode = vValue.toBool();
-    vValue = rcRequest.getParameter("decoder_folder");
+    vValue = rcInputArg.getParameter("decoder_folder");
     QString strDecoderPath = vValue.toString();
-    vValue = rcRequest.getParameter("output_folder");
+    vValue = rcInputArg.getParameter("output_folder");
     QString strDecoderOutputPath = vValue.toString();
     int iSequenceIndex = pModel->getSequenceManager().getAllSequences().size();
     strDecoderOutputPath += QString("/%1").arg(iSequenceIndex);
@@ -201,9 +201,9 @@ bool DecodeBitstreamCommand::execute( GitlCommandRequest& rcRequest, GitlCommand
     ///*****STEP 4 : Respond*****
     int iCurrentPoc = pModel->getFrameBuffer().getPoc();
     int iTotalFrame = pModel->getSequenceManager().getCurrentSequence().getTotalFrames();
-    rcRespond.setParameter("picture",    QVariant::fromValue((void*)(pcFramePixmap)) );
-    rcRespond.setParameter("current_frame_poc", iCurrentPoc);
-    rcRespond.setParameter("total_frame_num", iTotalFrame);
+    rcOutputArg.setParameter("picture",    QVariant::fromValue((void*)(pcFramePixmap)) );
+    rcOutputArg.setParameter("current_frame_poc", iCurrentPoc);
+    rcOutputArg.setParameter("total_frame_num", iTotalFrame);
 
 
     /// hide busy dialog
@@ -213,8 +213,8 @@ bool DecodeBitstreamCommand::execute( GitlCommandRequest& rcRequest, GitlCommand
 
     /// nofity sequence list to update
     QVector<ComSequence*>* ppcSequences = &(pModel->getSequenceManager().getAllSequences());
-    rcRespond.setParameter("sequences",QVariant::fromValue((void*)ppcSequences));
-    rcRespond.setParameter("current_sequence",QVariant::fromValue((void*)pcSequence));
+    rcOutputArg.setParameter("sequences",QVariant::fromValue((void*)ppcSequences));
+    rcOutputArg.setParameter("current_sequence",QVariant::fromValue((void*)pcSequence));
 
     return bSuccess;
 }

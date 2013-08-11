@@ -7,7 +7,7 @@ RefreshScreenCommand::RefreshScreenCommand(QObject *parent) :
 
 }
 
-bool RefreshScreenCommand::execute( GitlCommandRequest& rcRequest, GitlCommandRespond& rcRespond )
+bool RefreshScreenCommand::execute( GitlCommandParameter& rcInputArg, GitlCommandParameter& rcOutputArg )
 {
     ModelLocator* pModel = ModelLocator::getInstance();
     int iPoc = pModel->getFrameBuffer().getPoc();
@@ -15,7 +15,7 @@ bool RefreshScreenCommand::execute( GitlCommandRequest& rcRequest, GitlCommandRe
     pcFramePixmap = pModel->getDrawEngine().drawFrame(&(pModel->getSequenceManager().getCurrentSequence()), iPoc, pcFramePixmap);  ///< Draw Frame Buffer
 
     ///
-    rcRespond.setParameter("picture",  QVariant::fromValue((void*)(pcFramePixmap)));
+    rcOutputArg.setParameter("picture",  QVariant::fromValue((void*)(pcFramePixmap)));
 
     return true;
 }

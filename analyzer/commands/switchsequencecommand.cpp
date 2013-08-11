@@ -6,16 +6,16 @@ SwitchSequenceCommand::SwitchSequenceCommand(QObject *parent) :
 {
 }
 
-bool SwitchSequenceCommand::execute( GitlCommandRequest& rcRequest, GitlCommandRespond& rcRespond )
+bool SwitchSequenceCommand::execute( GitlCommandParameter& rcInputArg, GitlCommandParameter& rcOutputArg )
 {
     bool bIs16Bit = false;
-    if(rcRequest.hasParameter("is_16_bit"))
+    if(rcInputArg.hasParameter("is_16_bit"))
     {
-        bIs16Bit = rcRequest.getParameter("is_16_bit").toBool();
+        bIs16Bit = rcInputArg.getParameter("is_16_bit").toBool();
     }
 
-    QString strYUVFilename = rcRequest.getParameter("YUV_filename").toString();
-    ComSequence* pcSequence = (ComSequence*)(rcRequest.getParameter("sequence").value<void*>());
+    QString strYUVFilename = rcInputArg.getParameter("YUV_filename").toString();
+    ComSequence* pcSequence = (ComSequence*)(rcInputArg.getParameter("sequence").value<void*>());
     ModelLocator* pModel = ModelLocator::getInstance();
     pModel->getSequenceManager().setCurrentSequence(pcSequence);
 
@@ -34,9 +34,9 @@ bool SwitchSequenceCommand::execute( GitlCommandRequest& rcRequest, GitlCommandR
     pcFramePixmap = pModel->getDrawEngine().drawFrame(&(pModel->getSequenceManager().getCurrentSequence()), iPoc, pcFramePixmap);  ///< Draw Frame Buffer
 
     ///
-    rcRespond.setParameter("picture",  QVariant::fromValue((void*)(pcFramePixmap)));
-    rcRespond.setParameter("current_frame_poc", iPoc);
-    rcRespond.setParameter("total_frame_num", pModel->getSequenceManager().getCurrentSequence().getTotalFrames());
+    rcOutputArg.setParameter("picture",  QVariant::fromValue((void*)(pcFramePixmap)));
+    rcOutputArg.setParameter("current_frame_poc", iPoc);
+    rcOutputArg.setParameter("total_frame_num", pModel->getSequenceManager().getCurrentSequence().getTotalFrames());
 
 
 

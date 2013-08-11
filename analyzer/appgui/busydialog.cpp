@@ -1,8 +1,7 @@
 #include "busydialog.h"
 #include "ui_busydialog.h"
 #include "io/analyzermsgsender.h"
-#include "gitlcommandrequest.h"
-#include "gitlcommandrespond.h"
+
 
 BusyDialog::BusyDialog(QWidget *parent) :
     QDialog(parent),

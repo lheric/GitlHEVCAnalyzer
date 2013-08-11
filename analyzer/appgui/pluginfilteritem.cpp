@@ -1,6 +1,5 @@
 #include "pluginfilteritem.h"
 #include "ui_pluginfilteritem.h"
-#include "gitlcommandrequest.h"
 #include "gitlivkcmdevt.h"
 
 PluginFilterItem::PluginFilterItem(AbstractFilter* pcFilter, QWidget *parent) :

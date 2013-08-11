@@ -5,13 +5,13 @@ ZoomFrameCommand::ZoomFrameCommand(QObject *parent) :
 {
 }
 
-bool ZoomFrameCommand::execute( GitlCommandRequest& rcRequest, GitlCommandRespond& rcRespond )
+bool ZoomFrameCommand::execute( GitlCommandParameter& rcInputArg, GitlCommandParameter& rcOutputArg )
 {
     QVariant vValue;
     double dScale = 0.0;
-    if( rcRequest.hasParameter("scale") )
+    if( rcInputArg.hasParameter("scale") )
     {
-        vValue = rcRequest.getParameter("scale");
+        vValue = rcInputArg.getParameter("scale");
         dScale = vValue.toDouble();
     }
     else
@@ -25,7 +25,7 @@ bool ZoomFrameCommand::execute( GitlCommandRequest& rcRequest, GitlCommandRespon
     pcFramePixmap = pModel->getDrawEngine().drawFrame(&(pModel->getSequenceManager().getCurrentSequence()), iPoc, pcFramePixmap);  ///< Draw Frame Buffer
 
     ///
-    rcRespond.setParameter("picture",  QVariant::fromValue((void*)(pcFramePixmap)));
+    rcOutputArg.setParameter("picture",  QVariant::fromValue((void*)(pcFramePixmap)));
 
     return true;
 

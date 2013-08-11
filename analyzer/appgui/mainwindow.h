@@ -3,7 +3,6 @@
 
 #include <QMainWindow>
 #include <QThread>
-#include "gitlcommandrespond.h"
 #include "gitlmodual.h"
 #include "busydialog.h"
 #include "aboutdialog.h"

@@ -8,7 +8,7 @@ class ZoomFrameCommand : public GitlAbstractCommand
 public:
     Q_INVOKABLE explicit ZoomFrameCommand(QObject *parent = 0);
 
-    Q_INVOKABLE virtual bool execute( GitlCommandRequest& rcRequest, GitlCommandRespond& rcRespond );
+    Q_INVOKABLE virtual bool execute(GitlCommandParameter &rcInputArg, GitlCommandParameter &rcOutputArg);
 
 signals:
     

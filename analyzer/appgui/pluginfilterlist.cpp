@@ -2,8 +2,6 @@
 #include "drawengine/abstractfilter.h"
 #include "io/analyzermsgsender.h"
 #include "appgui/pluginfilteritem.h"
-#include "gitlcommandrespond.h"
-#include "gitlcommandrequest.h"
 #include "gitlivkcmdevt.h"
 
 PluginFilterList::PluginFilterList(QWidget *parent) :

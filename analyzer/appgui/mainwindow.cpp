@@ -7,15 +7,13 @@
 #include "model/modellocator.h"
 #include "commands/appfrontcontroller.h"
 #include "io/analyzermsgsender.h"
-#include "gitlcommandrequest.h"
 #include "bitstreamversionselector.h"
 #include "io/analyzermsgsender.h"
-#include "gitlcommandrespond.h"
 #include "common/comrom.h"
 #include "gitlivkcmdevt.h"
 
 MainWindow::MainWindow(QWidget *parent) :
-    QMainWindow(parent),    
+    QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
 

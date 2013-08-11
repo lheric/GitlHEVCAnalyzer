@@ -6,16 +6,16 @@ ConfigFilterCommand::ConfigFilterCommand(QObject *parent) :
 {
 }
 
-bool ConfigFilterCommand::execute( GitlCommandRequest& rcRequest, GitlCommandRespond& rcRespond )
+bool ConfigFilterCommand::execute( GitlCommandParameter &rcInputArg, GitlCommandParameter &rcOutputArg )
 {
     ModelLocator* pModel = ModelLocator::getInstance();
-    QVariant vValue = rcRequest.getParameter("filter");
+    QVariant vValue = rcInputArg.getParameter("filter");
     AbstractFilter* pcFilter = (AbstractFilter*)(vValue.value<void*>());
     pModel->getDrawEngine().getFilterLoader().config(pcFilter);
 
     int iPoc = pModel->getFrameBuffer().getPoc();
     QPixmap* pcFramePixmap = pModel->getFrameBuffer().getFrame(iPoc);       ///< Read Frame Buffer
     pcFramePixmap = pModel->getDrawEngine().drawFrame(&(pModel->getSequenceManager().getCurrentSequence()), iPoc, pcFramePixmap);  ///< Draw Frame Buffer
-    rcRespond.setParameter("picture",  QVariant::fromValue((void*)(pcFramePixmap)));
+    rcOutputArg.setParameter("picture",  QVariant::fromValue((void*)(pcFramePixmap)));
     return true;
 }

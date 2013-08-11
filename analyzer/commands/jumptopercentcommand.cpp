@@ -6,10 +6,10 @@ JumpToPercentCommand::JumpToPercentCommand(QObject *parent) :
 }
 
 
-bool JumpToPercentCommand::execute( GitlCommandRequest& rcRequest, GitlCommandRespond& rcRespond )
+bool JumpToPercentCommand::execute( GitlCommandParameter& rcInputArg, GitlCommandParameter& rcOutputArg )
 {
     ModelLocator* pModel = ModelLocator::getInstance();
-    QVariant vValue = rcRequest.getParameter("percent");
+    QVariant vValue = rcInputArg.getParameter("percent");
     int iPercent = vValue.toInt();
     int iMaxPOC = pModel->getSequenceManager().getCurrentSequence().getTotalFrames()-1;
     int iMinPOC = 0;
@@ -28,9 +28,9 @@ bool JumpToPercentCommand::execute( GitlCommandRequest& rcRequest, GitlCommandRe
     pcFramePixmap = pModel->getDrawEngine().drawFrame(&(pModel->getSequenceManager().getCurrentSequence()), iPoc, pcFramePixmap);  ///< Draw Frame Buffer
 
     ///
-    rcRespond.setParameter("picture",  QVariant::fromValue((void*)(pcFramePixmap)));
-    rcRespond.setParameter("current_frame_poc", iPoc);
-    rcRespond.setParameter("total_frame_num", pModel->getSequenceManager().getCurrentSequence().getTotalFrames());
+    rcOutputArg.setParameter("picture",  QVariant::fromValue((void*)(pcFramePixmap)));
+    rcOutputArg.setParameter("current_frame_poc", iPoc);
+    rcOutputArg.setParameter("total_frame_num", pModel->getSequenceManager().getCurrentSequence().getTotalFrames());
 
     return true;
 }

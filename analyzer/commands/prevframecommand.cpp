@@ -5,7 +5,7 @@ PrevFrameCommand::PrevFrameCommand(QObject *parent) :
 {
 }
 
-bool PrevFrameCommand::execute( GitlCommandRequest& rcRequest, GitlCommandRespond& rcRespond )
+bool PrevFrameCommand::execute( GitlCommandParameter& rcInputArg, GitlCommandParameter& rcOutputArg )
 {
     ModelLocator* pModel = ModelLocator::getInstance();
 
@@ -18,9 +18,9 @@ bool PrevFrameCommand::execute( GitlCommandRequest& rcRequest, GitlCommandRespon
     pcFramePixmap = pModel->getDrawEngine().drawFrame(&(pModel->getSequenceManager().getCurrentSequence()), iPredPoc, pcFramePixmap);  ///< Draw Frame Buffer
 
     ///
-    rcRespond.setParameter("picture",  QVariant::fromValue((void*)(pcFramePixmap)));
-    rcRespond.setParameter("current_frame_poc", iPredPoc);
-    rcRespond.setParameter("total_frame_num", pModel->getSequenceManager().getCurrentSequence().getTotalFrames());
+    rcOutputArg.setParameter("picture",  QVariant::fromValue((void*)(pcFramePixmap)));
+    rcOutputArg.setParameter("current_frame_poc", iPredPoc);
+    rcOutputArg.setParameter("total_frame_num", pModel->getSequenceManager().getCurrentSequence().getTotalFrames());
 
     return true;
 }

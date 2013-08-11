@@ -5,13 +5,13 @@ ReloadFiltersCommand::ReloadFiltersCommand(QObject *parent) :
 {
 }
 
-bool ReloadFiltersCommand::execute( GitlCommandRequest& rcRequest, GitlCommandRespond& rcRespond )
+bool ReloadFiltersCommand::execute( GitlCommandParameter& rcInputArg, GitlCommandParameter& rcOutputArg )
 {
     ModelLocator* pModel = ModelLocator::getInstance();
     FilterLoader* pFilterLoader = &pModel->getDrawEngine().getFilterLoader();
     pFilterLoader->reloadAllFilters();
     ///
-    rcRespond.setParameter("filters", QVariant::fromValue((void*)(&pFilterLoader->getFilters())));
+    rcOutputArg.setParameter("filters", QVariant::fromValue((void*)(&pFilterLoader->getFilters())));
 
     return true;
 }

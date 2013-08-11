@@ -28,9 +28,6 @@ SOURCES += main.cpp \
     io/ioyuv.cpp \
     parsers/meparser.cpp \
     model/modellocator.cpp \
-    commands/openyuvcommand.cpp \
-    commands/opencupucommand.cpp \
-    commands/openmecommand.cpp \
     commands/nextframecommand.cpp \
     commands/prevframecommand.cpp \
     commands/jumptoframecommand.cpp \
@@ -39,9 +36,7 @@ SOURCES += main.cpp \
     parsers/bitstreamparser.cpp \
     parsers/encodergeneralparser.cpp \
     parsers/decodergeneralparser.cpp \
-    commands/openencodergeneralcommand.cpp \
     commands/decodebitstreamcommand.cpp \
-    commands/opendecodergeneralcommand.cpp \
     parsers/spsparser.cpp \
     parsers/cupuparser.cpp \
     parsers/predparser.cpp \
@@ -81,9 +76,6 @@ HEADERS += \
     parsers/meparser.h \
     model/modellocator.h \
     common/commv.h \
-    commands/openyuvcommand.h \
-    commands/opencupucommand.h \
-    commands/openmecommand.h \
     commands/nextframecommand.h \
     commands/prevframecommand.h \
     commands/jumptoframecommand.h \
@@ -92,9 +84,7 @@ HEADERS += \
     parsers/bitstreamparser.h \
     parsers/encodergeneralparser.h \
     parsers/decodergeneralparser.h \
-    commands/openencodergeneralcommand.h \
     commands/decodebitstreamcommand.h \
-    commands/opendecodergeneralcommand.h \
     parsers/spsparser.h \
     parsers/cupuparser.h \
     parsers/predparser.h \

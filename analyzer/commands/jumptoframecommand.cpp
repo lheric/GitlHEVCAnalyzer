@@ -7,9 +7,9 @@ JumpToFrameCommand::JumpToFrameCommand(QObject *parent) :
 }
 
 
-bool JumpToFrameCommand::execute( GitlCommandRequest& rcRequest, GitlCommandRespond& rcRespond )
+bool JumpToFrameCommand::execute( GitlCommandParameter& rcInputArg, GitlCommandParameter& rcOutputArg )
 {
-    QVariant vValue = rcRequest.getParameter("poc");
+    QVariant vValue = rcInputArg.getParameter("poc");
     int iPoc = vValue.toInt();
     ///
     ModelLocator* pModel = ModelLocator::getInstance();
@@ -23,9 +23,9 @@ bool JumpToFrameCommand::execute( GitlCommandRequest& rcRequest, GitlCommandResp
     pcFramePixmap = pModel->getDrawEngine().drawFrame(&(pModel->getSequenceManager().getCurrentSequence()), iPoc, pcFramePixmap);  ///< Draw Frame Buffer
 
     ///
-    rcRespond.setParameter("picture",  QVariant::fromValue((void*)(pcFramePixmap)));
-    rcRespond.setParameter("current_frame_poc", iPoc);
-    rcRespond.setParameter("total_frame_num", pModel->getSequenceManager().getCurrentSequence().getTotalFrames());
+    rcOutputArg.setParameter("picture",  QVariant::fromValue((void*)(pcFramePixmap)));
+    rcOutputArg.setParameter("current_frame_poc", iPoc);
+    rcOutputArg.setParameter("total_frame_num", pModel->getSequenceManager().getCurrentSequence().getTotalFrames());
 
     return true;
 }

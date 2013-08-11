@@ -1,9 +1,7 @@
 #include "sequencelist.h"
 #include "ui_sequencelist.h"
 #include "common/comsequence.h"
-#include "gitlcommandrequest.h"
 #include "io/analyzermsgsender.h"
-#include "gitlcommandrespond.h"
 #include "gitlivkcmdevt.h"
 #include <QFileInfo>
 

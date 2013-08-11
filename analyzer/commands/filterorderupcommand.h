@@ -8,7 +8,7 @@ class FilterOrderUpCommand : public GitlAbstractCommand
 public:
     Q_INVOKABLE explicit FilterOrderUpCommand(QObject *parent = 0);
 
-    Q_INVOKABLE bool execute( GitlCommandRequest& rcRequest, GitlCommandRespond& rcRespond );
+    Q_INVOKABLE bool execute(GitlCommandParameter &rcInputArg, GitlCommandParameter &rcOutputArg);
 
 signals:
     

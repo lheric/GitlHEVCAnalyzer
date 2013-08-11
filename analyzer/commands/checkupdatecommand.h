@@ -7,7 +7,7 @@ class CheckUpdateCommand : public GitlAbstractCommand
     Q_OBJECT
 public:
     Q_INVOKABLE explicit CheckUpdateCommand(QObject *parent = 0);
-    Q_INVOKABLE bool execute( GitlCommandRequest& rcRequest, GitlCommandRespond& rcRespond );
+    Q_INVOKABLE bool execute(GitlCommandParameter &rcInputArg, GitlCommandParameter &rcOutputArg);
     
 signals:
     

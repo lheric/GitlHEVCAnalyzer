@@ -5,10 +5,6 @@
 #include "exceptions/decodingfailexception.h"
 #include "exceptions/bitstreamnotfoundexception.h"
 #include "commands/decodebitstreamcommand.h"
-#include "commands/openencodergeneralcommand.h"
-#include "commands/openyuvcommand.h"
-#include "commands/opencupucommand.h"
-#include "commands/openmecommand.h"
 #include "commands/prevframecommand.h"
 #include "commands/nextframecommand.h"
 #include "commands/jumptoframecommand.h"
@@ -28,13 +24,14 @@
 
 SINGLETON_PATTERN_IMPLIMENT(AppFrontController)
 
-static GitlCommandFormat s_sCmdTable[] =
+static struct
+{
+    char* strCommandName;
+    const QMetaObject* pMetaObject;
+}
+s_sCmdTable[] =
 {
     { "decode_bitstream", &DecodeBitstreamCommand::staticMetaObject    },
-    { "open_yuv",         &OpenYUVCommand::staticMetaObject            },
-    { "open_general",     &OpenEncoderGeneralCommand::staticMetaObject },
-    { "open_cupu",        &OpenCUPUCommand::staticMetaObject           },
-    { "open_me",          &OpenMECommand::staticMetaObject             },
     { "next_frame",       &NextFrameCommand::staticMetaObject          },
     { "prev_frame",       &PrevFrameCommand::staticMetaObject          },
     { "jumpto_frame",     &JumpToFrameCommand::staticMetaObject        },
@@ -65,10 +62,10 @@ bool AppFrontController::xInitCommand()
 {
     /// register commands
 
-    GitlCommandFormat* psCMD = s_sCmdTable;
+    auto* psCMD = s_sCmdTable;
     while( psCMD->pMetaObject != NULL )
     {
-        addCommand(*psCMD);
+        registerCommand(psCMD->strCommandName, psCMD->pMetaObject);
         psCMD++;
     }
     return true;

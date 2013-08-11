@@ -7,9 +7,10 @@
 #include <QDir>
 #include <QFileInfo>
 
+
 BitstreamParser::BitstreamParser(QObject *parent)
 {
-    connect(&m_cDecoderProcess, SIGNAL(readyRead()), this, SLOT(displayDecoderOutput()));
+    connect(&m_cDecoderProcess, SIGNAL(readyReadStandardOutput()), this, SLOT(displayDecoderOutput()));
 }
 
 bool BitstreamParser::parseFile(QString strDecoderFolder,

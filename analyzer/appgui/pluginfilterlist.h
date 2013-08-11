@@ -1,8 +1,9 @@
 #ifndef PLUGINFILTERLIST_H
 #define PLUGINFILTERLIST_H
 #include "gitlview.h"
+#include "gitlupdateuievt.h"
 #include <QListWidget>
-#include <gitlcommandrespond.h>
+
 class PluginFilterList : public QListWidget, public GitlView
 {
     Q_OBJECT

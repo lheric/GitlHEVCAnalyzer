@@ -8,7 +8,7 @@ class DecodeBitstreamCommand : public GitlAbstractCommand, GitlModual
 public:
     Q_INVOKABLE explicit DecodeBitstreamCommand(QObject *parent = 0);
 
-    Q_INVOKABLE bool execute( GitlCommandRequest& rcRequest, GitlCommandRespond& rcRespond );
+    Q_INVOKABLE bool execute(GitlCommandParameter &rcInputArg, GitlCommandParameter &rcOutputArg);
 signals:
 
 public slots:
