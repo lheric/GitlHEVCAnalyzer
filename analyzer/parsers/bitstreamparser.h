@@ -5,7 +5,7 @@
 #include <QProcess>
 #include <QFile>
 #include "gitlmodual.h"
-#include "../common/comsequence.h"
+#include "model/common/comsequence.h"
 class BitstreamParser : public QObject, public GitlModual
 {
     Q_OBJECT

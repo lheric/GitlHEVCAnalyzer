@@ -1,7 +1,7 @@
 #ifndef MCCDISPLAYFILTER_H
 #define MCCDISPLAYFILTER_H
 
-#include "drawengine/abstractfilter.h"
+#include "model/drawengine/abstractfilter.h"
 #include <QObject>
 #include <QMap>
 

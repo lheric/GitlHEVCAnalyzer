@@ -2,7 +2,7 @@
 #define MVDISPLAYFILTER_H
 
 #include <QObject>
-#include "drawengine/abstractfilter.h"
+#include "model/drawengine/abstractfilter.h"
 
 class MVDisplayFilter : public QObject, public AbstractFilter
 {

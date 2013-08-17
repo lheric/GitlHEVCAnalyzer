@@ -1,5 +1,5 @@
 #include "meparser.h"
-#include "../io/analyzermsgsender.h"
+#include "model/io/analyzermsgsender.h"
 
 
 MEParser::MEParser(QObject *parent) :

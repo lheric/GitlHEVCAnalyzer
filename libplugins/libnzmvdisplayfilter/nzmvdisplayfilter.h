@@ -2,7 +2,7 @@
 #define NZMVDISPLAYFILTER_H
 
 #include <QObject>
-#include "drawengine/abstractfilter.h"
+#include "model/drawengine/abstractfilter.h"
 
 class NZMVDisplayFilter : public QObject, public AbstractFilter
 {

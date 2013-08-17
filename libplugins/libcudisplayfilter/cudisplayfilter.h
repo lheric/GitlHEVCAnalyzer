@@ -1,6 +1,6 @@
 #ifndef CUDISPLAYFILTER_H
 #define CUDISPLAYFILTER_H
-#include "drawengine/abstractfilter.h"
+#include "model/drawengine/abstractfilter.h"
 #include <QObject>
 
 class CUDisplayFilter : public QObject, public AbstractFilter

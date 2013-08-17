@@ -3,7 +3,7 @@
 
 #include <QObject>
 #include <QMultiMap>
-#include "drawengine/abstractfilter.h"
+#include "model/drawengine/abstractfilter.h"
 struct LCUAddr
 {
     int iPoc;

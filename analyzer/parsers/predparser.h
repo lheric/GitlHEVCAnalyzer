@@ -3,7 +3,7 @@
 
 #include <QObject>
 #include <QTextStream>
-#include "../common/comsequence.h"
+#include "model/common/comsequence.h"
 
 class PredParser : public QObject
 {

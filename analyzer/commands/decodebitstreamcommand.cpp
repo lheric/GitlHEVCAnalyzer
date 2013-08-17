@@ -1,5 +1,5 @@
 #include "decodebitstreamcommand.h"
-#include "io/analyzermsgsender.h"
+#include "model/io/analyzermsgsender.h"
 #include "model/modellocator.h"
 #include "parsers/bitstreamparser.h"
 #include "parsers/spsparser.h"

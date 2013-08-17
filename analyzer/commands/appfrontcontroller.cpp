@@ -19,7 +19,8 @@
 #include "commands/zoomframecommand.h"
 #include "commands/configfiltercommand.h"
 #include "commands/reloadfilterscommand.h"
-#include "io/analyzermsgsender.h"
+#include "commands/switchfiltercommand.h"
+#include "model/io/analyzermsgsender.h"
 
 
 SINGLETON_PATTERN_IMPLIMENT(AppFrontController)
@@ -45,6 +46,7 @@ s_sCmdTable[] =
     { "config_filter",    &ConfigFilterCommand::staticMetaObject       },
     { "moveup_filter",    &FilterOrderUpCommand::staticMetaObject      },
     { "movedown_filter",  &FilterOrderDownCommand::staticMetaObject    },
+    { "switch_filter",    &SwitchFilterCommand::staticMetaObject       },
     { "check_update",     &CheckUpdateCommand::staticMetaObject        },
     { "",                 NULL                                         }
 };

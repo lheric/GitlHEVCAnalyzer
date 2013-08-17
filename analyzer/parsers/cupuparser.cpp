@@ -1,5 +1,5 @@
 #include "cupuparser.h"
-#include "io/analyzermsgsender.h"
+#include "model/io/analyzermsgsender.h"
 #include <QTextStream>
 #include <QRegExp>
 #include <QtAlgorithms>

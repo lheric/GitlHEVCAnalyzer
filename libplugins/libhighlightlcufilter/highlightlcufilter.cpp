@@ -1,5 +1,5 @@
 #include "highlightlcufilter.h"
-#include "io/analyzermsgsender.h"
+#include "model/io/analyzermsgsender.h"
 #include <QFile>
 #include <QTextStream>
 

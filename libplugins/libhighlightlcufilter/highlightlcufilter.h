@@ -1,6 +1,6 @@
 #ifndef HIGHLIGHTLCUFILTER_H
 #define HIGHLIGHTLCUFILTER_H
-#include "drawengine/abstractfilter.h"
+#include "model/drawengine/abstractfilter.h"
 #include <QObject>
 #include <QMap>
 

@@ -7,26 +7,12 @@
 #include <winsparkle.h>
 #include "gitlevent.h"
 #include "model/modellocator.h"
-#include "appgui/mainwindow.h"
+#include "views/mainwindow.h"
 #include "commands/appfrontcontroller.h"
 #include "exceptions/nosequencefoundexception.h"
-#include "io/analyzermsgsender.h"
-#include "common/comrom.h"
+#include "model/io/analyzermsgsender.h"
+#include "model/common/comrom.h"
 using namespace std;
-//static bool xSetLibPath()
-//{
-//    QStringList paths = QCoreApplication::instance()->libraryPaths();
-//    QDir cAppDir = QDir(QCoreApplication::instance()->applicationDirPath());
-
-//    if( !cAppDir.cd("runtime") )
-//    {
-//        qCritical() << "Runtime libraries missing..Some function may not work!";
-//        return false;
-//    }
-//    paths << cAppDir.absolutePath();
-//    QCoreApplication::instance()->setLibraryPaths(paths);
-//    return true;
-//}
 
 
 static bool xReadStylesheet()
@@ -71,7 +57,7 @@ static void xMessageOutput(QtMsgType type, const QMessageLogContext &context, co
 
 void xCheckUpdate()
 {
-    win_sparkle_set_appcast_url("http://winsparkle.org/example/appcast.xml");
+    win_sparkle_set_appcast_url("http://winsparkle.org/example/appcast.xml");   //TODO
     win_sparkle_init();
 }
 
@@ -79,16 +65,9 @@ void xCleanUpdate()
 {
     win_sparkle_cleanup();
 }
-#include <QSharedPointer>
-#include "gitlevent.h"
-//Q_DECLARE_METATYPE( QSharedPointer<GitlEvent> )
+
 int main(int argc, char *argv[])
 {
-//    qRegisterMetaType< QSharedPointer<GitlEvent> >();
-//    /// set run-time dynamic linked library (dll) path
-//    xSetLibPath();
-
-
     /// intall message handler
     qInstallMessageHandler(xMessageOutput);
 
@@ -105,9 +84,10 @@ int main(int argc, char *argv[])
 
     /// Show main win
     MainWindow cMainWin;
-    cMainWin.centralWidget()->layout()->setContentsMargins(0,0,0,0);    /// layout hack (maxmize central widget)
+    cMainWin.centralWidget()->layout()
+            ->setContentsMargins(0,0,0,0);          /// layout hack (maxmize central widget)
     cMainWin.show();
-    ModelLocator::getInstance();
+    ModelLocator::getInstance();                    /// init model
     cApp.exec();
 
     /// clean update

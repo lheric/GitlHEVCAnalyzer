@@ -1,7 +1,7 @@
 #ifndef MERGEDISPLAYFILTER_H
 #define MERGEDISPLAYFILTER_H
 
-#include "drawengine/abstractfilter.h"
+#include "model/drawengine/abstractfilter.h"
 #include <QObject>
 
 class MergeDisplayFilter : public QObject, public AbstractFilter

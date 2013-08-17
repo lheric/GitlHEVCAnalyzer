@@ -11,7 +11,8 @@ bool ReloadFiltersCommand::execute( GitlCommandParameter& rcInputArg, GitlComman
     FilterLoader* pFilterLoader = &pModel->getDrawEngine().getFilterLoader();
     pFilterLoader->reloadAllFilters();
     ///
-    rcOutputArg.setParameter("filters", QVariant::fromValue((void*)(&pFilterLoader->getFilters())));
+    rcOutputArg.setParameter("filter_names",  QVariant::fromValue(pFilterLoader->getFilterNames())  );
+    rcOutputArg.setParameter("filter_status", QVariant::fromValue(pFilterLoader->getEnableStatus()) );
 
     return true;
 }

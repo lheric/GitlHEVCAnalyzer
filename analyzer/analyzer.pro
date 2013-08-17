@@ -20,19 +20,20 @@ CONFIG += c++11
 TEMPLATE = app
 
 SOURCES += main.cpp \
-    common/comsequence.cpp \
-    common/comframe.cpp \
-    common/comlcu.cpp \
-    drawengine/drawengine.cpp \
-    appgui/mainwindow.cpp \
-    io/ioyuv.cpp \
+    model/common/comsequence.cpp \
+    model/common/comframe.cpp \
+    model/common/comlcu.cpp \
+    model/common/comrom.cpp \
+    model/drawengine/drawengine.cpp \
+    views/mainwindow.cpp \
+    model/io/ioyuv.cpp \
     parsers/meparser.cpp \
     model/modellocator.cpp \
     commands/nextframecommand.cpp \
     commands/prevframecommand.cpp \
     commands/jumptoframecommand.cpp \
     commands/appfrontcontroller.cpp \
-    appgui/bitstreamversionselector.cpp \
+    views/bitstreamversionselector.cpp \
     parsers/bitstreamparser.cpp \
     parsers/encodergeneralparser.cpp \
     parsers/decodergeneralparser.cpp \
@@ -43,44 +44,47 @@ SOURCES += main.cpp \
     parsers/mvparser.cpp \
     parsers/mergeparser.cpp \
     parsers/intraparser.cpp \
-    io/yuv420rgbbuffer.cpp \
+    model/io/yuv420rgbbuffer.cpp \
     commands/switchsequencecommand.cpp \
-    appgui/frameview.cpp \
-    drawengine/filterloader.cpp \
+    views/frameview.cpp \
+    model/drawengine/filterloader.cpp \
     commands/printscreencommand.cpp \
-    appgui/busydialog.cpp \
-    io/analyzermsgsender.cpp \
-    appgui/msgviewer.cpp \
-    appgui/aboutdialog.cpp \
+    views/busydialog.cpp \
+    model/io/analyzermsgsender.cpp \
+    views/msgviewer.cpp \
+    views/aboutdialog.cpp \
     commands/jumptopercentcommand.cpp \
-    appgui/pluginfilterlist.cpp \
-    appgui/pluginfilteritem.cpp \
+    views/pluginfilterlist.cpp \
+    views/pluginfilteritem.cpp \
     commands/refreshscreencommand.cpp \
-    appgui/sequencelist.cpp \
-    appgui/sequencelistitem.cpp \
+    views/sequencelist.cpp \
+    views/sequencelistitem.cpp \
     commands/zoomframecommand.cpp \
-    commands/configfiltercommand.cpp \
-    common/comrom.cpp \
+    commands/configfiltercommand.cpp \    
     commands/filterorderupcommand.cpp \
     commands/filterorderdowncommand.cpp \
     commands/checkupdatecommand.cpp \
     commands/reloadfilterscommand.cpp \
-    commands/switchyuvcommand.cpp
+    commands/switchyuvcommand.cpp \
+    commands/switchfiltercommand.cpp
 
 HEADERS += \
-    common/comsequence.h \
-    common/comframe.h \
-    drawengine/drawengine.h \
-    appgui/mainwindow.h \
-    io/ioyuv.h \
+    model/common/comsequence.h \
+    model/common/comframe.h \
+    model/common/comrom.h \
+    model/common/commv.h \
+    model/common/compu.h \
+    model/common/comcu.h \
+    model/drawengine/drawengine.h \
+    views/mainwindow.h \
+    model/io/ioyuv.h \
     parsers/meparser.h \
-    model/modellocator.h \
-    common/commv.h \
+    model/modellocator.h \    
     commands/nextframecommand.h \
     commands/prevframecommand.h \
     commands/jumptoframecommand.h \
     commands/appfrontcontroller.h \
-    appgui/bitstreamversionselector.h \
+    views/bitstreamversionselector.h \
     parsers/bitstreamparser.h \
     parsers/encodergeneralparser.h \
     parsers/decodergeneralparser.h \
@@ -91,37 +95,35 @@ HEADERS += \
     parsers/mvparser.h \
     parsers/mergeparser.h \
     parsers/intraparser.h \
-    io/yuv420rgbbuffer.h \
+    model/io/yuv420rgbbuffer.h \
     commands/switchsequencecommand.h \
-    appgui/frameview.h \
-    drawengine/filterloader.h \
+    views/frameview.h \
+    model/drawengine/filterloader.h \
     commands/printscreencommand.h \
-    appgui/busydialog.h \
-    io/analyzermsgsender.h \
-    appgui/msgviewer.h \
-    appgui/aboutdialog.h \
-    drawengine/abstractfilter.h \
+    views/busydialog.h \
+    model/io/analyzermsgsender.h \
+    views/msgviewer.h \
+    views/aboutdialog.h \
+    model/drawengine/abstractfilter.h \
     exceptions/nosequencefoundexception.h \
     commands/jumptopercentcommand.h \
     exceptions/invaildfilterindexexception.h \
-    appgui/pluginfilterlist.h \
-    appgui/pluginfilteritem.h \
-    common/compu.h \
+    views/pluginfilterlist.h \
+    views/pluginfilteritem.h \
     commands/refreshscreencommand.h \
-    appgui/sequencelist.h \
-    appgui/sequencelistitem.h \
-    commands/zoomframecommand.h \
-    common/comcu.h \
+    views/sequencelist.h \
+    views/sequencelistitem.h \
+    commands/zoomframecommand.h \    
     exceptions/decodernotfoundexception.h \
     exceptions/decodingfailexception.h \
     exceptions/bitstreamnotfoundexception.h \
-    commands/configfiltercommand.h \
-    common/comrom.h \
+    commands/configfiltercommand.h \    
     commands/filterorderupcommand.h \
     commands/filterorderdowncommand.h \
     commands/checkupdatecommand.h \
     commands/reloadfilterscommand.h \
-    commands/switchyuvcommand.h
+    commands/switchyuvcommand.h \
+    commands/switchfiltercommand.h
 
 #include & libs
 INCLUDEPATH += .\
@@ -136,16 +138,16 @@ Release: LIBS += -lGitlMVC  -lGitlEvtBus  -lWinSparkle
 
 
 FORMS += \
-    appgui/mainwindow.ui \
-    appgui/bitstreamversionselector.ui \
-    appgui/busydialog.ui \
-    appgui/aboutdialog.ui \
-    appgui/pluginfilteritem.ui \
-    appgui/sequencelist.ui \
-    appgui/sequencelistitem.ui
+    views/mainwindow.ui \
+    views/bitstreamversionselector.ui \
+    views/busydialog.ui \
+    views/aboutdialog.ui \
+    views/pluginfilteritem.ui \
+    views/sequencelist.ui \
+    views/sequencelistitem.ui
 
 #icon
-RC_FILE = icons/appicon.rc
+RC_FILE = resources/icons/appicon.rc
 
 RESOURCES += \
     resources/resources.qrc
