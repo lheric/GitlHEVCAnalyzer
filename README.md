@@ -19,7 +19,7 @@ Gitl HEVC Analyzer is a tool for bitstream analysis for HEVC.
 How To Build
 ============
 
-Written in C++ using Qt 5.0.2 with Qt Creator
+Written in C++ with Qt5
 
 Build & run on windows platform only
 Windows XP or later (32/64 bit)
@@ -34,10 +34,14 @@ Sun Yat-sen University, Guangzhou, P.R.China
 
 Author:
 Huang Li (李璜)
+
 lihuang55555@gmail.com
 
 
 Supervised by Prof. Hongyang CHAO
+
 Hongyang Chao (朝红阳)
+
 isschhy@mail.sysu.edu.cn
+
 Sun Yat-sen University
