@@ -6,12 +6,12 @@ Gitl HEVC Analyzer is a tool for bitstream analysis for HEVC.
 <ul>
 	<li>Custom Plugins Support</li>
     <li>Zoom In/Out Details</li>
-    <li>Bitsteam Compare (Under Development)</li> 
-    <li>Coding Unit Display</li>
-    <li>Prediton Type Display</li>
-    <li>Predition Unit Display</li>
-    <li>Transform Unit Display (Under Development)</li>
-    <li>Motion Vectors Display</li>    
+    <li>Bitsteam Comparison (Under Development)</li> 
+    <li>Predition Type Display</li>
+    <li>Coding Unit (CU) Display</li>
+    <li>Predition Unit (PU) Display</li>
+    <li>Transform Unit (TU) Display (Under Development)</li>
+    <li>Motion Vectors (MV) Display</li>    
 </ul>
 
 <a href="http://gitl.sysu.edu.cn">Intelligent Information Processing Lab</a> 
@@ -21,7 +21,8 @@ How To Build
 
 Written in C++ using Qt 5.0.2 with Qt Creator
 
-Supposed to run on windows platform
+Build & run on windows platform only
+Windows XP or later (32/64 bit)
 (Untested on other platforms)
 
 
@@ -31,26 +32,12 @@ Intellegent Information Processing Lab
 
 Sun Yat-sen University, Guangzhou, P.R.China
 
-
-Supervised by Prof. Hongyang CHAO
-
-Hongyang Chao (朝红阳)
-isschhy@mail.sysu.edu.cn
-
-
-Students:
-
+Author:
 Huang Li (李璜)
 lihuang55555@gmail.com
 
-Yihao Zhang (张倚豪)
-zhyihao66@gmail.com
 
-Shichao Huang (黄士超)
-huangshichao2009@gmail.com
-
-Zixin Liao (廖梓鑫)
-460672158@qq.com
-
-Jianhua Huang (黄戬骅)
-419991390@qq.com
+Supervised by Prof. Hongyang CHAO
+Hongyang Chao (朝红阳)
+isschhy@mail.sysu.edu.cn
+Sun Yat-sen University

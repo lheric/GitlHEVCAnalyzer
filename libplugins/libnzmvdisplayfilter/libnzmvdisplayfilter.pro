@@ -1,6 +1,6 @@
 TEMPLATE        = lib
 CONFIG         += plugin
-INCLUDEPATH    += ../../analyzer \
+INCLUDEPATH    += ../../src \
                   ../../libgitlmvc/libgitlevtbus/src
 HEADERS         = nzmvdisplayfilter.h
 SOURCES         = nzmvdisplayfilter.cpp

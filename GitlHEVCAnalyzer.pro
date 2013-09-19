@@ -1,5 +1,6 @@
 TEMPLATE = subdirs
 CONFIG += ordered
-SUBDIRS = libgitlmvc \
-    analyzer \
+SUBDIRS = appgitlhevcdecoder \
+    libgitlmvc \
+    src \
     libplugins
