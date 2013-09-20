@@ -50,7 +50,6 @@ SOURCES += main.cpp \
     model/drawengine/filterloader.cpp \
     commands/printscreencommand.cpp \
     views/busydialog.cpp \
-    model/io/analyzermsgsender.cpp \
     views/msgviewer.cpp \
     views/aboutdialog.cpp \
     commands/jumptopercentcommand.cpp \
@@ -101,7 +100,6 @@ HEADERS += \
     model/drawengine/filterloader.h \
     commands/printscreencommand.h \
     views/busydialog.h \
-    model/io/analyzermsgsender.h \
     views/msgviewer.h \
     views/aboutdialog.h \
     model/drawengine/abstractfilter.h \

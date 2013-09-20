@@ -28,8 +28,10 @@ bool BitstreamParser::parseFile(QString strDecoderFolder,
 {
     QDir cCurDir = QDir::current();
     /// check if decoder exist
-    QString strDecoderFilePath = strDecoderFolder + QString("/HM_%1.exe").arg(iEncoderVersion);
-    if(!cCurDir.exists(strDecoderFilePath))
+    QString strDecoderFilePathForWin   = strDecoderFolder + QString("/HM_%1.exe").arg(iEncoderVersion);
+    QString strDecoderFilePathForLinux = strDecoderFolder + QString("/HM_%1").arg(iEncoderVersion);
+
+    if(!cCurDir.exists(strDecoderFilePathForWin) && !cCurDir.exists(strDecoderFilePathForLinux))
     {
         throw DecoderNotFoundException();
     }
@@ -50,7 +52,7 @@ bool BitstreamParser::parseFile(QString strDecoderFolder,
     QString strStandardOutputFile = strOutputPath+"/decoder_general.txt";
     m_cStdOutputFile.setFileName(strStandardOutputFile);
     m_cStdOutputFile.open(QIODevice::WriteOnly);
-    QString strDecoderCmd = strDecoderFolder + QString("\"/HM_%1.exe\" -b %2 -o decoder_yuv.yuv").arg(iEncoderVersion).arg(strBitstreamFilePath);
+    QString strDecoderCmd = strDecoderFolder + QString("\"/HM_%1\" -b %2 -o decoder_yuv.yuv").arg(iEncoderVersion).arg(strBitstreamFilePath);
 
     m_cDecoderProcess.start(strDecoderCmd);
     m_cDecoderProcess.waitForFinished(-1);
