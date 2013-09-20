@@ -49,13 +49,13 @@ Bool TComSysuCuMDTools::compareSplitMode ( TComDataCU* pcRecursive, TComDataCU* 
 {
 
     UChar* puhFirCU = pcRecursive->getDepth();
-    Double dFirCost = pcRecursive->getTotalCost();
+//    Double dFirCost = pcRecursive->getTotalCost();
     UChar* puhSecCU = pcFast->getDepth();
-    Double dSecCost = pcFast->getTotalCost();
+//    Double dSecCost = pcFast->getTotalCost();
     UInt uiTotalNumPart = pcFast->getTotalNumPart();
 
-    Int iPoc = pcRecursive->getSlice()->getPOC();
-    Int iCuAddr = pcRecursive->getAddr();
+//    Int iPoc = pcRecursive->getSlice()->getPOC();
+//    Int iCuAddr = pcRecursive->getAddr();
 
     Bool bIsSame = true;
     

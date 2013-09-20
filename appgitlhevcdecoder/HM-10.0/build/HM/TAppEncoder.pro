@@ -7,13 +7,16 @@ CONFIG -= qt
 
 
 TEMPLATE = app
-TARGET = TAppEncoder
+TARGET = HM_100
 
 
 DEFINES += _CONSOLE _CRT_SECURE_NO_WARNINGS
 INCLUDEPATH += ../../source/Lib \
 	../../compat/msvc
 DEPENDPATH += .
+
+DESTDIR = $${OUT_PWD}/../../../../decoders
+
 include(TAppEncoder.pri)
 
 LIBS += -L$$OUT_PWD/..

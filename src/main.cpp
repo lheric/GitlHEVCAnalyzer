@@ -10,7 +10,6 @@
 #include "views/mainwindow.h"
 #include "commands/appfrontcontroller.h"
 #include "exceptions/nosequencefoundexception.h"
-#include "model/io/analyzermsgsender.h"
 #include "model/common/comrom.h"
 using namespace std;
 
@@ -47,7 +46,10 @@ static void xMessageOutput(QtMsgType type, const QMessageLogContext &context, co
     fflush(stdout);
     fflush(stderr);
 
-    AnalyzerMsgSender::getInstance()->msgOut(strMsg, type);
+    GitlUpdateUIEvt cEvt;
+    cEvt.setParameter("msg_detail", strMsg);
+    cEvt.setParameter("msg_level",(int)type);
+    cEvt.dispatch();
 
     if(type == QtFatalMsg)
         abort();

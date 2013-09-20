@@ -7,12 +7,15 @@ CONFIG -= qt
 
 
 TEMPLATE = app
-TARGET = TAppDecoder
+TARGET = HM_40
 
 DEFINES += _CONSOLE _CRT_SECURE_NO_WARNINGS
 INCLUDEPATH += ../../source/Lib \
 	../../compat/msvc
 DEPENDPATH += .
+
+DESTDIR = $${OUT_PWD}/../../../../decoders
+
 include(TAppDecoder.pri)
 
 LIBS += -L$$OUT_PWD/..

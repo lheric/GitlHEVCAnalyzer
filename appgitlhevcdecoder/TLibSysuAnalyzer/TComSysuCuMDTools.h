@@ -12,8 +12,8 @@ public:
     TComSysuCuMDTools( std::string cInFilename, std::string cOutFilename );
     ~TComSysuCuMDTools();
     // read & write splitting mode
-    Void setInputFileName    ( std::string cFilename )  { m_cInputFilename = cFilename; };
-    Void setOutputFileName   ( std::string cFilename )  { m_cOutputFilename = cFilename; };
+    Void setInputFileName    ( std::string cFilename )  { m_cInputFilename = cFilename; }
+    Void setOutputFileName   ( std::string cFilename )  { m_cOutputFilename = cFilename; }
     Void writeOutSplitMode   ( TComDataCU* pcCU );
     Void xWriteOutSplitMode  ( UChar* pcCU, Int iLength, UInt iDepth );
     
