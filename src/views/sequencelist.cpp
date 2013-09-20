@@ -1,7 +1,6 @@
 #include "sequencelist.h"
 #include "ui_sequencelist.h"
 #include "model/common/comsequence.h"
-#include "model/io/analyzermsgsender.h"
 #include "gitlivkcmdevt.h"
 #include <QFileInfo>
 

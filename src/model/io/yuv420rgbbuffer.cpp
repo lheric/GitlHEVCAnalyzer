@@ -1,6 +1,6 @@
 #include "yuv420rgbbuffer.h"
-#include "model/io/analyzermsgsender.h"
 #include <QFile>
+#include <QDebug>
 
 YUV420RGBBuffer::YUV420RGBBuffer()
 {

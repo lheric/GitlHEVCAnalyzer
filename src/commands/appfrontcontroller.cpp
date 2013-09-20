@@ -20,7 +20,6 @@
 #include "commands/configfiltercommand.h"
 #include "commands/reloadfilterscommand.h"
 #include "commands/switchfiltercommand.h"
-#include "model/io/analyzermsgsender.h"
 
 
 SINGLETON_PATTERN_IMPLIMENT(AppFrontController)

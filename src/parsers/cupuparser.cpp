@@ -1,9 +1,8 @@
 #include "cupuparser.h"
-#include "model/io/analyzermsgsender.h"
 #include <QTextStream>
 #include <QRegExp>
 #include <QtAlgorithms>
-
+#include <QDebug>
 #define CU_SLIPT_FLAG 99      ///< CU splitting flag in file
 
 /// for CU sorting in Addr ascending order

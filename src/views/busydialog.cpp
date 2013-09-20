@@ -1,6 +1,5 @@
 #include "busydialog.h"
 #include "ui_busydialog.h"
-#include "model/io/analyzermsgsender.h"
 
 
 BusyDialog::BusyDialog(QWidget *parent) :

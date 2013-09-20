@@ -1,9 +1,9 @@
 #include "pluginfilterlist.h"
 #include "model/drawengine/abstractfilter.h"
-#include "model/io/analyzermsgsender.h"
 #include "views/pluginfilteritem.h"
 #include "gitlivkcmdevt.h"
 #include <QVector>
+
 PluginFilterList::PluginFilterList(QWidget *parent) :
     QListWidget(parent)
 {

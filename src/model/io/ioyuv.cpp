@@ -1,7 +1,5 @@
 #include "ioyuv.h"
-#include "../io/analyzermsgsender.h"
-
-
+#include <QDebug>
 IOYUV::IOYUV(QObject *parent) :
     QObject(parent)
 {

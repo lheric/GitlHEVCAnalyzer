@@ -1,9 +1,9 @@
 #include "filterloader.h"
-#include "../io/analyzermsgsender.h"
 #include "exceptions/invaildfilterindexexception.h"
 #include "model/modellocator.h"
 #include "model/common/comrom.h"
 #include <QDir>
+#include <QDebug>
 
 #define PLUGIN_DIRECTORY "plugins" ///< plugin directory
 

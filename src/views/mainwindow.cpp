@@ -3,12 +3,11 @@
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QKeyEvent>
+#include <QDebug>
 #include <QMimeData>
 #include "model/modellocator.h"
 #include "commands/appfrontcontroller.h"
-#include "model/io/analyzermsgsender.h"
 #include "bitstreamversionselector.h"
-#include "model/io/analyzermsgsender.h"
 #include "model/common/comrom.h"
 #include "gitlivkcmdevt.h"
 

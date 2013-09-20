@@ -1,5 +1,4 @@
 #include "drawengine.h"
-#include "../io/analyzermsgsender.h"
 #include <QPainter>
 #include <iostream>
 using namespace std;

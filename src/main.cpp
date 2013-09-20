@@ -2,6 +2,7 @@
 #include <QApplication>
 #include <QLayout>
 #include <QDir>
+#include <QDebug>
 #include <iostream>
 #include <QTextCodec>
 #include <winsparkle.h>
