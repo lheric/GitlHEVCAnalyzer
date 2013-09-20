@@ -1,33 +1,23 @@
 #ifndef APPFRONTCONTROLLER_H
 #define APPFRONTCONTROLLER_H
 
-#include "gitlfrontcontroller.h"
-#include <QThread>
-#include <QMutex>
-#include <QMutexLocker>
-#include <QWaitCondition>
+#include "gitlmtfrontcontroller.h"
+//#include <QThread>
+//#include <QMutex>
+//#include <QMutexLocker>
+//#include <QWaitCondition>
 #include "gitlmodual.h"
 
-class AppFrontController : public QThread, protected GitlFrontController
+class AppFrontController : protected GitlMTFrontController
 {
-public:
-    AppFrontController();
-    /*! The concrete action to deal with specific event
-      */
-    virtual bool detonate( GitlEvent& cEvt );
 
 protected:
+    AppFrontController();
     bool xInitCommand();
-    virtual void run();
+
     //SINGLETON
     SINGLETON_PATTERN_DECLARE(AppFrontController)
 
-
-    ADD_CLASS_FIELD_PRIVATE(QList<GitlEvent*>, pcEvtQue)
-    ADD_CLASS_FIELD_PRIVATE(QMutex, cEvtQueMutex)
-    ADD_CLASS_FIELD_PRIVATE(QWaitCondition, cEvtQueNotEmpty)
-    ADD_CLASS_FIELD_PRIVATE(QWaitCondition, cEvtQueNotFull)
-    ADD_CLASS_FIELD(int, iMaxEvtInQue, setMaxEvtInQue, getMaxEvtInQue)
 };
 
 #endif // APPFRONTCONTROLLER_H

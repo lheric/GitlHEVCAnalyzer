@@ -53,16 +53,12 @@ s_sCmdTable[] =
 
 AppFrontController::AppFrontController()
 {
-    m_iMaxEvtInQue = 1000;
     xInitCommand();
-    setModualName("app_front_controller");
-    this->start();
 }
 
 bool AppFrontController::xInitCommand()
 {
     /// register commands
-
     auto* psCMD = s_sCmdTable;
     while( psCMD->pMetaObject != NULL )
     {
@@ -73,77 +69,59 @@ bool AppFrontController::xInitCommand()
 }
 
 
-bool AppFrontController::detonate(GitlEvent &cEvt )
-{    
+//void AppFrontController::run()
+//{
 
-    m_cEvtQueMutex.lock();
-    if( m_pcEvtQue.size() >= m_iMaxEvtInQue )
-    {
-        qCritical() << QString("Too Many Events Pending...Waiting...");
-        m_cEvtQueNotFull.wait(&m_cEvtQueMutex);
-        qDebug() << QString("Event Queue Not Full...Moving on...");
-    }
-    m_pcEvtQue.push_back(cEvt.clone());
-    m_cEvtQueMutex.unlock();
-    m_cEvtQueNotEmpty.wakeAll();
-    return true;
-
-}
-
-
-void AppFrontController::run()
-{
-
-    forever
-    {
-        /// get one event from the waiting queue
-        m_cEvtQueMutex.lock();
-        if( m_pcEvtQue.empty() )
-        {
-            m_cEvtQueNotEmpty.wait(&m_cEvtQueMutex);
-        }
-        GitlEvent* pcEvt = m_pcEvtQue.front();
-        m_pcEvtQue.pop_front();
-        m_cEvtQueMutex.unlock();
-        m_cEvtQueNotFull.wakeAll();
+//    forever
+//    {
+//        /// get one event from the waiting queue
+//        m_cEvtQueMutex.lock();
+//        if( m_pcEvtQue.empty() )
+//        {
+//            m_cEvtQueNotEmpty.wait(&m_cEvtQueMutex);
+//        }
+//        GitlEvent* pcEvt = m_pcEvtQue.front();
+//        m_pcEvtQue.pop_front();
+//        m_cEvtQueMutex.unlock();
+//        m_cEvtQueNotFull.wakeAll();
 
 
-        /// do command & exception handling
-        try
-        {
-            GitlFrontController::detonate(*pcEvt);
-            delete pcEvt;
-        }
-        catch( const NoSequenceFoundException& )
-        {
-            qCritical() << "No Video Sequence Found...";
-        }
-        catch( const InvaildFilterIndexException& )
-        {
-            qWarning() << "Invalid Filter Index...";
-        }
-        catch( const DecoderNotFoundException& )
-        {
-            qCritical() << "Decoder NOT Found...";
-        }
-        catch( const DecodingFailException& )
-        {
-            qCritical() << "Bitstream decoding FAILED!\n"
-                           "Following may be the reasons for this failure:\n"
-                           "1. Corrupted HEVC bitstream?\n"
-                           "2. Bitstream-decoder version mismatch?\n"
-                           "3. Non-English characters in bitstream path or analyzer path?\n";
-        }
-        catch( const BitstreamNotFoundException& )
-        {
-            qWarning() << "Bitstream NOT Found...";
-        }
-        catch( const QException& )
-        {
-            qCritical() << "Unknown Error Happened... :(";
-        }
+//        /// do command & exception handling
+//        try
+//        {
+//            GitlFrontController::detonate(*pcEvt);
+//            delete pcEvt;
+//        }
+//        catch( const NoSequenceFoundException& )
+//        {
+//            qCritical() << "No Video Sequence Found...";
+//        }
+//        catch( const InvaildFilterIndexException& )
+//        {
+//            qWarning() << "Invalid Filter Index...";
+//        }
+//        catch( const DecoderNotFoundException& )
+//        {
+//            qCritical() << "Decoder NOT Found...";
+//        }
+//        catch( const DecodingFailException& )
+//        {
+//            qCritical() << "Bitstream decoding FAILED!\n"
+//                           "Following may be the reasons for this failure:\n"
+//                           "1. Corrupted HEVC bitstream?\n"
+//                           "2. Bitstream-decoder version mismatch?\n"
+//                           "3. Non-English characters in bitstream path or analyzer path?\n";
+//        }
+//        catch( const BitstreamNotFoundException& )
+//        {
+//            qWarning() << "Bitstream NOT Found...";
+//        }
+//        catch( const QException& )
+//        {
+//            qCritical() << "Unknown Error Happened... :(";
+//        }
 
-    }
+//    }
 
 
-}
+//}
