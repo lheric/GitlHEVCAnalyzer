@@ -132,6 +132,21 @@ public:
         return true;
     }
 
+    /*!
+     * \brief drawTU
+     * \param pcContext \see FilterContext
+     * \param pcPainter the QPainter of the QPixmap object which is being displayed on screen
+     * \param pcTU the TU to be draw
+     * \param dScale the scale of current display
+     * \param pcScaledArea the scaled size of current PU
+     * \return
+     */
+    virtual bool drawTU   (FilterContext* pcContext, QPainter* pcPainter,
+                           ComTU *pcTU, double dScale,  QRect* pcScaledArea)
+    {
+        return true;
+    }
+
     /*! This is the filter name displayed in the user interface
      */
     ADD_CLASS_FIELD(QString, strName, getName, setName)

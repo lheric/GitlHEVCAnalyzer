@@ -132,7 +132,18 @@ bool FilterLoader::config(AbstractFilter* pcFilter)
     return true;
 }
 
-
+bool FilterLoader::drawTU   (QPainter* pcPainter, ComTU *pcTU,       double dScale,  QRect* pcScaledArea)
+{
+    for(int i = 0; i < m_apcFilters.size(); i++)
+    {
+        AbstractFilter* pFilter = m_apcFilters[i];
+        if( pFilter->getEnable() )
+        {
+            pFilter->drawTU(&m_cFilterContext, pcPainter, pcTU, dScale, pcScaledArea);
+        }
+    }
+    return true;
+}
 
 bool FilterLoader::drawPU  (QPainter* pcPainter, ComPU *pcPU,  double dScale, QRect* pcScaledArea)
 {

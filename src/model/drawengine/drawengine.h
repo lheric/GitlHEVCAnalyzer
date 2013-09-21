@@ -45,6 +45,16 @@ protected:
     bool xDrawCU( QPainter* pcPainter,  ComCU* pcCU );
 
 
+
+    /*!
+     * \brief xDrawTU draw TU recursively
+     * \param pcPainter
+     * \param pcTU
+     * \return
+     */
+    bool xDrawTU( QPainter* pcPainter,  ComCU* pcCU );
+    bool xDrawTUHelper( QPainter* pcPainter,  ComTU* pcTU );
+
     /*!
      * \brief xScaleRect scale the (CU/PU) rect area accodring to zooming in/out
      * \param rcUnscaled

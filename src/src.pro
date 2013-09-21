@@ -65,7 +65,9 @@ SOURCES += main.cpp \
     commands/checkupdatecommand.cpp \
     commands/reloadfilterscommand.cpp \
     commands/switchyuvcommand.cpp \
-    commands/switchfiltercommand.cpp
+    commands/switchfiltercommand.cpp \
+    model/common/comtu.cpp \
+    parsers/tuparser.cpp
 
 HEADERS += \
     model/common/comsequence.h \
@@ -121,7 +123,9 @@ HEADERS += \
     commands/checkupdatecommand.h \
     commands/reloadfilterscommand.h \
     commands/switchyuvcommand.h \
-    commands/switchfiltercommand.h
+    commands/switchfiltercommand.h \
+    model/common/comtu.h \
+    parsers/tuparser.h
 
 #include & libs
 INCLUDEPATH += .\

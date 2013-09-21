@@ -21,6 +21,13 @@ QPixmap* DrawEngine::drawFrame( ComSequence* pcSequence, int iPoc, QPixmap *pcPi
     /***********************************************************************
      *               Following is for drawing filters                      *
      ***********************************************************************/
+    /// draw TU
+    for( int iAddr = 0; iAddr < iLCUTotalNum; iAddr++ )
+    {
+        ComCU* pcLCU = pcFrame->getLCUs().at(iAddr);
+        xDrawTU( &cPainter, pcLCU );
+    }
+
 
     /// draw PU
     for( int iAddr = 0; iAddr < iLCUTotalNum; iAddr++ )
@@ -107,6 +114,48 @@ bool DrawEngine::xDrawCU( QPainter* pcPainter,  ComCU* pcCU )
     return true;
 
 }
+
+
+bool DrawEngine::xDrawTU(QPainter* pcPainter,  ComCU *pcCU )
+{
+    if( pcCU->getSCUs().empty() )
+    {
+
+        /// draw TU
+        xDrawTUHelper(pcPainter, &pcCU->getTURoot());
+
+    }
+    else
+    {
+        for(int iSub = 0; iSub < 4; iSub++)
+        {
+            xDrawTU ( pcPainter, pcCU->getSCUs().at(iSub) );
+        }
+    }
+    return true;
+}
+
+bool DrawEngine::xDrawTUHelper( QPainter* pcPainter,  ComTU* pcTU )
+{
+    int iSubTUNum = pcTU->getTUs().size();
+    if( iSubTUNum != 0 )
+    {
+        for(int i = 0; i < iSubTUNum; i++ )
+        {
+            xDrawTUHelper(pcPainter, pcTU->getTUs().at(i));
+        }
+    }
+    else
+    {
+        QRect cScaledTUArea;
+        cScaledTUArea.setCoords( pcTU->getX(), pcTU->getY(), (pcTU->getX()+pcTU->getSize())-1, (pcTU->getY()+pcTU->getSize())-1 );
+        xScaleRect(&cScaledTUArea,&cScaledTUArea);
+        m_cFilterLoader.drawTU(pcPainter, pcTU, m_dScale, &cScaledTUArea);
+
+    }
+    return true;
+}
+
 
 void DrawEngine::xScaleRect( QRect* rcUnscaled, QRect* rcScaled )
 {

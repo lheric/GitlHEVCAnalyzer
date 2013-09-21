@@ -33,7 +33,7 @@ void TSysuAnalyzerOutput::writeOutCUInfo   ( TComDataCU* pcCU )
   m_cTUOutput   << "<" << iPoc << "," << iAddr << ">" << " ";  ///< Write out TU mode info
   m_cMEOutput   << "<" << iPoc << "," << iAddr << ">" << " ";  ///< Write out ME info
   xWriteOutCUInfo  ( pcCU, iTotalNumPart, 0, 0 );   ///< Recursive write Prediction, CU, PU, Merge, Intra, ME
-  xWriteOutTUInfo  ( pcCU, iTotalNumPart, 0, 0 );   ///< Recursive write TU
+
   m_cPredOutput << endl;
   m_cCUPUOutput << endl;
   m_cMVOutput   << endl;
@@ -56,6 +56,8 @@ void TSysuAnalyzerOutput::xWriteOutCUInfo  ( TComDataCU* pcCU, Int iLength, Int 
     ///< CU PU info
     m_cCUPUOutput << (Int)(puhPartSize[iOffset]) << " "; 
 
+    ///< TU info
+    xWriteOutTUInfo  ( pcCU, iLength, iOffset, 0 );   ///< Recursive write TU
     
 
     /// PU number in this leaf CU

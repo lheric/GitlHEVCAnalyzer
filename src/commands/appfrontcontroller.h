@@ -10,7 +10,8 @@
 
 class AppFrontController : protected GitlMTFrontController
 {
-
+public:
+    virtual void run();
 protected:
     AppFrontController();
     bool xInitCommand();

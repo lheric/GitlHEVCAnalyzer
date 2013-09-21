@@ -3,7 +3,7 @@
 
 #include "compu.h"
 #include "commv.h"
-
+#include "comtu.h"
 
 class ComFrame;
 
@@ -40,10 +40,12 @@ public:
     ADD_CLASS_FIELD(QVector<ComCU*>, apcSCUs, getSCUs, setSCUs)
 
     /*!
-     * PUs in this CU (only for leaf-CUs)
+     * PUs & TUs in this CU (only for leaf-CUs)
      */
     ADD_CLASS_FIELD(PartSize, ePartSize, getPartSize, setPartSize)
     ADD_CLASS_FIELD(QVector<ComPU*>, apcPUs, getPUs, setPUs)
+    ADD_CLASS_FIELD_NOSETTER(ComTU, cTURoot, getTURoot)
+
 
     /*!
      * Regular infomations of CU

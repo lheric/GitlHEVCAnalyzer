@@ -10,7 +10,7 @@ Gitl HEVC Analyzer is a tool for bitstream analysis for HEVC.
     <li>Predition Type Display</li>
     <li>Coding Unit (CU) Display</li>
     <li>Predition Unit (PU) Display</li>
-    <li>Transform Unit (TU) Display (Under Development)</li>
+    <li>Transform Unit (TU) Display</li>
     <li>Motion Vectors (MV) Display</li>    
 </ul>
 

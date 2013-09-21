@@ -2,7 +2,8 @@ TEMPLATE = subdirs
 CONFIG += ordered
 SUBDIRS = libhighlightlcufilter \       #highlight lcu filter
           libhighlightdifffilter \      #highlight difference filter
-          libcudisplayfilter \          #cu stucture filter
+          libtudisplayfilter \          #tu structure filter
+          libcudisplayfilter \          #cu structure filter
           libmergedisplayfilter \       #merge display filter
           libmvdisplayfilter \          #MV display filter
           libmccdisplayfilter \         #Motion Collision Count display filter
