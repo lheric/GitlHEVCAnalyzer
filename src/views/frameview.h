@@ -12,9 +12,17 @@ class FrameView : public QGraphicsView, public GitlModual
     Q_OBJECT
 public:
     explicit FrameView(QWidget *parent = 0);
+    void setDisplayImage(const QPixmap* pcFramePixmap);
+
+
+
     virtual void wheelEvent ( QWheelEvent * event );
     virtual void mousePressEvent ( QMouseEvent * event );
     virtual void mouseMoveEvent ( QMouseEvent * event );
+
+
+
+
 
     /*!
      * current scale of the frame
@@ -25,7 +33,7 @@ public:
      * Stage and Item to display the frame
      */
     ADD_CLASS_FIELD_NOSETTER(QGraphicsScene, cGraphicsScene, getGraphicsScene)
-    ADD_CLASS_FIELD_NOSETTER(QGraphicsPixmapItem, cGraphicsPixmapItem, getGraphicsPixmapItem)
+    ADD_CLASS_FIELD_PRIVATE(QGraphicsPixmapItem, cGraphicsPixmapItem)
 
 
     ADD_CLASS_FIELD_PRIVATE(int, iMousePressX)

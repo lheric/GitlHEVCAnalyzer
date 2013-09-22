@@ -12,6 +12,16 @@ FrameView::FrameView(QWidget *parent) :
     setScene(&m_cGraphicsScene);
     setAcceptDrops(false); //avoid blocking drop event to QMainWindow
 }
+
+
+
+void FrameView::setDisplayImage(const QPixmap* pcFramePixmap)
+{
+    if(pcFramePixmap == NULL)
+        return;
+    m_cGraphicsPixmapItem.setPixmap(*pcFramePixmap);
+}
+
 void FrameView::wheelEvent ( QWheelEvent * event )
 {
     //AnalyzerMsgSender::getInstance()->msgOut(QString("%1").arg(event->delta()));

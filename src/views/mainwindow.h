@@ -32,8 +32,6 @@ protected:
 
 protected:
 
-    void xPresentFrameBuffer(QPixmap *pcPixmap);
-
     void xSaveSnapshot(QPixmap* pcPixmap);
 
 private slots:

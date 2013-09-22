@@ -41,7 +41,7 @@ void MainWindow::onUIUpdate(GitlUpdateUIEvt& rcEvt)
     {
         vValue = rcEvt.getParameter("picture");
         QPixmap* pcPixMap = (QPixmap*)(vValue.value<void *>());
-        xPresentFrameBuffer(pcPixMap);
+        ui->imageView->setDisplayImage(pcPixMap);
     }
 
 
@@ -130,12 +130,6 @@ void MainWindow::on_progressBar_actionTriggered(int action)
     cEvt.dispatch();
 }
 
-
-void MainWindow::xPresentFrameBuffer(QPixmap *pcPixmap)
-{
-    /// show frame
-    ui->imageView->getGraphicsPixmapItem().setPixmap(*pcPixmap);
-}
 
 void MainWindow::xSaveSnapshot(QPixmap *pcPixmap)
 {
