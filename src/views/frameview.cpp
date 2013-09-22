@@ -59,16 +59,16 @@ void FrameView::wheelEvent ( QWheelEvent * event )
 
 void FrameView::mousePressEvent ( QMouseEvent * event )
 {
-    m_iMousePressX = event->x();
-    m_iMousePressY = event->y();
+    m_iMousePressX = mapToScene(event->pos()).x();
+    m_iMousePressY = mapToScene(event->pos()).y();
     m_iMousePressImageX = m_cGraphicsPixmapItem.x();
     m_iMousePressImageY = m_cGraphicsPixmapItem.y();
 }
 
 void FrameView::mouseMoveEvent ( QMouseEvent * event )
 {
-    int iTransX = event->x() - m_iMousePressX;
-    int iTransY = event->y() - m_iMousePressY;
+    int iTransX = mapToScene(event->pos()).x() - m_iMousePressX;
+    int iTransY = mapToScene(event->pos()).y() - m_iMousePressY;
     m_cGraphicsPixmapItem.setPos(m_iMousePressImageX+iTransX,
                                  m_iMousePressImageY+iTransY);
 }
