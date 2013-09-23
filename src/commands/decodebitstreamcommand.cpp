@@ -13,6 +13,7 @@
 #include "gitlupdateuievt.h"
 #include <QDir>
 
+
 DecodeBitstreamCommand::DecodeBitstreamCommand(QObject *parent) :
     GitlAbstractCommand(parent)
 {
@@ -44,6 +45,13 @@ bool DecodeBitstreamCommand::execute( GitlCommandParameter& rcInputArg, GitlComm
     GitlUpdateUIEvt evt;
     evt.setParameter("busy_dialog_visible", true);
     evt.dispatch();
+
+    /// hide busy dialog when scope exit
+    SCOPE_EXIT(GitlUpdateUIEvt evt;
+               evt.setParameter("busy_dialog_visible", false);
+               evt.dispatch();
+               );
+
 
     //TODO BUG Memory Leaking when exception happens
     ComSequence* pcSequence = new ComSequence();
@@ -220,9 +228,6 @@ bool DecodeBitstreamCommand::execute( GitlCommandParameter& rcInputArg, GitlComm
     rcOutputArg.setParameter("total_frame_num", iTotalFrame);
 
 
-    /// hide busy dialog
-    evt.setParameter("busy_dialog_visible", false);
-    evt.dispatch();
 
 
     /// nofity sequence list to update

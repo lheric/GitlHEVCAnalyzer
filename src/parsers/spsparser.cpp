@@ -11,7 +11,7 @@ SpsParser::SpsParser(QObject *parent) :
   * Max CU Depth:4
   * Min TU Depth:0
   * Max TU Depth:1
-  *
+  * Input Bit Depth:8
   */
 bool SpsParser::parseFile(QTextStream* pcInputStream, ComSequence* pcSequence)
 {
@@ -85,6 +85,17 @@ bool SpsParser::parseFile(QTextStream* pcInputStream, ComSequence* pcSequence)
         }
     }
 
+    // Input Bit Depth:8
+    cMatchTarget.setPattern("Input Bit Depth:([0-9]+)");
+    while( !pcInputStream->atEnd() )
+    {
+        strOneLine = pcInputStream->readLine();
+        if( cMatchTarget.indexIn(strOneLine) != -1 ) {
+            int iInputBitDepth = cMatchTarget.cap(1).toInt();
+            pcSequence->setInputBitDepth(iInputBitDepth);
+            break;
+        }
+    }
 
     return true;
 }

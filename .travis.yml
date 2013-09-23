@@ -1,0 +1,8 @@
+before_install:
+  - yes | sudo add-apt-repository ppa:canonical-qt5-edgers/qt5-proper 
+  - sudo apt-get update -qq
+  - yes | sudo apt-get install qtdeclarative5-dev
+
+script:
+  - qmake -qt=qt5 GitlHEVCAnalyzer.pro -r "CONFIG+=Release"
+  - make

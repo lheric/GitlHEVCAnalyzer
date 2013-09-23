@@ -12,11 +12,12 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = analyzer
 
+# c++11 enalbed
+CONFIG += c++11
+
 CONFIG -= app_bundle
 CONFIG -= console
 CONFIG += static
-CONFIG += c++11
-
 TEMPLATE = app
 
 SOURCES += main.cpp \
