@@ -10,8 +10,8 @@ TEMPLATE = app
 TARGET = TAppDecoder
 
 DEFINES += _CONSOLE _CRT_SECURE_NO_WARNINGS
-INCLUDEPATH += ../../source/Lib \
-	../../compat/msvc
+INCLUDEPATH += ../../source/Lib
+msvc: INCLUDEPATH += ../../compat/msvc
 DEPENDPATH += .
 include(TAppDecoder.pri)
 

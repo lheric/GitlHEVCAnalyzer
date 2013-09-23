@@ -11,8 +11,8 @@ TARGET = HM_100
 
 
 DEFINES += _CONSOLE _CRT_SECURE_NO_WARNINGS
-INCLUDEPATH += ../../source/Lib \
-	../../compat/msvc
+INCLUDEPATH += ../../source/Lib
+msvc: INCLUDEPATH += ../../compat/msvc
 DEPENDPATH += .
 
 DESTDIR = $${OUT_PWD}/../../../../decoders

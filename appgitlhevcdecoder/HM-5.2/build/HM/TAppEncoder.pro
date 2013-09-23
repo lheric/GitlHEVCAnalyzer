@@ -11,8 +11,8 @@ TARGET = TAppEncoder
 
 
 DEFINES += _CONSOLE _CRT_SECURE_NO_WARNINGS
-INCLUDEPATH += ../../source/Lib \
-	../../compat/msvc
+INCLUDEPATH += ../../source/Lib
+msvc: INCLUDEPATH += ../../compat/msvc
 DEPENDPATH += .
 include(TAppEncoder.pri)
 
