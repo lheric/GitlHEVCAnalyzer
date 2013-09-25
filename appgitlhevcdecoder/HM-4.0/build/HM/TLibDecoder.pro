@@ -3,8 +3,8 @@
 # ------------------------------------------------------
 
 TEMPLATE = lib
-Debug:   TARGET = TLibDecoderd
-Release: TARGET = TLibDecoder
+debug:   TARGET = TLibDecoderd
+release: TARGET = TLibDecoder
 CONFIG += staticlib
 DEFINES += _CRT_SECURE_NO_WARNINGS
 INCLUDEPATH += ../../source/Lib \

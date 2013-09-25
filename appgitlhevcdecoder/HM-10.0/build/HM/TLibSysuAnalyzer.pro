@@ -3,8 +3,8 @@
 # ------------------------------------------------------
 
 TEMPLATE = lib
-Debug:   TARGET = TLibSysuAnalyzerd
-Release: TARGET = TLibSysuAnalyzer
+debug:   TARGET = TLibSysuAnalyzerd
+release: TARGET = TLibSysuAnalyzer
 CONFIG += staticlib
 DEFINES += _CRT_SECURE_NO_WARNINGS
 INCLUDEPATH += ../../source/Lib \

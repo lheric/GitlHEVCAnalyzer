@@ -19,7 +19,7 @@ DESTDIR = $${OUT_PWD}/../../../../decoders
 include(TAppDecoder.pri)
 
 LIBS += -L$$OUT_PWD/..
-Debug:   LIBS += -lTLibCommond -lTAppCommond -lTLibSysuAnalyzerd -lTLibVideoIOd -lTLibDecoderd
-Release: LIBS += -lTLibCommon  -lTAppCommon  -lTLibSysuAnalyzer  -lTLibVideoIO  -lTLibDecoder
+debug:   LIBS += -lTLibCommond -lTAppCommond -lTLibSysuAnalyzerd -lTLibVideoIOd -lTLibDecoderd
+release: LIBS += -lTLibCommon  -lTAppCommon  -lTLibSysuAnalyzer  -lTLibVideoIO  -lTLibDecoder
 DEPENDPATH += ../../source/Lib \
     ../../../TLibSysuAnalyzer

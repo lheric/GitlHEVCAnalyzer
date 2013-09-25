@@ -136,8 +136,8 @@ INCLUDEPATH += .\
 
 LIBS += -L$${OUT_PWD}/../libgitlmvc/libgitlevtbus -L$${OUT_PWD}/../libgitlmvc -L$${PWD}/../3rdparty/WinSparkle-0.3/lib
 
-Debug:   LIBS += -lGitlMVCd -lGitlEvtBusd -lWinSparkle
-Release: LIBS += -lGitlMVC  -lGitlEvtBus  -lWinSparkle
+debug:   LIBS += -lGitlMVCd -lGitlEvtBusd -lWinSparkle
+release: LIBS += -lGitlMVC  -lGitlEvtBus  -lWinSparkle
 
 
 FORMS += \

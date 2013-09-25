@@ -18,8 +18,8 @@ include(TAppEncoder.pri)
 
 LIBS += -L$$OUT_PWD/..
 
-Debug:   LIBS += -lTLibCommond -lTAppCommond -lTLibVideoIOd -lTLibEncoderd
-Release: LIBS += -lTLibCommon  -lTAppCommon  -lTLibVideoIO  -lTLibEncoder
+debug:   LIBS += -lTLibCommond -lTAppCommond -lTLibVideoIOd -lTLibEncoderd
+release: LIBS += -lTLibCommon  -lTAppCommon  -lTLibVideoIO  -lTLibEncoder
 
 DEPENDPATH += ../../source/Lib \
     ../../../TLibSysuAnalyzer

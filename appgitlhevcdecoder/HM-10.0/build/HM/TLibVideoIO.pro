@@ -3,8 +3,8 @@
 # ------------------------------------------------------
 
 TEMPLATE = lib
-Debug:   TARGET = TLibVideoIOd
-Release: TARGET = TLibVideoIO
+debug:   TARGET = TLibVideoIOd
+release: TARGET = TLibVideoIO
 CONFIG += staticlib
 DEFINES += _CRT_SECURE_NO_WARNINGS
 INCLUDEPATH += ../../source/Lib

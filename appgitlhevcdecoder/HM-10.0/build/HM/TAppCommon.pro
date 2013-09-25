@@ -4,8 +4,8 @@
 
 
 TEMPLATE = lib
-Debug:   TARGET = TAppCommond
-Release: TARGET = TAppCommon
+debug:   TARGET = TAppCommond
+release: TARGET = TAppCommon
 CONFIG += staticlib
 DEFINES += _CRT_SECURE_NO_WARNINGS
 INCLUDEPATH += ../../source/Lib

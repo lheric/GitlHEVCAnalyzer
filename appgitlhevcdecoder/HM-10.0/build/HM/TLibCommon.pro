@@ -3,8 +3,8 @@
 # ------------------------------------------------------
 
 TEMPLATE = lib
-Debug:   TARGET = TLibCommond
-Release: TARGET = TLibCommon
+debug:   TARGET = TLibCommond
+release: TARGET = TLibCommon
 CONFIG += staticlib
 DEFINES += _CRT_SECURE_NO_WARNINGS
 INCLUDEPATH += ../../source/Lib
