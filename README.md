@@ -30,9 +30,8 @@ How To Build
 
 Written in C++ with Qt5
 
-Build & run on windows platform only
+Currently it can be built & run on Windows platform only
 Windows XP or later (32/64 bit)
-(Theoretically it should work on linux, but it is untested on other platforms)
 
 
 Contact Us
