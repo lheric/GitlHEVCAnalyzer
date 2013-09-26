@@ -136,9 +136,12 @@ INCLUDEPATH += .\
 
 LIBS += -L$${OUT_PWD}/../libgitlmvc/libgitlevtbus -L$${OUT_PWD}/../libgitlmvc -L$${PWD}/../3rdparty/WinSparkle-0.3/lib
 
-debug:   LIBS += -lGitlMVCd -lGitlEvtBusd -lWinSparkle
-release: LIBS += -lGitlMVC  -lGitlEvtBus  -lWinSparkle
-
+CONFIG(debug, debug|release){
+    LIBS += -lGitlMVCd -lGitlEvtBusd -lWinSparkle
+}
+CONFIG(release, debug|release){
+    LIBS += -lGitlMVC  -lGitlEvtBus  -lWinSparkle
+}
 
 FORMS += \
     views/mainwindow.ui \
