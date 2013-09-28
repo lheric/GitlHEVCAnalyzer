@@ -131,16 +131,15 @@ HEADERS += \
 #include & libs
 INCLUDEPATH += .\
                ../libgitlmvc/libgitlevtbus/src \
-               ../libgitlmvc/src    \
-               ../3rdparty/WinSparkle-0.3/include
+               ../libgitlmvc/src
 
 LIBS += -L$${OUT_PWD}/../libgitlmvc/libgitlevtbus -L$${OUT_PWD}/../libgitlmvc -L$${PWD}/../3rdparty/WinSparkle-0.3/lib
 
 CONFIG(debug, debug|release){
-    LIBS += -lGitlMVCd -lGitlEvtBusd -lWinSparkle
+    LIBS += -lGitlMVCd -lGitlEvtBusd
 }
 CONFIG(release, debug|release){
-    LIBS += -lGitlMVC  -lGitlEvtBus  -lWinSparkle
+    LIBS += -lGitlMVC  -lGitlEvtBus
 }
 
 FORMS += \
