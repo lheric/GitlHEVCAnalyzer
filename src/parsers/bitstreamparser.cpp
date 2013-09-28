@@ -37,7 +37,7 @@ bool BitstreamParser::parseFile(QString strDecoderFolder,
     {
         if( cDecoderFolder.exists(strDecoderExe) )
         {
-            strDecoderPath = cDecoderFolder.filePath(strDecoderExe);
+            strDecoderPath = cDecoderFolder.absoluteFilePath(strDecoderExe);
             break;
         }
     }
