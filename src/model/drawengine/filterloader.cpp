@@ -274,7 +274,7 @@ void FilterLoader::xReadAndSortFilters()
     for (int i = 0; i < iSize; ++i)
     {
         g_cAppSetting.setArrayIndex(i);
-        QString& strFilterName = g_cAppSetting.value("filter_name").toString();
+        const QString& strFilterName = g_cAppSetting.value("filter_name").toString();
         cLastOrder.push_back(strFilterName);
     }
     g_cAppSetting.endArray();
