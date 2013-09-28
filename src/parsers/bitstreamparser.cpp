@@ -5,7 +5,7 @@
 #include <QProcess>
 #include <QDir>
 #include <QFileInfo>
-
+#include <QDebug>
 
 BitstreamParser::BitstreamParser(QObject *parent)
 {
@@ -27,14 +27,28 @@ bool BitstreamParser::parseFile(QString strDecoderFolder,
 {
     QDir cCurDir = QDir::current();
     /// check if decoder exist
-    QString strDecoderFilePathForWin   = strDecoderFolder + QString("/HM_%1.exe").arg(iEncoderVersion);
-    QString strDecoderFilePathForLinux = strDecoderFolder + QString("/HM_%1").arg(iEncoderVersion);
-
-    if(!cCurDir.exists(strDecoderFilePathForWin) && !cCurDir.exists(strDecoderFilePathForLinux))
+    QString strDecoderPath;
+    QStringList cCandidateDecoderList;
+    cCandidateDecoderList << QString("HM_%1").arg(iEncoderVersion)
+                          << QString("HM_%1.exe").arg(iEncoderVersion)
+                          << QString("HM_%1.out").arg(iEncoderVersion);
+    QDir cDecoderFolder(strDecoderFolder);
+    foreach(const QString& strDecoderExe, cCandidateDecoderList)
     {
+        if( cDecoderFolder.exists(strDecoderExe) )
+        {
+            strDecoderPath = cDecoderFolder.filePath(strDecoderExe);
+            break;
+        }
+    }
+    /// not found
+    if(strDecoderPath.isEmpty())
+    {
+        qCritical() << QString("Decoder Not found in folder %1").arg(strDecoderFolder);
         throw DecoderNotFoundException();
     }
-    /// check if bitstream file exist or
+
+    /// check if bitstream file exist
     if( (!cCurDir.exists(strBitstreamFilePath)) ||
         (!cCurDir.isAbsolutePath(strBitstreamFilePath)) )
     {
@@ -51,7 +65,8 @@ bool BitstreamParser::parseFile(QString strDecoderFolder,
     QString strStandardOutputFile = strOutputPath+"/decoder_general.txt";
     m_cStdOutputFile.setFileName(strStandardOutputFile);
     m_cStdOutputFile.open(QIODevice::WriteOnly);
-    QString strDecoderCmd = strDecoderFolder + QString("\"/HM_%1\" -b %2 -o decoder_yuv.yuv").arg(iEncoderVersion).arg(strBitstreamFilePath);
+    QString strDecoderCmd = strDecoderPath + QString(" -b %1 -o decoder_yuv.yuv").arg(strBitstreamFilePath);
+    qDebug() << strDecoderCmd;
 
     m_cDecoderProcess.start(strDecoderCmd);
     m_cDecoderProcess.waitForFinished(-1);
