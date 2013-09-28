@@ -19,10 +19,10 @@ include(TAppDecoder.pri)
 LIBS += -L$$OUT_PWD/..
 
 CONFIG(debug, debug|release){
-    LIBS += -lTLibCommond -lTAppCommond -lTLibSysuAnalyzerd -lTLibVideoIOd -lTLibDecoderd
+    LIBS += -lTLibDecoderd -lTAppCommond -lTLibSysuAnalyzerd -lTLibVideoIOd -lTLibCommond
 }
 CONFIG(release, debug|release){
-    LIBS += -lTLibCommon  -lTAppCommon  -lTLibSysuAnalyzer  -lTLibVideoIO  -lTLibDecoder
+    LIBS += -lTLibDecoder  -lTAppCommon   -lTLibSysuAnalyzer -lTLibVideoIO  -lTLibCommon
 }
 
 DEPENDPATH += ../../source/Lib \

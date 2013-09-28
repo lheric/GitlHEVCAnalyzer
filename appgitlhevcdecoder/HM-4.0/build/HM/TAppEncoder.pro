@@ -20,11 +20,12 @@ include(TAppEncoder.pri)
 LIBS += -L$$OUT_PWD/..
 
 CONFIG(debug, debug|release){
-    LIBS += -lTLibCommond -lTAppCommond -lTLibVideoIOd -lTLibEncoderd
+    LIBS += -lTLibEncoderd -lTAppCommond -lTLibVideoIOd -lTLibCommond
 }
 CONFIG(release, debug|release){
-    LIBS += -lTLibCommon  -lTAppCommon  -lTLibVideoIO  -lTLibEncoder
+    LIBS += -lTLibEncoder  -lTAppCommon   -lTLibVideoIO  -lTLibCommon
 }
+
 
 
 DEPENDPATH += ../../source/Lib \
