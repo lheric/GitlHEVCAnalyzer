@@ -6,6 +6,7 @@
 #include "gitlmodual.h"
 #include "io/yuv420rgbbuffer.h"
 #include "drawengine/drawengine.h"
+#include "preferences.h"
 #include "parsers/encodergeneralparser.h"
 #include "parsers/decodergeneralparser.h"
 #include "parsers/cupuparser.h"
@@ -79,6 +80,11 @@ public:
       */
     ADD_CLASS_FIELD_NOSETTER(DrawEngine, cDrawEngine, getDrawEngine)                ///< Draw engin for displaying CU PU ME info
 
+    /**
+      * Preferences
+      */
+    ADD_CLASS_FIELD_NOSETTER(Preferences, cPreferences, getPreferences)             ///< Setting for cache directory, decoder path, etc.
+
 public:
     /**
       * SINGLETON ( design pattern )
@@ -88,7 +94,6 @@ private:
     explicit ModelLocator();
 public:
     ~ModelLocator();
-
 };
 
 #endif // MODELLOCATOR_H

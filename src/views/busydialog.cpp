@@ -6,9 +6,8 @@ BusyDialog::BusyDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::BusyDialog)
 {
-
     ui->setupUi(this);
-    this->setWindowFlags(Qt::CustomizeWindowHint|Qt::WindowTitleHint);
+    this->setWindowFlags(Qt::Dialog|Qt::CustomizeWindowHint|Qt::WindowTitleHint);
     setModualName("busy_dialog");
 }
 

@@ -3,11 +3,13 @@
 
 #include <QMainWindow>
 #include <QThread>
+#include <QActionGroup>
 #include "gitlmodual.h"
 #include "busydialog.h"
 #include "aboutdialog.h"
 #include "sequencelist.h"
 #include "gitlview.h"
+#include "preferencedialog.h"
 namespace Ui {
     class MainWindow;
 }
@@ -61,6 +63,8 @@ private slots:
 
     void on_actionReloadPluginsFilters_triggered();
 
+    void on_actionPreferences_triggered();
+
 private:
     Ui::MainWindow *ui;
 
@@ -68,7 +72,8 @@ private:
 private:
     ADD_CLASS_FIELD_PRIVATE(BusyDialog, cBusyDialog)
     ADD_CLASS_FIELD_PRIVATE(AboutDialog, cAboutDialog)
-
+    ADD_CLASS_FIELD_PRIVATE(PreferenceDialog, cPreferenceDialog)
+    ADD_CLASS_FIELD_PRIVATE(QActionGroup, cThemeGroup)
 };
 
 #endif // MAINWINDOW_H

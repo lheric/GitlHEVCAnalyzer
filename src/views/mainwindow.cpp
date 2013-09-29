@@ -10,21 +10,36 @@
 #include "bitstreamversionselector.h"
 #include "model/common/comrom.h"
 #include "gitlivkcmdevt.h"
+#include "preferencedialog.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
+    m_cPreferenceDialog(this),
+    m_cBusyDialog(this),
+    m_cThemeGroup(this),
     ui(new Ui::MainWindow)
 {
 
     setModualName("main_window");
+    ui->setupUi(this);
 
-    ui->setupUi(this);    
+    /// layout hacks
     ui->msgDockWidget->widget()->layout()->setContentsMargins(0,0,0,0);
     ui->pluginFilterListDockWidget->widget()->layout()->setContentsMargins(0,0,0,0);
     ui->sequencesListDockWidget->widget()->layout()->setContentsMargins(0,0,0,0);
 
+    /// exclusive theme action btns
+    ui->defaultThemeAction->setActionGroup(&m_cThemeGroup);
+    ui->darkThemeAction->setActionGroup(&m_cThemeGroup);
+
+    /// bitstream drop open accepted
     setAcceptDrops(true);
-    ModelLocator::getInstance();    ///init filters, etc..
+
+    /// model init, including filter loading, etc..
+    ModelLocator::getInstance();
+
+
+
 }
 
 MainWindow::~MainWindow()
@@ -182,8 +197,6 @@ void MainWindow::on_actionOpen_bitstream_triggered()
     cEvt.setParameter("filename", strFilename);
     cEvt.setParameter("skip_decode", false);
     cEvt.setParameter("version", cBitstreamDig.getBitstreamVersion());
-    cEvt.setParameter("decoder_folder", "decoders");
-    cEvt.setParameter("output_folder", "decoded_sequences");
     cEvt.dispatch();
 
 }
@@ -272,7 +285,10 @@ void MainWindow::dropEvent(QDropEvent *event)
     cEvt.setParameter("filename", strFilename);
     cEvt.setParameter("skip_decode", false);
     cEvt.setParameter("version", cBitstreamDig.getBitstreamVersion());
-    cEvt.setParameter("decoder_folder", "decoders");
-    cEvt.setParameter("output_folder", "decoded_sequences");
     cEvt.dispatch();
+}
+
+void MainWindow::on_actionPreferences_triggered()
+{
+    m_cPreferenceDialog.show();
 }

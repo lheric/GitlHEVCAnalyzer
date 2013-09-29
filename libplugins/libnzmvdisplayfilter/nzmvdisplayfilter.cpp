@@ -27,7 +27,7 @@ bool NZMVDisplayFilter::drawPU  (FilterContext* pcContext, QPainter* pcPainter,
     else if( iInterDir == 2 )  /// uni-directional prediction
     {
         /// Get MV of PU
-        pcMV = pcPU->getMVs().at(1);
+        pcMV = pcPU->getMVs().at(0);
         bNotZeroFME = xIsFractionalMV(pcMV);
 
     }

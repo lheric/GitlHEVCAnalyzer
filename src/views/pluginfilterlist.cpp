@@ -3,7 +3,8 @@
 #include "views/pluginfilteritem.h"
 #include "gitlivkcmdevt.h"
 #include <QVector>
-
+#include <QScrollBar>
+#include <QDebug>
 PluginFilterList::PluginFilterList(QWidget *parent) :
     QListWidget(parent)
 {
@@ -16,9 +17,13 @@ PluginFilterList::PluginFilterList(QWidget *parent) :
 
 void PluginFilterList::onUIUpdate(GitlUpdateUIEvt &rcEvt)
 {
+
     // rebuild the filter list
     if(rcEvt.hasParameter("filter_names") && rcEvt.hasParameter("filter_status") )
     {
+        int iVPos = verticalScrollBar()->value();
+        int iHPos = horizontalScrollBar()->value();
+
         this->clear();
         QStringList cFilterNames = rcEvt.getParameter("filter_names").toStringList();
         QVector<bool> cFilterEnableStatus = rcEvt.getParameter("filter_status").value< QVector<bool> >();
@@ -31,6 +36,10 @@ void PluginFilterList::onUIUpdate(GitlUpdateUIEvt &rcEvt)
             pcItem->setSizeHint(pItemWidget->sizeHint());
             setItemWidget(pcItem, pItemWidget);
         }
+
+        verticalScrollBar()->setValue(iVPos);
+        horizontalScrollBar()->setValue(iHPos);
     }
+
 }
 

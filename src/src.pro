@@ -68,7 +68,11 @@ SOURCES += main.cpp \
     commands/switchyuvcommand.cpp \
     commands/switchfiltercommand.cpp \
     model/common/comtu.cpp \
-    parsers/tuparser.cpp
+    parsers/tuparser.cpp \
+    model/preferences.cpp \
+    views/preferencedialog.cpp \
+    commands/modifypreferencescommand.cpp \
+    commands/querypreferencescommand.cpp
 
 HEADERS += \
     model/common/comsequence.h \
@@ -126,7 +130,11 @@ HEADERS += \
     commands/switchyuvcommand.h \
     commands/switchfiltercommand.h \
     model/common/comtu.h \
-    parsers/tuparser.h
+    parsers/tuparser.h \
+    model/preferences.h \
+    views/preferencedialog.h \
+    commands/modifypreferencescommand.h \
+    commands/querypreferencescommand.h
 
 #include & libs
 INCLUDEPATH += .\
@@ -149,7 +157,8 @@ FORMS += \
     views/aboutdialog.ui \
     views/pluginfilteritem.ui \
     views/sequencelist.ui \
-    views/sequencelistitem.ui
+    views/sequencelistitem.ui \
+    views/preferencedialog.ui
 
 #icon
 RC_FILE = resources/icons/appicon.rc

@@ -20,6 +20,8 @@
 #include "commands/configfiltercommand.h"
 #include "commands/reloadfilterscommand.h"
 #include "commands/switchfiltercommand.h"
+#include "commands/querypreferencescommand.h"
+#include "commands/modifypreferencescommand.h"
 
 
 SINGLETON_PATTERN_IMPLIMENT(AppFrontController)
@@ -47,6 +49,8 @@ s_sCmdTable[] =
     { "movedown_filter",  &FilterOrderDownCommand::staticMetaObject    },
     { "switch_filter",    &SwitchFilterCommand::staticMetaObject       },
     { "check_update",     &CheckUpdateCommand::staticMetaObject        },
+    { "modify_pref",      &ModifyPreferencesCommand::staticMetaObject  },
+    { "query_pref",       &QueryPreferencesCommand::staticMetaObject   },
     { "",                 NULL                                         }
 };
 

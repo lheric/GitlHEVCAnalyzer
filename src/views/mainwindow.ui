@@ -396,8 +396,23 @@
     </property>
     <addaction name="actionReloadPluginsFilters"/>
    </widget>
+   <widget class="QMenu" name="menuOptions">
+    <property name="title">
+     <string>OPTIONS</string>
+    </property>
+    <widget class="QMenu" name="menuThemes">
+     <property name="title">
+      <string>Themes</string>
+     </property>
+     <addaction name="defaultThemeAction"/>
+     <addaction name="darkThemeAction"/>
+    </widget>
+    <addaction name="actionPreferences"/>
+    <addaction name="menuThemes"/>
+   </widget>
    <addaction name="menuBitstream"/>
    <addaction name="menuPlugins"/>
+   <addaction name="menuOptions"/>
    <addaction name="menuHelp"/>
   </widget>
   <action name="actionOpen_bitstream">
@@ -431,6 +446,30 @@
   <action name="actionReloadPluginsFilters">
    <property name="text">
     <string>Reload Plugins Filters</string>
+   </property>
+  </action>
+  <action name="actionPreferences">
+   <property name="text">
+    <string>Preferences</string>
+   </property>
+  </action>
+  <action name="defaultThemeAction">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Default</string>
+   </property>
+  </action>
+  <action name="darkThemeAction">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Dark</string>
    </property>
   </action>
  </widget>

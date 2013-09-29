@@ -29,10 +29,25 @@ How To Build
 ============
 
 Written in C++ with Qt5
+You should get and install **Qt5.1.0 or higher**.
 
-Currently it can be built & run on Windows platform only
-Windows XP or later (32/64 bit)
+Linux:
+```bash
+git submodule update --init --recursive
+git submodule update --recursive 
+qmake -qt=qt5 GitlHEVCAnalyzer.pro -r "CONFIG+=Release"
+make
+```
 
+Windows:
+```bash
+git submodule update --init --recursive
+git submodule update --recursive 
+qmake GitlHEVCAnalyzer.pro -r "CONFIG+=Release"
+make
+```
+
+Instead of the building on the command line , Qt Creator is supported. Clone this project and its submodules, then open `GitlHEVCAnalyzer.pro` in Qt Creator.
 
 Contact Us
 ============
