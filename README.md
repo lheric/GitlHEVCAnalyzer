@@ -1,6 +1,8 @@
 Gitl HEVC Analyzer
 ==================
 
+[![Build Status](https://magnum.travis-ci.com/lheric/GitlHEVCAnalyzer.png?token=sr6pzQtq5MTKBqgLtNnz&branch=master)](https://magnum.travis-ci.com/lheric/GitlHEVCAnalyzer)
+
 Gitl HEVC Analyzer is a tool for bitstream analysis for HEVC.
 
 It is released under Apache License 2.0.
