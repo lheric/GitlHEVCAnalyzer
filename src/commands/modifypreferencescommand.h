@@ -8,7 +8,7 @@ class ModifyPreferencesCommand : public GitlAbstractCommand
 public:
     Q_INVOKABLE explicit ModifyPreferencesCommand(QObject *parent = 0);
 
-    bool execute(GitlCommandParameter &rcInputArg, GitlCommandParameter &rcOutputArg);
+    Q_INVOKABLE bool execute(GitlCommandParameter &rcInputArg, GitlCommandParameter &rcOutputArg);
 
 signals:
     

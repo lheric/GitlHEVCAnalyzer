@@ -15,19 +15,6 @@
 using namespace std;
 
 
-static bool xReadStylesheet()
-{
-    QFile cFile(":/UI/UI/style_sheet.qss");
-    if( !cFile.open(QFile::ReadOnly) )
-        return false;
-
-    QString strStyleSheet = QLatin1String(cFile.readAll());
-    qApp->setStyleSheet(strStyleSheet);
-    cFile.close();
-    return true;
-}
-
-
 static void xMessageOutput(QtMsgType type, const QMessageLogContext &context, const QString &strMsg)
 {
     QByteArray localMsg = strMsg.toLocal8Bit();
@@ -80,10 +67,7 @@ int main(int argc, char *argv[])
     /// Register Commands
     AppFrontController::getInstance();
 
-    /// Stylesheet
     QApplication cApp(argc, argv);
-    if( !xReadStylesheet())
-        qWarning() << "Stylesheet Loading Failed";  ///stylesheet
 
     /// Show main win
     MainWindow cMainWin;

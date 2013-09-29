@@ -26,6 +26,12 @@ PreferenceDialog::~PreferenceDialog()
 }
 
 
+void PreferenceDialog::showEvent(QShowEvent * event)
+{
+    GitlIvkCmdEvt cEvt("query_pref");
+    cEvt.dispatch();
+}
+
 void PreferenceDialog::on_buttonBox_accepted()
 {
     GitlIvkCmdEvt cEvt("modify_pref");

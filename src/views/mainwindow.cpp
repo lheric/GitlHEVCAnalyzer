@@ -5,6 +5,7 @@
 #include <QKeyEvent>
 #include <QDebug>
 #include <QMimeData>
+#include <QApplication>
 #include "model/modellocator.h"
 #include "commands/appfrontcontroller.h"
 #include "bitstreamversionselector.h"
@@ -92,6 +93,11 @@ void MainWindow::onUIUpdate(GitlUpdateUIEvt& rcEvt)
         }
         ui->progressBar->setValue(iPos);
 
+    }
+
+    if( rcEvt.hasParameter("theme_stylesheet") )
+    {
+        qApp->setStyleSheet(rcEvt.getParameter("theme_stylesheet").toString());
     }
 
 
@@ -292,3 +298,25 @@ void MainWindow::on_actionPreferences_triggered()
 {
     m_cPreferenceDialog.show();
 }
+
+void MainWindow::on_defaultThemeAction_triggered()
+{
+    GitlIvkCmdEvt cEvt("switch_theme");
+    cEvt.setParameter("theme_name", "default");
+    cEvt.dispatch();
+}
+
+void MainWindow::on_darkThemeAction_triggered()
+{
+    GitlIvkCmdEvt cEvt("switch_theme");
+    cEvt.setParameter("theme_name", "dark");
+    cEvt.dispatch();
+}
+
+void MainWindow::on_defaultThemeAction_toggled(bool arg1)
+{
+    GitlIvkCmdEvt cEvt("switch_theme");
+    cEvt.setParameter("theme_name", "dark");
+    cEvt.dispatch();
+}
+

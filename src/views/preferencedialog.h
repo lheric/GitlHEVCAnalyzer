@@ -17,6 +17,9 @@ public:
     
     virtual void onUIUpdate(GitlUpdateUIEvt &rcEvt);
 
+protected:
+    void showEvent(QShowEvent * event);
+
 private slots:
     void on_buttonBox_accepted();
 

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>228</width>
-    <height>29</height>
+    <width>233</width>
+    <height>37</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -92,15 +92,15 @@
     </widget>
    </item>
    <item>
-    <widget class="QPushButton" name="configBtn">
+    <widget class="QToolButton" name="configBtn">
      <property name="minimumSize">
       <size>
-       <width>50</width>
-       <height>0</height>
+       <width>0</width>
+       <height>20</height>
       </size>
      </property>
      <property name="text">
-      <string>config</string>
+      <string>CONFIG</string>
      </property>
     </widget>
    </item>

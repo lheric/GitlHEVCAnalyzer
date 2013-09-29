@@ -72,7 +72,8 @@ SOURCES += main.cpp \
     model/preferences.cpp \
     views/preferencedialog.cpp \
     commands/modifypreferencescommand.cpp \
-    commands/querypreferencescommand.cpp
+    commands/querypreferencescommand.cpp \
+    commands/switchthemecommand.cpp
 
 HEADERS += \
     model/common/comsequence.h \
@@ -134,7 +135,8 @@ HEADERS += \
     model/preferences.h \
     views/preferencedialog.h \
     commands/modifypreferencescommand.h \
-    commands/querypreferencescommand.h
+    commands/querypreferencescommand.h \
+    commands/switchthemecommand.h
 
 #include & libs
 INCLUDEPATH += .\

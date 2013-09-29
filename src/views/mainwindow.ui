@@ -472,6 +472,11 @@
     <string>Dark</string>
    </property>
   </action>
+  <action name="actionTest">
+   <property name="text">
+    <string>test</string>
+   </property>
+  </action>
  </widget>
  <customwidgets>
   <customwidget>

@@ -3,6 +3,7 @@
 #include <QString>
 #include <QDir>
 
+
 Preferences::Preferences() :
     m_cSettings(QSettings::IniFormat, QSettings::UserScope, "GITL", "Gitl_HEVC_Analyzer_Preferences")
 {
@@ -20,9 +21,12 @@ Preferences::Preferences() :
         m_cSettings.sync();
     }
 
-    m_strCacheFolder   = m_cSettings.value("cache_path").toString();
-    m_strDecoderFolder = m_cSettings.value("decoder_path").toString();
 
+    m_strCacheFolder   = m_cSettings.value("cache_path").toString();
+    xCreateIfNotExist(m_strCacheFolder);
+
+    m_strDecoderFolder = m_cSettings.value("decoder_path").toString();
+    xCreateIfNotExist(m_strDecoderFolder);
 
 }
 
@@ -39,4 +43,11 @@ void Preferences::setDecoderFolder(const QString& strDecoderFolder)
     m_strDecoderFolder = strDecoderFolder;
     m_cSettings.setValue("decoder_path", m_strDecoderFolder);
     m_cSettings.sync();
+}
+
+void Preferences::xCreateIfNotExist(QString strPath)
+{
+    QDir cFolder(strPath);
+    if(!cFolder.exists())
+        cFolder.mkpath(".");
 }

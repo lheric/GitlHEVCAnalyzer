@@ -18,5 +18,6 @@
         <file>UI/style_sheet.qss</file>
         <file>UI/treeview_arrow_down.png</file>
         <file>UI/treeview_arrow_right.png</file>
+        <file>UI/default.qss</file>
     </qresource>
 </RCC>
