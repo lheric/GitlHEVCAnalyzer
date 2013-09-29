@@ -10,9 +10,11 @@ It is released under Apache License 2.0.
 
 Screenshot
 ==========
+Windows:
+![Win](https://github.com/lheric/GitlHEVCAnalyzer/blob/master/screenshots/screenshoot_win.png?raw=true)
 
-![Win](https://github.com/lheric/GitlHEVCAnalyzer/blob/master/screenshots/screenshoot.png?raw=true)
-
+Linux:
+![Linux](https://github.com/lheric/GitlHEVCAnalyzer/blob/master/screenshots/screenshoot_linux.png?raw=true)
 
 Features
 ========
