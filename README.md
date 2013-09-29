@@ -11,7 +11,7 @@ It is released under Apache License 2.0.
 Screenshot
 ==========
 
-![Win](https://github.com/lheric/GitlHEVCAnalyzer/blob/master/screenshots/screenshoot_win.jpg)
+![Win](https://github.com/lheric/GitlHEVCAnalyzer/blob/master/screenshots/screenshoot.png?raw=true)
 
 
 Features
