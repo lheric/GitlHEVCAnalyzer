@@ -7,6 +7,13 @@ Gitl HEVC Analyzer is a tool for bitstream analysis for HEVC.
 
 It is released under Apache License 2.0.
 
+
+Screenshot
+==========
+
+![Win](https://github.com/lheric/GitlHEVCAnalyzer/blob/master/screenshots/screenshoot_win.jpg)
+
+
 Features
 ========
 
