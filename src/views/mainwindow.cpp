@@ -39,8 +39,10 @@ MainWindow::MainWindow(QWidget *parent) :
     /// model init, including filter loading, etc..
     ModelLocator::getInstance();
 
-
-
+    /// load theme from preferences
+    GitlIvkCmdEvt cEvt("switch_theme");
+    cEvt.setParameter("load_theme_from_pref", true);
+    cEvt.dispatch();
 }
 
 MainWindow::~MainWindow()
@@ -98,6 +100,12 @@ void MainWindow::onUIUpdate(GitlUpdateUIEvt& rcEvt)
     if( rcEvt.hasParameter("theme_stylesheet") )
     {
         qApp->setStyleSheet(rcEvt.getParameter("theme_stylesheet").toString());
+        QString strThemeName = rcEvt.getParameter("theme_name").toString();
+        qDebug() << strThemeName;
+        if(strThemeName == "default")
+            ui->defaultThemeAction->setChecked(true);
+        else if(strThemeName == "dark")
+            ui->darkThemeAction->setChecked(true);
     }
 
 
@@ -307,13 +315,6 @@ void MainWindow::on_defaultThemeAction_triggered()
 }
 
 void MainWindow::on_darkThemeAction_triggered()
-{
-    GitlIvkCmdEvt cEvt("switch_theme");
-    cEvt.setParameter("theme_name", "dark");
-    cEvt.dispatch();
-}
-
-void MainWindow::on_defaultThemeAction_toggled(bool arg1)
 {
     GitlIvkCmdEvt cEvt("switch_theme");
     cEvt.setParameter("theme_name", "dark");

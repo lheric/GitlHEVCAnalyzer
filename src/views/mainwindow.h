@@ -69,7 +69,6 @@ private slots:
 
     void on_darkThemeAction_triggered();
 
-    void on_defaultThemeAction_toggled(bool arg1);
 
 private:
     Ui::MainWindow *ui;

@@ -25,6 +25,8 @@ private slots:
 
     void on_buttonBox_rejected();
 
+    void on_cacheFolderBrowseBtn_clicked();
+
 private:
     Ui::PreferenceDialog *ui;
 };

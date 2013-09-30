@@ -1,6 +1,7 @@
 #include "preferencedialog.h"
 #include "ui_preferencedialog.h"
 #include "gitlivkcmdevt.h"
+#include <QFileDialog>
 PreferenceDialog::PreferenceDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::PreferenceDialog)
@@ -43,4 +44,13 @@ void PreferenceDialog::on_buttonBox_accepted()
 void PreferenceDialog::on_buttonBox_rejected()
 {
     this->hide();
+}
+
+void PreferenceDialog::on_cacheFolderBrowseBtn_clicked()
+{
+    QString strFolder=QFileDialog::getExistingDirectory(this,
+                                          tr("Select Cache Location"),
+                                          ui->cacheFolderEdit->text() );
+    if(!strFolder.isEmpty())
+        ui->cacheFolderEdit->setText(strFolder);
 }
