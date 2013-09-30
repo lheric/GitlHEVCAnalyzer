@@ -101,7 +101,6 @@ void MainWindow::onUIUpdate(GitlUpdateUIEvt& rcEvt)
     {
         qApp->setStyleSheet(rcEvt.getParameter("theme_stylesheet").toString());
         QString strThemeName = rcEvt.getParameter("theme_name").toString();
-        qDebug() << strThemeName;
         if(strThemeName == "default")
             ui->defaultThemeAction->setChecked(true);
         else if(strThemeName == "dark")
