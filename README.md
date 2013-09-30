@@ -15,9 +15,11 @@ Linux	(64 bit):    <a href="https://sourceforge.net/projects/gtilhevcanalyzer/">
 
 Screenshot
 ==========
+Windows:
+![Win](https://github.com/lheric/GitlHEVCAnalyzer/blob/master/screenshots/screenshoot_win.png?raw=true)
 
-![Win](https://github.com/lheric/GitlHEVCAnalyzer/blob/master/screenshots/screenshoot_win.jpg)
-
+Linux:
+![Linux](https://github.com/lheric/GitlHEVCAnalyzer/blob/master/screenshots/screenshoot_linux.png?raw=true)
 
 Features
 ========
