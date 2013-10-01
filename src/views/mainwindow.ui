@@ -111,9 +111,9 @@
     <number>1</number>
    </attribute>
    <widget class="QWidget" name="dockWidgetContents_5">
-    <layout class="QHBoxLayout" name="horizontalLayout_3">
+    <layout class="QVBoxLayout" name="verticalLayout_5">
      <item>
-      <widget class="MsgViewer" name="msgTextBrowser"/>
+      <widget class="MessageViewer" name="messageBrowser" native="true"/>
      </item>
     </layout>
    </widget>
@@ -485,11 +485,6 @@
    <header>views/frameview.h</header>
   </customwidget>
   <customwidget>
-   <class>MsgViewer</class>
-   <extends>QTextBrowser</extends>
-   <header location="global">views/msgviewer.h</header>
-  </customwidget>
-  <customwidget>
    <class>PluginFilterList</class>
    <extends>QListWidget</extends>
    <header>views/pluginfilterlist.h</header>
@@ -498,6 +493,12 @@
    <class>SequenceList</class>
    <extends>QListWidget</extends>
    <header>views/sequencelist.h</header>
+  </customwidget>
+  <customwidget>
+   <class>MessageViewer</class>
+   <extends>QWidget</extends>
+   <header>messageviewer.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources/>

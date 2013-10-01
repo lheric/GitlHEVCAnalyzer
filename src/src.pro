@@ -51,7 +51,6 @@ SOURCES += main.cpp \
     model/drawengine/filterloader.cpp \
     commands/printscreencommand.cpp \
     views/busydialog.cpp \
-    views/msgviewer.cpp \
     views/aboutdialog.cpp \
     commands/jumptopercentcommand.cpp \
     views/pluginfilterlist.cpp \
@@ -73,7 +72,8 @@ SOURCES += main.cpp \
     views/preferencedialog.cpp \
     commands/modifypreferencescommand.cpp \
     commands/querypreferencescommand.cpp \
-    commands/switchthemecommand.cpp
+    commands/switchthemecommand.cpp \
+    views/messageviewer.cpp
 
 HEADERS += \
     model/common/comsequence.h \
@@ -108,7 +108,6 @@ HEADERS += \
     model/drawengine/filterloader.h \
     commands/printscreencommand.h \
     views/busydialog.h \
-    views/msgviewer.h \
     views/aboutdialog.h \
     model/drawengine/abstractfilter.h \
     exceptions/nosequencefoundexception.h \
@@ -136,7 +135,8 @@ HEADERS += \
     views/preferencedialog.h \
     commands/modifypreferencescommand.h \
     commands/querypreferencescommand.h \
-    commands/switchthemecommand.h
+    commands/switchthemecommand.h \
+    views/messageviewer.h
 
 #include & libs
 INCLUDEPATH += .\
@@ -160,7 +160,8 @@ FORMS += \
     views/pluginfilteritem.ui \
     views/sequencelist.ui \
     views/sequencelistitem.ui \
-    views/preferencedialog.ui
+    views/preferencedialog.ui \
+    views/messageviewer.ui
 
 #icon
 RC_FILE = resources/icons/appicon.rc

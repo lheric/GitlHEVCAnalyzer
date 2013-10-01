@@ -20,16 +20,16 @@ static void xMessageOutput(QtMsgType type, const QMessageLogContext &context, co
     QByteArray localMsg = strMsg.toLocal8Bit();
     switch (type) {
     case QtDebugMsg:
-        fprintf(stdout, "[Info]: %s\n", localMsg.constData());
+        fprintf(stdout, "[Debug]: %s\n", localMsg.constData());
         break;
     case QtWarningMsg:
-        fprintf(stderr, "[Warn]: %s\n", localMsg.constData());
+        fprintf(stderr, "[Warn]: %s\n",  localMsg.constData());
         break;
     case QtCriticalMsg:
-        fprintf(stderr, "[Crit]: %s\n", localMsg.constData());
+        fprintf(stderr, "[Crit]: %s\n",  localMsg.constData());
         break;
     case QtFatalMsg:
-        fprintf(stderr, "[Fata]: %s\n", localMsg.constData());        
+        fprintf(stderr, "[Fata]: %s\n",  localMsg.constData());
     }
     fflush(stdout);
     fflush(stderr);
