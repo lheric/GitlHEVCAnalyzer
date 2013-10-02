@@ -497,7 +497,7 @@
   <customwidget>
    <class>MessageViewer</class>
    <extends>QWidget</extends>
-   <header>messageviewer.h</header>
+   <header>views/messageviewer.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

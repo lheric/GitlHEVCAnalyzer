@@ -5,7 +5,7 @@ Gitl HEVC Analyzer
 
 Gitl HEVC Analyzer is a tool for bitstream analysis for HEVC.
 
-It is released under Apache License 2.0. In addition, it's **NOT for commercial use**. If you want to use it for commercial purpose, please contact us. If you are not using it to develop weapons, produce or sell illegal drugs, and if you are not a terrorist, we will give your a commercial lisence for **free**.
+It is released under Apache License 2.0. In addition, it's **NOT for commercial use**. If you want to use it for commercial purpose, please contact us. If you are not using it to develop weapons, produce or sell illegal drugs, and if you are not a terrorist, we will give your a commercial version for **free**.
 
 If you are using it in academic institution, you can let us know and we will be happy to add you to the partner list.
 
