@@ -18,10 +18,10 @@ Windows (32/64 bit):
 
 Screenshot
 ==========
-Windows:
+Windows (Dark theme):
 ![Win](https://github.com/lheric/GitlHEVCAnalyzer/blob/master/screenshots/screenshoot_win.png?raw=true)
 
-Linux:
+Linux (Default theme):
 ![Linux](https://github.com/lheric/GitlHEVCAnalyzer/blob/master/screenshots/screenshoot_linux.png?raw=true)
 
 Features
