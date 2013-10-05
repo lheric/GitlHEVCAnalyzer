@@ -61,6 +61,7 @@ cd GitlHEVCAnalyzer
 git submodule update --init --recursive
 git submodule update --recursive
 ```
+
 3a. Build on linux:
 ```bash
 qmake -qt=qt5 GitlHEVCAnalyzer.pro -r "CONFIG+=Release"
