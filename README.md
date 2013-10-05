@@ -9,8 +9,10 @@ It is released under Apache License 2.0. In addition, it's **NOT for commercial 
 
 If you are using it in academic institution, you can let us know and we will be happy to add you to the partner list.
 
-Looking for binary?
-Windows (32/64 bit) / Linux	(64 bit):
+Looking for **binary**?
+
+Windows (32/64 bit):
+
 <a href="https://sourceforge.net/projects/gtilhevcanalyzer/">https://sourceforge.net/projects/gtilhevcanalyzer/</a>
 
 
@@ -48,18 +50,25 @@ How To Build
 Written in C++ with Qt5
 You should get and install **Qt5.1.0 or higher**.
 
-Linux:
+1.  Clone this repository.
 ```bash
+git clone https://github.com/lheric/GitlHEVCAnalyzer.git GitlHEVCAnalyzer
+```
+
+2.  Init & update the submodules.
+```bash
+cd GitlHEVCAnalyzer
 git submodule update --init --recursive
-git submodule update --recursive 
+git submodule update --recursive
+```
+3a. Build on linux:
+```bash
 qmake -qt=qt5 GitlHEVCAnalyzer.pro -r "CONFIG+=Release"
 make
 ```
 
-Windows:
+3b. Build on windows:
 ```bash
-git submodule update --init --recursive
-git submodule update --recursive 
 qmake GitlHEVCAnalyzer.pro -r "CONFIG+=Release"
 make
 ```

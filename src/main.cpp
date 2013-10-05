@@ -5,7 +5,6 @@
 #include <QDebug>
 #include <iostream>
 #include <QTextCodec>
-//#include <winsparkle.h>
 #include "gitlevent.h"
 #include "model/modellocator.h"
 #include "views/mainwindow.h"
@@ -45,24 +44,11 @@ static void xMessageOutput(QtMsgType type, const QMessageLogContext &context, co
 
 }
 
-//void xCheckUpdate()
-//{
-//    win_sparkle_set_appcast_url("http://winsparkle.org/example/appcast.xml");   //TODO
-//    win_sparkle_init();
-//}
-
-//void xCleanUpdate()
-//{
-//    win_sparkle_cleanup();
-//}
 
 int main(int argc, char *argv[])
 {
     /// intall message handler
     qInstallMessageHandler(xMessageOutput);
-
-    /// check update
-    //xCheckUpdate();
 
     /// Register Commands
     AppFrontController::getInstance();
@@ -77,8 +63,6 @@ int main(int argc, char *argv[])
     ModelLocator::getInstance();                    /// init model
     cApp.exec();
 
-    /// clean update
-    //xCleanUpdate();
 
     return EXIT_SUCCESS;
 

@@ -6,16 +6,20 @@
 #include <QDir>
 #include <QFileInfo>
 #include <QDebug>
+#include <QApplication>
 
-BitstreamParser::BitstreamParser(QObject *parent)
+BitstreamParser::BitstreamParser(QObject *parent):
+    m_cDecoderProcess(this)
 {
     connect(&m_cDecoderProcess, SIGNAL(readyReadStandardOutput()), this, SLOT(displayDecoderOutput()));
+    connect(qApp, SIGNAL(aboutToQuit()), &m_cDecoderProcess, SLOT(kill()));
+    //connect
 }
 
 BitstreamParser::~BitstreamParser()
 {
     m_cDecoderProcess.kill();
-    m_cDecoderProcess.waitForFinished();
+    //m_cDecoderProcess.waitForFinished();
 }
 
 
@@ -65,11 +69,13 @@ bool BitstreamParser::parseFile(QString strDecoderFolder,
     QString strStandardOutputFile = strOutputPath+"/decoder_general.txt";
     m_cStdOutputFile.setFileName(strStandardOutputFile);
     m_cStdOutputFile.open(QIODevice::WriteOnly);
-    QString strDecoderCmd = strDecoderPath + QString(" -b %1 -o decoder_yuv.yuv").arg(strBitstreamFilePath);
+    QString strDecoderCmd = strDecoderPath + QString(" -b \"%1\" -o decoder_yuv.yuv").arg(strBitstreamFilePath);
     qDebug() << strDecoderCmd;
 
     m_cDecoderProcess.start(strDecoderCmd);
+    /// wait for end/cancel
     m_cDecoderProcess.waitForFinished(-1);
+
     m_cStdOutputFile.close();
 
     pcSequence->setFileName(strBitstreamFilePath);

@@ -124,7 +124,7 @@ bool DecodeBitstreamCommand::execute( GitlCommandParameter& rcInputArg, GitlComm
         cCUPUFile.close();
         qDebug() << "CU&PU file parsing finished";
     }
-    /// TODO Parse deocder_tu.txt
+    /// Parse deocder_tu.txt
     QString strTUFilename = strDecoderOutputPath + "/decoder_tu.txt";
     if( bSuccess )
     {

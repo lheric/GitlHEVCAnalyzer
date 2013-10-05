@@ -10,7 +10,6 @@
 #include "parsers/encodergeneralparser.h"
 #include "parsers/decodergeneralparser.h"
 #include "parsers/cupuparser.h"
-#include "parsers/meparser.h"
 #include "exceptions/nosequencefoundexception.h"
 /*!
  * \brief The SequenceManager class

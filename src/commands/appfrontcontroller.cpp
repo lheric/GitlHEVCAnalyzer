@@ -26,6 +26,7 @@
 
 SINGLETON_PATTERN_IMPLIMENT(AppFrontController)
 
+/// command <string,class> pair
 static struct
 {
     char* strCommandName;

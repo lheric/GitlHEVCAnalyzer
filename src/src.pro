@@ -10,7 +10,9 @@ QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = analyzer
+TARGET = Gitl_HEVC_Analyzer
+
+DESTDIR = $${OUT_PWD}/..
 
 # c++11 enalbed
 CONFIG += c++11
@@ -28,7 +30,6 @@ SOURCES += main.cpp \
     model/drawengine/drawengine.cpp \
     views/mainwindow.cpp \
     model/io/ioyuv.cpp \
-    parsers/meparser.cpp \
     model/modellocator.cpp \
     commands/nextframecommand.cpp \
     commands/prevframecommand.cpp \
@@ -85,7 +86,6 @@ HEADERS += \
     model/drawengine/drawengine.h \
     views/mainwindow.h \
     model/io/ioyuv.h \
-    parsers/meparser.h \
     model/modellocator.h \    
     commands/nextframecommand.h \
     commands/prevframecommand.h \
