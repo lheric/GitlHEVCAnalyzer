@@ -1,7 +1,7 @@
 Gitl HEVC Analyzer
 ==================
 
-[![Build Status](https://travis-ci.org/lheric/GITLHEVCAnalyzer.png?branch=master)](https://travis-ci.org/lheric/GITLHEVCAnalyzer)
+[![Build Status](https://travis-ci.org/lheric/GitlHEVCAnalyzer.png?branch=master)](https://travis-ci.org/lheric/GitlHEVCAnalyzer)
 
 Gitl HEVC Analyzer is a tool for bitstream analysis for HEVC.
 
