@@ -1,6 +1,6 @@
 #include "intraparser.h"
 #include <QRegExp>
-
+#include <QDebug>
 IntraParser::IntraParser(QObject *parent) :
     QObject(parent)
 {
@@ -59,12 +59,14 @@ bool IntraParser::xReadIntraMode(QTextStream* pcCUInfoStream, ComCU* pcCU)
     else
     {
         /// leaf node : read data
-        int iIntraDir;
+        int iIntraDirLuma;
+        int iIntraDirChroma;
         for(int i = 0; i < pcCU->getPUs().size(); i++)
         {
             Q_ASSERT(pcCUInfoStream->atEnd()==false);
-            *pcCUInfoStream >> iIntraDir;
-            pcCU->getPUs().at(i)->setIntraDirLuma(iIntraDir);
+            *pcCUInfoStream >> iIntraDirLuma >> iIntraDirChroma;
+            pcCU->getPUs().at(i)->setIntraDirLuma(iIntraDirLuma);
+            pcCU->getPUs().at(i)->setIntraDirChroma(iIntraDirChroma);
         }
     }
     return true;

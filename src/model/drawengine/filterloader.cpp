@@ -285,10 +285,12 @@ void FilterLoader::xReadAndSortFilters()
     /// sorting
     for (int i = 0; i < cLastOrder.size(); ++i)
     {
+        bool bFound = false;
         for(int j = 0; j < m_apcFilters.size(); j++)
         {
             if(m_apcFilters.at(j)->getName() == cLastOrder.at(i))
             {
+                bFound = true;
                 /// swap position i & j
                 AbstractFilter* tempFilter = m_apcFilters.at(i);
                 m_apcFilters.replace(i, m_apcFilters.at(j));
@@ -298,6 +300,12 @@ void FilterLoader::xReadAndSortFilters()
                 m_apcPluginLoaders.replace(i, m_apcPluginLoaders.at(j));
                 m_apcPluginLoaders.replace(j, tempLoader);
             }
+
+        }
+        if(bFound == false) /// earse the filters that are missing
+        {
+            cLastOrder.erase(cLastOrder.begin()+i);
+            i--;
         }
     }
 
