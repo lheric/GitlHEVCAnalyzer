@@ -46,7 +46,7 @@ bool IntraDisplayFilter::drawPU   (FilterContext* pcContext, QPainter* pcPainter
         pcPainter->setClipRect(*pcScaledArea, Qt::ReplaceClip);
         pcPainter->setClipping(true);
 
-        if(iIntraDir == 0)  /// PLANAR
+        if(iIntraDir == 0)      /// PLANAR
         {
             pcPainter->drawEllipse(pcScaledArea->center(), pcScaledArea->width()/2, pcScaledArea->width()/2);
         }
@@ -54,7 +54,7 @@ bool IntraDisplayFilter::drawPU   (FilterContext* pcContext, QPainter* pcPainter
         {
             pcPainter->drawEllipse(pcScaledArea->topLeft(), pcScaledArea->width()/2, pcScaledArea->width()/2);
         }
-        else if(iIntraDir >= 2 && iIntraDir <= 34)      /// Angular
+        else if(iIntraDir >= 2 && iIntraDir <= 34)  /// Angular
         {
             double dRotation = -s_aiIntraRotation[iIntraDir];
             int iLength = pcScaledArea->width();
