@@ -20,9 +20,9 @@ Windows (32/64 bit):
 Why Gitl HEVC Analyzer
 ======================
 
-First, almost all the commercial HEVC analyzer is too expensive for us.
+First, all the commercial HEVC analyzers are too expensive for us.
 
-Second, we need to draw additional grphics on the analysis result. It supports custom filters.
+Second, we need to draw additional grphics on the analysis results. It supports custom filters. In fact, all the features are implemented via custom filters.
 
 
 Screenshot
