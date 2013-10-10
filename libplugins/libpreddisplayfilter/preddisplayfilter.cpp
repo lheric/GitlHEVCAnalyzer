@@ -4,7 +4,7 @@
 PredDisplayFilter::PredDisplayFilter(QObject *parent) :
     QObject(parent)
 {
-    setName("Pred Type Structure");
+    setName("Pred Type Display");
 }
 
 
