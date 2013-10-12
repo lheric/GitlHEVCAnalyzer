@@ -31,9 +31,6 @@ Preferences::Preferences() :
     m_strCacheFolder   = m_cSettings.value("cache_path").toString();
     xCreateIfNotExist(m_strCacheFolder);
 
-    m_strDecoderFolder = m_cSettings.value("decoder_path").toString();
-    xCreateIfNotExist(m_strDecoderFolder);
-
     m_strThemeName     = m_cSettings.value("theme_name").toString();
 
 }
@@ -43,13 +40,6 @@ void Preferences::setCacheFolder(const QString& strCacheFolder)
 {
     m_strCacheFolder = strCacheFolder;
     m_cSettings.setValue("cache_path", m_strCacheFolder);
-    m_cSettings.sync();
-}
-
-void Preferences::setDecoderFolder(const QString& strDecoderFolder)
-{
-    m_strDecoderFolder = strDecoderFolder;
-    m_cSettings.setValue("decoder_path", m_strDecoderFolder);
     m_cSettings.sync();
 }
 

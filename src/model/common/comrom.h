@@ -5,7 +5,7 @@
 extern QSettings g_cAppSetting;
 
 
-#define ANALYZER_VERSION "1.0.0"    ///< version number
+#define ANALYZER_VERSION "1.1.0"    ///< version number
 
 
 #endif // COMROM_H

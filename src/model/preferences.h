@@ -19,14 +19,12 @@ public:
 
 
     void setCacheFolder(const QString& strCacheFolder);
-    void setDecoderFolder(const QString& strDecoderFolder);
     void setThemeName(const QString& strThemeName);
 
 protected:
     void xCreateIfNotExist(QString strPath);
 
     ADD_CLASS_FIELD_NOSETTER(QString, strCacheFolder, getCacheFolder)       /// for temp decoded sequences
-    ADD_CLASS_FIELD_NOSETTER(QString, strDecoderFolder, getDecoderFolder)   /// decoder location
     ADD_CLASS_FIELD_NOSETTER(QString, strThemeName, getThemeName)           /// theme name
 
     ADD_CLASS_FIELD_PRIVATE(QSettings, cSettings)    /// for save onto disk

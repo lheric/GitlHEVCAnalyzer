@@ -104,7 +104,22 @@ Void TComPic::destroy()
     delete m_apcPicYuv[1];
     m_apcPicYuv[1]  = NULL;
   }
-  
+
+#if ENABLE_ANAYSIS_OUTPUT
+  if(m_pcPicYuvPred)
+  {
+    m_pcPicYuvPred->destroy();
+    delete m_pcPicYuvPred;
+    m_pcPicYuvPred = NULL;
+  }
+
+  if(m_pcPicYuvResi)
+  {
+    m_pcPicYuvResi->destroy();
+    delete m_pcPicYuvResi;
+    m_pcPicYuvResi = NULL;
+  }
+#endif
   delete m_SEIs;
 }
 
