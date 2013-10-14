@@ -66,11 +66,13 @@ bool CUPUParser::parseFile(QTextStream* pcInputStream, ComSequence* pcSequence)
             if( xReadInCUMode( &cCUInfoStream, pcLCU ) == false )
                 return false;
             pcFrame->getLCUs().push_back(pcLCU);
-        }
+        }        
+
+        /// sort LCU in ascendning order
+        qSort(pcFrame->getLCUs().begin(), pcFrame->getLCUs().end(), xCUSortingOrder);
 
     }
 
-    qSort(pcFrame->getLCUs().begin(), pcFrame->getLCUs().end(), xCUSortingOrder);
 
     return true;
 }
