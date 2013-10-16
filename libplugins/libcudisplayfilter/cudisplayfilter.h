@@ -2,7 +2,7 @@
 #define CUDISPLAYFILTER_H
 #include "model/drawengine/abstractfilter.h"
 #include <QObject>
-
+#include <QPen>
 class CUDisplayFilter : public QObject, public AbstractFilter
 {
     Q_OBJECT
@@ -12,11 +12,18 @@ public:
     explicit CUDisplayFilter(QObject *parent = 0);
     virtual bool config   (FilterContext* pcContext);
 
+    virtual bool drawCTU  (FilterContext *pcContext, QPainter *pcPainter,
+                           ComCU *pcCTU, double dScale, QRect *pcScaledArea);
+
     virtual bool drawCU   (FilterContext* pcContext, QPainter* pcPainter,
                            ComCU *pcCU, double dScale,  QRect* pcScaledArea);
 
 signals:
     ADD_CLASS_FIELD_PRIVATE(bool, bShowPU)
+
+    ADD_CLASS_FIELD_PRIVATE(QPen, cLCUPen)
+    ADD_CLASS_FIELD_PRIVATE(QPen, cCUPen)
+    ADD_CLASS_FIELD_PRIVATE(QPen, cPUPen)
     
 public slots:
     

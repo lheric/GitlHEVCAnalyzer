@@ -35,7 +35,6 @@ bool IntraDisplayFilter::drawPU   (FilterContext* pcContext, QPainter* pcPainter
     /// Draw PU Rect
     pcPainter->setBrush(Qt::NoBrush);
     pcPainter->setPen(QColor(255,255,255,128));
-    pcPainter->drawRect(*pcScaledArea);
 
     /// Draw intra mode
     if(pcPU->getPredMode() == MODE_INTRA)
@@ -48,11 +47,11 @@ bool IntraDisplayFilter::drawPU   (FilterContext* pcContext, QPainter* pcPainter
 
         if(iIntraDir == 0)      /// PLANAR
         {
-            pcPainter->drawEllipse(pcScaledArea->center(), pcScaledArea->width()/2, pcScaledArea->width()/2);
+            pcPainter->drawEllipse(pcScaledArea->center(), pcScaledArea->width()/2-1, pcScaledArea->width()/2-1);
         }
         else if(iIntraDir == 1) /// DC
         {
-            pcPainter->drawEllipse(pcScaledArea->topLeft(), pcScaledArea->width()/2, pcScaledArea->width()/2);
+            pcPainter->drawEllipse(pcScaledArea->topLeft(), pcScaledArea->width()/2-1, pcScaledArea->width()/2-1);
         }
         else if(iIntraDir >= 2 && iIntraDir <= 34)  /// Angular
         {

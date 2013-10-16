@@ -5,6 +5,19 @@ MVDisplayFilter::MVDisplayFilter(QObject *parent) :
 {
     setName("MV Display");
     m_bShowRefPOC = false;
+
+    /// MV pen
+    m_cPenL0.setColor(QColor(Qt::blue));
+    m_cPenL1.setColor(QColor(Qt::red));
+
+    /// text pen
+    m_cPenText.setColor(QColor(Qt::yellow));
+
+    /// circle filling
+    m_cCircleL0Fill.setStyle(Qt::SolidPattern);
+    m_cCircleL0Fill.setColor(QColor(Qt::blue));
+    m_cCircleL1Fill.setStyle(Qt::SolidPattern);
+    m_cCircleL1Fill.setColor(QColor(Qt::red));
 }
 
 bool MVDisplayFilter::config  (FilterContext* pcContext)
@@ -33,8 +46,9 @@ bool MVDisplayFilter::drawPU  (FilterContext* pcContext, QPainter* pcPainter,
     {
         /// Get MV of PU
         pcMV = pcPU->getMVs().at(0);
-
-        pcPainter->setPen(QColor(Qt::blue));
+        pcPainter->setPen(m_cPenL0);
+        pcPainter->setBrush(m_cCircleL0Fill);
+        pcPainter->drawEllipse((QPointF)cCenter, 1.5, 1.5);
         pcPainter->drawLine(cCenter, cCenter+QPoint(pcMV->getHor(),pcMV->getVer())*dScale/4);
 
         if(m_bShowRefPOC)
@@ -46,7 +60,9 @@ bool MVDisplayFilter::drawPU  (FilterContext* pcContext, QPainter* pcPainter,
         /// Get MV of PU
         pcMV = pcPU->getMVs().at(0);
 
-        pcPainter->setPen(QColor(Qt::red));
+        pcPainter->setPen(m_cPenL1);
+        pcPainter->setBrush(m_cCircleL1Fill);
+        pcPainter->drawEllipse((QPointF)cCenter, 1.5, 1.5);
         pcPainter->drawLine(cCenter, cCenter+QPoint(pcMV->getHor(),pcMV->getVer())*dScale/4);
 
         if(m_bShowRefPOC)
@@ -57,12 +73,16 @@ bool MVDisplayFilter::drawPU  (FilterContext* pcContext, QPainter* pcPainter,
     {
         /// Get MV of PU ( first direction )
         pcMV = pcPU->getMVs().at(0);
-        pcPainter->setPen(QColor(Qt::blue));
+        pcPainter->setPen(m_cPenL0);
+        pcPainter->setBrush(m_cCircleL0Fill);
+        pcPainter->drawEllipse((QPointF)cCenter, 1.5, 1.5);
         pcPainter->drawLine(cCenter, cCenter+QPoint(pcMV->getHor(),pcMV->getVer())*dScale/4);
 
         /// Get MV of PU ( second direction)
         pcMV = pcPU->getMVs().at(1);
-        pcPainter->setPen(QColor(Qt::red));
+        pcPainter->setPen(m_cPenL1);
+        pcPainter->setBrush(m_cCircleL1Fill);
+        pcPainter->drawEllipse((QPointF)cCenter, 1.5, 1.5);
         pcPainter->drawLine(cCenter, cCenter+QPoint(pcMV->getHor(),pcMV->getVer())*dScale/4);
 
         if(m_bShowRefPOC)

@@ -5,6 +5,21 @@ CUDisplayFilter::CUDisplayFilter(QObject *parent) :
 {
     setName("CU Structure");
     m_bShowPU = true;
+
+    /// init lcu pen
+    m_cLCUPen.setStyle(Qt::SolidLine);
+    m_cLCUPen.setWidth(2);
+    m_cLCUPen.setBrush(QBrush(QColor(255,255,255,255)));
+
+    /// init cu pen
+    m_cCUPen.setStyle(Qt::SolidLine);
+    m_cCUPen.setWidth(1);
+    m_cCUPen.setBrush(QBrush(QColor(255,255,255,128)));
+
+    /// init pu pen
+    m_cPUPen.setStyle(Qt::DashLine);
+    m_cPUPen.setWidth(1);
+    m_cPUPen.setBrush(QBrush(QColor(255,255,255,128)));
 }
 
 bool CUDisplayFilter::config   (FilterContext* pcContext)
@@ -14,27 +29,27 @@ bool CUDisplayFilter::config   (FilterContext* pcContext)
 }
 
 
+bool CUDisplayFilter::drawCTU  (FilterContext *pcContext, QPainter *pcPainter,
+                                ComCU *pcCTU, double dScale, QRect *pcScaledArea)
+{
+    pcPainter->setBrush(Qt::NoBrush);
+    pcPainter->setPen(m_cLCUPen);
+    pcPainter->drawRect(*pcScaledArea);
+    return true;
+}
+
 bool CUDisplayFilter::drawCU   (FilterContext* pcContext, QPainter* pcPainter,
                                 ComCU *pcCU, double dScale,  QRect* pcScaledArea)
 {
-    /// Scaled CU Area
-//    QPoint cLeftTop(iCUX*dScale+0.5, iCUY*dScale+0.5);
-//    QPoint cBottomRight((iCUX+iCUSize)*dScale-0.5, (iCUY+iCUSize)*dScale-0.5);
-//    QRect cCUArea(cLeftTop, cBottomRight);
-
     /// Draw CU Rect
     pcPainter->setBrush(Qt::NoBrush);
-    pcPainter->setPen(QColor(255,255,255,128));
+    pcPainter->setPen(m_cCUPen);
     pcPainter->drawRect(*pcScaledArea);
 
     /// Draw PU
     if(m_bShowPU)
     {
-        QPen cPen;
-        cPen.setStyle(Qt::DashLine);
-        cPen.setWidth(1);
-        cPen.setBrush(QBrush(QColor(255,255,255,128)));
-        pcPainter->setPen(cPen);
+        pcPainter->setPen(m_cPUPen);
 
         PartSize ePartSize = pcCU->getPartSize();
 
