@@ -43,7 +43,6 @@ For historical reasons, besides formal HEVC bitstream, it also supports bitstrea
 <ul>
     <li>Custom Plugins Support</li>
     <li>Zoom In/Out Details</li>
-    <li>Bitsteam Comparison (Under Development)</li> 
     <li>Predition Type Display</li>
     <li>Coding Unit (CU) Display</li>
     <li>Predition Unit (PU) Display</li>
@@ -54,11 +53,17 @@ For historical reasons, besides formal HEVC bitstream, it also supports bitstrea
 
 <a href="http://gitl.sysu.edu.cn">Intelligent Information Processing Lab</a> 
 
+Road Map
+========
+- [ ] GOP Structure Graph
+- [ ] 10 Bit YUV Support
+- [ ] Bitsteam Comparison 
+
 How To Build
 ============
 
 Written in C++ with Qt5
-You should get and install **Qt5.1.0 or higher**.
+You should get and install **Qt 5.1.0 or higher**.
 
 1.  Clone this repository.
 ```bash
