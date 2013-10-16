@@ -23,12 +23,21 @@ public:
     ADD_CLASS_FIELD(ComSequence*, pcSequence, getSequence, setSequence)
     ADD_CLASS_FIELD(int, iPoc, getPoc, setPoc)
 
+    /*! L0 & L1 & LC*/
+    ADD_CLASS_FIELD_NOSETTER(QVector<int>, aiL0List, getL0List )
+    ADD_CLASS_FIELD_NOSETTER(QVector<int>, aiL1List, getL1List )
+    ADD_CLASS_FIELD_NOSETTER(QVector<int>, aiLCList, getLCList )
+
+
+    /*! Decoding time comsumed*/
+    ADD_CLASS_FIELD(double, dTotalDecTime, getTotalDecTime, setTotalDecTime)
+
     /*! Obsolescent
      */
     ADD_CLASS_FIELD(double, dPSNR, getPSNR, setPSNR)
     ADD_CLASS_FIELD(double, dBitrate, getBitrate, setBitrate)
     ADD_CLASS_FIELD(double, dTotalEncTime, getTotalEncTime, setTotalEncTime)
-    ADD_CLASS_FIELD(double, dTotalDecTime, getTotalDecTime, setTotalDecTime)
+
 
 
 };

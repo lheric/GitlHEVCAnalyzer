@@ -49,7 +49,7 @@ For historical reasons, besides formal HEVC bitstream, it also supports bitstrea
     <li>Predition Unit (PU) Display</li>
     <li>Transform Unit (TU) Display</li>
     <li>Motion Vectors (MV) Display</li>
-    <li>Intra Mode Display (Angular, DC, Planar)</li>    
+    <li>Intra Mode (Angular, DC, Planar) Display</li>    
 </ul>
 
 <a href="http://gitl.sysu.edu.cn">Intelligent Information Processing Lab</a> 

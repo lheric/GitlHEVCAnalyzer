@@ -31,6 +31,12 @@ public:
     virtual bool drawFrame(QPainter* pcPainter, ComFrame *pcFrame, double dScale,  QRect* pcScaledArea);
 
     /*!
+     * \brief reinitAllFilters reinit all filters
+     * \return
+     */
+    virtual bool reinitAllFilters();
+
+    /*!
      * \brief reloadAllFilters reload filters in the directory
      * \return
      */
@@ -87,6 +93,9 @@ protected:
      * \brief xReadAndSortFilters sort filters according to loaded configurations (previous saved qsettings)
      */
     void xReadAndSortFilters();
+
+    void xPrepareFilterContext();
+
 
     /*!
      * Plugin Directory

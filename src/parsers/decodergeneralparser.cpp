@@ -1,5 +1,7 @@
 #include "decodergeneralparser.h"
 #include <QRegExp>
+#include <QTextStream>
+#include <QDebug>
 
 /// for frame sorting in POC ascending order
 static bool xFrameSortingOrder(const ComFrame* pcFrameFirst, const ComFrame* pcFrameSecond)
@@ -11,6 +13,18 @@ static bool xFrameSortingOrder(const ComFrame* pcFrameFirst, const ComFrame* pcF
 DecoderGeneralParser::DecoderGeneralParser(QObject *parent) :
     QObject(parent)
 {
+}
+
+static void readIntArray(QVector<int>* paiArr, QString* pstrArrStr)
+{
+    QString strTrimmed = pstrArrStr->trimmed();
+    QTextStream strTextStream(&strTrimmed);
+    int iPOC;
+    while(!strTextStream.atEnd())
+    {
+        strTextStream >> iPOC;
+        paiArr->push_back(iPOC);
+    }
 }
 
 bool DecoderGeneralParser::parseFile(QTextStream* pcInputStream, ComSequence* pcSequence)
@@ -37,7 +51,7 @@ bool DecoderGeneralParser::parseFile(QTextStream* pcInputStream, ComSequence* pc
     // read one frame
 
     ComFrame *pcFrame = NULL;
-    cMatchTarget.setPattern("POC *([0-9]+).*\\[DT *([0-9.]+) *\\]");
+    cMatchTarget.setPattern("POC *([0-9]+).*\\[DT *([0-9.]+) *\\] \\[L0(( [0-9]+){0,}) \\] \\[L1(( [0-9]+){0,}) \\] (\\[LC(( [0-9]+){0,}) \\])?");
     pcInputStream->readLine();///< Skip a empty line
     while( !pcInputStream->atEnd() )
     {
@@ -50,8 +64,18 @@ bool DecoderGeneralParser::parseFile(QTextStream* pcInputStream, ComSequence* pc
         }
         if( cMatchTarget.indexIn(strOneLine) != -1 ) {
             pcFrame = new ComFrame(pcSequence);
+
+            /// POC & Decoding time
             pcFrame->setPoc(cMatchTarget.cap(1).toInt());
             pcFrame->setTotalDecTime(cMatchTarget.cap(2).toDouble());
+
+            /// L0 L1 LC
+            QString strL0, strL1, strLC;
+            strL0 = cMatchTarget.cap(3); strL1 = cMatchTarget.cap(5); strLC = cMatchTarget.cap(7);
+            readIntArray(&pcFrame->getL0List(), &strL0);
+            readIntArray(&pcFrame->getL1List(), &strL1);
+            readIntArray(&pcFrame->getLCList(), &strLC);
+
             pcSequence->getFrames().push_back(pcFrame);
 
 

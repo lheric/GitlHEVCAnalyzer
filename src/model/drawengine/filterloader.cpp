@@ -16,6 +16,18 @@ FilterLoader::~FilterLoader()
 {
 }
 
+
+bool FilterLoader::reinitAllFilters()
+{
+    xPrepareFilterContext();
+    for(int i = 0; i < m_apcFilters.size(); i++)
+    {
+        m_apcFilters[i]->uninit(&m_cFilterContext);
+        m_apcFilters[i]->init(&m_cFilterContext);
+    }
+    return true;
+}
+
 bool FilterLoader::reloadAllFilters()
 {
     unloadAllFilters();
@@ -56,9 +68,9 @@ bool FilterLoader::reloadAllFilters()
     xReadAndSortFilters();
 
     /// init each filter
+    xPrepareFilterContext();
     for(int i = 0; i < m_apcFilters.size(); i++)
     {
-
         if( m_apcFilters[i]->init(&m_cFilterContext) == false )
             qWarning() << QString("Plugin Filter %1 Init Failed!").arg(m_apcFilters[i]->getName());
     }
@@ -310,6 +322,17 @@ void FilterLoader::xReadAndSortFilters()
     }
 
 }
+
+void FilterLoader::xPrepareFilterContext()
+{
+    /// prepare filter context
+    ModelLocator* pModel = ModelLocator::getInstance();
+    m_cFilterContext.pcBuffer = &pModel->getFrameBuffer();
+    m_cFilterContext.pcDrawEngine = &pModel->getDrawEngine();
+    m_cFilterContext.pcFilterLoader = &pModel->getDrawEngine().getFilterLoader();
+    m_cFilterContext.pcSequenceManager = &pModel->getSequenceManager();
+}
+
 
 void FilterLoader::saveFilterOrder()
 {

@@ -19,7 +19,7 @@ QPixmap* DrawEngine::drawFrame( ComSequence* pcSequence, int iPoc, QPixmap *pcPi
     QPainter cPainter(&m_cDrawnPixmap);
 
     /***********************************************************************
-     *               Following is for drawing filters                      *
+     *               Followings are for drawing filters                    *
      ***********************************************************************/
     /// draw TU
     for( int iAddr = 0; iAddr < iLCUTotalNum; iAddr++ )

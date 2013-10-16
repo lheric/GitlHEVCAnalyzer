@@ -14,7 +14,10 @@ bool SwitchSequenceCommand::execute( GitlCommandParameter& rcInputArg, GitlComma
         bIs16Bit = rcInputArg.getParameter("is_16_bit").toBool();
     }
 
-    QString strYUVFilename = rcInputArg.getParameter("YUV_filename").toString();
+    QString strYUVFilename = "decoder_yuv.yuv";
+    if(rcInputArg.hasParameter("YUV_filename"))
+        strYUVFilename = rcInputArg.getParameter("YUV_filename").toString();
+
     ComSequence* pcSequence = (ComSequence*)(rcInputArg.getParameter("sequence").value<void*>());
     ModelLocator* pModel = ModelLocator::getInstance();
     pModel->getSequenceManager().setCurrentSequence(pcSequence);
@@ -31,6 +34,9 @@ bool SwitchSequenceCommand::execute( GitlCommandParameter& rcInputArg, GitlComma
     iPoc = VALUE_CLIP(iMinPoc, iMaxPoc, iPoc);
 
     QPixmap* pcFramePixmap = pModel->getFrameBuffer().getFrame(iPoc);       ///< Read Frame Buffer
+
+    /// re-load & re-init filters
+    pModel->getDrawEngine().getFilterLoader().reinitAllFilters();
     pcFramePixmap = pModel->getDrawEngine().drawFrame(&(pModel->getSequenceManager().getCurrentSequence()), iPoc, pcFramePixmap);  ///< Draw Frame Buffer
 
     ///

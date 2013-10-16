@@ -37,6 +37,7 @@ public:
     /*! Decoded File Location */
     ADD_CLASS_FIELD( QString, strDeocdingFolder, getDecodingFolder, setDecodingFolder)
 
+
     /*!
      * Optional info
      * Obsolescent

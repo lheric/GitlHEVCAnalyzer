@@ -11,6 +11,7 @@
 #include "parsers/intraparser.h"
 #include "exceptions/decodingfailexception.h"
 #include "gitlupdateuievt.h"
+#include "gitlivkcmdevt.h"
 #include <QDir>
 
 
@@ -200,32 +201,12 @@ bool DecodeBitstreamCommand::execute( GitlCommandParameter& rcInputArg, GitlComm
     }
 
     ///*****STEP 3 : Open decoded YUV sequence*****
+
     pModel->getSequenceManager().addSequence(pcSequence);
-    pModel->getSequenceManager().setCurrentSequence(pcSequence);
-
-    QString strYUVFilename = strDecoderOutputPath + "/decoder_yuv.yuv";
-    int iWidth  = pModel->getSequenceManager().getCurrentSequence().getWidth();
-    int iHeight = pModel->getSequenceManager().getCurrentSequence().getHeight();
-    QPixmap* pcFramePixmap = NULL;
-    if( bSuccess )
-    {
-        cDecodingStageInfo.setParameter("decoding_progress", "(10/10)Reding & Drawing Reconstructed YUV...");
-        dispatchEvt(cDecodingStageInfo);
-        pModel->getFrameBuffer().openYUVFile(strYUVFilename, iWidth, iHeight);
-        pcFramePixmap = pModel->getFrameBuffer().getFrame(0);   ///< Read Frame Buffer
-        pcFramePixmap = pModel->getDrawEngine().drawFrame(pcSequence, 0, pcFramePixmap);  ///< Draw Frame Buffer
-
-    }
-
-
-    ///*****STEP 4 : Respond*****
-    int iCurrentPoc = pModel->getFrameBuffer().getPoc();
-    int iTotalFrame = pModel->getSequenceManager().getCurrentSequence().getTotalFrames();
-    rcOutputArg.setParameter("picture",    QVariant::fromValue((void*)(pcFramePixmap)) );
-    rcOutputArg.setParameter("current_frame_poc", iCurrentPoc);
-    rcOutputArg.setParameter("total_frame_num", iTotalFrame);
-
-
+    GitlIvkCmdEvt cSwitchSeq("switch_sequence");
+    cSwitchSeq.setParameter("command_name", "switch_sequence");
+    cSwitchSeq.setParameter("sequence", QVariant::fromValue((void*)pcSequence));
+    cSwitchSeq.dispatch();
 
 
     /// nofity sequence list to update
