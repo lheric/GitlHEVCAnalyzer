@@ -6,18 +6,25 @@ MVDisplayFilter::MVDisplayFilter(QObject *parent) :
     setName("MV Display");
     m_bShowRefPOC = false;
 
+    QColor cBlue(Qt::blue);
+    cBlue.setAlpha(200);
+    QColor cRed(Qt::red);
+    cRed.setAlpha(200);
+    QColor cGreen(Qt::green);
+    cGreen.setAlpha(200);
+
     /// MV pen
-    m_cPenL0.setColor(QColor(Qt::blue));
-    m_cPenL1.setColor(QColor(Qt::red));
+    m_cPenL0.setColor(cBlue);
+    m_cPenL1.setColor(cRed);
 
     /// text pen
-    m_cPenText.setColor(QColor(Qt::yellow));
+    m_cPenText.setColor(cGreen);
 
     /// circle filling
     m_cCircleL0Fill.setStyle(Qt::SolidPattern);
-    m_cCircleL0Fill.setColor(QColor(Qt::blue));
+    m_cCircleL0Fill.setColor(cBlue);
     m_cCircleL1Fill.setStyle(Qt::SolidPattern);
-    m_cCircleL1Fill.setColor(QColor(Qt::red));
+    m_cCircleL1Fill.setColor(cRed);
 }
 
 bool MVDisplayFilter::config  (FilterContext* pcContext)

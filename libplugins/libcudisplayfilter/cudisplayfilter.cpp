@@ -8,8 +8,8 @@ CUDisplayFilter::CUDisplayFilter(QObject *parent) :
 
     /// init lcu pen
     m_cLCUPen.setStyle(Qt::SolidLine);
-    m_cLCUPen.setWidth(2);
-    m_cLCUPen.setBrush(QBrush(QColor(255,255,255,255)));
+    m_cLCUPen.setWidth(3);
+    m_cLCUPen.setBrush(QBrush(QColor(255,255,255,128)));
 
     /// init cu pen
     m_cCUPen.setStyle(Qt::SolidLine);

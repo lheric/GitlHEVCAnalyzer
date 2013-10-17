@@ -55,6 +55,9 @@ For historical reasons, besides formal HEVC bitstream, it also supports bitstrea
 
 Road Map
 ========
+- [ ] Frames Bit Heatmap Filter
+- [ ] Slice Display
+- [ ] Tile Display
 - [ ] GOP Structure Graph
 - [ ] 10 Bit YUV Support
 - [ ] Bitsteam Comparison 

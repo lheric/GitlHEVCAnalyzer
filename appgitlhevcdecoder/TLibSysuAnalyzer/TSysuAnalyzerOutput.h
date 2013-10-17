@@ -52,6 +52,7 @@ private:
   std::ofstream m_cMergeOutput; ///< Merge info output
   std::ofstream m_cIntraOutput; ///< Intra info output
   std::ofstream m_cTUOutput;    ///< TU info output
+  std::ofstream m_cBitOutput;   ///< CU bit output
 
   /// Encoder output ( extracted in the encoding process
   std::ofstream m_cMEOutput;    ///< ME info (search point number, SAD, cost, etc)

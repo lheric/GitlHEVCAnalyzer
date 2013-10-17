@@ -365,7 +365,13 @@ Void TDecSlice::decompressSlice(TComInputBitstream** ppcSubstreams, TComPic*& rp
         }
       }
     }
+#if ENABLE_ANAYSIS_OUTPUT
+    UInt uiBefore = ppcSubstreams[uiSubStrm]->getByteLocation();
+#endif
     m_pcCuDecoder->decodeCU     ( pcCU, uiIsLast );
+#if ENABLE_ANAYSIS_OUTPUT
+    pcCU->getTotalBits() = ppcSubstreams[uiSubStrm]->getByteLocation() - uiBefore;
+#endif
     m_pcCuDecoder->decompressCU ( pcCU );
     
 #if ENC_DEC_TRACE

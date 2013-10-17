@@ -106,7 +106,14 @@ Void TDecSlice::decompressSlice(TComInputBitstream* pcBitstream, TComPic*& rpcPi
 #if ENC_DEC_TRACE
     g_bJustDoIt = g_bEncDecTraceEnable;
 #endif
+
+#if ENABLE_ANAYSIS_OUTPUT
+    UInt uiBefore = pcBitstream->getNumBitsLeft();
+#endif
     m_pcCuDecoder->decodeCU     ( pcCU, uiIsLast );
+#if ENABLE_ANAYSIS_OUTPUT
+    pcCU->getTotalBits() =  uiBefore - pcBitstream->getNumBitsLeft();
+#endif
     m_pcCuDecoder->decompressCU ( pcCU );
     
 #if ENC_DEC_TRACE
