@@ -74,7 +74,8 @@ SOURCES += main.cpp \
     commands/modifypreferencescommand.cpp \
     commands/querypreferencescommand.cpp \
     commands/switchthemecommand.cpp \
-    views/messageviewer.cpp
+    views/messageviewer.cpp \
+    parsers/bitparser.cpp
 
 HEADERS += \
     model/common/comsequence.h \
@@ -136,7 +137,8 @@ HEADERS += \
     commands/modifypreferencescommand.h \
     commands/querypreferencescommand.h \
     commands/switchthemecommand.h \
-    views/messageviewer.h
+    views/messageviewer.h \
+    parsers/bitparser.h
 
 #include & libs
 INCLUDEPATH += .\

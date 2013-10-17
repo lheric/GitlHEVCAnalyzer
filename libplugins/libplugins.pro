@@ -5,4 +5,5 @@ SUBDIRS = libtudisplayfilter \          #tu structure filter
           libmergedisplayfilter \       #merge display filter
           libmvdisplayfilter\           #MV display filter
           libintradisplayfilter\        #intra mode display
-          libpreddisplayfilter          #pred mode display
+          libpreddisplayfilter\         #pred mode display
+          libbitdisplayfilter			#bit heatmap display

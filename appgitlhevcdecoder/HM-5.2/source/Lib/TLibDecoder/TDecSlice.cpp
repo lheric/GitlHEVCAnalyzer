@@ -306,10 +306,12 @@ Void TDecSlice::decompressSlice(TComInputBitstream* pcBitstream, TComInputBitstr
     UInt uiBefore = ppcSubstreams[uiSubStrm]->getByteLocation();
 #endif
     m_pcCuDecoder->decodeCU     ( pcCU, uiIsLast );
-    m_pcCuDecoder->decompressCU ( pcCU );
 #if ENABLE_ANAYSIS_OUTPUT
     pcCU->getTotalBits() = ppcSubstreams[uiSubStrm]->getByteLocation() - uiBefore;
 #endif
+    m_pcCuDecoder->decompressCU ( pcCU );
+
+
 #if ENC_DEC_TRACE
     g_bJustDoIt = g_bEncDecTraceDisable;
 #endif

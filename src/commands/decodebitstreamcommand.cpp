@@ -9,6 +9,7 @@
 #include "parsers/mvparser.h"
 #include "parsers/mergeparser.h"
 #include "parsers/intraparser.h"
+#include "parsers/bitparser.h"
 #include "exceptions/decodingfailexception.h"
 #include "gitlupdateuievt.h"
 #include "gitlivkcmdevt.h"
@@ -198,6 +199,21 @@ bool DecodeBitstreamCommand::execute( GitlCommandParameter& rcInputArg, GitlComm
         bSuccess = cIntraParser.parseFile( &cIntraTextStream, pcSequence );
         cIntraFile.close();
         qDebug() << "Intra file parsing finished";
+    }
+
+    /// Parse decoder_bit.txt
+    QString strBitFilename = strDecoderOutputPath + "/decoder_bit.txt";
+    if( bSuccess )
+    {
+        cDecodingStageInfo.setParameter("decoding_progress", "(10/10)Start Parsing Bits Info...");
+        dispatchEvt(cDecodingStageInfo);
+        QFile cBitFile(strBitFilename);
+        cBitFile.open(QIODevice::ReadOnly);
+        QTextStream cBitTextStream(&cBitFile);
+        BitParser cBitParser;
+        bSuccess = cBitParser.parseFile( &cBitTextStream, pcSequence );
+        cBitFile.close();
+        qDebug() << "Bit file parsing finished";
     }
 
     ///*****STEP 3 : Open decoded YUV sequence*****

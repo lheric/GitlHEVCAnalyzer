@@ -58,6 +58,11 @@ public:
     ADD_CLASS_FIELD(int, iZorder, getZorder, setZorder)                         ///< Z-Order of CU
     ADD_CLASS_FIELD(int, iDepth, getDepth, setDepth)                            ///< Depth of CU
 
+    /*!
+     * Bit info (only for LCU)
+     */
+    ADD_CLASS_FIELD(int, iTotalBits, getTotalBits, setTotalBits)                ///< Bits comsumed by this LCU
+
 public:
     static int getPUNum( PartSize ePartSize );
     static void getPUOffsetAndSize( int        iLeafCUSize,

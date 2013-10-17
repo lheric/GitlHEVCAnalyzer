@@ -17,6 +17,8 @@ Windows (32/64 bit):
 
 <a href="https://sourceforge.net/projects/gtilhevcanalyzer/">https://sourceforge.net/projects/gtilhevcanalyzer/</a>
 
+**If you are using our analyzer in your paper, please add a footnote or reference to our homepage**
+
 Why Gitl HEVC Analyzer
 ======================
 
@@ -111,5 +113,7 @@ Supervised by Prof. Hongyang CHAO
 Hongyang Chao (朝红阳)
 
 isschhy@mail.sysu.edu.cn
+
+School of Software
 
 Sun Yat-sen University
