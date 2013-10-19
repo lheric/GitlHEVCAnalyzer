@@ -75,7 +75,11 @@ SOURCES += main.cpp \
     commands/querypreferencescommand.cpp \
     commands/switchthemecommand.cpp \
     views/messageviewer.cpp \
-    parsers/bitparser.cpp
+    views/timelineview.cpp \
+    parsers/bitparser.cpp \
+    views/timelineframeitem.cpp \
+    views/timelineindicatoritem.cpp
+
 
 HEADERS += \
     model/common/comsequence.h \
@@ -138,7 +142,11 @@ HEADERS += \
     commands/querypreferencescommand.h \
     commands/switchthemecommand.h \
     views/messageviewer.h \
-    parsers/bitparser.h
+    views/timelineview.h \
+    parsers/bitparser.h \
+    views/timelineframeitem.h \
+    views/timelineindicatoritem.h
+
 
 #include & libs
 INCLUDEPATH += .\

@@ -48,6 +48,7 @@
 
 #include <time.h>
 #include <math.h>
+#include <functional>
 
 using namespace std;
 

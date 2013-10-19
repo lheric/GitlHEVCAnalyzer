@@ -4,10 +4,9 @@
 #include <QGraphicsView>
 #include <QGraphicsPixmapItem>
 #include <QGraphicsScene>
-#include "gitlmodual.h"
 #include "gitldef.h"
 
-class FrameView : public QGraphicsView, public GitlModual
+class FrameView : public QGraphicsView
 {
     Q_OBJECT
 public:

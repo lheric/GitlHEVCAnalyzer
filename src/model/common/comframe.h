@@ -32,6 +32,9 @@ public:
     /*! Decoding time comsumed*/
     ADD_CLASS_FIELD(double, dTotalDecTime, getTotalDecTime, setTotalDecTime)
 
+    /*! Bit comsumed */
+    ADD_CLASS_FIELD(int, iBitCount, getBitCount, setBitCount)
+
     /*! Obsolescent
      */
     ADD_CLASS_FIELD(double, dPSNR, getPSNR, setPSNR)

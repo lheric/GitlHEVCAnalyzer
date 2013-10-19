@@ -61,7 +61,7 @@ public:
     /*!
      * Bit info (only for LCU)
      */
-    ADD_CLASS_FIELD(int, iTotalBits, getTotalBits, setTotalBits)                ///< Bits comsumed by this LCU
+    ADD_CLASS_FIELD(int, iBitCount, getBitCount, setBitCount)                ///< Bits comsumed by this LCU
 
 public:
     static int getPUNum( PartSize ePartSize );

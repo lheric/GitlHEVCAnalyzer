@@ -224,11 +224,5 @@ bool DecodeBitstreamCommand::execute( GitlCommandParameter& rcInputArg, GitlComm
     cSwitchSeq.setParameter("sequence", QVariant::fromValue((void*)pcSequence));
     cSwitchSeq.dispatch();
 
-
-    /// nofity sequence list to update
-    QVector<ComSequence*>* ppcSequences = &(pModel->getSequenceManager().getAllSequences());
-    rcOutputArg.setParameter("sequences",QVariant::fromValue((void*)ppcSequences));
-    rcOutputArg.setParameter("current_sequence",QVariant::fromValue((void*)pcSequence));
-
     return bSuccess;
 }

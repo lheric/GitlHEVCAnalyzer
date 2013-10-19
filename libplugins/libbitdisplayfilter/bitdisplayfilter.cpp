@@ -14,7 +14,7 @@ bool BitDisplayFilter::init(FilterContext* pcContext)
 
     foreach( ComFrame* pcFrame, rcSeq.getFrames())
         foreach( ComCU* pcCU, pcFrame->getLCUs() )
-            m_iLCUAvgBit += pcCU->getTotalBits();
+            m_iLCUAvgBit += pcCU->getBitCount();
 
     return true;
 
@@ -23,7 +23,7 @@ bool BitDisplayFilter::init(FilterContext* pcContext)
 bool BitDisplayFilter::drawCTU  (FilterContext *pcContext, QPainter *pcPainter,
                                 ComCU *pcCTU, double dScale, QRect *pcScaledArea)
 {
-    int iClip = VALUE_CLIP(0,240,pcCTU->getTotalBits());
+    int iClip = VALUE_CLIP(0,240,pcCTU->getBitCount());
 
     QColor cFill;
     double dHue = (240-iClip)/360.0;

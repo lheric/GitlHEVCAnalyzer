@@ -39,12 +39,14 @@ bool SwitchSequenceCommand::execute( GitlCommandParameter& rcInputArg, GitlComma
     pModel->getDrawEngine().getFilterLoader().reinitAllFilters();
     pcFramePixmap = pModel->getDrawEngine().drawFrame(&(pModel->getSequenceManager().getCurrentSequence()), iPoc, pcFramePixmap);  ///< Draw Frame Buffer
 
-    ///
+    ///notify
     rcOutputArg.setParameter("picture",  QVariant::fromValue((void*)(pcFramePixmap)));
     rcOutputArg.setParameter("current_frame_poc", iPoc);
     rcOutputArg.setParameter("total_frame_num", pModel->getSequenceManager().getCurrentSequence().getTotalFrames());
 
-
+    QVector<ComSequence*>* ppcSequences = &(pModel->getSequenceManager().getAllSequences());
+    rcOutputArg.setParameter("sequences",QVariant::fromValue((void*)ppcSequences));
+    rcOutputArg.setParameter("current_sequence",QVariant::fromValue((void*)pcSequence));
 
     return true;
 }

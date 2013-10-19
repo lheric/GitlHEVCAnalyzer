@@ -36,7 +36,9 @@ bool BitParser::parseFile(QTextStream* pcInputStream, ComSequence* pcSequence)
 
             ///
             QString strBitInfo = cMatchTarget.cap(3);
-            pcLCU->setTotalBits(strBitInfo.toInt());
+            int iLCUBit = strBitInfo.toInt();
+            pcLCU->setBitCount(iLCUBit);
+            pcFrame->getBitCount() += iLCUBit;
 
         }
 

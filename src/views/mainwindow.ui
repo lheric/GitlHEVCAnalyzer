@@ -41,6 +41,28 @@
       </layout>
      </widget>
     </item>
+    <item>
+     <widget class="TimeLineView" name="timelineView">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>180</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>180</height>
+       </size>
+      </property>
+     </widget>
+    </item>
    </layout>
   </widget>
   <widget class="QDockWidget" name="sequencesListDockWidget">
@@ -499,6 +521,11 @@
    <extends>QWidget</extends>
    <header>views/messageviewer.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>TimeLineView</class>
+   <extends>QGraphicsView</extends>
+   <header>views/timelineview.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

@@ -37,7 +37,7 @@
 
 #include <list>
 #include <algorithm>
-
+#include <functional>
 #include "TEncTop.h"
 #include "TEncGOP.h"
 #include "TEncAnalyze.h"
