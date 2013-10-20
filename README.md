@@ -7,7 +7,7 @@ Gitl HEVC Analyzer is an open-source tool for bitstream analysis for HEVC/H.265 
 
 It is released under Apache License 2.0. In addition, it's **NOT for commercial use**. If you want to use it for commercial purpose, please contact us. If you are not using it to develop weapons, produce or sell illegal drugs, and if you are not a terrorist, we will give your a commercial version for **free**.
 
-If you are using it in academic institution, you can let us know and we will be happy to add you to the partner list.
+**If you are using our analyzer in your paper, please add a footnote or reference to our work**
 
 Current building status:  [![Build Status](https://travis-ci.org/lheric/GitlHEVCAnalyzer.png?branch=master)](https://travis-ci.org/lheric/GitlHEVCAnalyzer)
 
@@ -17,7 +17,6 @@ Windows (32/64 bit):
 
 <a href="https://sourceforge.net/projects/gtilhevcanalyzer/">https://sourceforge.net/projects/gtilhevcanalyzer/</a>
 
-**If you are using our analyzer in your paper, please add a footnote or reference to our homepage**
 
 Why Gitl HEVC Analyzer
 ======================
@@ -57,7 +56,8 @@ For historical reasons, besides formal HEVC bitstream, it also supports bitstrea
 
 Road Map
 ========
-- [ ] Frames Bit Heatmap Filter
+- [X] Frames Bit Heatmap Filter
+- [X] Frame Timeline
 - [ ] Slice Display
 - [ ] Tile Display
 - [ ] GOP Structure Graph
