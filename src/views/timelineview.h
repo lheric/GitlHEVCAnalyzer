@@ -20,6 +20,10 @@ public:
 public slots:
     void frameBarClicked(int iPoc);
 
+
+protected:
+    void wheelEvent(QWheelEvent * event);
+
 private:
     void xDrawFrameBars(ComSequence* pcSequence);
     void xClearAllDrawing();

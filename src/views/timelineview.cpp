@@ -2,6 +2,7 @@
 #include "model/common/comsequence.h"
 #include "gitlivkcmdevt.h"
 #include <QDebug>
+#include <QWheelEvent>
 
 TimeLineView::TimeLineView(QWidget *parent) :
     QGraphicsView(parent)
@@ -77,6 +78,20 @@ void TimeLineView::frameBarClicked(int iPoc)
     cEvt.dispatch();
 }
 
+
+void TimeLineView::wheelEvent(QWheelEvent * event)
+{
+    if( event->delta() < 0 ) /// rotated towards user
+    {
+        GitlIvkCmdEvt cEvt("next_frame");
+        cEvt.dispatch();
+    }
+    else
+    {
+        GitlIvkCmdEvt cEvt("prev_frame");
+        cEvt.dispatch();
+    }
+}
 
 void TimeLineView::xDrawFrameBars(ComSequence* pcSequence)
 {
