@@ -24,6 +24,14 @@ MainWindow::MainWindow(QWidget *parent) :
     setModualName("main_window");
     ui->setupUi(this);
 
+    /// set listeners
+    listenToParams("picture", MAKE_CALLBACK(MainWindow::onFrameArrived));
+    listenToParams(QStringList() <<"total_frame_num"<<"current_frame_poc",
+                   MAKE_CALLBACK(MainWindow::onPOCInfoChanged));
+    listenToParams("theme_stylesheet", MAKE_CALLBACK(MainWindow::onStylesheetChanged));
+    listenToParams("snapshot", MAKE_CALLBACK(MainWindow::onSnapshot));
+
+
     /// layout hacks
     ui->msgDockWidget->widget()->layout()->setContentsMargins(0,0,0,0);
     ui->pluginFilterListDockWidget->widget()->layout()->setContentsMargins(0,0,0,0);
@@ -49,71 +57,62 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
-void MainWindow::onUIUpdate(GitlUpdateUIEvt& rcEvt)
+
+void MainWindow::onFrameArrived(GitlUpdateUIEvt& rcEvt)
 {
+    QVariant vValue = rcEvt.getParameter("picture");
+    QPixmap* pcPixMap = (QPixmap*)(vValue.value<void *>());
+    ui->imageView->setDisplayImage(pcPixMap);
+}
 
+void MainWindow::onPOCInfoChanged(GitlUpdateUIEvt& rcEvt)
+{
+    static int iTotalFrameNum = -1;
+    static int iCurrentFrameNum = -1;
     QVariant vValue;
-
-    /// draw current frame to screen
-    if( rcEvt.hasParameter("picture") )
+    /// frame number
+    if( rcEvt.hasParameter("total_frame_num") )
     {
-        vValue = rcEvt.getParameter("picture");
-        QPixmap* pcPixMap = (QPixmap*)(vValue.value<void *>());
-        ui->imageView->setDisplayImage(pcPixMap);
+        vValue = rcEvt.getParameter("total_frame_num");
+        iTotalFrameNum = vValue.toInt();
+        ui->totalFrameNum->setText(QString("%1").arg(iTotalFrameNum));
     }
 
-
-    /// change frame number, total frame number & slide bar position in GUI.
-    if( rcEvt.hasParameter("total_frame_num") || rcEvt.hasParameter("current_frame_poc") )
+    /// total frame number
+    if( rcEvt.hasParameter("current_frame_poc") )
     {
-        static int iTotalFrameNum = -1;
-        static int iCurrentFrameNum = -1;
-
-        /// frame number
-        if( rcEvt.hasParameter("total_frame_num") )
-        {
-            vValue = rcEvt.getParameter("total_frame_num");
-            iTotalFrameNum = vValue.toInt();
-            ui->totalFrameNum->setText(QString("%1").arg(iTotalFrameNum));
-        }
-
-        /// total frame number
-        if( rcEvt.hasParameter("current_frame_poc") )
-        {
-            vValue = rcEvt.getParameter("current_frame_poc");
-            iCurrentFrameNum = vValue.toInt() + 1;
-            ui->currentFrameNum->setText(QString("%1").arg(iCurrentFrameNum));
-        }
-
-        /// slide bar position
-        int iMin = ui->progressBar->minimum();
-        int iMax = ui->progressBar->maximum();
-        int iPos = 0;
-        if(iTotalFrameNum != 1)
-        {
-            iPos = (iCurrentFrameNum-1)*(iMax-iMin)/(iTotalFrameNum-1);
-        }
-        ui->progressBar->setValue(iPos);
-
+        vValue = rcEvt.getParameter("current_frame_poc");
+        iCurrentFrameNum = vValue.toInt() + 1;
+        ui->currentFrameNum->setText(QString("%1").arg(iCurrentFrameNum));
     }
 
-    if( rcEvt.hasParameter("theme_stylesheet") )
+    /// slide bar position
+    int iMin = ui->progressBar->minimum();
+    int iMax = ui->progressBar->maximum();
+    int iPos = 0;
+    if(iTotalFrameNum != 1)
     {
-        qApp->setStyleSheet(rcEvt.getParameter("theme_stylesheet").toString());
-        QString strThemeName = rcEvt.getParameter("theme_name").toString();
-        if(strThemeName == "default")
-            ui->defaultThemeAction->setChecked(true);
-        else if(strThemeName == "dark")
-            ui->darkThemeAction->setChecked(true);
+        iPos = (iCurrentFrameNum-1)*(iMax-iMin)/(iTotalFrameNum-1);
     }
+    ui->progressBar->setValue(iPos);
+}
 
+void MainWindow::onStylesheetChanged(GitlUpdateUIEvt& rcEvt)
+{
+    qApp->setStyleSheet(rcEvt.getParameter("theme_stylesheet").toString());
+    QString strThemeName = rcEvt.getParameter("theme_name").toString();
+    if(strThemeName == "default")
+        ui->defaultThemeAction->setChecked(true);
+    else if(strThemeName == "dark")
+        ui->darkThemeAction->setChecked(true);
+}
 
-    if( rcEvt.hasParameter("snapshot") )
-    {
-        vValue = rcEvt.getParameter("snapshot");
-        QPixmap* pcPixMap = (QPixmap*)(vValue.value<void *>());
-        xSaveSnapshot(pcPixMap);
-    }
+void MainWindow::onSnapshot(GitlUpdateUIEvt& rcEvt)
+{
+    /// TODO refactor
+    QVariant vValue = rcEvt.getParameter("snapshot");
+    QPixmap* pcPixMap = (QPixmap*)(vValue.value<void *>());
+    xSaveSnapshot(pcPixMap);
 }
 
 /// Keyboard Event

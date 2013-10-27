@@ -9,7 +9,7 @@ class PluginFilterList : public QListWidget, public GitlView
     Q_OBJECT
 public:
     explicit PluginFilterList( QWidget *parent = 0 );
-    virtual void onUIUpdate(GitlUpdateUIEvt &rcEvt);
+    virtual void onSequenceChanged(GitlUpdateUIEvt &rcEvt);
 
 
 };

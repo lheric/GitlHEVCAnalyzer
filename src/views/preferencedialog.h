@@ -15,8 +15,6 @@ public:
     explicit PreferenceDialog(QWidget *parent = 0);
     ~PreferenceDialog();
     
-    virtual void onUIUpdate(GitlUpdateUIEvt &rcEvt);
-
 protected:
     void showEvent(QShowEvent * event);
 

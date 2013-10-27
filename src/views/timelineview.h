@@ -14,8 +14,10 @@ class TimeLineView : public QGraphicsView, public GitlView
     Q_OBJECT
 public:
     explicit TimeLineView(QWidget *parent = 0);
+    ~TimeLineView();
 
-    virtual void onUIUpdate(GitlUpdateUIEvt& rcEvt);
+    void onSequenceChanged(GitlUpdateUIEvt& rcEvt);
+    void onPOCChanged(GitlUpdateUIEvt& rcEvt);
 
 public slots:
     void frameBarClicked(int iPoc);
@@ -35,6 +37,7 @@ private:
     ADD_CLASS_FIELD_PRIVATE(QGraphicsScene, cScene)
 
     ADD_CLASS_FIELD_PRIVATE(int, iMaxBitForFrame)
+
 signals:
     
 

@@ -10,6 +10,13 @@ SequenceList::SequenceList(QWidget *parent) :
     ui(new Ui::SequenceList)
 {
     ui->setupUi(this);
+
+    setModualName("sequence_list");
+    ///set listener
+    listenToParams(QStringList()<<"sequences"<<"current_sequence",
+                   MAKE_CALLBACK(SequenceList::onSequenceChanged) );
+
+    ///
     addNoSquenceRadioBtn();
 }
 
@@ -38,43 +45,42 @@ void SequenceList::clearAllRadioBtn()
 
 }
 
-void SequenceList::onUIUpdate(GitlUpdateUIEvt &rcEvt)
+void SequenceList::onSequenceChanged(GitlUpdateUIEvt &rcEvt)
 {
     QVariant vValue;
-    if( rcEvt.hasParameter("sequences") && rcEvt.hasParameter("current_sequence"))
+
+    clearAllRadioBtn();
+    vValue = rcEvt.getParameter("sequences");
+    QVector<ComSequence*>* ppcSequences = (QVector<ComSequence*>*)vValue.value<void*>();
+    vValue = rcEvt.getParameter("current_sequence");
+    ComSequence* pcCurrentSequence = (ComSequence*)vValue.value<void*>();
+    if(ppcSequences->size() != 0)
     {
-        clearAllRadioBtn();
-        vValue = rcEvt.getParameter("sequences");
-        QVector<ComSequence*>* ppcSequences = (QVector<ComSequence*>*)vValue.value<void*>();
-        vValue = rcEvt.getParameter("current_sequence");
-        ComSequence* pcCurrentSequence = (ComSequence*)vValue.value<void*>();
-        if(ppcSequences->size() != 0)
+        for(int i = 0; i < ppcSequences->size(); i++)
         {
-            for(int i = 0; i < ppcSequences->size(); i++)
-            {
-                //
-                QListWidgetItem* pcItem = new QListWidgetItem();
-                this->addItem(pcItem);
-                ComSequence* pcSequence = ppcSequences->at(i);
-                QFileInfo cFileInfo(pcSequence->getFileName());
-                SequenceListItem* seqRadioBtn = new SequenceListItem(cFileInfo.fileName(), m_cButtonGroup);
-                seqRadioBtn->setSequence(pcSequence);
-                seqRadioBtn->setChecked(pcCurrentSequence == pcSequence);
-                pcItem->setSizeHint(seqRadioBtn->sizeHint());
-                setItemWidget(pcItem, seqRadioBtn);
+            //
+            QListWidgetItem* pcItem = new QListWidgetItem();
+            this->addItem(pcItem);
+            ComSequence* pcSequence = ppcSequences->at(i);
+            QFileInfo cFileInfo(pcSequence->getFileName());
+            SequenceListItem* seqRadioBtn = new SequenceListItem(cFileInfo.fileName(), m_cButtonGroup);
+            seqRadioBtn->setSequence(pcSequence);
+            seqRadioBtn->setChecked(pcCurrentSequence == pcSequence);
+            pcItem->setSizeHint(seqRadioBtn->sizeHint());
+            setItemWidget(pcItem, seqRadioBtn);
 
-                connect(seqRadioBtn, SIGNAL(sequenceRadioButtonClicked(ComSequence*, QString, bool)),
-                        this, SLOT(sequenceRadioButtonClicked(ComSequence*, QString, bool)));
-                connect(seqRadioBtn, SIGNAL(yuvSelectionBoxChanged(ComSequence*,QString,bool)),
-                        this, SLOT(yuvSelectionBoxChanged(ComSequence*,QString,bool)) );
+            connect(seqRadioBtn, SIGNAL(sequenceRadioButtonClicked(ComSequence*, QString, bool)),
+                    this, SLOT(sequenceRadioButtonClicked(ComSequence*, QString, bool)));
+            connect(seqRadioBtn, SIGNAL(yuvSelectionBoxChanged(ComSequence*,QString,bool)),
+                    this, SLOT(yuvSelectionBoxChanged(ComSequence*,QString,bool)) );
 
-            }
-        }
-        else
-        {
-            addNoSquenceRadioBtn();
         }
     }
+    else
+    {
+        addNoSquenceRadioBtn();
+    }
+
 
 }
 

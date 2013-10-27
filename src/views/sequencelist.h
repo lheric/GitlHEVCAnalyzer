@@ -20,7 +20,7 @@ class SequenceList : public QListWidget, public GitlView
     
 public:
     explicit SequenceList(QWidget *parent = 0);
-    void onUIUpdate(GitlUpdateUIEvt &rcEvt);
+    void onSequenceChanged(GitlUpdateUIEvt &rcEvt);
     ~SequenceList();
 
     void addNoSquenceRadioBtn();

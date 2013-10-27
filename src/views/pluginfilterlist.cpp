@@ -9,37 +9,38 @@ PluginFilterList::PluginFilterList(QWidget *parent) :
     QListWidget(parent)
 {
     setModualName("plugin_filter_list");
+    // set listener
+    listenToParams(QStringList()<<"filter_names"<<"filter_status",
+                   MAKE_CALLBACK(PluginFilterList::onSequenceChanged));
 
     // load filters command
     GitlIvkCmdEvt cRequest("reload_filter");
     cRequest.dispatch();
 }
 
-void PluginFilterList::onUIUpdate(GitlUpdateUIEvt &rcEvt)
+void PluginFilterList::onSequenceChanged(GitlUpdateUIEvt &rcEvt)
 {
 
-    // rebuild the filter list
-    if(rcEvt.hasParameter("filter_names") && rcEvt.hasParameter("filter_status") )
+    // rebuild the filter list 
+    int iVPos = verticalScrollBar()->value();
+    int iHPos = horizontalScrollBar()->value();
+
+    this->clear();
+    QStringList cFilterNames = rcEvt.getParameter("filter_names").toStringList();
+    QVector<bool> cFilterEnableStatus = rcEvt.getParameter("filter_status").value< QVector<bool> >();
+
+    for(int i = 0; i < cFilterNames.size(); i++)
     {
-        int iVPos = verticalScrollBar()->value();
-        int iHPos = horizontalScrollBar()->value();
-
-        this->clear();
-        QStringList cFilterNames = rcEvt.getParameter("filter_names").toStringList();
-        QVector<bool> cFilterEnableStatus = rcEvt.getParameter("filter_status").value< QVector<bool> >();
-
-        for(int i = 0; i < cFilterNames.size(); i++)
-        {
-            QListWidgetItem* pcItem = new QListWidgetItem();
-            this->addItem(pcItem);
-            PluginFilterItem *pItemWidget = new PluginFilterItem(cFilterNames[i], cFilterEnableStatus[i]);
-            pcItem->setSizeHint(pItemWidget->sizeHint());
-            setItemWidget(pcItem, pItemWidget);
-        }
-
-        verticalScrollBar()->setValue(iVPos);
-        horizontalScrollBar()->setValue(iHPos);
+        QListWidgetItem* pcItem = new QListWidgetItem();
+        this->addItem(pcItem);
+        PluginFilterItem *pItemWidget = new PluginFilterItem(cFilterNames[i], cFilterEnableStatus[i]);
+        pcItem->setSizeHint(pItemWidget->sizeHint());
+        setItemWidget(pcItem, pItemWidget);
     }
+
+    verticalScrollBar()->setValue(iVPos);
+    horizontalScrollBar()->setValue(iHPos);
+
 
 }
 

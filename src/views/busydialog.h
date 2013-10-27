@@ -17,7 +17,6 @@ public:
 
 public slots:
     void setHintText(QString& str);
-    virtual void onUIUpdate(GitlUpdateUIEvt &rcEvt);
     
 private:
     Ui::BusyDialog *ui;

@@ -19,7 +19,7 @@ public:
     ~MessageViewer();
 
     ///
-    virtual void onUIUpdate(GitlUpdateUIEvt &rcEvt);
+    void onMessageArrived(GitlUpdateUIEvt &rcEvt);
     
 private slots:
     void on_clearMsgBtn_clicked();

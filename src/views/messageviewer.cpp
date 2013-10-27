@@ -15,7 +15,8 @@ MessageViewer::MessageViewer(QWidget *parent) :
     ui->setupUi(this);
     m_cDefalutTextColor = ui->msgTextBrowser->palette().foreground().color();
 
-    m_cWarningBox.setWindowTitle("Warning");
+    listenToParams(QStringList()<<"msg_detail"<<"msg_level",
+                   MAKE_CALLBACK(MessageViewer::onMessageArrived));
 }
 
 MessageViewer::~MessageViewer()
@@ -24,7 +25,7 @@ MessageViewer::~MessageViewer()
 }
 
 
-void MessageViewer::onUIUpdate(GitlUpdateUIEvt &rcEvt)
+void MessageViewer::onMessageArrived(GitlUpdateUIEvt &rcEvt)
 {
     /// <message level -- switch> table
     static MessageSwitchItem s_messageSwith[] =
@@ -36,45 +37,45 @@ void MessageViewer::onUIUpdate(GitlUpdateUIEvt &rcEvt)
         {QtMsgType(-1),    NULL}      /// end mark
     };
 
-    if( rcEvt.hasParameter("msg_detail"))
+
+    /// TODO FIX BUG #7
+    QVariant vValue = rcEvt.getParameter("msg_detail");
+    QString strMsg = vValue.toString();
+    QtMsgType eMsgLevel = (QtMsgType)rcEvt.getParameter("msg_level").toInt();
+
+    /// different message, different color
+    if(eMsgLevel != QtDebugMsg)
+        ui->msgTextBrowser->setTextColor(QColor(Qt::red));
+    else
+        ui->msgTextBrowser->setTextColor(m_cDefalutTextColor);
+
+
+    /// check if the message type is allow
+    MessageSwitchItem *pcItem = s_messageSwith;
+    bool bIsAllowed = false;
+    do
     {
-        QVariant vValue = rcEvt.getParameter("msg_detail");
-        QString strMsg = vValue.toString();
-        QtMsgType eMsgLevel = (QtMsgType)rcEvt.getParameter("msg_level").toInt();
-
-        /// different message, different color
-        if(eMsgLevel != QtDebugMsg)
-            ui->msgTextBrowser->setTextColor(QColor(Qt::red));
-        else
-            ui->msgTextBrowser->setTextColor(m_cDefalutTextColor);
-
-
-        /// check if the message type is allow
-        MessageSwitchItem *pcItem = s_messageSwith;
-        bool bIsAllowed = false;
-        do
+        if(pcItem->eMsgType == eMsgLevel && pcItem->pcSwitch->isChecked())
         {
-            if(pcItem->eMsgType == eMsgLevel && pcItem->pcSwitch->isChecked())
-            {
-                bIsAllowed = true;
-                break;
-            }
-            pcItem++;
-        }while(pcItem->pcSwitch != NULL);
+            bIsAllowed = true;
+            break;
+        }
+        pcItem++;
+    }while(pcItem->pcSwitch != NULL);
 
 
-        if(bIsAllowed)
+    if(bIsAllowed)
+    {
+        /// display message
+        ui->msgTextBrowser->append(strMsg);
+        /// severe message should prompt dialog
+        if( eMsgLevel >= QtCriticalMsg )
         {
-            /// display message
-            ui->msgTextBrowser->append(strMsg);
-            /// severe message should prompt dialog
-            if( eMsgLevel >= QtCriticalMsg )
-            {
-                m_cWarningBox.setText(strMsg);
-                m_cWarningBox.show();
-            }
+            m_cWarningBox.setText(strMsg);
+            m_cWarningBox.show();
         }
     }
+
 }
 
 void MessageViewer::on_clearMsgBtn_clicked()

@@ -24,7 +24,11 @@ public:
 
 public:
     void onUIUpdate(GitlUpdateUIEvt& rcEvt);
-    //bool detonate( GitlEvent&  cEvt );
+
+    void onFrameArrived(GitlUpdateUIEvt& rcEvt);
+    void onPOCInfoChanged(GitlUpdateUIEvt& rcEvt);
+    void onStylesheetChanged(GitlUpdateUIEvt& rcEvt);
+    void onSnapshot(GitlUpdateUIEvt& rcEvt);
 
 protected:
     virtual void keyPressEvent ( QKeyEvent * event );

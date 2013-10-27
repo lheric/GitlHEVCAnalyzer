@@ -9,17 +9,16 @@ PreferenceDialog::PreferenceDialog(QWidget *parent) :
     ui->setupUi(this);
     this->setFixedSize(this->size());
 
+    setModualName("preference_dialog");
+    ///set listener
+    listenToParams("cache_path", [&](GitlUpdateUIEvt &rcEvt) {
+        ui->cacheFolderEdit->setText(rcEvt.getParameter("cache_path").toString());
+    });
+
     GitlIvkCmdEvt cEvt("query_pref");
     cEvt.dispatch();
 }
 
-void PreferenceDialog::onUIUpdate(GitlUpdateUIEvt &rcEvt)
-{
-    if( rcEvt.hasParameter("cache_path"))
-    {
-        ui->cacheFolderEdit->setText(rcEvt.getParameter("cache_path").toString());
-    }
-}
 
 PreferenceDialog::~PreferenceDialog()
 {
