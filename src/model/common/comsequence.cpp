@@ -1,5 +1,6 @@
 #include "comsequence.h"
 
+
 ComSequence::ComSequence()
 {
     init();
@@ -31,6 +32,9 @@ void ComSequence::init()
     m_iMaxCUDepth = -1;
     m_iMinTUDepth = -1;
     m_iMaxTUDepth = -1;
+
+    /*! YUV Info -- Currently Displaying YUV*/
+    m_eYUVRole = YUV_NONE;
 
 
     /*!

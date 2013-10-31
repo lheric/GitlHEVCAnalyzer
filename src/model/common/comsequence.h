@@ -4,6 +4,14 @@
 
 #include "comframe.h"
 
+enum YUVRole
+{
+    YUV_NONE,
+    YUV_PREDICTED,
+    YUV_RESIDUAL,
+    YUV_RECONSTRUCTED
+};
+
 /*!
  * \brief This class represents a video sequence
  */
@@ -36,6 +44,9 @@ public:
 
     /*! Decoded File Location */
     ADD_CLASS_FIELD( QString, strDeocdingFolder, getDecodingFolder, setDecodingFolder)
+
+    /*! Currently Displaying YUV (Predicted, Residual or Reconstructed)*/
+    ADD_CLASS_FIELD( YUVRole, eYUVRole, getYUVRole, setYUVRole)
 
 
     /*!

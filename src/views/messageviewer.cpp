@@ -10,9 +10,12 @@ struct MessageSwitchItem
 
 MessageViewer::MessageViewer(QWidget *parent) :
     QWidget(parent),
+    m_cWarningBox(this),
     ui(new Ui::MessageViewer)
 {
     ui->setupUi(this);
+
+    m_cWarningBox.setModal(false);
     m_cDefalutTextColor = ui->msgTextBrowser->palette().foreground().color();
 
     listenToParams(QStringList()<<"msg_detail"<<"msg_level",
@@ -37,8 +40,6 @@ void MessageViewer::onMessageArrived(GitlUpdateUIEvt &rcEvt)
         {QtMsgType(-1),    NULL}      /// end mark
     };
 
-
-    /// TODO FIX BUG #7
     QVariant vValue = rcEvt.getParameter("msg_detail");
     QString strMsg = vValue.toString();
     QtMsgType eMsgLevel = (QtMsgType)rcEvt.getParameter("msg_level").toInt();

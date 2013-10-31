@@ -69,10 +69,10 @@ void SequenceList::onSequenceChanged(GitlUpdateUIEvt &rcEvt)
             pcItem->setSizeHint(seqRadioBtn->sizeHint());
             setItemWidget(pcItem, seqRadioBtn);
 
-            connect(seqRadioBtn, SIGNAL(sequenceRadioButtonClicked(ComSequence*, QString, bool)),
-                    this, SLOT(sequenceRadioButtonClicked(ComSequence*, QString, bool)));
-            connect(seqRadioBtn, SIGNAL(yuvSelectionBoxChanged(ComSequence*,QString,bool)),
-                    this, SLOT(yuvSelectionBoxChanged(ComSequence*,QString,bool)) );
+            connect(seqRadioBtn, SIGNAL(sequenceRadioButtonClicked(ComSequence*)),
+                    this, SLOT(sequenceRadioButtonClicked(ComSequence*)) );
+            connect(seqRadioBtn, SIGNAL(yuvSelectionBoxChanged(ComSequence*)),
+                    this, SLOT(yuvSelectionBoxChanged(ComSequence*)) );
 
         }
     }
@@ -84,21 +84,16 @@ void SequenceList::onSequenceChanged(GitlUpdateUIEvt &rcEvt)
 
 }
 
-void SequenceList::sequenceRadioButtonClicked(ComSequence* pcSequence, QString strYUVFileName, bool bIs16Bit)
+void SequenceList::sequenceRadioButtonClicked(ComSequence* pcSequence)
 {
     GitlIvkCmdEvt cRequest("switch_sequence");
-    cRequest.setParameter("command_name", "switch_sequence");
     cRequest.setParameter("sequence", QVariant::fromValue((void*)pcSequence));
-    cRequest.setParameter("YUV_filename", strYUVFileName);
-    cRequest.setParameter("is_16_bit", bIs16Bit);
     cRequest.dispatch();
 }
 
-void SequenceList::yuvSelectionBoxChanged(ComSequence* pcSequence, QString strYUVFileName, bool bIs16Bit)
+void SequenceList::yuvSelectionBoxChanged(ComSequence* pcSequence)
 {
     GitlIvkCmdEvt cRequest("switch_yuv");
     cRequest.setParameter("sequence", QVariant::fromValue((void*)pcSequence));
-    cRequest.setParameter("YUV_filename", strYUVFileName);
-    cRequest.setParameter("is_16_bit", bIs16Bit);
     cRequest.dispatch();
 }

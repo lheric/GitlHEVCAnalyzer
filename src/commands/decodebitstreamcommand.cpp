@@ -55,7 +55,8 @@ bool DecodeBitstreamCommand::execute( GitlCommandParameter& rcInputArg, GitlComm
 
     //TODO BUG Memory Leaking when exception happens
     ComSequence* pcSequence = new ComSequence();
-    pcSequence->init();
+    pcSequence->init();    
+    pcSequence->setFileName(strFilename);
 
     /// *****STEP 1 : Use the special decoder to parse bitstream*****
     /// call decoder process to decode bitstream to YUV and output text info
@@ -219,6 +220,7 @@ bool DecodeBitstreamCommand::execute( GitlCommandParameter& rcInputArg, GitlComm
     ///*****STEP 3 : Open decoded YUV sequence*****
 
     pModel->getSequenceManager().addSequence(pcSequence);
+    pcSequence->setYUVRole(YUV_RECONSTRUCTED);      /// display the recon. by default
     GitlIvkCmdEvt cSwitchSeq("switch_sequence");
     cSwitchSeq.setParameter("command_name", "switch_sequence");
     cSwitchSeq.setParameter("sequence", QVariant::fromValue((void*)pcSequence));

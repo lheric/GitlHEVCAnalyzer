@@ -27,7 +27,8 @@ TimeLineView::TimeLineView(QWidget *parent) :
 TimeLineView::~TimeLineView()
 {
     /// takes back the ownership of the indicator, or there will be a double deletion by scene
-    m_cScene.removeItem(&m_cCurFrameIndicator);
+    if(m_cCurFrameIndicator.scene() != NULL)
+        m_cCurFrameIndicator.scene()->removeItem(&m_cCurFrameIndicator);
 }
 
 void TimeLineView::onSequenceChanged(GitlUpdateUIEvt &rcEvt)

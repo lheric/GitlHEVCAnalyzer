@@ -4,18 +4,16 @@
 
 struct YUV_SELECTION
 {
-    int   iComboIndex;
-    char* phLableName;
-    char* phFileName;
-    bool  bIs16Bit;
+    int     iComboIndex;
+    char*   phLableName;
+    YUVRole eRole;
 };
 
 static YUV_SELECTION pasSelections[] =
 {
-    { 0, "Reconstructed", "decoder_yuv.yuv", false },
-    { 1, "Residual",      "resi_yuv.yuv",    true  },
-    //{2, "Predicted",     "pred_yuv.yuv",    false},
-    { -1, NULL,            NULL,             false }
+    { 0,    "Reconstructed",    YUV_RECONSTRUCTED },
+    { 1,    "Residual",         YUV_RESIDUAL      },
+    { -1,   NULL,               YUV_NONE          },       /// end mark
 };
 
 SequenceListItem::SequenceListItem(const QString& strText, QButtonGroup& rcGroup, QWidget *parent) :
@@ -47,13 +45,8 @@ SequenceListItem::~SequenceListItem()
 
 void SequenceListItem::mouseReleaseEvent ( QMouseEvent * e )
 {
-    int index = ui->yuvSelectionBox->currentIndex();
-
-    bool bIs16Bit = pasSelections[index].bIs16Bit;
-    QString strItemString = pasSelections[index].phFileName;
     ui->radioButton->setChecked(true);
-
-    emit sequenceRadioButtonClicked(m_pcSequence, strItemString, bIs16Bit);
+    emit sequenceRadioButtonClicked(m_pcSequence);
 }
 
 void SequenceListItem::setChecked(bool bCheck)
@@ -70,8 +63,7 @@ void SequenceListItem::on_yuvSelectionBox_currentIndexChanged(int index)
 {
     if(ui->radioButton->isChecked())
     {
-        bool bIs16Bit = pasSelections[index].bIs16Bit;
-        QString strItemString = pasSelections[index].phFileName;
-        emit yuvSelectionBoxChanged(m_pcSequence, strItemString, bIs16Bit);
+        m_pcSequence->setYUVRole(pasSelections[index].eRole);
+        emit yuvSelectionBoxChanged(m_pcSequence);
     }
 }

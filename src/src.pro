@@ -78,7 +78,8 @@ SOURCES += main.cpp \
     views/timelineview.cpp \
     parsers/bitparser.cpp \
     views/timelineframeitem.cpp \
-    views/timelineindicatoritem.cpp
+    views/timelineindicatoritem.cpp \
+    model/sequencemanager.cpp
 
 
 HEADERS += \
@@ -145,7 +146,8 @@ HEADERS += \
     views/timelineview.h \
     parsers/bitparser.h \
     views/timelineframeitem.h \
-    views/timelineindicatoritem.h
+    views/timelineindicatoritem.h \
+    model/sequencemanager.h
 
 
 #include & libs

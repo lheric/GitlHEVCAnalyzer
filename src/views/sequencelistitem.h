@@ -22,8 +22,10 @@ protected:
 
 
 signals:
-    void sequenceRadioButtonClicked(ComSequence*, QString, bool);
-    void yuvSelectionBoxChanged(ComSequence*, QString, bool);
+    void sequenceRadioButtonClicked(ComSequence*);
+    void yuvSelectionBoxChanged(ComSequence*);
+
+
     ADD_CLASS_FIELD(ComSequence*, pcSequence, getSequence, setSequence)
 
     

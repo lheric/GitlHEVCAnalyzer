@@ -4,8 +4,12 @@
 #include <QObject>
 #include <QPixmap>
 #include <QFile>
+#include <QMap>
 #include "ioyuv.h"
 #include "gitldef.h"
+
+
+
 
 class YUV420RGBBuffer : public QObject
 {
@@ -29,6 +33,8 @@ public:
     ADD_CLASS_FIELD_PRIVATE(uchar*,  puhYUVBuffer)
     ADD_CLASS_FIELD_PRIVATE(uchar*,  puhRGBBuffer)
     ADD_CLASS_FIELD_PRIVATE(IOYUV,   cIOYUV)
+
+
 
 protected:
     bool xReadFrame(int iPoc);

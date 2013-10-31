@@ -78,7 +78,6 @@ bool BitstreamParser::parseFile(QString strDecoderFolder,
 
     m_cStdOutputFile.close();
 
-    pcSequence->setFileName(strBitstreamFilePath);
     pcSequence->setDecodingFolder(strOutputPath);
 
     return (m_cDecoderProcess.exitCode() == 0);
