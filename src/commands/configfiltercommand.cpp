@@ -1,5 +1,6 @@
 #include "configfiltercommand.h"
 #include "model/modellocator.h"
+#include "gitlivkcmdevt.h"
 #include <QString>
 
 ConfigFilterCommand::ConfigFilterCommand(QObject *parent) :
@@ -15,9 +16,9 @@ bool ConfigFilterCommand::execute( GitlCommandParameter &rcInputArg, GitlCommand
     if(pcFilter == NULL)
         return false;
     pModel->getDrawEngine().getFilterLoader().config(pcFilter);
-    int iPoc = pModel->getFrameBuffer().getPoc();
-    QPixmap* pcFramePixmap = pModel->getFrameBuffer().getFrame(iPoc);       ///< Read Frame Buffer
-    pcFramePixmap = pModel->getDrawEngine().drawFrame(&(pModel->getSequenceManager().getCurrentSequence()), iPoc, pcFramePixmap);  ///< Draw Frame Buffer
-    rcOutputArg.setParameter("picture",  QVariant::fromValue((void*)(pcFramePixmap)));
+
+    GitlIvkCmdEvt cRefreshEvt("refresh_screen");
+    cRefreshEvt.dispatch();
+
     return true;
 }

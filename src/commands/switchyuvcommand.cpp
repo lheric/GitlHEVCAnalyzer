@@ -1,5 +1,6 @@
 #include "switchyuvcommand.h"
 #include "model/modellocator.h"
+#include "gitlivkcmdevt.h"
 #include <QDebug>
 
 static struct YUVInfo
@@ -26,44 +27,35 @@ SwitchYUVCommand::SwitchYUVCommand(QObject *parent) :
 
 bool SwitchYUVCommand::execute( GitlCommandParameter& rcInputArg, GitlCommandParameter& rcOutputArg )
 {
-      bool bIs16Bit = false;
-//    if(rcInputArg.hasParameter("is_16_bit"))
-//    {
-//        bIs16Bit = rcInputArg.getParameter("is_16_bit").toBool();
-//    }
-
-//    QString strYUVFilename = rcInputArg.getParameter("YUV_filename").toString();
-
-      //TODO YUV Role should be passed as arg, not changed outside this command
-    ComSequence* pcSequence = (ComSequence*)rcInputArg.getParameter("sequence").value<void*>();
-    QString strYUVFilename = xGetYUVFilenameByRole(pcSequence->getYUVRole());
-    if(pcSequence->getYUVRole() == YUV_RESIDUAL)
-        bIs16Bit = true;
     ModelLocator* pModel = ModelLocator::getInstance();
-    if( pcSequence != &(pModel->getSequenceManager().getCurrentSequence()) )
-    {
-        qWarning() << "Not current displaying sequence, cannot switch to residual";
+    ComSequence *pcCurSeq = pModel->getSequenceManager().getCurrentSequence();
+    if(pcCurSeq == NULL)
         return false;
+
+    ComSequence* pcSequence = (ComSequence*)rcInputArg.getParameter("sequence").value<void*>();
+    if(rcInputArg.hasParameter("yuv_type"))
+    {
+        YUVRole eRole = rcInputArg.getParameter("yuv_type").value<YUVRole>();;
+        pcSequence->setYUVRole(eRole);
     }
 
-    //
-    int iWidth = pcSequence->getWidth();
-    int iHeight = pcSequence->getHeight();
-    pModel->getFrameBuffer().openYUVFile(pcSequence->getDecodingFolder()+"/"+strYUVFilename, iWidth, iHeight, bIs16Bit);
-    int iPoc = pModel->getFrameBuffer().getPoc();
+    QString strYUVFilename = xGetYUVFilenameByRole(pcSequence->getYUVRole());
 
-    int iMaxPoc = pModel->getSequenceManager().getCurrentSequence().getTotalFrames()-1;
-    int iMinPoc = 0;
+    bool bIs16Bit = false;
+    if(pcSequence->getYUVRole() == YUV_RESIDUAL)
+        bIs16Bit = true;
 
-    iPoc = VALUE_CLIP(iMinPoc, iMaxPoc, iPoc);
+    if( pcSequence == pcCurSeq )
+    {
+        //
+        int iWidth = pcSequence->getWidth();
+        int iHeight = pcSequence->getHeight();
+        pModel->getFrameBuffer().openYUVFile(pcSequence->getDecodingFolder()+"/"+strYUVFilename, iWidth, iHeight, bIs16Bit);
 
-    QPixmap* pcFramePixmap = pModel->getFrameBuffer().getFrame(iPoc);       ///< Read Frame Buffer
-    pcFramePixmap = pModel->getDrawEngine().drawFrame(&(pModel->getSequenceManager().getCurrentSequence()), iPoc, pcFramePixmap);  ///< Draw Frame Buffer
-
-    ///
-    rcOutputArg.setParameter("picture",  QVariant::fromValue((void*)(pcFramePixmap)));
-    rcOutputArg.setParameter("current_frame_poc", iPoc);
-    rcOutputArg.setParameter("total_frame_num", pModel->getSequenceManager().getCurrentSequence().getTotalFrames());
+        /// refresh
+        GitlIvkCmdEvt cRefreshEvt("refresh_screen");
+        cRefreshEvt.dispatch();
+    }
     return true;
 }
 

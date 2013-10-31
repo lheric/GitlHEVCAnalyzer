@@ -19,13 +19,11 @@ CONFIG += c++11
 
 CONFIG -= app_bundle
 CONFIG -= console
-CONFIG += static
 TEMPLATE = app
 
 SOURCES += main.cpp \
     model/common/comsequence.cpp \
     model/common/comframe.cpp \
-    model/common/comlcu.cpp \
     model/common/comrom.cpp \
     model/drawengine/drawengine.cpp \
     views/mainwindow.cpp \
@@ -79,7 +77,8 @@ SOURCES += main.cpp \
     parsers/bitparser.cpp \
     views/timelineframeitem.cpp \
     views/timelineindicatoritem.cpp \
-    model/sequencemanager.cpp
+    model/sequencemanager.cpp \
+    model/common/comcu.cpp
 
 
 HEADERS += \

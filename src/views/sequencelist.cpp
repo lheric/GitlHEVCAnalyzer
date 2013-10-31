@@ -65,14 +65,15 @@ void SequenceList::onSequenceChanged(GitlUpdateUIEvt &rcEvt)
             QFileInfo cFileInfo(pcSequence->getFileName());
             SequenceListItem* seqRadioBtn = new SequenceListItem(cFileInfo.fileName(), m_cButtonGroup);
             seqRadioBtn->setSequence(pcSequence);
+            seqRadioBtn->setYUVSelectorStatus(pcSequence->getYUVRole());
             seqRadioBtn->setChecked(pcCurrentSequence == pcSequence);
             pcItem->setSizeHint(seqRadioBtn->sizeHint());
             setItemWidget(pcItem, seqRadioBtn);
 
             connect(seqRadioBtn, SIGNAL(sequenceRadioButtonClicked(ComSequence*)),
                     this, SLOT(sequenceRadioButtonClicked(ComSequence*)) );
-            connect(seqRadioBtn, SIGNAL(yuvSelectionBoxChanged(ComSequence*)),
-                    this, SLOT(yuvSelectionBoxChanged(ComSequence*)) );
+            connect(seqRadioBtn, SIGNAL(yuvSelectionBoxChanged(ComSequence*, YUVRole)),
+                    this, SLOT(yuvSelectionBoxChanged(ComSequence*, YUVRole)) );
 
         }
     }
@@ -91,9 +92,10 @@ void SequenceList::sequenceRadioButtonClicked(ComSequence* pcSequence)
     cRequest.dispatch();
 }
 
-void SequenceList::yuvSelectionBoxChanged(ComSequence* pcSequence)
+void SequenceList::yuvSelectionBoxChanged(ComSequence* pcSequence, YUVRole eRole)
 {
     GitlIvkCmdEvt cRequest("switch_yuv");
     cRequest.setParameter("sequence", QVariant::fromValue((void*)pcSequence));
+    cRequest.setParameter("yuv_type", QVariant::fromValue(eRole));
     cRequest.dispatch();
 }

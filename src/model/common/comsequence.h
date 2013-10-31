@@ -1,7 +1,7 @@
 #ifndef COMSEQUENCE_H
 #define COMSEQUENCE_H
 #include <QString>
-
+#include <QMetaType>
 #include "comframe.h"
 
 enum YUVRole
@@ -11,6 +11,8 @@ enum YUVRole
     YUV_RESIDUAL,
     YUV_RECONSTRUCTED
 };
+
+Q_DECLARE_METATYPE(YUVRole)
 
 /*!
  * \brief This class represents a video sequence

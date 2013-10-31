@@ -28,7 +28,7 @@ public:
     
 private slots:
     void sequenceRadioButtonClicked(ComSequence* pcSequence);
-    void yuvSelectionBoxChanged(ComSequence* pcSequence);
+    void yuvSelectionBoxChanged(ComSequence* pcSequence, YUVRole eRole);
 private:
     Ui::SequenceList *ui;
     ADD_CLASS_FIELD_PRIVATE(QButtonGroup, cButtonGroup)

@@ -32,9 +32,6 @@ SequenceListItem::SequenceListItem(const QString& strText, QButtonGroup& rcGroup
         ui->yuvSelectionBox->insertItem(pSelection->iComboIndex, pSelection->phLableName);
         pSelection++;
     }
-
-
-
 }
 
 SequenceListItem::~SequenceListItem()
@@ -54,6 +51,18 @@ void SequenceListItem::setChecked(bool bCheck)
     this->ui->radioButton->setChecked(bCheck);
 }
 
+void SequenceListItem::setYUVSelectorStatus(YUVRole eRole)
+{
+    YUV_SELECTION* pSelection = pasSelections;
+    while( pSelection->iComboIndex != -1 )
+    {
+        if( pSelection->eRole == eRole )
+            break;
+        pSelection++;
+    }
+    this->ui->yuvSelectionBox->setCurrentIndex(pSelection->iComboIndex);
+}
+
 void SequenceListItem::setYUVSelectorVisible(bool bVisible)
 {
     this->ui->yuvSelectionBox->setVisible(bVisible);
@@ -61,9 +70,6 @@ void SequenceListItem::setYUVSelectorVisible(bool bVisible)
 
 void SequenceListItem::on_yuvSelectionBox_currentIndexChanged(int index)
 {
-    if(ui->radioButton->isChecked())
-    {
-        m_pcSequence->setYUVRole(pasSelections[index].eRole);
-        emit yuvSelectionBoxChanged(m_pcSequence);
-    }
+    emit yuvSelectionBoxChanged(m_pcSequence, pasSelections[index].eRole);
+
 }

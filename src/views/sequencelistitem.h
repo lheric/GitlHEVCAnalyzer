@@ -16,6 +16,7 @@ public:
     explicit SequenceListItem(const QString& strText, QButtonGroup& rcGroup, QWidget *parent = 0);
     ~SequenceListItem();
     void setChecked(bool bCheck);
+    void setYUVSelectorStatus(YUVRole eRole);
     void setYUVSelectorVisible(bool bVisible);
 protected:
     virtual void mouseReleaseEvent ( QMouseEvent * e );
@@ -23,7 +24,7 @@ protected:
 
 signals:
     void sequenceRadioButtonClicked(ComSequence*);
-    void yuvSelectionBoxChanged(ComSequence*);
+    void yuvSelectionBoxChanged(ComSequence*, YUVRole eRole);
 
 
     ADD_CLASS_FIELD(ComSequence*, pcSequence, getSequence, setSequence)

@@ -1,5 +1,5 @@
 #include "jumptoframecommand.h"
-
+#include "gitlivkcmdevt.h"
 
 JumpToFrameCommand::JumpToFrameCommand(QObject *parent) :
     GitlAbstractCommand(parent)
@@ -13,19 +13,23 @@ bool JumpToFrameCommand::execute( GitlCommandParameter& rcInputArg, GitlCommandP
     int iPoc = vValue.toInt();
     ///
     ModelLocator* pModel = ModelLocator::getInstance();
-    if( iPoc > pModel->getSequenceManager().getCurrentSequence().getTotalFrames()-1 ||
+    ComSequence *pcCurSeq = pModel->getSequenceManager().getCurrentSequence();
+    if(pcCurSeq == NULL)
+        return false;
+
+    if( iPoc > pcCurSeq->getTotalFrames()-1 ||
         iPoc < 0 )
     {
         return false;
     }
 
-    QPixmap* pcFramePixmap = pModel->getFrameBuffer().getFrame(iPoc);       ///< Read Frame Buffer
-    pcFramePixmap = pModel->getDrawEngine().drawFrame(&(pModel->getSequenceManager().getCurrentSequence()), iPoc, pcFramePixmap);  ///< Draw Frame Buffer
+    QPixmap* pcFramePixmap = pModel->getFrameBuffer().getFrame(iPoc);   ///< Read Frame Buffer
+    pcFramePixmap = pModel->getDrawEngine().drawFrame(pcCurSeq, iPoc, pcFramePixmap);  ///< Draw Frame Buffer
 
     ///
     rcOutputArg.setParameter("picture",  QVariant::fromValue((void*)(pcFramePixmap)));
     rcOutputArg.setParameter("current_frame_poc", iPoc);
-    rcOutputArg.setParameter("total_frame_num", pModel->getSequenceManager().getCurrentSequence().getTotalFrames());
+    rcOutputArg.setParameter("total_frame_num", pcCurSeq->getTotalFrames());
 
     return true;
 }

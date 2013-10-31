@@ -10,9 +10,11 @@ BitDisplayFilter::BitDisplayFilter(QObject *parent) :
 bool BitDisplayFilter::init(FilterContext* pcContext)
 {
     m_iLCUAvgBit = 0;
-    ComSequence& rcSeq = pcContext->pcSequenceManager->getCurrentSequence();
+    ComSequence* pcSeq = pcContext->pcSequenceManager->getCurrentSequence();
+    if(pcSeq == NULL)
+        return false;
 
-    foreach( ComFrame* pcFrame, rcSeq.getFrames())
+    foreach( ComFrame* pcFrame, pcSeq->getFrames())
         foreach( ComCU* pcCU, pcFrame->getLCUs() )
             m_iLCUAvgBit += pcCU->getBitCount();
 

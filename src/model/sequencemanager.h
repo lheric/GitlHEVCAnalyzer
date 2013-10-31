@@ -4,6 +4,7 @@
 #include "common/comsequence.h"
 #include "exceptions/nosequencefoundexception.h"
 #include <QVector>
+#include <QDebug>
 /*!
  * \brief The SequenceManager class
  * This class contains serveral sequences, in order to support multi-sequence analysis (difference comparasion, etc.)
@@ -12,47 +13,18 @@
 class SequenceManager
 {
 public:
-    explicit SequenceManager(){ m_pcCurrentSequence = NULL; }
-    ~SequenceManager()
-    {
-        while(!m_apSequences.empty())
-        {
-            delete m_apSequences.back();
-            m_apSequences.pop_back();
-        }
-    }
+    explicit SequenceManager();
+    ~SequenceManager();
 
-    ComSequence& getCurrentSequence()
-    {
-        if(m_pcCurrentSequence == NULL)
-            throw NoSequenceFoundException();
-        return *m_pcCurrentSequence;
-    }
+    ComSequence* getCurrentSequence();
 
-    void setCurrentSequence(ComSequence* pcSequence)
-    {
-        m_pcCurrentSequence = pcSequence;
-    }
+    void setCurrentSequence(ComSequence* pcSequence);
 
-    void addSequence(ComSequence* pcSequence)
-    {
-        m_apSequences.push_back(pcSequence);
-    }
+    void addSequence(ComSequence* pcSequence);
 
-    QVector<ComSequence*>& getAllSequences()
-    {
-        return m_apSequences;
-    }
+    QVector<ComSequence*>& getAllSequences();
 
-    ComSequence* getSequenceByFilename(const QString& strFilename)
-    {
-        foreach(ComSequence* p, m_apSequences)
-        {
-            if(p->getFileName() == strFilename)
-                return p;
-        }
-        return NULL;
-    }
+    ComSequence* getSequenceByFilename(const QString& strFilename);
 
     ADD_CLASS_FIELD_PRIVATE(ComSequence*, pcCurrentSequence)
     ADD_CLASS_FIELD_PRIVATE(QVector<ComSequence*>, apSequences)

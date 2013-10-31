@@ -1,5 +1,6 @@
 #include "zoomframecommand.h"
 #include "model/modellocator.h"
+#include "gitlivkcmdevt.h"
 ZoomFrameCommand::ZoomFrameCommand(QObject *parent) :
     GitlAbstractCommand(parent)
 {
@@ -20,12 +21,9 @@ bool ZoomFrameCommand::execute( GitlCommandParameter& rcInputArg, GitlCommandPar
     }
     ModelLocator* pModel = ModelLocator::getInstance();
     pModel->getDrawEngine().setScale(dScale);
-    int iPoc = pModel->getFrameBuffer().getPoc();
-    QPixmap* pcFramePixmap = pModel->getFrameBuffer().getFrame(iPoc);
-    pcFramePixmap = pModel->getDrawEngine().drawFrame(&(pModel->getSequenceManager().getCurrentSequence()), iPoc, pcFramePixmap);  ///< Draw Frame Buffer
-
-    ///
-    rcOutputArg.setParameter("picture",  QVariant::fromValue((void*)(pcFramePixmap)));
+    /// refresh
+    GitlIvkCmdEvt cRefreshEvt("refresh_screen");
+    cRefreshEvt.dispatch();
 
     return true;
 
