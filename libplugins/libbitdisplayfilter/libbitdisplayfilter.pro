@@ -1,5 +1,6 @@
 TEMPLATE        = lib
 CONFIG         += plugin
+CONFIG         += c++11
 INCLUDEPATH    += ../../src \
                   ../../libgitlmvc/libgitlevtbus/src
 HEADERS         = bitdisplayfilter.h
