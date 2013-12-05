@@ -154,7 +154,7 @@ INCLUDEPATH += .\
                ../libgitlmvc/libgitlevtbus/src \
                ../libgitlmvc/src
 
-LIBS += -L$${OUT_PWD}/../libgitlmvc/libgitlevtbus -L$${OUT_PWD}/../libgitlmvc -L$${PWD}/../3rdparty/WinSparkle-0.3/lib
+LIBS += -L$${OUT_PWD}/../libgitlmvc/libgitlevtbus -L$${OUT_PWD}/../libgitlmvc
 
 CONFIG(debug, debug|release){
     LIBS += -lGitlMVCd -lGitlEvtBusd

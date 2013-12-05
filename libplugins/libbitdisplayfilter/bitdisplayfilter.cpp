@@ -25,6 +25,7 @@ bool BitDisplayFilter::init(FilterContext* pcContext)
 bool BitDisplayFilter::drawCTU  (FilterContext *pcContext, QPainter *pcPainter,
                                 ComCU *pcCTU, double dScale, QRect *pcScaledArea)
 {
+    ///TODO fix m_iLCUAvgBit should be used here
     int iClip = VALUE_CLIP(0,240,pcCTU->getBitCount());
 
     QColor cFill;
