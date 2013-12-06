@@ -13,7 +13,9 @@ Current building status:  [![Build Status](https://travis-ci.org/lheric/GitlHEVC
 
 Looking for **binary**?
 
-Windows (32/64 bit):
+(**If the binary is unstable on your system, please compile it from the source code**)
+
+Windows (64 bit):
 
 <a href="https://sourceforge.net/projects/gtilhevcanalyzer/">https://sourceforge.net/projects/gtilhevcanalyzer/</a>
 
