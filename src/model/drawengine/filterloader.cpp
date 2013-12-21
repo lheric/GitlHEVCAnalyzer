@@ -16,21 +16,31 @@ FilterLoader::~FilterLoader()
 {
 }
 
-
-bool FilterLoader::reinitAllFilters()
+bool FilterLoader::initAllFilters()
 {
     xPrepareFilterContext();
     for(int i = 0; i < m_apcFilters.size(); i++)
-    {
-        if(m_apcFilters[i]->uninit(&m_cFilterContext) == false )
-            qWarning() << QString("Plugin Filter %1 Uninit Failed!").arg(m_apcFilters[i]->getName());
-
         if(m_apcFilters[i]->init(&m_cFilterContext) == false )
             qWarning() << QString("Plugin Filter %1 Init Failed!").arg(m_apcFilters[i]->getName());
+    return true;
+}
+
+bool FilterLoader::uninitAllFilters()
+{
+    xPrepareFilterContext();
+    for(int i = 0; i < m_apcFilters.size(); i++)
+        if(m_apcFilters[i]->uninit(&m_cFilterContext) == false )
+            qWarning() << QString("Plugin Filter %1 Uninit Failed!").arg(m_apcFilters[i]->getName());
+    return true;
+}
 
 
 
-    }
+
+bool FilterLoader::reinitAllFilters()
+{
+    uninitAllFilters();
+    initAllFilters();
     return true;
 }
 
@@ -73,8 +83,8 @@ bool FilterLoader::reloadAllFilters()
     /// sort
     xReadAndSortFilters();
 
-
-
+    /// init
+    initAllFilters();
     return true;
 }
 

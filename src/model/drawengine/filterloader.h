@@ -31,7 +31,19 @@ public:
     virtual bool drawFrame(QPainter* pcPainter, ComFrame *pcFrame, double dScale,  QRect* pcScaledArea);
 
     /*!
-     * \brief reinitAllFilters reinit all filters
+     * \brief initAllFilter Init all filters
+     * \return
+     */
+    virtual bool initAllFilters();
+
+    /*!
+     * \brief uninitAllFilter Uninit all filters
+     * \return
+     */
+    virtual bool uninitAllFilters();
+
+    /*!
+     * \brief reinitAllFilters Re-init all filters
      * \return
      */
     virtual bool reinitAllFilters();

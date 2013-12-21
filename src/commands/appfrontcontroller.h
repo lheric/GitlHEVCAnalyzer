@@ -1,14 +1,10 @@
 #ifndef APPFRONTCONTROLLER_H
 #define APPFRONTCONTROLLER_H
 
-#include "gitlmtfrontcontroller.h"
-//#include <QThread>
-//#include <QMutex>
-//#include <QMutexLocker>
-//#include <QWaitCondition>
+#include "gitlfrontcontroller.h"
 #include "gitlmodual.h"
 
-class AppFrontController : protected GitlMTFrontController
+class AppFrontController : protected GitlFrontController
 {
 public:
     virtual void run();

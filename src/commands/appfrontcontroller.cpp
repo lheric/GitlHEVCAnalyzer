@@ -84,7 +84,7 @@ void AppFrontController::run()
         /// do command & exception handling
         try
         {
-            GitlMTFrontController::run();
+            GitlFrontController::run();
         }
         catch( const NoSequenceFoundException& )
         {

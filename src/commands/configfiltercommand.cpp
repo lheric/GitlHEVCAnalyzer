@@ -6,6 +6,7 @@
 ConfigFilterCommand::ConfigFilterCommand(QObject *parent) :
     GitlAbstractCommand(parent)
 {
+    setInWorkerThread(false);
 }
 
 bool ConfigFilterCommand::execute( GitlCommandParameter &rcInputArg, GitlCommandParameter &rcOutputArg )
