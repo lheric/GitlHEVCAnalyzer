@@ -38,7 +38,7 @@
 #include "CommonDef.h"
 #include "TComSlice.h"
 #include "TComPic.h"
-#include "TLibEncoder/TEncSbac.h"
+
 #include "TLibDecoder/TDecSbac.h"
 
 //! \ingroup TLibCommon
