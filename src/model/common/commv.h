@@ -29,6 +29,11 @@ public:
         return ComMV(m_iHor-other.m_iHor, m_iVer-other.m_iVer);
     }
 
+    ComMV operator / (const int iScale)
+    {
+        return ComMV(m_iHor/iScale, m_iVer/iScale);
+    }
+
     bool isZero() const
     {
         return (m_iHor==0 && m_iVer==0);

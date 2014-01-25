@@ -78,7 +78,12 @@ SOURCES += main.cpp \
     views/timelineframeitem.cpp \
     views/timelineindicatoritem.cpp \
     model/sequencemanager.cpp \
-    model/common/comcu.cpp
+    model/common/comcu.cpp \
+    views/filterconfigcheckbox.cpp \
+    views/filterconfigdialog.cpp \
+    views/filterconfigslider.cpp \
+    views/gitlcolorpicker.cpp \
+    views/filterconfigradios.cpp
 
 
 HEADERS += \
@@ -146,7 +151,12 @@ HEADERS += \
     parsers/bitparser.h \
     views/timelineframeitem.h \
     views/timelineindicatoritem.h \
-    model/sequencemanager.h
+    model/sequencemanager.h \
+    views/filterconfigcheckbox.h \
+    views/filterconfigdialog.h \
+    views/filterconfigslider.h \
+    views/gitlcolorpicker.h \
+    views/filterconfigradios.h
 
 
 #include & libs
@@ -172,7 +182,12 @@ FORMS += \
     views/sequencelist.ui \
     views/sequencelistitem.ui \
     views/preferencedialog.ui \
-    views/messageviewer.ui
+    views/messageviewer.ui \
+    views/filterconfigcheckbox.ui \
+    views/filterconfigdialog.ui \
+    views/filterconfigslider.ui \
+    views/gitlcolorpicker.ui \
+    views/filterconfigradios.ui
 
 #icon
 RC_FILE = resources/icons/appicon.rc

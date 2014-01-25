@@ -44,7 +44,7 @@ static void xMessageOutput(QtMsgType type, const QMessageLogContext &context, co
 
 }
 
-
+#include "views/gitlcolorpicker.h"
 int main(int argc, char *argv[])
 {
     /// intall message handler

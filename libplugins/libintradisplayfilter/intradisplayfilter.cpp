@@ -20,10 +20,16 @@ IntraDisplayFilter::IntraDisplayFilter(QObject *parent) :
     QObject(parent)
 {
     setName("Intra Mode Display");
+    m_cConfigDialog.setWindowTitle("Intra Mode Filter");
+    m_cConfigDialog.addColorPicker("Color", &m_cConfig.getColor());
+    m_cConfigDialog.addSlider("Opaque", 0.0, 1.0, &m_cConfig.getOpaque());
+
 }
 
 bool IntraDisplayFilter::config   (FilterContext* pcContext)
 {
+    m_cConfigDialog.exec();
+    m_cConfig.applyOpaque();
     return true;
 }
 
@@ -32,9 +38,9 @@ bool IntraDisplayFilter::drawPU   (FilterContext* pcContext, QPainter* pcPainter
                                                 ComPU *pcPU, double dScale,  QRect* pcScaledArea)
 {
 
-    /// Draw PU Rect
+    /// Set Pen
     pcPainter->setBrush(Qt::NoBrush);
-    pcPainter->setPen(QColor(255,255,255,128));
+    pcPainter->setPen(m_cConfig.getColor());
 
     /// Draw intra mode
     if(pcPU->getPredMode() == MODE_INTRA)

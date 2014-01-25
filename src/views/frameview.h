@@ -4,6 +4,7 @@
 #include <QGraphicsView>
 #include <QGraphicsPixmapItem>
 #include <QGraphicsScene>
+#include <QDialog>
 #include "gitldef.h"
 
 class FrameView : public QGraphicsView

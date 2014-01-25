@@ -4,27 +4,43 @@ CUDisplayFilter::CUDisplayFilter(QObject *parent) :
     QObject(parent)
 {
     setName("CU Structure");
-    m_bShowPU = true;
+
+    ///
+    m_cConfigDialog.setWindowTitle("CU Structure Filter");
+    m_cConfigDialog.addCheckbox("Display PU", "", &m_cConfig.getShowPU());
+    m_cConfigDialog.addCheckbox("Only Disaly LCU", "", &m_cConfig.getShowLCUOnly());
+    m_cConfigDialog.addColorPicker("PU Color", &m_cConfig.getPUColor());
+    m_cConfigDialog.addColorPicker("Largest CU Color (LCU/CTU)", &m_cConfig.getLCUColor());
+    m_cConfigDialog.addColorPicker("Leaf CU Color (Smallest CU)", &m_cConfig.getSCUColor());
+    m_cConfigDialog.addSlider("Opaque", 0.1, 1.0, &m_cConfig.getOpaque() );
 
     /// init lcu pen
     m_cLCUPen.setStyle(Qt::SolidLine);
     m_cLCUPen.setWidth(3);
-    m_cLCUPen.setBrush(QBrush(QColor(255,255,255,128)));
+    m_cLCUPen.setBrush(QBrush(m_cConfig.getLCUColor()));
 
     /// init cu pen
     m_cCUPen.setStyle(Qt::SolidLine);
     m_cCUPen.setWidth(1);
-    m_cCUPen.setBrush(QBrush(QColor(255,255,255,128)));
+    m_cCUPen.setBrush(QBrush(m_cConfig.getSCUColor()));
 
     /// init pu pen
     m_cPUPen.setStyle(Qt::DashLine);
     m_cPUPen.setWidth(1);
-    m_cPUPen.setBrush(QBrush(QColor(255,255,255,128)));
+    m_cPUPen.setBrush(QBrush(m_cConfig.getPUColor()));
+
+
+
+
 }
 
 bool CUDisplayFilter::config   (FilterContext* pcContext)
 {
-    m_bShowPU = !m_bShowPU;
+    m_cConfigDialog.exec();
+    m_cConfig.applyOpaque();
+    m_cLCUPen.setBrush(QBrush(m_cConfig.getLCUColor()));
+    m_cCUPen.setBrush(QBrush(m_cConfig.getSCUColor()));
+    m_cPUPen.setBrush(QBrush(m_cConfig.getPUColor()));
     return true;
 }
 
@@ -41,13 +57,17 @@ bool CUDisplayFilter::drawCTU  (FilterContext *pcContext, QPainter *pcPainter,
 bool CUDisplayFilter::drawCU   (FilterContext* pcContext, QPainter* pcPainter,
                                 ComCU *pcCU, double dScale,  QRect* pcScaledArea)
 {
+    /// only show LCU
+    if(m_cConfig.getShowLCUOnly())
+        return true;
+
     /// Draw CU Rect
     pcPainter->setBrush(Qt::NoBrush);
     pcPainter->setPen(m_cCUPen);
     pcPainter->drawRect(*pcScaledArea);
 
     /// Draw PU
-    if(m_bShowPU)
+    if(m_cConfig.getShowPU())
     {
         pcPainter->setPen(m_cPUPen);
 

@@ -6,7 +6,7 @@
 class BitDisplayFilter : public QObject, public AbstractFilter
 {
     Q_OBJECT
-    Q_PLUGIN_METADATA(IID "cn.edu.gitl.sysu.gitlhevcanalyzer.AbstractFilter")
+    Q_PLUGIN_METADATA(IID "cn.edu.sysu.gitl.gitlhevcanalyzer.AbstractFilter")
     Q_INTERFACES(AbstractFilter)
 public:
     explicit BitDisplayFilter(QObject *parent = 0);

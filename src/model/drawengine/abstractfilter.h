@@ -5,7 +5,6 @@
 #include <QtPlugin>
 #include "model/common/comsequence.h"
 
-
 class SequenceManager;
 class DrawEngine;
 class YUV420RGBBuffer;
@@ -159,10 +158,13 @@ public:
     ADD_CLASS_FIELD(bool, bEnable, getEnable, setEnable)
 
 
+
+
+
 };
 
 /// This is required by the Qt Plugin System.
-Q_DECLARE_INTERFACE(AbstractFilter, "cn.edu.gitl.sysu.gitlhevcanalyzer.AbstractFilter")
+Q_DECLARE_INTERFACE(AbstractFilter, "cn.edu.sysu.gitl.gitlhevcanalyzer.AbstractFilter")
 Q_DECLARE_METATYPE(AbstractFilter*)
 
 #endif // ABSTRACTFILTER_H
