@@ -1,0 +1,198 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectName>TLibEncoder</ProjectName>
+    <ProjectGuid>{47E90995-1FC5-4EE4-A94D-AD474169F0E1}</ProjectGuid>
+    <RootNamespace>TLibEncoder</RootNamespace>
+    <Keyword>Qt4VSv1.0</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.40219.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)\vc10\$(Platform)\$(Configuration)\$(RootNamespace)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)\vc10\$(Platform)\$(Configuration)\$(RootNamespace)\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)\vc10\$(Platform)\$(Configuration)\$(RootNamespace)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)\vc10\$(Platform)\$(Configuration)\$(RootNamespace)\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)\vc10\$(Platform)\$(Configuration)\$(RootNamespace)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)\vc10\$(Platform)\$(Configuration)\$(RootNamespace)\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SolutionDir)\vc10\$(Platform)\$(Configuration)\$(RootNamespace)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SolutionDir)\vc10\$(Platform)\$(Configuration)\$(RootNamespace)\</IntDir>
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" />
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Release|x64'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>$(SolutionDir)\..\source\Lib\;$(SolutionDir)\..\compat\msvc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Midl>
+      <TargetEnvironment>X64</TargetEnvironment>
+    </Midl>
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>$(SolutionDir)\..\source\Lib\;$(SolutionDir)\..\compat\msvc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <IntrinsicFunctions>false</IntrinsicFunctions>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <AdditionalIncludeDirectories>$(SolutionDir)\..\source\Lib\;$(SolutionDir)\..\compat\msvc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_LIB;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Midl>
+      <TargetEnvironment>X64</TargetEnvironment>
+    </Midl>
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <IntrinsicFunctions>false</IntrinsicFunctions>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <AdditionalIncludeDirectories>$(SolutionDir)\..\source\Lib\;$(SolutionDir)\..\compat\msvc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_LIB;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\source\Lib\TLibEncoder\NALwrite.cpp" />
+    <ClCompile Include="..\..\source\Lib\TLibEncoder\SEIwrite.cpp" />
+    <ClCompile Include="..\..\source\Lib\TLibEncoder\SyntaxElementWriter.cpp" />
+    <ClCompile Include="..\..\source\Lib\TLibEncoder\TEncAnalyze.cpp" />
+    <ClCompile Include="..\..\source\Lib\TLibEncoder\TEncBinCoderCABAC.cpp" />
+    <ClCompile Include="..\..\source\Lib\TLibEncoder\TEncBinCoderCABACCounter.cpp" />
+    <ClCompile Include="..\..\source\Lib\TLibEncoder\TEncCavlc.cpp" />
+    <ClCompile Include="..\..\source\Lib\TLibEncoder\TEncCu.cpp" />
+    <ClCompile Include="..\..\source\Lib\TLibEncoder\TEncEntropy.cpp" />
+    <ClCompile Include="..\..\source\Lib\TLibEncoder\TEncGOP.cpp" />
+    <ClCompile Include="..\..\source\Lib\TLibEncoder\TEncPic.cpp" />
+    <ClCompile Include="..\..\source\Lib\TLibEncoder\TEncPreanalyzer.cpp" />
+    <ClCompile Include="..\..\source\Lib\TLibEncoder\TEncRateCtrl.cpp" />
+    <ClCompile Include="..\..\source\Lib\TLibEncoder\TEncSampleAdaptiveOffset.cpp" />
+    <ClCompile Include="..\..\source\Lib\TLibEncoder\TEncSbac.cpp" />
+    <ClCompile Include="..\..\source\Lib\TLibEncoder\TEncSearch.cpp" />
+    <ClCompile Include="..\..\source\Lib\TLibEncoder\TEncSlice.cpp" />
+    <ClCompile Include="..\..\source\Lib\TLibEncoder\TEncTop.cpp" />
+    <ClCompile Include="..\..\source\Lib\TLibEncoder\WeightPredAnalysis.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\source\Lib\TLibEncoder\AnnexBwrite.h" />
+    <ClInclude Include="..\..\source\Lib\TLibEncoder\NALwrite.h" />
+    <ClInclude Include="..\..\source\Lib\TLibEncoder\SEIwrite.h" />
+    <ClInclude Include="..\..\source\Lib\TLibEncoder\SyntaxElementWriter.h" />
+    <ClInclude Include="..\..\source\Lib\TLibEncoder\TEncAnalyze.h" />
+    <ClInclude Include="..\..\source\Lib\TLibEncoder\TEncBinCoder.h" />
+    <ClInclude Include="..\..\source\Lib\TLibEncoder\TEncBinCoderCABAC.h" />
+    <ClInclude Include="..\..\source\Lib\TLibEncoder\TEncBinCoderCABACCounter.h" />
+    <ClInclude Include="..\..\source\Lib\TLibEncoder\TEncCavlc.h" />
+    <ClInclude Include="..\..\source\Lib\TLibEncoder\TEncCfg.h" />
+    <ClInclude Include="..\..\source\Lib\TLibEncoder\TEncCu.h" />
+    <ClInclude Include="..\..\source\Lib\TLibEncoder\TEncEntropy.h" />
+    <ClInclude Include="..\..\source\Lib\TLibEncoder\TEncGOP.h" />
+    <ClInclude Include="..\..\source\Lib\TLibEncoder\TEncPic.h" />
+    <ClInclude Include="..\..\source\Lib\TLibEncoder\TEncPreanalyzer.h" />
+    <ClInclude Include="..\..\source\Lib\TLibEncoder\TEncRateCtrl.h" />
+    <ClInclude Include="..\..\source\Lib\TLibEncoder\TEncSampleAdaptiveOffset.h" />
+    <ClInclude Include="..\..\source\Lib\TLibEncoder\TEncSbac.h" />
+    <ClInclude Include="..\..\source\Lib\TLibEncoder\TEncSearch.h" />
+    <ClInclude Include="..\..\source\Lib\TLibEncoder\TEncSlice.h" />
+    <ClInclude Include="..\..\source\Lib\TLibEncoder\TEncTop.h" />
+    <ClInclude Include="..\..\source\Lib\TLibEncoder\WeightPredAnalysis.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties Qt5Version_x0020_Win32="msvc2012" />
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

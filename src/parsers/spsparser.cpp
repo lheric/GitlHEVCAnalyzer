@@ -61,26 +61,26 @@ bool SpsParser::parseFile(QTextStream* pcInputStream, ComSequence* pcSequence)
         }
     }
 
-    // Min TU Depth:0
-    cMatchTarget.setPattern("Min TU Depth:([0-9]+)");
+    // Max Inter TU Depth:3
+    cMatchTarget.setPattern("Max Inter TU Depth:([0-9]+)");
     while( !pcInputStream->atEnd() )
     {
         strOneLine = pcInputStream->readLine();
         if( cMatchTarget.indexIn(strOneLine) != -1 ) {
             int iMinTUDepth = cMatchTarget.cap(1).toInt();
-            pcSequence->setMinTUDepth(iMinTUDepth);
+            pcSequence->setMaxInterTUDepth(iMinTUDepth);
             break;
         }
     }
 
-    // Max TU Depth:1
-    cMatchTarget.setPattern("Max TU Depth:([0-9]+)");
+    // Max Intra TU Depth:3
+    cMatchTarget.setPattern("Max Intra TU Depth:([0-9]+)");
     while( !pcInputStream->atEnd() )
     {
         strOneLine = pcInputStream->readLine();
         if( cMatchTarget.indexIn(strOneLine) != -1 ) {
             int iMaxTUDepth = cMatchTarget.cap(1).toInt();
-            pcSequence->setMaxTUDepth(iMaxTUDepth);
+            pcSequence->setMaxIntraTUDepth(iMaxTUDepth);
             break;
         }
     }

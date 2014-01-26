@@ -213,8 +213,8 @@ Void TSysuAnalyzerOutput::writeOutSps   ( TComSPS* pcSPS )
 
   m_cSpsOut << "Max CU Size:"  << pcSPS->getMaxCUHeight() << endl;
   m_cSpsOut << "Max CU Depth:" << pcSPS->getMaxCUDepth() << endl;
-  m_cSpsOut << "Min TU Depth:" << pcSPS->getMinTrDepth() << endl;
-  m_cSpsOut << "Max TU Depth:" << pcSPS->getMaxTrDepth() << endl;
+  m_cSpsOut << "Max Inter TU Depth:" << pcSPS->getQuadtreeTUMaxDepthInter() << endl;
+  m_cSpsOut << "Max Intra TU Depth:" << pcSPS->getQuadtreeTUMaxDepthIntra() << endl;
 
 #if (HM_VERSION >= 100)
   int iInputBitDepth = pcSPS->getBitDepthY();

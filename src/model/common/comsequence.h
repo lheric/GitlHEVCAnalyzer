@@ -40,9 +40,9 @@ public:
 
     ADD_CLASS_FIELD( int, iMaxCUSize, getMaxCUSize, setMaxCUSize )      /// max CU size (64 as general)
     ADD_CLASS_FIELD( int, iMaxCUDepth, getMaxCUDepth, setMaxCUDepth )   /// max CU Tree depth (4 as general)
-    ADD_CLASS_FIELD( int, iMinTUDepth, getMinTUDepth, setMinTUDepth )   /// max TU size
-    ADD_CLASS_FIELD( int, iMaxTUDepth, getMaxTUDepth, setMaxTUDepth )   /// max TU Tree depth
-    ADD_CLASS_FIELD( int, iInputBitDepth, getInputBitDepth, setInputBitDepth)   /// YUV bit depth
+    ADD_CLASS_FIELD( int, iMinTUDepth, getMaxIntraTUDepth, setMaxIntraTUDepth )   /// max Intra TU depth
+    ADD_CLASS_FIELD( int, iMaxTUDepth, getMaxInterTUDepth, setMaxInterTUDepth )   /// max Inter TU depth
+    ADD_CLASS_FIELD( int, iInputBitDepth, getInputBitDepth, setInputBitDepth)     /// YUV bit depth
 
     /*! Decoded File Location */
     ADD_CLASS_FIELD( QString, strDeocdingFolder, getDecodingFolder, setDecodingFolder)

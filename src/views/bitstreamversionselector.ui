@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>194</width>
-    <height>152</height>
+    <width>197</width>
+    <height>165</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -50,7 +50,14 @@
              <bool>true</bool>
             </property>
             <property name="text">
-             <string>HM 10.0 or later</string>
+             <string>HM 10.0</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QRadioButton" name="version120">
+            <property name="text">
+             <string>HM 12.0 or later</string>
             </property>
            </widget>
           </item>

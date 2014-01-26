@@ -1,0 +1,213 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectName>TLibCommon</ProjectName>
+    <ProjectGuid>{78018D78-F890-47E3-A0B7-09D273F0B11D}</ProjectGuid>
+    <RootNamespace>TLibCommon</RootNamespace>
+    <Keyword>Qt4VSv1.0</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.40219.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)\vc10\$(Platform)\$(Configuration)\$(RootNamespace)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)\vc10\$(Platform)\$(Configuration)\$(RootNamespace)\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)\vc10\$(Platform)\$(Configuration)\$(RootNamespace)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)\vc10\$(Platform)\$(Configuration)\$(RootNamespace)\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)\vc10\$(Platform)\$(Configuration)\$(RootNamespace)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)\vc10\$(Platform)\$(Configuration)\$(RootNamespace)\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SolutionDir)\vc10\$(Platform)\$(Configuration)\$(RootNamespace)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SolutionDir)\vc10\$(Platform)\$(Configuration)\$(RootNamespace)\</IntDir>
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" />
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Release|x64'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>$(SolutionDir)\..\source\Lib\;$(SolutionDir)\..\compat\msvc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Midl>
+      <TargetEnvironment>X64</TargetEnvironment>
+    </Midl>
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>$(SolutionDir)\..\source\Lib\;$(SolutionDir)\..\compat\msvc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <IntrinsicFunctions>false</IntrinsicFunctions>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <AdditionalIncludeDirectories>$(SolutionDir)\..\source\Lib\;$(SolutionDir)\..\compat\msvc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_LIB;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Midl>
+      <TargetEnvironment>X64</TargetEnvironment>
+    </Midl>
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <IntrinsicFunctions>false</IntrinsicFunctions>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <AdditionalIncludeDirectories>$(SolutionDir)\..\source\Lib\;$(SolutionDir)\..\compat\msvc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_LIB;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\source\Lib\TLibCommon\ContextModel.cpp" />
+    <ClCompile Include="..\..\source\Lib\TLibCommon\ContextModel3DBuffer.cpp" />
+    <ClCompile Include="..\..\source\Lib\libmd5\libmd5.c" />
+    <ClCompile Include="..\..\source\Lib\TLibCommon\SEI.cpp" />
+    <ClCompile Include="..\..\source\Lib\TLibCommon\TComBitStream.cpp" />
+    <ClCompile Include="..\..\source\Lib\TLibCommon\TComCABACTables.cpp" />
+    <ClCompile Include="..\..\source\Lib\TLibCommon\TComDataCU.cpp" />
+    <ClCompile Include="..\..\source\Lib\TLibCommon\TComInterpolationFilter.cpp" />
+    <ClCompile Include="..\..\source\Lib\TLibCommon\TComLoopFilter.cpp" />
+    <ClCompile Include="..\..\source\Lib\TLibCommon\TComMotionInfo.cpp" />
+    <ClCompile Include="..\..\source\Lib\TLibCommon\TComPattern.cpp" />
+    <ClCompile Include="..\..\source\Lib\TLibCommon\TComPic.cpp" />
+    <ClCompile Include="..\..\source\Lib\TLibCommon\TComPicSym.cpp" />
+    <ClCompile Include="..\..\source\Lib\TLibCommon\TComPicYuv.cpp" />
+    <ClCompile Include="..\..\source\Lib\TLibCommon\TComPicYuvMD5.cpp" />
+    <ClCompile Include="..\..\source\Lib\TLibCommon\TComPrediction.cpp" />
+    <ClCompile Include="..\..\source\Lib\TLibCommon\TComRdCost.cpp" />
+    <ClCompile Include="..\..\source\Lib\TLibCommon\TComRdCostWeightPrediction.cpp" />
+    <ClCompile Include="..\..\source\Lib\TLibCommon\TComRom.cpp" />
+    <ClCompile Include="..\..\source\Lib\TLibCommon\TComSampleAdaptiveOffset.cpp" />
+    <ClCompile Include="..\..\source\Lib\TLibCommon\TComSlice.cpp" />
+    <ClCompile Include="..\..\source\Lib\TLibCommon\TComTrQuant.cpp" />
+    <ClCompile Include="..\..\source\Lib\TLibCommon\TComWeightPrediction.cpp" />
+    <ClCompile Include="..\..\source\Lib\TLibCommon\TComYuv.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\source\Lib\TLibCommon\AccessUnit.h" />
+    <ClInclude Include="..\..\source\Lib\TLibCommon\CommonDef.h" />
+    <ClInclude Include="..\..\source\Lib\TLibCommon\ContextModel.h" />
+    <ClInclude Include="..\..\source\Lib\TLibCommon\ContextModel3DBuffer.h" />
+    <ClInclude Include="..\..\source\Lib\TLibCommon\ContextTables.h" />
+    <ClInclude Include="..\..\source\Lib\libmd5\libmd5.h" />
+    <ClInclude Include="..\..\source\Lib\libmd5\MD5.h" />
+    <ClInclude Include="..\..\source\Lib\TLibCommon\NAL.h" />
+    <ClInclude Include="..\..\source\Lib\TLibCommon\SEI.h" />
+    <ClInclude Include="..\..\source\Lib\TLibCommon\TComBitCounter.h" />
+    <ClInclude Include="..\..\source\Lib\TLibCommon\TComBitStream.h" />
+    <ClInclude Include="..\..\source\Lib\TLibCommon\TComCABACTables.h" />
+    <ClInclude Include="..\..\source\Lib\TLibCommon\TComDataCU.h" />
+    <ClInclude Include="..\..\source\Lib\TLibCommon\TComInterpolationFilter.h" />
+    <ClInclude Include="..\..\source\Lib\TLibCommon\TComList.h" />
+    <ClInclude Include="..\..\source\Lib\TLibCommon\TComLoopFilter.h" />
+    <ClInclude Include="..\..\source\Lib\TLibCommon\TComMotionInfo.h" />
+    <ClInclude Include="..\..\source\Lib\TLibCommon\TComMv.h" />
+    <ClInclude Include="..\..\source\Lib\TLibCommon\TComPattern.h" />
+    <ClInclude Include="..\..\source\Lib\TLibCommon\TComPic.h" />
+    <ClInclude Include="..\..\source\Lib\TLibCommon\TComPicSym.h" />
+    <ClInclude Include="..\..\source\Lib\TLibCommon\TComPicYuv.h" />
+    <ClInclude Include="..\..\source\Lib\TLibCommon\TComPrediction.h" />
+    <ClInclude Include="..\..\source\Lib\TLibCommon\TComRdCost.h" />
+    <ClInclude Include="..\..\source\Lib\TLibCommon\TComRdCostWeightPrediction.h" />
+    <ClInclude Include="..\..\source\Lib\TLibCommon\TComRom.h" />
+    <ClInclude Include="..\..\source\Lib\TLibCommon\TComSampleAdaptiveOffset.h" />
+    <ClInclude Include="..\..\source\Lib\TLibCommon\TComSlice.h" />
+    <ClInclude Include="..\..\source\Lib\TLibCommon\TComTrQuant.h" />
+    <ClInclude Include="..\..\source\Lib\TLibCommon\TComWeightPrediction.h" />
+    <ClInclude Include="..\..\source\Lib\TLibCommon\TComYuv.h" />
+    <ClInclude Include="..\..\source\Lib\TLibCommon\TypeDef.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties Qt5Version_x0020_Win32="msvc2012" />
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>
