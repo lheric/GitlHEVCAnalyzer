@@ -50,7 +50,7 @@ bool FilterLoader::reloadAllFilters()
 
     QDir cPluginsDir(m_strPluginDir);
     QStringList cFilters;
-    cFilters << "*.dll" << "*.so";
+    cFilters << "*.dll" << "*.so" << "*.dylib";
     /// try to load each file as plugin in the directory
     foreach(QString strPluginFileName, cPluginsDir.entryList(cFilters, QDir::Files))
     {
