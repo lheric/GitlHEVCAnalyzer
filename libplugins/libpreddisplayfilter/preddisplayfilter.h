@@ -51,7 +51,7 @@ public:
                            ComPU *pcPU, double dScale,  QRect* pcScaledArea);
 
     ADD_CLASS_FIELD_PRIVATE(PredDisplayFilterConfig, cConfig)     ///< filter configurations
-    ADD_CLASS_FIELD_PRIVATE(FilterConfigDialog, cConfigDialog)  ///< config GUI
+    ADD_CLASS_FIELD_PRIVATE(FilterConfigDialog, cConfigDialog)    ///< config GUI
     
 public slots:
     

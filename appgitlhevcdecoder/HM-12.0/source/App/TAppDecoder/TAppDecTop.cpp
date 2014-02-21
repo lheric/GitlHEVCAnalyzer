@@ -280,7 +280,7 @@ Void TAppDecTop::xWriteOutput( TComList<TComPic*>* pcListPic, UInt tId )
                                         conf.getWindowTopOffset() + defDisp.getWindowTopOffset(),
                                         conf.getWindowBottomOffset() + defDisp.getWindowBottomOffset(), isTff );
 #if ENABLE_ANAYSIS_OUTPUT
-        m_cTVideoIOYuvResiFile.write(   pcPicTop->getPicYuvResi(), pcPicBottom->getPicYuvResi(),
+        m_cTVideoIOYuvResiFile.write(   pcPicTop->getPicYuvResi(),  pcPicBottom->getPicYuvResi(),
                                         conf.getWindowLeftOffset() + defDisp.getWindowLeftOffset(),
                                         conf.getWindowRightOffset() + defDisp.getWindowRightOffset(),
                                         conf.getWindowTopOffset() + defDisp.getWindowTopOffset(),
@@ -347,6 +347,13 @@ Void TAppDecTop::xWriteOutput( TComList<TComPic*>* pcListPic, UInt tId )
                                         conf.getWindowRightOffset() + defDisp.getWindowRightOffset(),
                                         conf.getWindowTopOffset() + defDisp.getWindowTopOffset(),
                                         conf.getWindowBottomOffset() + defDisp.getWindowBottomOffset() );
+#if ENABLE_ANAYSIS_OUTPUT
+        m_cTVideoIOYuvResiFile.write( pcPic->getPicYuvResi(),
+                                        conf.getWindowLeftOffset() + defDisp.getWindowLeftOffset(),
+                                        conf.getWindowRightOffset() + defDisp.getWindowRightOffset(),
+                                        conf.getWindowTopOffset() + defDisp.getWindowTopOffset(),
+                                        conf.getWindowBottomOffset() + defDisp.getWindowBottomOffset() );
+#endif
         }
         
         // update POC of display order
@@ -415,7 +422,7 @@ Void TAppDecTop::xFlushOutput( TComList<TComPic*>* pcListPic )
                                         conf.getWindowTopOffset() + defDisp.getWindowTopOffset(),
                                         conf.getWindowBottomOffset() + defDisp.getWindowBottomOffset(), isTff );
 #if ENABLE_ANAYSIS_OUTPUT
-        m_cTVideoIOYuvResiFile.write( pcPicTop->getPicYuvResi(),  pcPicBottom->getPicYuvResi(),
+        m_cTVideoIOYuvResiFile.write(   pcPicTop->getPicYuvResi(),  pcPicBottom->getPicYuvResi(),
                                         conf.getWindowLeftOffset() + defDisp.getWindowLeftOffset(),
                                         conf.getWindowRightOffset() + defDisp.getWindowRightOffset(),
                                         conf.getWindowTopOffset() + defDisp.getWindowTopOffset(),
@@ -496,6 +503,13 @@ Void TAppDecTop::xFlushOutput( TComList<TComPic*>* pcListPic )
                                         conf.getWindowRightOffset() + defDisp.getWindowRightOffset(),
                                         conf.getWindowTopOffset() + defDisp.getWindowTopOffset(),
                                         conf.getWindowBottomOffset() + defDisp.getWindowBottomOffset() );
+#if ENABLE_ANAYSIS_OUTPUT
+        m_cTVideoIOYuvResiFile.write( pcPic->getPicYuvResi(),
+                                        conf.getWindowLeftOffset() + defDisp.getWindowLeftOffset(),
+                                        conf.getWindowRightOffset() + defDisp.getWindowRightOffset(),
+                                        conf.getWindowTopOffset() + defDisp.getWindowTopOffset(),
+                                        conf.getWindowBottomOffset() + defDisp.getWindowBottomOffset() );
+#endif
         }
         
         // update POC of display order
