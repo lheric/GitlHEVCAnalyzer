@@ -97,13 +97,13 @@ void BitstreamParser::displayDecoderOutput()
 
         // display progress text as event
         QRegExp cMatchTarget;
-        cMatchTarget.setPattern("POC *([0-9]+)");
+        cMatchTarget.setPattern("POC *(-?[0-9]+)");
 
         if( cMatchTarget.indexIn(strLine) != -1 )
         {
             GitlUpdateUIEvt evt;
             int iPoc = cMatchTarget.cap(1).toInt();
-            QString strText = QString("%1 Frame Decoded").arg(iPoc);
+            QString strText = QString("POC %1 Decoded").arg(iPoc);
             evt.setParameter("decoding_progress", strText);
             dispatchEvt(evt);
         }

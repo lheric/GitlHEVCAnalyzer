@@ -14,10 +14,10 @@ bool BitDisplayFilter::init(FilterContext* pcContext)
     if(pcSeq == NULL)
         return true;
 
-    foreach( ComFrame* pcFrame, pcSeq->getFrames())
+    foreach( ComFrame* pcFrame, pcSeq->getFramesInDisOrder())
         foreach( ComCU* pcCU, pcFrame->getLCUs() )
             m_iLCUAvgBit += pcCU->getBitCount();
-    m_iLCUAvgBit /= pcSeq->getFrames().size()*(pcSeq->getFrames().at(0)->getLCUs().size());
+    m_iLCUAvgBit /= pcSeq->getFramesInDisOrder().size()*(pcSeq->getFramesInDisOrder().at(0)->getLCUs().size());
 
     return true;
 

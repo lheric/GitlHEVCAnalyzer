@@ -19,12 +19,12 @@ public:
     ~YUV420RGBBuffer();
 
     bool openYUVFile( const QString& strYUVPath, int iWidth, int iHeight, bool bIs16Bit = false );
-    QPixmap* getFrame(int iPoc);
+    QPixmap* getFrame(int iFrameCount);
 
 
     ADD_CLASS_FIELD(int, iBufferWidth, getBufferWidth, setBufferWidth)
     ADD_CLASS_FIELD(int, iBufferHeight, getBufferHeight, setBufferHeight)
-    ADD_CLASS_FIELD(int, iPoc, getPoc, setPoc)
+    ADD_CLASS_FIELD(int, iFrameCount, getFrameCount, setFrameCount)
     ADD_CLASS_FIELD(bool, bIs16Bit, getIs16Bit, setIs16Bit)
 
 
@@ -37,7 +37,7 @@ public:
 
 
 protected:
-    bool xReadFrame(int iPoc);
+    bool xReadFrame(int iFrameCount);
     void xYuv2rgb(uchar* puhYUV, uchar* puhRGB, int iWidth, int iHeight);
     void x16to8BitClip(uchar* puh8BitYUV, const uchar* puh16BitYUV, const long lSizeInUnitCount);
 

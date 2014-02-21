@@ -8,7 +8,6 @@
 #include "io/yuv420rgbbuffer.h"
 #include "drawengine/drawengine.h"
 #include "preferences.h"
-#include "parsers/encodergeneralparser.h"
 #include "parsers/decodergeneralparser.h"
 #include "parsers/cupuparser.h"
 #include "exceptions/nosequencefoundexception.h"

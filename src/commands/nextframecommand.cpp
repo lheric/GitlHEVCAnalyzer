@@ -13,7 +13,7 @@ bool NextFrameCommand::execute( GitlCommandParameter &rcInputArg, GitlCommandPar
     if(pcCurSeq == NULL)
         return false;
 
-    int iCurBufPoc = pModel->getFrameBuffer().getPoc();
+    int iCurBufPoc = pModel->getFrameBuffer().getFrameCount();
     int iNextPoc = iCurBufPoc+1;
     if( iNextPoc >= pcCurSeq->getTotalFrames())
         return false;

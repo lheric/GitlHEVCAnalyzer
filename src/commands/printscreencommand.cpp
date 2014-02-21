@@ -13,7 +13,7 @@ bool PrintScreenCommand::execute( GitlCommandParameter& rcInputArg, GitlCommandP
     if(pcCurSeq == NULL)
         return false;
 
-    int iCurBufPoc = pModel->getFrameBuffer().getPoc();
+    int iCurBufPoc = pModel->getFrameBuffer().getFrameCount();
     QPixmap* pcFramePixmap = pModel->getFrameBuffer().getFrame(iCurBufPoc);   ///< Read Frame Buffer
     if( pcFramePixmap == NULL )
         return false;

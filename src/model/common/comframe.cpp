@@ -3,7 +3,7 @@
 ComFrame::ComFrame(ComSequence* pcParent)
 {
     m_pcSequence = pcParent;
-    m_iPoc = -1;
+    m_iFrameCount = -1;
     m_iBitCount = 0;
     m_dPSNR = -1;
     m_dBitrate = -1;

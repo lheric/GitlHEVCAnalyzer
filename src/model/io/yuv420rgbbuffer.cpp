@@ -8,7 +8,7 @@ YUV420RGBBuffer::YUV420RGBBuffer()
 
     m_iBufferWidth = 0;
     m_iBufferHeight = 0;
-    m_iPoc = -1;
+    m_iFrameCount = -1;
     m_puh16BitYUVBuffer = NULL;
     m_puhYUVBuffer = NULL;
     m_puhRGBBuffer = NULL;
@@ -65,11 +65,11 @@ bool YUV420RGBBuffer::openYUVFile( const QString& strYUVPath, int iWidth, int iH
 
 }
 
-QPixmap* YUV420RGBBuffer::getFrame(int iPoc)
+QPixmap* YUV420RGBBuffer::getFrame(int iFrameCount)
 {
     QPixmap* pcFramePixmap = NULL;
 
-    if( xReadFrame(iPoc) )
+    if( xReadFrame(iFrameCount) )
     {
         QImage cFrameImg(m_puhRGBBuffer, m_iBufferWidth, m_iBufferHeight, QImage::Format_RGB888 );
         m_cFramePixmap = QPixmap::fromImage(cFrameImg);
@@ -83,15 +83,15 @@ QPixmap* YUV420RGBBuffer::getFrame(int iPoc)
     return pcFramePixmap;
 }
 
-bool YUV420RGBBuffer::xReadFrame(int iPoc)
+bool YUV420RGBBuffer::xReadFrame(int iFrameCount)
 {
     int i16BitMultiplier = ( m_bIs16Bit ? 2 : 1 );
 
-    if( iPoc < 0 )
+    if( iFrameCount < 0 )
         return false;
-    m_iPoc = iPoc;
+    m_iFrameCount = iFrameCount;
     int iFrameSizeInByte = (m_iBufferWidth*m_iBufferHeight*3/2)*i16BitMultiplier;
-    if( m_cIOYUV.seekTo(iPoc*iFrameSizeInByte) == false )
+    if( m_cIOYUV.seekTo(iFrameCount*iFrameSizeInByte) == false )
         return false;
     int iReadBytes = 0;   ///read
 

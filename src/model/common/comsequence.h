@@ -29,7 +29,8 @@ public:
     void init();
 
     /*! Frames in this sequence */
-    ADD_CLASS_FIELD(QVector<ComFrame*>, cFrames, getFrames, setFrames)
+    ADD_CLASS_FIELD(QVector<ComFrame*>, cFramesInDisOrder, getFramesInDisOrder, setFramesInDisOrder)    /// frames in displaying order    0 1 2 3 4 ...
+    ADD_CLASS_FIELD(QVector<ComFrame*>, cFramesInDecOrder, getFramesInDecOrder, setFramesInDecOrder)    /// frames in decoding order      0 4 2 1 3 ...
 
 
     /*! Sequence Parameter Set */

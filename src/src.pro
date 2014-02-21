@@ -35,7 +35,6 @@ SOURCES += main.cpp \
     commands/appfrontcontroller.cpp \
     views/bitstreamversionselector.cpp \
     parsers/bitstreamparser.cpp \
-    parsers/encodergeneralparser.cpp \
     parsers/decodergeneralparser.cpp \
     commands/decodebitstreamcommand.cpp \
     parsers/spsparser.cpp \
@@ -103,7 +102,6 @@ HEADERS += \
     commands/appfrontcontroller.h \
     views/bitstreamversionselector.h \
     parsers/bitstreamparser.h \
-    parsers/encodergeneralparser.h \
     parsers/decodergeneralparser.h \
     commands/decodebitstreamcommand.h \
     parsers/spsparser.h \

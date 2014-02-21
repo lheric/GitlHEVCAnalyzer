@@ -19,7 +19,7 @@ bool JumpToPercentCommand::execute( GitlCommandParameter& rcInputArg, GitlComman
     int iPoc = int(iPercent*iMaxPOC/100.0+0.5);
 
     /// [Optimization] if poc is not changed, do nothing
-    if( iPoc == pModel->getFrameBuffer().getPoc() )
+    if( iPoc == pModel->getFrameBuffer().getFrameCount() )
         return true;
 
     if( iPoc > iMaxPOC || iPoc < iMinPOC )

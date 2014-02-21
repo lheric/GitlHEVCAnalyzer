@@ -36,8 +36,10 @@ bool CUPUParser::parseFile(QTextStream* pcInputStream, ComSequence* pcSequence)
     ComFrame* pcFrame = NULL;
     ComCU* pcLCU = NULL;
     int iLCUSize = pcSequence->getMaxCUSize();
-    cMatchTarget.setPattern("^<([0-9]+),([0-9]+)> (.*) ");
+    cMatchTarget.setPattern("^<(-?[0-9]+),([0-9]+)> (.*) ");
     QTextStream cCUInfoStream;
+    int iDecOrder = -1;
+    int iLastPOC  = -1;
     while( !pcInputStream->atEnd() )
     {
 
@@ -47,7 +49,9 @@ bool CUPUParser::parseFile(QTextStream* pcInputStream, ComSequence* pcSequence)
 
             /// poc and lcu addr
             int iPoc = cMatchTarget.cap(1).toInt();
-            pcFrame = pcSequence->getFrames().at(iPoc);
+            iDecOrder += (iLastPOC != iPoc);
+            iLastPOC = iPoc;
+            pcFrame = pcSequence->getFramesInDecOrder().at(iDecOrder);
             int iAddr = cMatchTarget.cap(2).toInt();
             pcLCU = new ComCU(pcFrame);
             pcLCU->setAddr(iAddr);

@@ -12,6 +12,9 @@ public:
     explicit DecoderGeneralParser(QObject *parent = 0);
     bool parseFile(QTextStream* pcInputStream, ComSequence* pcSequence);
 
+protected:
+    void xSortByFrameCount( ComSequence* pcSequence );
+
 signals:
 
 public slots:

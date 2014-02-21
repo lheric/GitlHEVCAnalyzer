@@ -8,20 +8,21 @@ ComSequence::ComSequence()
 
 ComSequence::~ComSequence()
 {
-    for( int i = 0; i < m_cFrames.size(); i++ )
+    for( int i = 0; i < m_cFramesInDisOrder.size(); i++ )
     {
-        delete m_cFrames.at(i);
+        delete m_cFramesInDisOrder.at(i);
     }
 }
 
 void ComSequence::init()
 {
     /*! Frames in this sequence */
-    for( int i = 0; i < m_cFrames.size(); i++ )
+    for( int i = 0; i < m_cFramesInDisOrder.size(); i++ )
     {
-        delete m_cFrames.at(i);
+        delete m_cFramesInDisOrder.at(i);
     }
-    m_cFrames.clear();
+    m_cFramesInDisOrder.clear();
+    m_cFramesInDecOrder.clear();
 
     /*! Sequence general info */
     m_strFileName.clear();

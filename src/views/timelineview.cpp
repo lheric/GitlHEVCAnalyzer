@@ -101,14 +101,14 @@ void TimeLineView::xDrawFrameBars(ComSequence* pcSequence)
     int iCounter = 0;
     int iGap = 2;
 
-    foreach(ComFrame* pcFrame, pcSequence->getFrames())
+    foreach(ComFrame* pcFrame, pcSequence->getFramesInDisOrder())
     {
         int iPercent = pcFrame->getBitCount()*100/m_iMaxBitForFrame;
         iPercent = VALUE_CLIP(0, 100, iPercent);
-        TimeLineFrameItem* pRectItem = new TimeLineFrameItem(iPercent, pcFrame->getPoc());
+        TimeLineFrameItem* pRectItem = new TimeLineFrameItem(iPercent, pcFrame->getFrameCount());
         connect(pRectItem, SIGNAL(barClick(int)), this, SLOT(frameBarClicked(int)));
         pRectItem->setPos(iCounter*(cRect.width()+iGap), 0);
-        pRectItem->setPOC(pcFrame->getPoc());
+        pRectItem->setPOC(pcFrame->getFrameCount());
         m_cFrameBars.push_back(pRectItem);
         m_cScene.addItem(pRectItem);
         iCounter++;
@@ -130,9 +130,9 @@ void TimeLineView::xCalMaxBitForFrame(ComSequence* pcSequence)
 {
     // TODO not the real bit of frame (only the sum of LCUS)
     int iTotalBit = 0;
-    foreach(ComFrame* pcFrame, pcSequence->getFrames())
+    foreach(ComFrame* pcFrame, pcSequence->getFramesInDisOrder())
             iTotalBit += pcFrame->getBitCount();
-    int iTotalFrames = pcSequence->getFrames().size();
+    int iTotalFrames = pcSequence->getFramesInDisOrder().size();
     m_iMaxBitForFrame = iTotalBit/iTotalFrames;
     if(m_iMaxBitForFrame == 0)  ///< avoid divide zero error
         ++m_iMaxBitForFrame;

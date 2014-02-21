@@ -11,7 +11,7 @@ public:
 
     bool operator < (const ComFrame& cOther) const
     {
-        return (m_iPoc < cOther.m_iPoc);
+        return (m_iFrameCount < cOther.m_iFrameCount);
     }
 
     /*! CUs in one frame
@@ -21,7 +21,8 @@ public:
     /*! Frame info
       */
     ADD_CLASS_FIELD(ComSequence*, pcSequence, getSequence, setSequence)
-    ADD_CLASS_FIELD(int, iPoc, getPoc, setPoc)
+    ADD_CLASS_FIELD(int, iPOC, getPOC, setPOC)
+    ADD_CLASS_FIELD(int, iFrameCount, getFrameCount, setFrameCount)
 
     /*! L0 & L1 & LC*/
     ADD_CLASS_FIELD_NOSETTER(QVector<int>, aiL0List, getL0List )

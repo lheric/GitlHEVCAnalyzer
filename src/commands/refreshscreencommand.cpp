@@ -14,7 +14,7 @@ bool RefreshScreenCommand::execute( GitlCommandParameter& rcInputArg, GitlComman
     if(pcCurSeq == NULL)
         return false;
 
-    int iPoc = pModel->getFrameBuffer().getPoc();
+    int iPoc = pModel->getFrameBuffer().getFrameCount();
     int iMaxPoc = pcCurSeq->getTotalFrames()-1;
     int iMinPoc = 0;
     iPoc = VALUE_CLIP(iMinPoc, iMaxPoc, iPoc);

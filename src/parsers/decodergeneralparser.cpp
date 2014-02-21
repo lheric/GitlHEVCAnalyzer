@@ -3,10 +3,10 @@
 #include <QTextStream>
 #include <QDebug>
 
-/// for frame sorting in POC ascending order
-static bool xFrameSortingOrder(const ComFrame* pcFrameFirst, const ComFrame* pcFrameSecond)
+/// rearrange frames into POC ascending order
+static bool xFrameSortingOrder(ComFrame* pcFrameFirst, ComFrame* pcFrameSecond)
 {
-    return (*pcFrameFirst < *pcFrameSecond);
+    return (pcFrameFirst->getPOC() < pcFrameSecond->getPOC());
 }
 
 
@@ -51,7 +51,7 @@ bool DecoderGeneralParser::parseFile(QTextStream* pcInputStream, ComSequence* pc
     // read one frame
 
     ComFrame *pcFrame = NULL;
-    cMatchTarget.setPattern("POC *([0-9]+).*\\[DT *([0-9.]+) *\\] \\[L0(( [0-9]+){0,}) \\] \\[L1(( [0-9]+){0,}) \\] (\\[LC(( [0-9]+){0,}) \\])?");
+    cMatchTarget.setPattern("POC *(-?[0-9]+).*\\[DT *([0-9.]+) *\\] \\[L0(( -?[0-9]+){0,}) \\] \\[L1(( -?[0-9]+){0,}) \\] (\\[LC(( -?[0-9]+){0,}) \\])?");
     pcInputStream->readLine();///< Skip a empty line
     while( !pcInputStream->atEnd() )
     {
@@ -66,7 +66,7 @@ bool DecoderGeneralParser::parseFile(QTextStream* pcInputStream, ComSequence* pc
             pcFrame = new ComFrame(pcSequence);
 
             /// POC & Decoding time
-            pcFrame->setPoc(cMatchTarget.cap(1).toInt());
+            pcFrame->setPOC(cMatchTarget.cap(1).toInt());
             pcFrame->setTotalDecTime(cMatchTarget.cap(2).toDouble());
 
             /// L0 L1 LC
@@ -76,14 +76,15 @@ bool DecoderGeneralParser::parseFile(QTextStream* pcInputStream, ComSequence* pc
             readIntArray(&pcFrame->getL1List(), &strL1);
             readIntArray(&pcFrame->getLCList(), &strLC);
 
-            pcSequence->getFrames().push_back(pcFrame);
+            pcSequence->getFramesInDecOrder().push_back(pcFrame);
+            pcSequence->getFramesInDisOrder().push_back(pcFrame);
 
 
         }
         else    // frames finish
         {
 
-            pcSequence->setTotalFrames(pcSequence->getFrames().size());
+            pcSequence->setTotalFrames(pcSequence->getFramesInDisOrder().size());
 
             // Total Time:     2070.335 sec.
 
@@ -100,10 +101,37 @@ bool DecoderGeneralParser::parseFile(QTextStream* pcInputStream, ComSequence* pc
 
     }
 
+    /// sort & calculate frame displaying order according to POC
+    xSortByFrameCount(pcSequence);
 
-    /// sort frames in POC ascending order
-    qSort(pcSequence->getFrames().begin(), pcSequence->getFrames().end(), xFrameSortingOrder);
 
 
     return true;
+}
+
+void DecoderGeneralParser::xSortByFrameCount( ComSequence* pcSequence )
+{
+    /// Get IDR groups
+    QList<QVector<ComFrame*>::iterator> cIDRGroup;
+    QVector<ComFrame*>::iterator cIter = pcSequence->getFramesInDisOrder().begin();
+    while(cIter!=pcSequence->getFramesInDisOrder().end())
+    {
+        if ((*cIter)->getPOC() == 0)
+        {
+            cIDRGroup.push_back(cIter);
+        }
+        cIter++;
+    }
+    cIDRGroup.push_back(cIter);
+    Q_ASSERT(cIDRGroup.size() >= 2);    /// at least one IDR group
+
+    /// sort each IDRGroup
+    for(int i = 0; i < cIDRGroup.size()-1; i++)
+        qSort(cIDRGroup[i], cIDRGroup[i+1], xFrameSortingOrder);
+
+    /// assign frame num
+    for(int i = 0; i < pcSequence->getFramesInDisOrder().size(); i++)
+    {
+        pcSequence->getFramesInDisOrder().at(i)->setFrameCount(i);
+    }
 }
