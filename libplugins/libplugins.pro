@@ -6,6 +6,6 @@ SUBDIRS = libtudisplayfilter \          #tu structure filter
           libintradisplayfilter \       #intra mode display
           libpreddisplayfilter \        #pred mode display
           libbitdisplayfilter \ 	#bit heatmap display
-          GitlHEVCAnalyzerPrivateFilter/libmccdisplayfilter \         #mcc display
-          GitlHEVCAnalyzerPrivateFilter/libeventdetectionfilter \     #event detection
-          GitlHEVCAnalyzerPrivateFilter/libobjecttrackingfilter       #object tracking filter
+          #GitlHEVCAnalyzerPrivateFilter/libmccdisplayfilter \         #mcc display
+          #GitlHEVCAnalyzerPrivateFilter/libeventdetectionfilter \     #event detection
+          #GitlHEVCAnalyzerPrivateFilter/libobjecttrackingfilter       #object tracking filter
