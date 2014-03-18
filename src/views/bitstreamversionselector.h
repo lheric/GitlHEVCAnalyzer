@@ -31,6 +31,7 @@ public:
 protected:
     virtual void showEvent(QShowEvent * event);
     virtual void hideEvent(QHideEvent * event);
+    void xSetDecoderVersion();
 
 private:
     Ui::BitstreamVersionSelector *ui;

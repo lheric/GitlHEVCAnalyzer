@@ -69,13 +69,17 @@ void BitstreamVersionSelector::showEvent(QShowEvent * event)
 void BitstreamVersionSelector::hideEvent(QHideEvent * event)
 {
     /// save current selection
+    xSetDecoderVersion();
     g_cAppSetting.setValue("last_bitstream_version", m_iBitstreamVersion);
     QDialog::hideEvent(event);
 }
 
-
-
 void BitstreamVersionSelector::on_buttonBox_accepted()
+{
+    xSetDecoderVersion();
+}
+
+void BitstreamVersionSelector::xSetDecoderVersion()
 {
     if(ui->version40->isChecked())
     {
