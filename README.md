@@ -106,7 +106,7 @@ Contact Us
 ============
 <a href="http://gitl.sysu.edu.cn">Intelligent Information Processing Lab</a>
 
-Sun Yat-sen University, Guangzhou, P.R.China
+School of Software, Sun Yat-sen University, Guangzhou, P.R.China
 
 Author:
 Huang Li (李璜)
