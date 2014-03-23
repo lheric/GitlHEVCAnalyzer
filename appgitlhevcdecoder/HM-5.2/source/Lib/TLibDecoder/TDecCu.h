@@ -94,9 +94,9 @@ public:
   
 protected:
 #if ENABLE_ANAYSIS_OUTPUT
-  Void TDecCu::xDecodeCU( TComInputBitstream* pcBitstream, TComDataCU* pcCU, UInt uiAbsPartIdx, UInt uiDepth, UInt& ruiIsLast);
+  Void xDecodeCU( TComInputBitstream* pcBitstream, TComDataCU* pcCU, UInt uiAbsPartIdx, UInt uiDepth, UInt& ruiIsLast);
 #else
-  Void TDecCu::xDecodeCU( TComDataCU* pcCU, UInt uiAbsPartIdx, UInt uiDepth, UInt& ruiIsLast);
+  Void xDecodeCU( TComDataCU* pcCU, UInt uiAbsPartIdx, UInt uiDepth, UInt& ruiIsLast);
 #endif
   Void xFinishDecodeCU          ( TComDataCU* pcCU,                       UInt uiAbsPartIdx, UInt uiDepth, UInt &ruiIsLast);
   Bool xDecodeSliceEnd          ( TComDataCU* pcCU,                       UInt uiAbsPartIdx, UInt uiDepth);
