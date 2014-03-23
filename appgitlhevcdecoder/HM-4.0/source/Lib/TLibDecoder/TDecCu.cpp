@@ -124,7 +124,11 @@ Void TDecCu::destroy()
 /** \param    pcCU        pointer of CU data
  \param    ruiIsLast   last data?
  */
+#if ENABLE_ANAYSIS_OUTPUT
+Void TDecCu::decodeCU( TComInputBitstream* pcBitstream, TComDataCU* pcCU, UInt& ruiIsLast )
+#elif
 Void TDecCu::decodeCU( TComDataCU* pcCU, UInt& ruiIsLast )
+#endif
 {
   if ( pcCU->getSlice()->getSPS()->getUseDQP() )
   {
@@ -132,7 +136,11 @@ Void TDecCu::decodeCU( TComDataCU* pcCU, UInt& ruiIsLast )
   }
   // start from the top level CU
 #if FINE_GRANULARITY_SLICES
+#if ENABLE_ANAYSIS_OUTPUT
+  xDecodeCU( pcBitstream, pcCU, 0, 0, ruiIsLast);
+#else
   xDecodeCU( pcCU, 0, 0, ruiIsLast);
+#endif
 #else
   xDecodeCU( pcCU, 0, 0 );
 #endif
@@ -222,7 +230,11 @@ Bool TDecCu::xDecodeSliceEnd( TComDataCU* pcCU, UInt uiAbsPartIdx, UInt uiDepth)
  */
 
 #if FINE_GRANULARITY_SLICES
+#if ENABLE_ANAYSIS_OUTPUT
+Void TDecCu::xDecodeCU( TComInputBitstream* pcBitstream,TComDataCU* pcCU, UInt uiAbsPartIdx, UInt uiDepth, UInt& ruiIsLast)
+#else
 Void TDecCu::xDecodeCU( TComDataCU* pcCU, UInt uiAbsPartIdx, UInt uiDepth, UInt& ruiIsLast)
+#endif
 #else
 Void TDecCu::xDecodeCU( TComDataCU* pcCU, UInt uiAbsPartIdx, UInt uiDepth )
 #endif
@@ -275,7 +287,12 @@ Void TDecCu::xDecodeCU( TComDataCU* pcCU, UInt uiAbsPartIdx, UInt uiDepth )
         if ( ( uiLPelX < pcCU->getSlice()->getSPS()->getWidth() ) && ( uiTPelY < pcCU->getSlice()->getSPS()->getHeight() ) )
         {
 #if FINE_GRANULARITY_SLICES
+#if ENABLE_ANAYSIS_OUTPUT
+          xDecodeCU( pcBitstream, pcCU, uiIdx, uiDepth+1, ruiIsLast );
+#else
           xDecodeCU( pcCU, uiIdx, uiDepth+1, ruiIsLast );
+#endif
+
 #else
           xDecodeCU( pcCU, uiIdx, uiDepth+1 );
 #endif
@@ -316,6 +333,10 @@ Void TDecCu::xDecodeCU( TComDataCU* pcCU, UInt uiAbsPartIdx, UInt uiDepth )
 #endif
     return;
   }
+
+#if ENABLE_ANAYSIS_OUTPUT
+    UInt uiByteLocation = pcBitstream->getNumBitsLeft();
+#endif
   
 #if SUB_LCU_DQP
   if( (g_uiMaxCUWidth>>uiDepth) >= pcCU->getSlice()->getPPS()->getMinCuDQPSize() && pcCU->getSlice()->getSPS()->getUseDQP())
@@ -403,6 +424,10 @@ Void TDecCu::xDecodeCU( TComDataCU* pcCU, UInt uiAbsPartIdx, UInt uiDepth )
       }
     }
     xFinishDecodeCU( pcCU, uiAbsPartIdx, uiDepth, ruiIsLast );
+#if ENABLE_ANAYSIS_OUTPUT
+    UInt iByteConsumed = uiByteLocation - pcBitstream->getNumBitsLeft();
+    TSysuAnalyzerOutput::getInstance()->aiCUBits.push_back(iByteConsumed);
+#endif
     return;
   }
   m_pcEntropyDecoder->decodePredMode( pcCU, uiAbsPartIdx, uiDepth );
@@ -416,6 +441,10 @@ Void TDecCu::xDecodeCU( TComDataCU* pcCU, UInt uiAbsPartIdx, UInt uiDepth )
     if(pcCU->getIPCMFlag(uiAbsPartIdx))
     {
       xFinishDecodeCU( pcCU, uiAbsPartIdx, uiDepth, ruiIsLast );
+#if ENABLE_ANAYSIS_OUTPUT
+    UInt iByteConsumed = uiByteLocation - pcBitstream->getNumBitsLeft();
+    TSysuAnalyzerOutput::getInstance()->aiCUBits.push_back(iByteConsumed);
+#endif
       return;
     }
   }
@@ -433,6 +462,10 @@ Void TDecCu::xDecodeCU( TComDataCU* pcCU, UInt uiAbsPartIdx, UInt uiDepth )
   setdQPFlag( bCodeDQP );
   
   xFinishDecodeCU( pcCU, uiAbsPartIdx, uiDepth, ruiIsLast );
+#if ENABLE_ANAYSIS_OUTPUT
+    UInt iByteConsumed = uiByteLocation - pcBitstream->getNumBitsLeft();
+    TSysuAnalyzerOutput::getInstance()->aiCUBits.push_back(iByteConsumed);
+#endif
 }
 
 #if FINE_GRANULARITY_SLICES

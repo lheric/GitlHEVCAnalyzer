@@ -13,7 +13,8 @@ TSysuAnalyzerOutput::TSysuAnalyzerOutput()
   m_cIntraOutput.open("decoder_intra.txt",ios::out);
   m_cTUOutput.open   ("decoder_tu.txt",   ios::out);
   m_cMEOutput.open   ("encoder_me.txt",   ios::out);
-  m_cBitOutput.open  ("decoder_bit.txt",  ios::out);
+  m_cBitOutputLCU.open  ("decoder_bit_lcu.txt",  ios::out);
+  m_cBitOutputSCU.open  ("decoder_bit_scu.txt",  ios::out);
 
 
 }
@@ -32,11 +33,14 @@ void TSysuAnalyzerOutput::writeOutCUInfo   ( TComDataCU* pcCU )
   m_cMergeOutput<< "<" << iPoc << "," << iAddr << ">" << " ";  ///< Write out merge mode info
   m_cIntraOutput<< "<" << iPoc << "," << iAddr << ">" << " ";  ///< Write out intra mode info
   m_cTUOutput   << "<" << iPoc << "," << iAddr << ">" << " ";  ///< Write out TU mode info
-  m_cBitOutput  << "<" << iPoc << "," << iAddr << ">" << " ";  ///< Write out bit info
+  m_cBitOutputLCU << "<" << iPoc << "," << iAddr << ">" << " ";  ///< Write out bit info
+  m_cBitOutputSCU << "<" << iPoc << "," << iAddr << ">" << " ";  ///< Write out bit info
   m_cMEOutput   << "<" << iPoc << "," << iAddr << ">" << " ";  ///< Write out ME info  
 
   xWriteOutCUInfo  ( pcCU, iTotalNumPart, 0, 0 );   ///< Recursive write Prediction, CU, PU, Merge, Intra, ME
-  m_cBitOutput << pcCU->getTotalBits(); ///< Bit info
+  m_cBitOutputLCU << pcCU->getTotalBits(); ///< Bit info
+  for(int i = 0; i < aiCUBits.size(); i++)
+    m_cBitOutputSCU << aiCUBits.at(i) << " "; ///< Bit info
 
   m_cPredOutput << endl;
   m_cCUPUOutput << endl;
@@ -44,7 +48,8 @@ void TSysuAnalyzerOutput::writeOutCUInfo   ( TComDataCU* pcCU )
   m_cMergeOutput<< endl;
   m_cIntraOutput<< endl;
   m_cTUOutput   << endl;
-  m_cBitOutput  << endl;
+  m_cBitOutputLCU  << endl;
+  m_cBitOutputSCU  << endl;
   m_cMEOutput   << endl;
 }
 
@@ -235,6 +240,7 @@ TSysuAnalyzerOutput::~TSysuAnalyzerOutput()
   m_cSpsOut.close();
   m_cIntraOutput.close();
   m_cTUOutput.close();
-  m_cBitOutput.close();
+  m_cBitOutputLCU.close();
+  m_cBitOutputSCU.close();
   m_cMEOutput.close();
 }

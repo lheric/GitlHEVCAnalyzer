@@ -36,7 +36,9 @@
 */
 
 #include "TDecSlice.h"
-
+#if ENABLE_ANAYSIS_OUTPUT
+#include "TLibSysuAnalyzer/TSysuAnalyzerOutput.h"
+#endif
 //! \ingroup TLibDecoder
 //! \{
 
@@ -109,10 +111,11 @@ Void TDecSlice::decompressSlice(TComInputBitstream* pcBitstream, TComPic*& rpcPi
 
 #if ENABLE_ANAYSIS_OUTPUT
     UInt uiBefore = pcBitstream->getNumBitsLeft();
-#endif
-    m_pcCuDecoder->decodeCU     ( pcCU, uiIsLast );
-#if ENABLE_ANAYSIS_OUTPUT
+    TSysuAnalyzerOutput::getInstance()->aiCUBits.clear();
+    m_pcCuDecoder->decodeCU     ( pcBitstream, pcCU, uiIsLast );
     pcCU->getTotalBits() =  uiBefore - pcBitstream->getNumBitsLeft();
+#else
+    m_pcCuDecoder->decodeCU     ( pcCU, uiIsLast );
 #endif
     m_pcCuDecoder->decompressCU ( pcCU );
     

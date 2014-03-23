@@ -9,7 +9,11 @@ class BitParser : public QObject
     Q_OBJECT
 public:
     explicit BitParser(QObject *parent = 0);
-    bool parseFile(QTextStream* pcInputStream, ComSequence* pcSequence);
+    bool parseLCUBitFile(QTextStream* pcInputStream, ComSequence* pcSequence);
+    bool parseSCUBitFile(QTextStream* pcInputStream, ComSequence* pcSequence);
+
+protected:
+    bool xParseSCUBitFile(QTextStream* pcSCUBitInfoStream, ComCU* pcCU);
 signals:
     
 public slots:

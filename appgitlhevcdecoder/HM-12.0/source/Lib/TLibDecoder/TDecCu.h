@@ -83,14 +83,21 @@ public:
   Void  destroy                 ();
   
   /// decode CU information
+#if ENABLE_ANAYSIS_OUTPUT
+  Void  decodeCU                ( TComInputBitstream* pcSubstreams, TComDataCU* pcCU, UInt& ruiIsLast );
+#else
   Void  decodeCU                ( TComDataCU* pcCU, UInt& ruiIsLast );
-  
+#endif
   /// reconstruct CU information
   Void  decompressCU            ( TComDataCU* pcCU );
   
 protected:
-  
+#if ENABLE_ANAYSIS_OUTPUT
+  Void xDecodeCU                (  TComInputBitstream* pcSubstreams, TComDataCU* pcCU, UInt uiAbsPartIdx, UInt uiDepth, UInt &ruiIsLast);
+#else
   Void xDecodeCU                ( TComDataCU* pcCU,                       UInt uiAbsPartIdx, UInt uiDepth, UInt &ruiIsLast);
+#endif
+
   Void xFinishDecodeCU          ( TComDataCU* pcCU,                       UInt uiAbsPartIdx, UInt uiDepth, UInt &ruiIsLast);
   Bool xDecodeSliceEnd          ( TComDataCU* pcCU,                       UInt uiAbsPartIdx, UInt uiDepth);
   Void xDecompressCU            ( TComDataCU* pcCU, UInt uiAbsPartIdx, UInt uiDepth );

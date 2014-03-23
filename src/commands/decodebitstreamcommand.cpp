@@ -203,17 +203,25 @@ bool DecodeBitstreamCommand::execute( GitlCommandParameter& rcInputArg, GitlComm
     }
 
     /// Parse decoder_bit.txt
-    QString strBitFilename = strDecoderOutputPath + "/decoder_bit.txt";
+    QString strLCUBitFilename = strDecoderOutputPath + "/decoder_bit_lcu.txt";
+    QString strSCUBitFilename = strDecoderOutputPath + "/decoder_bit_scu.txt";
     if( bSuccess )
     {
         cDecodingStageInfo.setParameter("decoding_progress", "(10/10)Start Parsing Bits Info...");
         dispatchEvt(cDecodingStageInfo);
-        QFile cBitFile(strBitFilename);
-        cBitFile.open(QIODevice::ReadOnly);
-        QTextStream cBitTextStream(&cBitFile);
+        QFile cLCUBitFile(strLCUBitFilename);
+        cLCUBitFile.open(QIODevice::ReadOnly);
+        QTextStream cLCUBitTextStream(&cLCUBitFile);
         BitParser cBitParser;
-        bSuccess = cBitParser.parseFile( &cBitTextStream, pcSequence );
-        cBitFile.close();
+        bSuccess = cBitParser.parseLCUBitFile( &cLCUBitTextStream, pcSequence );
+        cLCUBitFile.close();
+
+
+        QFile cSCUBitFile(strSCUBitFilename);
+        cSCUBitFile.open(QIODevice::ReadOnly);
+        QTextStream cSCUBitTextStream(&cSCUBitFile);
+        bSuccess = bSuccess && cBitParser.parseSCUBitFile( &cSCUBitTextStream, pcSequence );
+        cSCUBitFile.close();
         qDebug() << "Bit file parsing finished";
     }
 
