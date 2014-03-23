@@ -18,7 +18,7 @@ public:
 
 signals:
 
-    ADD_CLASS_FIELD_PRIVATE(int, iLCUAvgBit)
+    ADD_CLASS_FIELD_PRIVATE(double, dLCUAvgBit)
     
 public slots:
     

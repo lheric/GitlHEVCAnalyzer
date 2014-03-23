@@ -9,15 +9,15 @@ BitDisplayFilter::BitDisplayFilter(QObject *parent) :
 
 bool BitDisplayFilter::init(FilterContext* pcContext)
 {
-    m_iLCUAvgBit = 0;
+    m_dLCUAvgBit = 0;
     ComSequence* pcSeq = pcContext->pcSequenceManager->getCurrentSequence();
     if(pcSeq == NULL)
         return true;
 
     foreach( ComFrame* pcFrame, pcSeq->getFramesInDisOrder())
         foreach( ComCU* pcCU, pcFrame->getLCUs() )
-            m_iLCUAvgBit += pcCU->getBitCount();
-    m_iLCUAvgBit /= pcSeq->getFramesInDisOrder().size()*(pcSeq->getFramesInDisOrder().at(0)->getLCUs().size());
+            m_dLCUAvgBit += pcCU->getBitCount();
+    m_dLCUAvgBit /= pcSeq->getFramesInDisOrder().size()*(pcSeq->getFramesInDisOrder().at(0)->getLCUs().size());
 
     return true;
 
@@ -26,8 +26,7 @@ bool BitDisplayFilter::init(FilterContext* pcContext)
 bool BitDisplayFilter::drawCTU  (FilterContext *pcContext, QPainter *pcPainter,
                                 ComCU *pcCTU, double dScale, QRect *pcScaledArea)
 {
-    ///TODO fix m_iLCUAvgBit should be used here
-    int iClip = VALUE_CLIP(240,359,pcCTU->getBitCount()/(m_iLCUAvgBit*5.0)*(359-240)+240);
+    int iClip = VALUE_CLIP(240,359,pcCTU->getBitCount()/(m_dLCUAvgBit*5.0)*(359-240)+240);
 
     QColor cFill;
     double dHue = iClip/360.0;
@@ -37,3 +36,4 @@ bool BitDisplayFilter::drawCTU  (FilterContext *pcContext, QPainter *pcPainter,
     pcPainter->drawRect(*pcScaledArea);
     return true;
 }
+
