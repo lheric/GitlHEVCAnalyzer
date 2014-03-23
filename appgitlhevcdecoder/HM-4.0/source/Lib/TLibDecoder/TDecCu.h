@@ -85,7 +85,7 @@ public:
   /// decode CU information
 #if ENABLE_ANAYSIS_OUTPUT
     Void decodeCU( TComInputBitstream* pcBitstream, TComDataCU* pcCU, UInt& ruiIsLast );
-#elif
+#else
     Void decodeCU( TComDataCU* pcCU, UInt& ruiIsLast );
 #endif
 

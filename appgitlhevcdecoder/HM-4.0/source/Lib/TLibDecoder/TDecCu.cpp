@@ -126,7 +126,7 @@ Void TDecCu::destroy()
  */
 #if ENABLE_ANAYSIS_OUTPUT
 Void TDecCu::decodeCU( TComInputBitstream* pcBitstream, TComDataCU* pcCU, UInt& ruiIsLast )
-#elif
+#else
 Void TDecCu::decodeCU( TComDataCU* pcCU, UInt& ruiIsLast )
 #endif
 {
