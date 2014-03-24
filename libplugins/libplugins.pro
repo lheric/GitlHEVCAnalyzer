@@ -12,11 +12,7 @@ SUBDIRS = libtudisplayfilter \          #tu structure filter
 #private filters for internal usage
 EXTRA_PRIVATE_FILTER {
     message("private filters included")
-    SUBDIRS += \
-              GitlHEVCAnalyzerPrivateFilter/libfinerbitdisplayfilter \
-              GitlHEVCAnalyzerPrivateFilter/libmccdisplayfilter \         #mcc display
-              GitlHEVCAnalyzerPrivateFilter/libeventdetectionfilter \     #event detection
-              GitlHEVCAnalyzerPrivateFilter/libobjecttrackingfilter       #object tracking filter
+    SUBDIRS += PrivateFilter
 } else {
     message("private filters excluded")
 }
