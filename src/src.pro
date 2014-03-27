@@ -82,7 +82,8 @@ SOURCES += main.cpp \
     views/filterconfigdialog.cpp \
     views/filterconfigslider.cpp \
     views/gitlcolorpicker.cpp \
-    views/filterconfigradios.cpp
+    views/filterconfigradios.cpp \
+    views/filterconfigcombobox.cpp
 
 
 HEADERS += \
@@ -154,7 +155,8 @@ HEADERS += \
     views/filterconfigdialog.h \
     views/filterconfigslider.h \
     views/gitlcolorpicker.h \
-    views/filterconfigradios.h
+    views/filterconfigradios.h \
+    views/filterconfigcombobox.h
 
 
 #include & libs
@@ -185,7 +187,8 @@ FORMS += \
     views/filterconfigdialog.ui \
     views/filterconfigslider.ui \
     views/gitlcolorpicker.ui \
-    views/filterconfigradios.ui
+    views/filterconfigradios.ui \
+    views/filterconfigcombobox.ui
 
 #icon
 RC_FILE = resources/icons/appicon.rc

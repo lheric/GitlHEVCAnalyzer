@@ -1,8 +1,11 @@
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TEMPLATE        = lib
 CONFIG         += plugin
 CONFIG         += c++11
-INCLUDEPATH    += ../../src \
-                  ../../libgitlmvc/libgitlevtbus/src
+
+TARGET          = $$qtLibraryTarget(libbitdisplayfilter)
+DESTDIR         = $${OUT_PWD}/../../plugins
+
 HEADERS         = bitdisplayfilter.h
 SOURCES         = bitdisplayfilter.cpp \
                   ../../src/model/sequencemanager.cpp \
@@ -10,7 +13,5 @@ SOURCES         = bitdisplayfilter.cpp \
                   ../../src/model/common/comframe.cpp \
                   ../../src/model/common/comcu.cpp \
                   ../../src/model/common/comtu.cpp
-TARGET          = $$qtLibraryTarget(libbitdisplayfilter)
-DESTDIR         = $${OUT_PWD}/../../plugins
 
-
+include(../filterconfiggui.pri)

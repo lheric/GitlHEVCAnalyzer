@@ -1,8 +1,8 @@
 #ifndef GITLCOLORPICKER_H
 #define GITLCOLORPICKER_H
 
-#include <QWidget>
-#include <QColorDialog>
+#include <QtWidgets/QWidget>
+#include <QtWidgets/QColorDialog>
 #include "gitldef.h"
 
 namespace Ui {

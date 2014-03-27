@@ -45,3 +45,10 @@ void FilterConfigDialog::addRadioButtons(const QStringList& rList, int* piIndex)
     m_apcComponents.push_back(pcRadios);
     ui->contentLayout->addWidget(pcRadios);
 }
+
+void FilterConfigDialog::addComboBox(const QStringList& rList, int* piIndex, const QString& strTitle)
+{
+    FilterConfigComboBox* pcComboBox = new FilterConfigComboBox(rList, piIndex, strTitle);
+    m_apcComponents.push_back(pcComboBox);
+    ui->contentLayout->addWidget(pcComboBox);
+}

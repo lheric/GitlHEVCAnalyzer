@@ -1,9 +1,9 @@
 #ifndef FILTERCONFIGRADIOS_H
 #define FILTERCONFIGRADIOS_H
 
-#include <QWidget>
-#include <QRadioButton>
-#include <QButtonGroup>
+#include <QtWidgets/QWidget>
+#include <QtWidgets/QRadioButton>
+#include <QtWidgets/QButtonGroup>
 #include <QList>
 #include "gitldef.h"
 

@@ -7,6 +7,7 @@
 #include "filterconfigslider.h"
 #include "filterconfigcheckbox.h"
 #include "filterconfigradios.h"
+#include "filterconfigcombobox.h"
 #include "gitlcolorpicker.h"
 
 namespace Ui {
@@ -25,7 +26,7 @@ public:
     void addCheckbox(const QString& rLabel, const QString& rDiscription, bool* pbValue);
     void addColorPicker(const QString& rLabel, QColor* pcColor);
     void addRadioButtons(const QStringList& rList, int* piIndex);
-
+    void addComboBox(const QStringList& rList, int* piIndex, const QString& strTitle);
 private:
     Ui::FilterConfigDialog *ui;
     QList<QWidget*> m_apcComponents;
