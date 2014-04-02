@@ -1,3 +1,5 @@
+CONFIG += c++11
+
 INCLUDEPATH  += ../../src \
                 ../../libgitlmvc/libgitlevtbus/src
 
