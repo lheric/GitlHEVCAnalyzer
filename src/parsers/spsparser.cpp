@@ -6,7 +6,8 @@ SpsParser::SpsParser(QObject *parent) :
 {
 }
 
-/** Resolution:176x144
+/** --- SAMPLE TEXT ---
+  * Resolution:176x144
   * Max CU Size:64
   * Max CU Depth:4
   * Min TU Depth:0

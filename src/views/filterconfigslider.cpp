@@ -27,7 +27,7 @@ void FilterConfigSlider::on_slider_valueChanged(int value)
     double dSliderMax = ui->slider->maximum();
     double dSliderMin = ui->slider->minimum();
     *m_pdValue = (value-dSliderMin)/(dSliderMax-dSliderMin)*(m_dMax-m_dMin)+m_dMin;
-    ui->sliderValue->setText(QString::number(*m_pdValue, 'f', 2));
+    ui->sliderValue->setText(QString::number(*m_pdValue, 'f', 3));
 }
 
 void FilterConfigSlider::showEvent(QShowEvent *event)
