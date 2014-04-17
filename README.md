@@ -31,6 +31,11 @@ First, all the commercial HEVC analyzers are too expensive.
 
 Second, we need to draw additional grphics on the analysis results. It supports custom filters. In fact, all the features are implemented via custom filters.
 
+Documents
+=========
+
+Program structures (coming soon)
+How to write a custom filter (coming soon)
 
 Screenshot
 ==========
