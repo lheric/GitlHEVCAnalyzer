@@ -5,7 +5,7 @@ What is Gitl HEVC Analyzer
 
 Gitl HEVC/H.265 Analyzer is an open-source tool for bitstream analysis for HEVC/H.265 .
 
-It is released under Apache License 2.0. In addition, it's **NOT for commercial use**. If you want to use it for commercial purpose, please contact us. If you ares not using it to develop weapons, produce or sell illegal drugs, and if you are not a terrorist, we will give your a commercial version for **free**.
+It is released under Apache License 2.0. In addition, it's **NOT for commercial use**. If you want to use it for commercial purpose, please contact us. If you are not using it to develop weapons, produce or sell illegal drugs, and if you are not a terrorist, we will give your a commercial version for **free**.
 
 **If you are using our analyzer in your paper, please add a footnote or reference to our work**
 
@@ -31,6 +31,12 @@ First, all the commercial HEVC analyzers are too expensive.
 
 Second, we need to draw additional grphics on the analysis results. It supports custom filters. In fact, all the features are implemented via custom filters.
 
+Documents
+=========
+
+Program structures (coming soon)
+
+How to write a custom filter (coming soon)
 
 Screenshot
 ==========
