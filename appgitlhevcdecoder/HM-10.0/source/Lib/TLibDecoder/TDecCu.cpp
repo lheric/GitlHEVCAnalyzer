@@ -257,6 +257,9 @@ Void TDecCu::xDecodeCU(  TComDataCU* pcCU, UInt uiAbsPartIdx, UInt uiDepth, UInt
         else
         {
           pcCU->setOutsideCUPart( uiIdx, uiDepth+1 );
+#if ENABLE_ANAYSIS_OUTPUT
+          TSysuAnalyzerOutput::getInstance()->aiCUBits.push_back(0);    ///< 0 bit for out of image cus
+#endif
         }
       }
       
