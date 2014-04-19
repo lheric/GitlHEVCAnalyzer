@@ -205,7 +205,7 @@ void MainWindow::on_actionOpen_bitstream_triggered()
         return;
 
     /// prepare & sent event to bus
-    GitlIvkCmdEvt cEvt("decode_bitstream");
+    GitlIvkCmdEvt cEvt("open_bitstream");
     cEvt.setParameter("filename", strFilename);
     cEvt.setParameter("skip_decode", false);
     cEvt.setParameter("version", cBitstreamDig.getBitstreamVersion());
@@ -292,8 +292,7 @@ void MainWindow::dropEvent(QDropEvent *event)
 
     /// prepare & sent event to bus
     /// invoke command
-    GitlIvkCmdEvt cEvt("reload_filter");
-    cEvt.setParameter("command_name", "decode_bitstream");
+    GitlIvkCmdEvt cEvt("open_bitstream");
     cEvt.setParameter("filename", strFilename);
     cEvt.setParameter("skip_decode", false);
     cEvt.setParameter("version", cBitstreamDig.getBitstreamVersion());

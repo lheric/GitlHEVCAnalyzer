@@ -32,6 +32,22 @@ void SequenceManager::addSequence(ComSequence *pcSequence)
     m_apSequences.push_back(pcSequence);
 }
 
+bool SequenceManager::delSequence(ComSequence *pcSequence)
+{
+    for(int i = 0; i < m_apSequences.size(); i++)
+    {
+        if( m_apSequences[i] == pcSequence)
+        {         
+            m_apSequences.remove(i);
+            if(pcSequence == m_pcCurrentSequence)
+                m_pcCurrentSequence = NULL;
+            delete pcSequence;
+            return true;
+        }
+    }
+    return false;
+}
+
 QVector<ComSequence *> &SequenceManager::getAllSequences()
 {
     return m_apSequences;

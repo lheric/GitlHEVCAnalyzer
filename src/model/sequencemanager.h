@@ -22,6 +22,8 @@ public:
 
     void addSequence(ComSequence* pcSequence);
 
+    bool delSequence(ComSequence* pcSequence);
+
     QVector<ComSequence*>& getAllSequences();
 
     ComSequence* getSequenceByFilename(const QString& strFilename);

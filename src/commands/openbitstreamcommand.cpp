@@ -1,4 +1,4 @@
-#include "decodebitstreamcommand.h"
+#include "openbitstreamcommand.h"
 #include "model/modellocator.h"
 #include "parsers/bitstreamparser.h"
 #include "parsers/spsparser.h"
@@ -16,12 +16,12 @@
 #include <QDir>
 
 
-DecodeBitstreamCommand::DecodeBitstreamCommand(QObject *parent) :
+OpenBitstreamCommand::OpenBitstreamCommand(QObject *parent) :
     GitlAbstractCommand(parent)
 {
 }
 
-bool DecodeBitstreamCommand::execute( GitlCommandParameter& rcInputArg, GitlCommandParameter& rcOutputArg )
+bool OpenBitstreamCommand::execute( GitlCommandParameter& rcInputArg, GitlCommandParameter& rcOutputArg )
 {
     ModelLocator* pModel = ModelLocator::getInstance();
 
@@ -54,6 +54,11 @@ bool DecodeBitstreamCommand::execute( GitlCommandParameter& rcInputArg, GitlComm
 
 
     //TODO BUG Memory Leaking when exception happens
+    if(pModel->getSequenceManager().getSequenceByFilename(strFilename) != NULL)
+    {
+        qCritical() << "This bitstream is aleardy opened...";
+        return false;
+    }
     ComSequence* pcSequence = new ComSequence();
     pcSequence->init();    
     pcSequence->setFileName(strFilename);
@@ -230,7 +235,6 @@ bool DecodeBitstreamCommand::execute( GitlCommandParameter& rcInputArg, GitlComm
     pModel->getSequenceManager().addSequence(pcSequence);
     pcSequence->setYUVRole(YUV_RECONSTRUCTED);      /// display the recon. by default
     GitlIvkCmdEvt cSwitchSeq("switch_sequence");
-    cSwitchSeq.setParameter("command_name", "switch_sequence");
     cSwitchSeq.setParameter("sequence", QVariant::fromValue((void*)pcSequence));
     cSwitchSeq.dispatch();
 

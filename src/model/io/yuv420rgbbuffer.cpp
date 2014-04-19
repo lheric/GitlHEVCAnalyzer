@@ -9,7 +9,6 @@ YUV420RGBBuffer::YUV420RGBBuffer()
     m_iBufferWidth = 0;
     m_iBufferHeight = 0;
     m_iFrameCount = -1;
-    m_puh16BitYUVBuffer = NULL;
     m_puhYUVBuffer = NULL;
     m_puhRGBBuffer = NULL;
     m_bIs16Bit = false;
@@ -23,9 +22,6 @@ YUV420RGBBuffer::~YUV420RGBBuffer()
 
     delete[] m_puhRGBBuffer;
     m_puhRGBBuffer = NULL;
-
-    delete[] m_puh16BitYUVBuffer;
-    m_puh16BitYUVBuffer = NULL;
 }
 
 

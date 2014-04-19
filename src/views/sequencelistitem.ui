@@ -56,6 +56,19 @@
    <item>
     <widget class="QComboBox" name="yuvSelectionBox"/>
    </item>
+   <item>
+    <widget class="QPushButton" name="closeBtn">
+     <property name="maximumSize">
+      <size>
+       <width>20</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>X</string>
+     </property>
+    </widget>
+   </item>
   </layout>
  </widget>
  <resources/>

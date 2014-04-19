@@ -29,7 +29,6 @@ public:
 
 
     ADD_CLASS_FIELD_PRIVATE(QPixmap, cFramePixmap)
-    ADD_CLASS_FIELD_PRIVATE(uchar*, puh16BitYUVBuffer)
     ADD_CLASS_FIELD_PRIVATE(uchar*,  puhYUVBuffer)
     ADD_CLASS_FIELD_PRIVATE(uchar*,  puhRGBBuffer)
     ADD_CLASS_FIELD_PRIVATE(IOYUV,   cIOYUV)

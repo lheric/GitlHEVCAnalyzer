@@ -68,8 +68,18 @@ void SequenceListItem::setYUVSelectorVisible(bool bVisible)
     this->ui->yuvSelectionBox->setVisible(bVisible);
 }
 
+void SequenceListItem::setCloseBtnVisible(bool bVisible)
+{
+    this->ui->closeBtn->setVisible(bVisible);
+}
+
 void SequenceListItem::on_yuvSelectionBox_currentIndexChanged(int index)
 {
     emit yuvSelectionBoxChanged(m_pcSequence, pasSelections[index].eRole);
 
+}
+
+void SequenceListItem::on_closeBtn_clicked()
+{
+    emit closeSequenceButtonClicked(m_pcSequence);
 }

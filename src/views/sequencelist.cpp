@@ -32,6 +32,7 @@ void SequenceList::addNoSquenceRadioBtn()
     SequenceListItem* seqRadioBtn = new SequenceListItem("No Sequence", m_cButtonGroup);
     seqRadioBtn->setChecked(true);
     seqRadioBtn->setYUVSelectorVisible(false);
+    seqRadioBtn->setCloseBtnVisible(false);
     pcItem->setSizeHint(seqRadioBtn->sizeHint());
     setItemWidget(pcItem, seqRadioBtn);
 }
@@ -74,6 +75,8 @@ void SequenceList::onSequenceChanged(GitlUpdateUIEvt &rcEvt)
                     this, SLOT(sequenceRadioButtonClicked(ComSequence*)) );
             connect(seqRadioBtn, SIGNAL(yuvSelectionBoxChanged(ComSequence*, YUVRole)),
                     this, SLOT(yuvSelectionBoxChanged(ComSequence*, YUVRole)) );
+            connect(seqRadioBtn, SIGNAL(closeSequenceButtonClicked(ComSequence*)),
+                    this, SLOT(closeSequenceButtonClicked(ComSequence*)) );
 
         }
     }
@@ -97,5 +100,12 @@ void SequenceList::yuvSelectionBoxChanged(ComSequence* pcSequence, YUVRole eRole
     GitlIvkCmdEvt cRequest("switch_yuv");
     cRequest.setParameter("sequence", QVariant::fromValue((void*)pcSequence));
     cRequest.setParameter("yuv_type", QVariant::fromValue(eRole));
+    cRequest.dispatch();
+}
+
+void SequenceList::closeSequenceButtonClicked(ComSequence *pcSequence)
+{
+    GitlIvkCmdEvt cRequest("close_bitstream");
+    cRequest.setParameter("sequence_path", QVariant::fromValue(pcSequence->getFileName()));
     cRequest.dispatch();
 }

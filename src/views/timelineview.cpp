@@ -40,9 +40,10 @@ void TimeLineView::onSequenceChanged(GitlUpdateUIEvt &rcEvt)
         m_pcCurDrawnSeq = pcCurSequence;
         xClearAllDrawing();
         xCalMaxBitForFrame(pcCurSequence);
+        /// Draw bars
+        xDrawFrameBars(pcCurSequence);
     }
-    /// Draw bars
-    xDrawFrameBars(pcCurSequence);
+
 }
 
 void TimeLineView::onPOCChanged(GitlUpdateUIEvt &rcEvt)

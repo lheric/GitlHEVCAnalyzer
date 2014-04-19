@@ -36,7 +36,6 @@ SOURCES += main.cpp \
     views/bitstreamversionselector.cpp \
     parsers/bitstreamparser.cpp \
     parsers/decodergeneralparser.cpp \
-    commands/decodebitstreamcommand.cpp \
     parsers/spsparser.cpp \
     parsers/cupuparser.cpp \
     parsers/predparser.cpp \
@@ -83,7 +82,9 @@ SOURCES += main.cpp \
     views/filterconfigslider.cpp \
     views/gitlcolorpicker.cpp \
     views/filterconfigradios.cpp \
-    views/filterconfigcombobox.cpp
+    views/filterconfigcombobox.cpp \
+    commands/openbitstreamcommand.cpp \
+    commands/closebitstreamcommand.cpp
 
 
 HEADERS += \
@@ -104,7 +105,6 @@ HEADERS += \
     views/bitstreamversionselector.h \
     parsers/bitstreamparser.h \
     parsers/decodergeneralparser.h \
-    commands/decodebitstreamcommand.h \
     parsers/spsparser.h \
     parsers/cupuparser.h \
     parsers/predparser.h \
@@ -156,7 +156,9 @@ HEADERS += \
     views/filterconfigslider.h \
     views/gitlcolorpicker.h \
     views/filterconfigradios.h \
-    views/filterconfigcombobox.h
+    views/filterconfigcombobox.h \
+    commands/openbitstreamcommand.h \
+    commands/closebitstreamcommand.h
 
 
 #include & libs

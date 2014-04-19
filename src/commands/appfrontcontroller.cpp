@@ -4,7 +4,8 @@
 #include "exceptions/decodernotfoundexception.h"
 #include "exceptions/decodingfailexception.h"
 #include "exceptions/bitstreamnotfoundexception.h"
-#include "commands/decodebitstreamcommand.h"
+#include "commands/openbitstreamcommand.h"
+#include "commands/closebitstreamcommand.h"
 #include "commands/prevframecommand.h"
 #include "commands/nextframecommand.h"
 #include "commands/jumptoframecommand.h"
@@ -34,7 +35,8 @@ static struct
 }
 s_sCmdTable[] =
 {
-    { "decode_bitstream", &DecodeBitstreamCommand::staticMetaObject    },
+    { "open_bitstream",   &OpenBitstreamCommand::staticMetaObject      },
+    { "close_bitstream",  &CloseBitstreamCommand::staticMetaObject     },
     { "next_frame",       &NextFrameCommand::staticMetaObject          },
     { "prev_frame",       &PrevFrameCommand::staticMetaObject          },
     { "jumpto_frame",     &JumpToFrameCommand::staticMetaObject        },
