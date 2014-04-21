@@ -73,6 +73,25 @@ void FrameView::mousePressEvent ( QMouseEvent * event )
     m_iMousePressY = mapToScene(event->pos()).y();
     m_iMousePressImageX = m_cGraphicsPixmapItem.x();
     m_iMousePressImageY = m_cGraphicsPixmapItem.y();
+
+    int iMouseX = mapToScene(event->pos()).x();
+    int iMouseY = mapToScene(event->pos()).y();
+
+    /// only respond to mouse action inside a frame (shink for 1px)
+    QRectF cFrameRect = m_cGraphicsPixmapItem.boundingRect();
+    cFrameRect.translate(1,1);
+    cFrameRect.setWidth(cFrameRect.width()-2);
+    cFrameRect.setHeight(cFrameRect.height()-2);
+    cFrameRect = m_cGraphicsPixmapItem.mapRectToScene(cFrameRect);
+    if(cFrameRect.contains(iMouseX,iMouseY))
+    {
+        QPointF cScaledPoint = m_cGraphicsPixmapItem.mapFromScene(iMouseX, iMouseY);
+        GitlIvkCmdEvt cFilterMousePressCMD("mousepress_filter");
+        cFilterMousePressCMD.setParameter("scaled_point", cScaledPoint);
+        cFilterMousePressCMD.setParameter("mouse_button",int(event->button()));
+        cFilterMousePressCMD.dispatch();
+    }
+
 }
 
 void FrameView::mouseMoveEvent ( QMouseEvent * event )
@@ -81,6 +100,14 @@ void FrameView::mouseMoveEvent ( QMouseEvent * event )
     int iTransY = mapToScene(event->pos()).y() - m_iMousePressY;
     m_cGraphicsPixmapItem.setPos(m_iMousePressImageX+iTransX,
                                  m_iMousePressImageY+iTransY);
+}
+
+void FrameView::keyPressEvent(QKeyEvent *event)
+{
+    GitlIvkCmdEvt cFilterKeyPressCMD("keypress_filter");
+    cFilterKeyPressCMD.setParameter("pressed_key", event->key());
+    cFilterKeyPressCMD.dispatch();
+    QGraphicsView::keyPressEvent(event);    /// do not block key event
 }
 
 

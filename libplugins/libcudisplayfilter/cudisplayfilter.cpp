@@ -1,5 +1,6 @@
 #include "cudisplayfilter.h"
-
+#include "model/modellocator.h"
+#include <QDebug>
 CUDisplayFilter::CUDisplayFilter(QObject *parent) :
     QObject(parent)
 {
@@ -29,7 +30,8 @@ CUDisplayFilter::CUDisplayFilter(QObject *parent) :
     m_cPUPen.setWidth(1);
     m_cPUPen.setBrush(QBrush(m_cConfig.getPUColor()));
 
-
+    /// selected CU
+    m_pcSelectedCU = NULL;
 
 
 }
@@ -62,8 +64,20 @@ bool CUDisplayFilter::drawCU   (FilterContext* pcContext, QPainter* pcPainter,
         return true;
 
     /// Draw CU Rect
-    pcPainter->setBrush(Qt::NoBrush);
-    pcPainter->setPen(m_cCUPen);
+
+
+    if(pcCU == m_pcSelectedCU)      /// selected
+    {
+        QPen cSelectedPen = m_cCUPen;
+        cSelectedPen.setWidth(m_cCUPen.width()+3);
+        pcPainter->setBrush(QBrush(QColor(255,0,0,128)));
+        pcPainter->setPen(cSelectedPen);
+    }
+    else
+    {
+        pcPainter->setBrush(Qt::NoBrush);
+        pcPainter->setPen(m_cCUPen);
+    }
     pcPainter->drawRect(*pcScaledArea);
 
     /// Draw PU
@@ -112,5 +126,19 @@ bool CUDisplayFilter::drawCU   (FilterContext* pcContext, QPainter* pcPainter,
     }
 
 
+    return true;
+}
+
+
+bool CUDisplayFilter::mousePress(FilterContext *pcContext, QPainter *pcPainter, ComFrame *pcFrame, const QPointF *pcUnscaledPos, const QPointF *scaledPos, double dScale, Qt::MouseButton eMouseBtn)
+{
+    m_pcSelectedCU = pcContext->pcSelectionManager->getSCU(pcFrame, pcUnscaledPos);
+    return true;
+}
+
+bool CUDisplayFilter::keyPress(FilterContext *pcContext, QPainter *pcPainter, ComFrame *pcFrame, int iKeyPressed)
+{
+    if(iKeyPressed == Qt::Key_Escape)
+        m_pcSelectedCU = NULL;
     return true;
 }

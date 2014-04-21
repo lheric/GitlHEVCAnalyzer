@@ -5,13 +5,14 @@ using namespace std;
 DrawEngine::DrawEngine()
 {
     m_dScale = 1.0;
+    m_pcCurFrame = NULL;
 }
 
 
 QPixmap* DrawEngine::drawFrame( ComSequence* pcSequence, int iPoc, QPixmap *pcPixmap )
 {
-
     ComFrame* pcFrame = pcSequence->getFramesInDisOrder().at(iPoc);
+    m_pcCurFrame = pcFrame;
     int iLCUTotalNum = pcFrame->getLCUs().size();
 
     /// draw original pic
@@ -59,6 +60,19 @@ QPixmap* DrawEngine::drawFrame( ComSequence* pcSequence, int iPoc, QPixmap *pcPi
     QRect cScaledFrameArea(QPoint(0,0), m_cDrawnPixmap.size());
     m_cFilterLoader.drawFrame(&cPainter, pcFrame, m_dScale, &cScaledFrameArea);
     return &m_cDrawnPixmap;
+}
+
+void DrawEngine::mousePress(const QPointF *pcScaledPos, Qt::MouseButton eMouseBtn)
+{
+    QPainter cPainter(&m_cDrawnPixmap);
+    QPointF  cUnscaledPos = *pcScaledPos/m_dScale;
+    m_cFilterLoader.mousePress(&cPainter, m_pcCurFrame, &cUnscaledPos, pcScaledPos, m_dScale, eMouseBtn);
+}
+
+void DrawEngine::keyPress(int iKeyPressed)
+{
+    QPainter cPainter(&m_cDrawnPixmap);
+    m_cFilterLoader.keyPress(&cPainter, m_pcCurFrame, iKeyPressed);
 }
 
 bool DrawEngine::xDrawPU( QPainter* pcPainter,  ComCU* pcCU )

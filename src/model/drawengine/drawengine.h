@@ -15,7 +15,7 @@ public:
     explicit DrawEngine();
 
     /*!
-     * draw one frame
+     * \brief draw one frame
      * \param pcSequence    current sequence
      * \param iPoc          POC of the frame to be draw
      * \param pcPixmap      input frame to draw on
@@ -23,6 +23,26 @@ public:
      * \return output frame (the drawn & scaled frame)
      */
     QPixmap* drawFrame  ( ComSequence* pcSequence, int iPoc, QPixmap *pcPixmap );
+
+    /*!
+     * \brief mousePress
+     * \param pcPainter
+     * \param pcScaledPos
+     * \param scaledPos
+     * \param dScale
+     * \param eMouseBtn
+     */
+    void mousePress( const QPointF* pcScaledPos, Qt::MouseButton eMouseBtn);
+
+    /*!
+     * \brief mousePress
+     * \param pcPainter
+     * \param pcScaledPos
+     * \param scaledPos
+     * \param dScale
+     * \param eMouseBtn
+     */
+    void keyPress(int iKeyPressed);
 
 protected:
 
@@ -65,6 +85,11 @@ protected:
      * Scale of the frame
      */
     ADD_CLASS_FIELD(double, dScale, getScale, setScale)
+
+    /*!
+     * Current display frame
+     */
+    ADD_CLASS_FIELD_NOSETTER(ComFrame*, pcCurFrame, getCurFrame)
 
     /*!
      * Scaled frame

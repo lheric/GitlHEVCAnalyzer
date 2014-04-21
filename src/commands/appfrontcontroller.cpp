@@ -15,6 +15,8 @@
 #include "commands/switchyuvcommand.h"
 #include "commands/refreshscreencommand.h"
 #include "commands/checkupdatecommand.h"
+#include "commands/filtermousepresscommand.h"
+#include "commands/filterkeypresscommand.h"
 #include "commands/filterorderdowncommand.h"
 #include "commands/filterorderupcommand.h"
 #include "commands/zoomframecommand.h"
@@ -46,6 +48,8 @@ s_sCmdTable[] =
     { "print_screen",     &PrintScreenCommand::staticMetaObject        },
     { "refresh_screen",   &RefreshScreenCommand::staticMetaObject      },
     { "zoom_frame",       &ZoomFrameCommand::staticMetaObject          },
+    { "mousepress_filter",&FilterMousePressCommand::staticMetaObject   },
+    { "keypress_filter",  &FilterKeyPressCommand::staticMetaObject     },
     { "reload_filter",    &ReloadFiltersCommand::staticMetaObject      },
     { "config_filter",    &ConfigFilterCommand::staticMetaObject       },
     { "moveup_filter",    &FilterOrderUpCommand::staticMetaObject      },

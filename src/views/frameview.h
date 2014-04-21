@@ -15,12 +15,11 @@ public:
     void setDisplayImage(const QPixmap* pcFramePixmap);
 
 
-
-    virtual void wheelEvent ( QWheelEvent * event );
+protected:
+    virtual void wheelEvent      ( QWheelEvent * event );
     virtual void mousePressEvent ( QMouseEvent * event );
-    virtual void mouseMoveEvent ( QMouseEvent * event );
-
-
+    virtual void mouseMoveEvent  ( QMouseEvent * event );
+    virtual void keyPressEvent   ( QKeyEvent * event );
 
 
 

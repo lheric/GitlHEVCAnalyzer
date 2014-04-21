@@ -121,15 +121,12 @@ bool FilterLoader::unloadAllFilters()
 bool FilterLoader::config(int iFilterIndex)
 {
 
-    if(iFilterIndex >= m_apcFilters.size())
+    if(iFilterIndex >= m_apcFilters.size() || iFilterIndex < 0)
         throw InvaildFilterIndexException();
 
     // prepare filter context
-    ModelLocator* pModel = ModelLocator::getInstance();
-    m_cFilterContext.pcBuffer = &pModel->getFrameBuffer();
-    m_cFilterContext.pcDrawEngine = &pModel->getDrawEngine();
-    m_cFilterContext.pcSequenceManager = &pModel->getSequenceManager();
-    m_cFilterContext.pcFilterLoader = this;
+    xPrepareFilterContext();
+
 
     // config filter
     m_apcFilters[iFilterIndex]->config(&m_cFilterContext);
@@ -142,11 +139,7 @@ bool FilterLoader::config(AbstractFilter* pcFilter)
         throw InvaildFilterIndexException();
 
     // prepare filter context
-    ModelLocator* pModel = ModelLocator::getInstance();
-    m_cFilterContext.pcBuffer = &pModel->getFrameBuffer();
-    m_cFilterContext.pcDrawEngine = &pModel->getDrawEngine();
-    m_cFilterContext.pcSequenceManager = &pModel->getSequenceManager();
-    m_cFilterContext.pcFilterLoader = this;
+    xPrepareFilterContext();
 
     // config filter
     pcFilter->config(&m_cFilterContext);
@@ -155,6 +148,9 @@ bool FilterLoader::config(AbstractFilter* pcFilter)
 
 bool FilterLoader::drawTU   (QPainter* pcPainter, ComTU *pcTU,       double dScale,  QRect* pcScaledArea)
 {
+    // prepare filter context
+    xPrepareFilterContext();
+
     for(int i = 0; i < m_apcFilters.size(); i++)
     {
         AbstractFilter* pFilter = m_apcFilters[i];
@@ -168,6 +164,9 @@ bool FilterLoader::drawTU   (QPainter* pcPainter, ComTU *pcTU,       double dSca
 
 bool FilterLoader::drawPU  (QPainter* pcPainter, ComPU *pcPU,  double dScale, QRect* pcScaledArea)
 {
+    // prepare filter context
+    xPrepareFilterContext();
+
     for(int i = 0; i < m_apcFilters.size(); i++)
     {
         AbstractFilter* pFilter = m_apcFilters[i];
@@ -181,6 +180,9 @@ bool FilterLoader::drawPU  (QPainter* pcPainter, ComPU *pcPU,  double dScale, QR
 
 bool FilterLoader::drawCU  (QPainter* pcPainter, ComCU *pcCU, double dScale, QRect* pcScaledArea)
 {
+    // prepare filter context
+    xPrepareFilterContext();
+
     for(int i = 0; i < m_apcFilters.size(); i++)
     {
         AbstractFilter* pFilter = m_apcFilters[i];
@@ -195,8 +197,10 @@ bool FilterLoader::drawCU  (QPainter* pcPainter, ComCU *pcCU, double dScale, QRe
 }
 
 bool FilterLoader::drawCTU  (QPainter* pcPainter, ComCU *pcCU, double dScale, QRect* pcScaledArea)
-
 {
+    // prepare filter context
+    xPrepareFilterContext();
+
     for(int i = 0; i < m_apcFilters.size(); i++)
     {
         AbstractFilter* pFilter = m_apcFilters[i];
@@ -211,12 +215,49 @@ bool FilterLoader::drawCTU  (QPainter* pcPainter, ComCU *pcCU, double dScale, QR
 
 bool FilterLoader::drawFrame(QPainter* pcPainter, ComFrame *pcFrame, double dScale, QRect* pcScaledArea)
 {
+    // prepare filter context
+    xPrepareFilterContext();
+
     for(int i = 0; i < m_apcFilters.size(); i++)
     {
         AbstractFilter* pFilter = m_apcFilters[i];
         if( pFilter->getEnable() )
         {
             pFilter->drawFrame(&m_cFilterContext, pcPainter, pcFrame, dScale, pcScaledArea);
+        }
+    }
+    return true;
+}
+
+bool FilterLoader::mousePress(QPainter *pcPainter, ComFrame *pcFrame,
+                              const QPointF *pcUnscaledPos, const QPointF *scaledPos,
+                              double dScale, Qt::MouseButton eMouseBtn)
+{
+    // prepare filter context
+    xPrepareFilterContext();
+
+    for(int i = 0; i < m_apcFilters.size(); i++)
+    {
+        AbstractFilter* pFilter = m_apcFilters[i];
+        if( pFilter->getEnable() )
+        {
+            pFilter->mousePress(&m_cFilterContext, pcPainter, pcFrame, pcUnscaledPos, scaledPos, dScale, eMouseBtn);
+        }
+    }
+    return true;
+}
+
+bool FilterLoader::keyPress(QPainter *pcPainter, ComFrame *pcFrame, int iKeyPressed)
+{
+    // prepare filter context
+    xPrepareFilterContext();
+
+    for(int i = 0; i < m_apcFilters.size(); i++)
+    {
+        AbstractFilter* pFilter = m_apcFilters[i];
+        if( pFilter->getEnable() )
+        {
+            pFilter->keyPress(&m_cFilterContext, pcPainter, pcFrame, iKeyPressed);
         }
     }
     return true;
@@ -340,6 +381,7 @@ void FilterLoader::xPrepareFilterContext()
     m_cFilterContext.pcDrawEngine = &pModel->getDrawEngine();
     m_cFilterContext.pcFilterLoader = &pModel->getDrawEngine().getFilterLoader();
     m_cFilterContext.pcSequenceManager = &pModel->getSequenceManager();
+    m_cFilterContext.pcSelectionManager = &pModel->getSelectionManager();
 }
 
 

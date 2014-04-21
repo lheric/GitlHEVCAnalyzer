@@ -11,6 +11,7 @@
 #include "parsers/decodergeneralparser.h"
 #include "parsers/cupuparser.h"
 #include "exceptions/nosequencefoundexception.h"
+#include "selectionmanager.h"
 
 /*!
  * \brief The ModelLocator class
@@ -30,6 +31,11 @@ public:
       * Sequence meta infomations
       */
     ADD_CLASS_FIELD_NOSETTER(SequenceManager, cSequenceManager, getSequenceManager) ///< Sequences meta info
+
+    /**
+      * Selection manager
+      */
+    ADD_CLASS_FIELD_NOSETTER(SelectionManager, cSelectionManager, getSelectionManager)  ///< selection helper functions
 
     /**
       * Draw Engine

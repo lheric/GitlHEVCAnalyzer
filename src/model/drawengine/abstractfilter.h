@@ -9,6 +9,7 @@ class SequenceManager;
 class DrawEngine;
 class YUV420RGBBuffer;
 class FilterLoader;
+class SelectionManager;
 
 /*!
  * \brief The FilterContext class
@@ -21,6 +22,7 @@ struct FilterContext
     DrawEngine* pcDrawEngine;               /// draw engine
     YUV420RGBBuffer* pcBuffer;              /// yuv and rgb buffer
     FilterLoader* pcFilterLoader;           /// filter loader (all filters are here)
+    SelectionManager* pcSelectionManager;   /// selection helper function
 };
 
 /*!
@@ -146,6 +148,38 @@ public:
         return true;
     }
 
+
+
+    /*!
+     * \brief mousePress when user press mouse button on the dispalyed frame
+     * \param pcContext \see FilterContext
+     * \param pcPainter the QPainter of the QPixmap object which is being displayed on screen
+     * \param pcUnscaledPos position in the unscaled frame
+     * \param scaledPos position in the scaled frame
+     * \param dScale the scale of current display
+     * \param eMouseBtn mouse button that is pressed
+     * \return
+     */
+    virtual bool mousePress(FilterContext* pcContext, QPainter* pcPainter, ComFrame *pcFrame,
+                            const QPointF* pcUnscaledPos, const QPointF* scaledPos,
+                            double dScale, Qt::MouseButton eMouseBtn)
+    {
+        return true;
+    }
+
+    /*!
+     * \brief keyPress when user press a key
+     * \param pcContext \see FilterContext
+     * \param pcPainter the QPainter of the QPixmap object which is being displayed on screen
+     * \param iKeyPressed position in the unscaled frame
+     * \return
+     */
+    virtual bool keyPress  (FilterContext* pcContext, QPainter* pcPainter, ComFrame *pcFrame,
+                            int iKeyPressed)
+    {
+        return true;
+    }
+
     /*! This is the filter name displayed in the user interface
      */
     ADD_CLASS_FIELD(QString, strName, getName, setName)
@@ -163,7 +197,7 @@ public:
 
 };
 
-/// This is required by the Qt Plugin System.
+/// This is required by the Qt plugin system.
 Q_DECLARE_INTERFACE(AbstractFilter, "cn.edu.sysu.gitl.gitlhevcanalyzer.AbstractFilter")
 Q_DECLARE_METATYPE(AbstractFilter*)
 

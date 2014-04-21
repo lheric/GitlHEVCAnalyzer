@@ -33,6 +33,7 @@ public:
     ADD_CLASS_FIELD(bool,   bShowPU,   getShowPU,   setShowPU)
     ADD_CLASS_FIELD(bool,   bShowLCUOnly, getShowLCUOnly, setShowLCUOnly)
     ADD_CLASS_FIELD(double, dOpaque,   getOpaque,   setOpaque)
+
 };
 
 
@@ -53,6 +54,10 @@ public:
     virtual bool drawCU   (FilterContext* pcContext, QPainter* pcPainter,
                            ComCU *pcCU, double dScale,  QRect* pcScaledArea);
 
+    virtual bool mousePress(FilterContext *pcContext, QPainter *pcPainter, ComFrame *pcFrame,
+                            const QPointF *pcUnscaledPos, const QPointF *scaledPos, double dScale, Qt::MouseButton eMouseBtn);
+
+    virtual bool keyPress  (FilterContext *pcContext, QPainter *pcPainter, ComFrame *pcFrame, int iKeyPressed);
 signals:
 
     ADD_CLASS_FIELD_PRIVATE(QPen, cLCUPen)
@@ -61,9 +66,12 @@ signals:
 
     ADD_CLASS_FIELD_PRIVATE(FilterConfigDialog, cConfigDialog)
     ADD_CLASS_FIELD_PRIVATE(CUDisplayFilterConfig, cConfig)
+    ADD_CLASS_FIELD_PRIVATE(ComCU*, pcSelectedCU)
     
 public slots:
     
+
+
 };
 
 #endif // CUDISPLAYFILTER_H

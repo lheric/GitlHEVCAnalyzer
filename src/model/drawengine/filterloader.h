@@ -22,13 +22,15 @@ public:
     /*!
      * Bacially it is a waper of filter interface \see AbstractFilter
      */
-    virtual bool config   (int iFilterIndex);
-    virtual bool config   (AbstractFilter* pcFilter);
-    virtual bool drawTU   (QPainter* pcPainter, ComTU *pcTU,       double dScale,  QRect* pcScaledArea);
-    virtual bool drawPU   (QPainter* pcPainter, ComPU *pcPU,       double dScale,  QRect* pcScaledArea);
-    virtual bool drawCU   (QPainter* pcPainter, ComCU *pcCU,       double dScale,  QRect* pcScaledArea);
-    virtual bool drawCTU  (QPainter* pcPainter, ComCU *pcCU,       double dScale,  QRect* pcScaledArea);
-    virtual bool drawFrame(QPainter* pcPainter, ComFrame *pcFrame, double dScale,  QRect* pcScaledArea);
+    virtual bool config    (int iFilterIndex);
+    virtual bool config    (AbstractFilter* pcFilter);
+    virtual bool drawTU    (QPainter* pcPainter, ComTU *pcTU,       double dScale,  QRect* pcScaledArea);
+    virtual bool drawPU    (QPainter* pcPainter, ComPU *pcPU,       double dScale,  QRect* pcScaledArea);
+    virtual bool drawCU    (QPainter* pcPainter, ComCU *pcCU,       double dScale,  QRect* pcScaledArea);
+    virtual bool drawCTU   (QPainter* pcPainter, ComCU *pcCU,       double dScale,  QRect* pcScaledArea);
+    virtual bool drawFrame (QPainter* pcPainter, ComFrame *pcFrame, double dScale,  QRect* pcScaledArea);
+    virtual bool mousePress(QPainter* pcPainter, ComFrame *pcFrame, const QPointF* pcUnscaledPos, const QPointF* scaledPos, double dScale, Qt::MouseButton eMouseBtn);
+    virtual bool keyPress  (QPainter* pcPainter, ComFrame *pcFrame, int iKeyPressed);
 
     /*!
      * \brief initAllFilter Init all filters
@@ -99,6 +101,7 @@ public:
      * \return
      */
     QVector<bool> getEnableStatus();
+
 
 protected:
     /*!

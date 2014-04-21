@@ -84,7 +84,10 @@ SOURCES += main.cpp \
     views/filterconfigradios.cpp \
     views/filterconfigcombobox.cpp \
     commands/openbitstreamcommand.cpp \
-    commands/closebitstreamcommand.cpp
+    commands/closebitstreamcommand.cpp \
+    commands/filtermousepresscommand.cpp \
+    commands/filterkeypresscommand.cpp \
+    model/selectionmanager.cpp
 
 
 HEADERS += \
@@ -158,7 +161,10 @@ HEADERS += \
     views/filterconfigradios.h \
     views/filterconfigcombobox.h \
     commands/openbitstreamcommand.h \
-    commands/closebitstreamcommand.h
+    commands/closebitstreamcommand.h \
+    commands/filtermousepresscommand.h \
+    commands/filterkeypresscommand.h \
+    model/selectionmanager.h
 
 
 #include & libs
