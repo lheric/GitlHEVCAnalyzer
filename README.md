@@ -68,8 +68,8 @@ For historical reasons, besides formal HEVC bitstream, it also supports bitstrea
 
 Road Map
 ========
-- [X] Frames Bit Heatmap Filter
-- [X] Frame Timeline
+- [x] Frames Bit Heatmap Filter
+- [x] Frame Timeline
 - [ ] Slice Display
 - [ ] Tile Display
 - [ ] GOP Structure Graph
