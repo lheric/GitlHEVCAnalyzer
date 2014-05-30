@@ -34,6 +34,8 @@ Second, we need to draw additional grphics on the analysis results. It supports 
 Documents
 =========
 
+[User Manual](https://github.com/lheric/GitlHEVCAnalyzer/blob/master/DOCS/manual.md)
+
 Program structures (coming soon)
 
 How to write a custom filter (coming soon)
