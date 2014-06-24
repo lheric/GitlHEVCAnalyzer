@@ -26,6 +26,7 @@
 #include "commands/querypreferencescommand.h"
 #include "commands/modifypreferencescommand.h"
 #include "commands/switchthemecommand.h"
+#include "commands/cleancachecommand.h"
 
 SINGLETON_PATTERN_IMPLIMENT(AppFrontController)
 
@@ -59,6 +60,7 @@ s_sCmdTable[] =
     { "modify_pref",      &ModifyPreferencesCommand::staticMetaObject  },
     { "query_pref",       &QueryPreferencesCommand::staticMetaObject   },
     { "switch_theme",     &SwitchThemeCommand::staticMetaObject        },
+    { "clean_cache",      &CleanCacheCommand::staticMetaObject         },
     { "",                 NULL                                         }    ///end mark
 };
 

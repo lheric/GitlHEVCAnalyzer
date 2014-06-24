@@ -55,6 +55,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
 MainWindow::~MainWindow()
 {
+    /// delete cache folder when exit
+    GitlIvkCmdEvt cEvt("clean_cache");
+    cEvt.dispatch();
     delete ui;
 }
 
