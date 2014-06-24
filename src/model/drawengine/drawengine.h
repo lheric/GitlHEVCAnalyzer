@@ -47,6 +47,16 @@ public:
 protected:
 
     /*!
+     * \brief xDrawTile
+     * \param pcFrame
+     *\param pcPainter
+     * \return
+     */
+    bool xDrawTile(QPainter* pcPainter,  ComFrame *pcFrame);
+
+
+
+    /*!
      * \brief xDrawPU draw PU recursively
      * \param pcPainter
      * \param pcCU
@@ -102,6 +112,11 @@ protected:
      */
     ADD_CLASS_FIELD_NOSETTER(FilterLoader, cFilterLoader, getFilterLoader)
 
+
+    /*!
+     * MaxCUSize info
+     */
+    ADD_CLASS_FIELD_PRIVATE(int, iMaxCUSize)
 
 
 signals:

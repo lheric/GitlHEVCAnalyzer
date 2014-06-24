@@ -87,6 +87,24 @@ public:
         return true;
     }
 
+
+
+
+    /*!
+     * \brief drawTile is called for every frame
+     * \param pcContext \see FilterContext
+     * \param pcPainter the QPainter of the QPixmap object which is being displayed on screen
+     * \param pcSequence sequence which is selected as the currently displaying one
+     * \param iPoc the POC of currently displaying frame (begin with 0)
+     * \return true - success   false - fail
+     */
+    virtual bool drawTile(FilterContext *pcContext, QPainter *pcPainter, ComFrame *pcFrame, double dScale, QRect *pcScaledArea)
+    {
+        return true;
+    }
+
+
+
     /*!
      * \brief drawCTU is called for each CTU (Coding Tree Unit, i.e. LCU)
      * \param pcContext \see FilterContext

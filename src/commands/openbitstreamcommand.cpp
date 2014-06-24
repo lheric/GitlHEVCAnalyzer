@@ -10,6 +10,7 @@
 #include "parsers/mergeparser.h"
 #include "parsers/intraparser.h"
 #include "parsers/bitparser.h"
+#include "parsers/tileparser.h"
 #include "exceptions/decodingfailexception.h"
 #include "gitlupdateuievt.h"
 #include "gitlivkcmdevt.h"
@@ -221,14 +222,35 @@ bool OpenBitstreamCommand::execute( GitlCommandParameter& rcInputArg, GitlComman
         bSuccess = cBitParser.parseLCUBitFile( &cLCUBitTextStream, pcSequence );
         cLCUBitFile.close();
 
-
         QFile cSCUBitFile(strSCUBitFilename);
         cSCUBitFile.open(QIODevice::ReadOnly);
         QTextStream cSCUBitTextStream(&cSCUBitFile);
         bSuccess = bSuccess && cBitParser.parseSCUBitFile( &cSCUBitTextStream, pcSequence );
         cSCUBitFile.close();
         qDebug() << "Bit file parsing finished";
+
     }
+
+
+    ///parse decoder_tile.txt
+    QString strTileFilename = strDecoderOutputPath + "/decoder_tile.txt";
+    if( bSuccess )
+    {
+        cDecodingStageInfo.setParameter("decoding_progress", "(10/10)Start Parsing tile Info...");
+        dispatchEvt(cDecodingStageInfo);
+        QFile cTileFile(strTileFilename);
+        if(cTileFile.open(QIODevice::ReadOnly))
+        {
+            QTextStream cTileTextStream(&cTileFile);
+            TileParser cTileParser;
+            bSuccess = cTileParser.parseFile( &cTileTextStream, pcSequence );
+            qDebug() << "Tile file parsing finished";
+        }
+        cTileFile.close();
+
+    }
+
+
 
     ///*****STEP 3 : Open decoded YUV sequence*****
 
