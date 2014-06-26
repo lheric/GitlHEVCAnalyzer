@@ -155,13 +155,13 @@ public:
      * \param pcContext \see FilterContext
      * \param pcPainter the QPainter of the QPixmap object which is being displayed on screen
      * \param pcUnscaledPos position in the unscaled frame
-     * \param scaledPos position in the scaled frame
+     * \param pcScaledPos position in the scaled frame
      * \param dScale the scale of current display
      * \param eMouseBtn mouse button that is pressed
      * \return
      */
     virtual bool mousePress(FilterContext* pcContext, QPainter* pcPainter, ComFrame *pcFrame,
-                            const QPointF* pcUnscaledPos, const QPointF* scaledPos,
+                            const QPointF* pcUnscaledPos, const QPointF* pcScaledPos,
                             double dScale, Qt::MouseButton eMouseBtn)
     {
         return true;
