@@ -89,7 +89,7 @@ SOURCES += main.cpp \
     commands/filterkeypresscommand.cpp \
     model/selectionmanager.cpp \
     commands/cleancachecommand.cpp
-
+    parsers/tileparser.cpp
 
 HEADERS += \
     model/common/comsequence.h \
@@ -167,6 +167,7 @@ HEADERS += \
     commands/filterkeypresscommand.h \
     model/selectionmanager.h \
     commands/cleancachecommand.h
+    parsers/tileparser.h
 
 
 #include & libs

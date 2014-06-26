@@ -626,6 +626,10 @@ Bool TDecTop::xDecodeSlice(InputNALUnit &nalu, Int &iSkipFrame, Int iPOCLastDisp
   //  Decode a picture
   m_cGopDecoder.decompressSlice(nalu.m_Bitstream, pcPic);
 
+#if ENABLE_ANAYSIS_OUTPUT
+  TSysuAnalyzerOutput::getInstance()->writeOutTileInfo(pcPic);
+#endif
+
   m_bFirstSliceInPicture = false;
   m_uiSliceIdx++;
 

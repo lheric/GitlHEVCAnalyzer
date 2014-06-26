@@ -7,7 +7,8 @@ SUBDIRS = libtudisplayfilter \          #tu structure filter
           libmvdisplayfilter \          #MV display filter
           libintradisplayfilter \       #intra mode display
           libpreddisplayfilter \        #pred mode display
-          libbitdisplayfilter   	#bit heatmap display
+          libbitdisplayfilter \   	#bit heatmap display
+    libtiledisplayfilter
 
 #private filters for internal usage
 EXTRA_PRIVATE_FILTER {

@@ -15,6 +15,8 @@ QPixmap* DrawEngine::drawFrame( ComSequence* pcSequence, int iPoc, QPixmap *pcPi
     m_pcCurFrame = pcFrame;
     int iLCUTotalNum = pcFrame->getLCUs().size();
 
+    m_iMaxCUSize = pcSequence ->getMaxCUSize();
+
     /// draw original pic
     m_cDrawnPixmap = pcPixmap->scaled(pcPixmap->size()*m_dScale, Qt::KeepAspectRatio, Qt::FastTransformation);
     QPainter cPainter(&m_cDrawnPixmap);
@@ -56,11 +58,44 @@ QPixmap* DrawEngine::drawFrame( ComSequence* pcSequence, int iPoc, QPixmap *pcPi
         m_cFilterLoader.drawCTU(&cPainter, pcLCU, m_dScale, &cScaledCUArea);
     }
 
+    ///drawTile
+    xDrawTile(&cPainter, pcFrame);
+
     ///draw Frame
     QRect cScaledFrameArea(QPoint(0,0), m_cDrawnPixmap.size());
     m_cFilterLoader.drawFrame(&cPainter, pcFrame, m_dScale, &cScaledFrameArea);
+
     return &m_cDrawnPixmap;
+
 }
+
+bool DrawEngine::xDrawTile(QPainter *pcPainter, ComFrame *pcFrame)
+{
+    ComCU * iLCU = NULL;
+    QRect cScaledTileArea;
+    int iTileNum = pcFrame ->m_iTileNum;
+    for(int i = 0; i < iTileNum; ++i)
+    {
+        int iAddr = pcFrame ->m_iTileInfoArrayInFrame[i]->iFirstCUAddr;
+        iLCU = pcFrame ->getLCUs().at(iAddr);
+        int iX = iLCU ->getX();
+        int iY = iLCU ->getY();
+
+        int iWidth  = pcFrame ->m_iTileInfoArrayInFrame[i] ->iWidth * m_iMaxCUSize;
+        int iHeight  = pcFrame ->m_iTileInfoArrayInFrame[i] ->iHeight * m_iMaxCUSize;
+
+        cScaledTileArea.setCoords(iX , iY , iX + iWidth-1 ,iY + iHeight - 1);
+        xScaleRect(&cScaledTileArea, &cScaledTileArea);
+        m_cFilterLoader.drawTile(pcPainter, pcFrame, m_dScale, &cScaledTileArea);
+
+    }
+    return true;
+
+}
+
+
+
+
 
 void DrawEngine::mousePress(const QPointF *pcScaledPos, Qt::MouseButton eMouseBtn)
 {

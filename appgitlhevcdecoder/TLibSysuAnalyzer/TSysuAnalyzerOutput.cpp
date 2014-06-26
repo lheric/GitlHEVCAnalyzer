@@ -16,8 +16,49 @@ TSysuAnalyzerOutput::TSysuAnalyzerOutput()
   m_cBitOutputLCU.open  ("decoder_bit_lcu.txt",  ios::out);
   m_cBitOutputSCU.open  ("decoder_bit_scu.txt",  ios::out);
 
+#if ( HM_VERSION > 40)
+  m_cTileOutPut.open("decoder_tile.txt", ios::out);
+#endif
+
 
 }
+
+
+#if ( HM_VERSION > 40)
+//write out tile info
+void TSysuAnalyzerOutput::writeOutTileInfo(TComPic * pcPic)
+{
+    int iPoc = pcPic ->getPOC();
+    int iTileNumRows =  pcPic ->getPicSym() ->getNumRowsMinus1()+1;
+    int iTileNumCols = pcPic ->getPicSym() ->getNumColumnsMinus1()+1;
+
+
+    for( int uiRowIdx=0; uiRowIdx < iTileNumRows; uiRowIdx++ )
+           for( int uiColumnIdx=0; uiColumnIdx <iTileNumCols ; uiColumnIdx++ )
+           {
+             int uiTileIdx = uiRowIdx * (iTileNumCols) + uiColumnIdx;
+
+             //information for each tile
+             int uiTileWidth = 0;
+             int uiTileHeight = 0;
+             int uiFirstCUAddr = 0;
+
+             uiTileWidth = pcPic ->getPicSym()->getTComTile(uiTileIdx)->getTileWidth();
+
+             uiTileHeight = pcPic ->getPicSym()->getTComTile(uiTileIdx)->getTileHeight();
+
+             uiFirstCUAddr = pcPic ->getPicSym()->getTComTile(uiTileIdx) ->getFirstCUAddr();
+
+             m_cTileOutPut << "<" << iPoc << "," << (iTileNumCols )* (iTileNumRows )<< ">"
+                  << " " << uiFirstCUAddr << " " << uiTileWidth << " " << uiTileHeight << endl;
+
+
+           }
+}
+
+#endif
+
+
 
 
 void TSysuAnalyzerOutput::writeOutCUInfo   ( TComDataCU* pcCU )
@@ -243,4 +284,8 @@ TSysuAnalyzerOutput::~TSysuAnalyzerOutput()
   m_cBitOutputLCU.close();
   m_cBitOutputSCU.close();
   m_cMEOutput.close();
+
+#if (HM_VERSION >40)
+   m_cTileOutPut.close();
+#endif
 }
