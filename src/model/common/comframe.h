@@ -3,11 +3,32 @@
 
 #include "comcu.h"
 class ComSequence;
+
+struct TileInfoArrayInFrame
+{
+    int  iFirstCUAddr;
+    int  iWidth;
+    int  iHeight;
+
+    TileInfoArrayInFrame()
+    {
+        iFirstCUAddr = -1;
+        iWidth = -1;
+        iHeight = -1;
+    }
+
+};
+
+
 class ComFrame
 {
 public:
     explicit ComFrame(ComSequence *pcParent);
     ~ComFrame();
+
+    ///add tile info to frame
+    int m_iTileNum;
+    QVector< TileInfoArrayInFrame *> m_iTileInfoArrayInFrame;
 
     bool operator < (const ComFrame& cOther) const
     {

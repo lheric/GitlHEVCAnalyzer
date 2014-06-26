@@ -128,8 +128,6 @@ bool YUV420RGBBuffer::xReadFrame(int iFrameCount)
   **/
 void YUV420RGBBuffer::xYuv2rgb(uchar* puhYUV, uchar* puhRGB, int iWidth, int iHeight)
 {
-
-
     int uiFrameSizeInPixel = iWidth*iHeight;
     uchar* const puhY = puhYUV;
     uchar* const puhU = puhYUV + uiFrameSizeInPixel;
