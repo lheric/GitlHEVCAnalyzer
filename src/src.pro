@@ -88,7 +88,7 @@ SOURCES += main.cpp \
     commands/filtermousepresscommand.cpp \
     commands/filterkeypresscommand.cpp \
     model/selectionmanager.cpp \
-    commands/cleancachecommand.cpp
+    commands/cleancachecommand.cpp \
     parsers/tileparser.cpp
 
 HEADERS += \
@@ -166,7 +166,7 @@ HEADERS += \
     commands/filtermousepresscommand.h \
     commands/filterkeypresscommand.h \
     model/selectionmanager.h \
-    commands/cleancachecommand.h
+    commands/cleancachecommand.h \
     parsers/tileparser.h
 
 
