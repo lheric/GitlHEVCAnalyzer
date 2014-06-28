@@ -98,7 +98,7 @@ public:
      * \param iPoc the POC of currently displaying frame (begin with 0)
      * \return true - success   false - fail
      */
-    virtual bool drawTile(FilterContext *pcContext, QPainter *pcPainter, ComFrame *pcFrame, double dScale, QRect *pcScaledArea)
+    virtual bool drawTile(FilterContext *pcContext, QPainter *pcPainter, ComTile *pcTile, double dScale, QRect *pcScaledArea)
     {
         return true;
     }

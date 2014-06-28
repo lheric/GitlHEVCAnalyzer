@@ -2,33 +2,14 @@
 #define COMFRAME_H
 
 #include "comcu.h"
+#include "comtile.h"
 class ComSequence;
-
-struct TileInfoArrayInFrame
-{
-    int  iFirstCUAddr;
-    int  iWidth;
-    int  iHeight;
-
-    TileInfoArrayInFrame()
-    {
-        iFirstCUAddr = -1;
-        iWidth = -1;
-        iHeight = -1;
-    }
-
-};
-
 
 class ComFrame
 {
 public:
     explicit ComFrame(ComSequence *pcParent);
     ~ComFrame();
-
-    ///add tile info to frame
-    int m_iTileNum;
-    QVector< TileInfoArrayInFrame *> m_iTileInfoArrayInFrame;
 
     bool operator < (const ComFrame& cOther) const
     {
@@ -44,6 +25,10 @@ public:
     ADD_CLASS_FIELD(ComSequence*, pcSequence, getSequence, setSequence)
     ADD_CLASS_FIELD(int, iPOC, getPOC, setPOC)
     ADD_CLASS_FIELD(int, iFrameCount, getFrameCount, setFrameCount)
+
+
+    /*! Tile info */
+    ADD_CLASS_FIELD_NOSETTER(QVector<ComTile*>, acTiles, getTiles)
 
     /*! L0 & L1 & LC*/
     ADD_CLASS_FIELD_NOSETTER(QVector<int>, aiL0List, getL0List )

@@ -9,7 +9,6 @@ ComFrame::ComFrame(ComSequence* pcParent)
     m_dBitrate = -1;
     m_dTotalEncTime = -1;
     m_dTotalDecTime = -1;
-    m_iTileNum = -1;
 }
 
 ComFrame::~ComFrame()
@@ -19,10 +18,9 @@ ComFrame::~ComFrame()
         delete m_cLCUs.at(i);
     }
 
-
-    for(int i = 0; i < m_iTileInfoArrayInFrame.size(); ++i)
+    foreach(ComTile* pcTile, m_acTiles)
     {
-          delete m_iTileInfoArrayInFrame.at(i);
+        delete pcTile;
     }
 }
 

@@ -13,7 +13,7 @@ class TileDisplayFilter : public QObject, public AbstractFilter
 public:
     explicit TileDisplayFilter(QObject *parent = 0);
 
-    virtual bool drawTile(FilterContext *pcContext, QPainter *pcPainter, ComFrame *pcFrame, double dScale, QRect *pcScaledArea);
+    virtual bool drawTile(FilterContext *pcContext, QPainter *pcPainter, ComTile *pcTile, double dScale, QRect *pcScaledArea);
 
 
 signals:

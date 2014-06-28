@@ -62,7 +62,7 @@ QPixmap* DrawEngine::drawFrame( ComSequence* pcSequence, int iPoc, QPixmap *pcPi
     xDrawTile(&cPainter, pcFrame);
 
     ///draw Frame
-    QRect cScaledFrameArea(QPoint(0,0), m_cDrawnPixmap.size());
+    QRect cScaledFrameArea =  m_cDrawnPixmap.rect();
     m_cFilterLoader.drawFrame(&cPainter, pcFrame, m_dScale, &cScaledFrameArea);
 
     return &m_cDrawnPixmap;
@@ -73,20 +73,22 @@ bool DrawEngine::xDrawTile(QPainter *pcPainter, ComFrame *pcFrame)
 {
     ComCU * iLCU = NULL;
     QRect cScaledTileArea;
-    int iTileNum = pcFrame ->m_iTileNum;
+    int iTileNum = pcFrame->getTiles().size();
     for(int i = 0; i < iTileNum; ++i)
     {
-        int iAddr = pcFrame ->m_iTileInfoArrayInFrame[i]->iFirstCUAddr;
+        ComTile* pcTile = pcFrame->getTiles().at(i);
+        int iAddr = pcTile->getFirstCUAddr();
         iLCU = pcFrame ->getLCUs().at(iAddr);
         int iX = iLCU ->getX();
         int iY = iLCU ->getY();
 
-        int iWidth  = pcFrame ->m_iTileInfoArrayInFrame[i] ->iWidth * m_iMaxCUSize;
-        int iHeight  = pcFrame ->m_iTileInfoArrayInFrame[i] ->iHeight * m_iMaxCUSize;
+        int iWidth  = pcTile->getWidth()  * m_iMaxCUSize;
+        int iHeight = pcTile->getHeight() * m_iMaxCUSize;
 
-        cScaledTileArea.setCoords(iX , iY , iX + iWidth-1 ,iY + iHeight - 1);
+        cScaledTileArea.setCoords(iX , iY , iX + iWidth ,iY + iHeight);
         xScaleRect(&cScaledTileArea, &cScaledTileArea);
-        m_cFilterLoader.drawTile(pcPainter, pcFrame, m_dScale, &cScaledTileArea);
+        cScaledTileArea = cScaledTileArea.intersected(m_cDrawnPixmap.rect()).adjusted(0, 0, -1, -1);
+        m_cFilterLoader.drawTile(pcPainter, pcTile, m_dScale, &cScaledTileArea);
 
     }
     return true;

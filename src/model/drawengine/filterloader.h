@@ -28,7 +28,7 @@ public:
     virtual bool drawPU    (QPainter* pcPainter, ComPU *pcPU,       double dScale,  QRect* pcScaledArea);
     virtual bool drawCU    (QPainter* pcPainter, ComCU *pcCU,       double dScale,  QRect* pcScaledArea);
     virtual bool drawCTU   (QPainter* pcPainter, ComCU *pcCU,       double dScale,  QRect* pcScaledArea);
-    virtual bool drawTile (QPainter* pcPainter, ComFrame *pcFrame, double dScale,  QRect* pcScaledArea);
+    virtual bool drawTile  (QPainter* pcPainter, ComTile  *pcTile, double dScale,  QRect* pcScaledArea);
     virtual bool drawFrame (QPainter* pcPainter, ComFrame *pcFrame, double dScale,  QRect* pcScaledArea);
     virtual bool mousePress(QPainter* pcPainter, ComFrame *pcFrame, const QPointF* pcUnscaledPos, const QPointF* scaledPos, double dScale, Qt::MouseButton eMouseBtn);
     virtual bool keyPress  (QPainter* pcPainter, ComFrame *pcFrame, int iKeyPressed);

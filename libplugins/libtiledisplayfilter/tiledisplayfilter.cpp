@@ -11,12 +11,12 @@ TileDisplayFilter::TileDisplayFilter(QObject *parent) :
 
 
 
-bool TileDisplayFilter::drawTile(FilterContext *pcContext, QPainter *pcPainter, ComFrame *pcFrame, double dScale, QRect *pcScaledArea)
+bool TileDisplayFilter::drawTile(FilterContext *pcContext, QPainter *pcPainter, ComTile *pcTile, double dScale, QRect *pcScaledArea)
 {
 
     QPen iPen;
     iPen.setStyle(Qt::SolidLine);
-    iPen.setWidth(3);
+    iPen.setWidth(7);
     iPen.setBrush(QColor(0,255,255));
     pcPainter ->setBrush(Qt::NoBrush);
     pcPainter ->setPen(iPen);

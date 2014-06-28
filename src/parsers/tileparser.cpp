@@ -26,9 +26,9 @@ bool TileParser::parseFile(QTextStream *pcInputStream, ComSequence *pcSequence)
     int iLastPOC = -1;
 
 
-    while(!pcInputStream ->atEnd())
+    while(!pcInputStream->atEnd())
     {
-        strOneLine = pcInputStream ->readLine();
+        strOneLine = pcInputStream->readLine();
         if(cMatchTarget.indexIn(strOneLine) != -1)
         {
             ///poc addr and iTileNum
@@ -36,10 +36,10 @@ bool TileParser::parseFile(QTextStream *pcInputStream, ComSequence *pcSequence)
             iDecOrder += (iLastPOC != iPoc);
             iLastPOC = iPoc;
 
-            pcFrame = pcSequence ->getFramesInDecOrder().at(iDecOrder);
+            pcFrame = pcSequence->getFramesInDecOrder().at(iDecOrder);
 
             int iTileNum = cMatchTarget.cap(2).toInt();
-            pcFrame ->m_iTileNum = iTileNum;
+            //pcFrame->m_iTileNum = iTileNum;
 
             QString strTileInfo = cMatchTarget.cap(3);
             cTileInfoStream.setString( &strTileInfo, QIODevice::ReadOnly);
@@ -58,22 +58,22 @@ bool TileParser::xReadTile(QTextStream *pcTileInfoStream, ComFrame *pcFrame)
 {
 
     int iTempVal = 0;
-    TileInfoArrayInFrame * tileInfo = NULL;
-    tileInfo = new TileInfoArrayInFrame();
+    ComTile * pcTile = NULL;
+    pcTile = new ComTile(pcFrame);
+
+    Q_ASSERT( !pcTileInfoStream->atEnd() );
+    *pcTileInfoStream >> iTempVal;
+    pcTile->setFirstCUAddr(iTempVal);
+
+    Q_ASSERT( !pcTileInfoStream->atEnd() );
+    *pcTileInfoStream >> iTempVal;
+    pcTile->setWidth(iTempVal);
 
     Q_ASSERT( !pcTileInfoStream ->atEnd() );
     *pcTileInfoStream >> iTempVal;
-    tileInfo->iFirstCUAddr = iTempVal;
+    pcTile->setHeight(iTempVal);
 
-    Q_ASSERT( !pcTileInfoStream ->atEnd() );
-    *pcTileInfoStream >> iTempVal;
-    tileInfo->iWidth = iTempVal;
-
-    Q_ASSERT( !pcTileInfoStream ->atEnd() );
-    *pcTileInfoStream >> iTempVal;
-    tileInfo->iHeight = iTempVal;
-
-    pcFrame ->m_iTileInfoArrayInFrame.push_back(tileInfo);
+    pcFrame->getTiles().push_back(pcTile);
 
     return true;
 

@@ -212,14 +212,14 @@ bool FilterLoader::drawCTU  (QPainter* pcPainter, ComCU *pcCU, double dScale, QR
     return true;
 }
 
-bool FilterLoader::drawTile(QPainter* pcPainter, ComFrame *pcFrame, double dScale, QRect* pcScaledArea)
+bool FilterLoader::drawTile(QPainter* pcPainter, ComTile *pcTile, double dScale, QRect* pcScaledArea)
 {
     for(int i = 0; i < m_apcFilters.size(); i++)
     {
         AbstractFilter* pFilter = m_apcFilters[i];
         if( pFilter->getEnable() )
         {
-            pFilter->drawTile(&m_cFilterContext, pcPainter, pcFrame, dScale, pcScaledArea);
+            pFilter->drawTile(&m_cFilterContext, pcPainter, pcTile, dScale, pcScaledArea);
         }
     }
     return true;
