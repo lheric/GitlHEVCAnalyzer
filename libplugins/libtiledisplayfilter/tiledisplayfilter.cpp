@@ -7,6 +7,8 @@ TileDisplayFilter::TileDisplayFilter(QObject *parent) :
     QObject(parent)
 {
     setName("Tile Disply Filter");
+    m_cConfigDialog.addColorPicker("Color", &m_cConfig.getPenColor());
+    m_cConfigDialog.addSlider("Line Width", 1.0, 10.0, &m_cConfig.getPenWidth());
 }
 
 
@@ -16,13 +18,19 @@ bool TileDisplayFilter::drawTile(FilterContext *pcContext, QPainter *pcPainter, 
 
     QPen iPen;
     iPen.setStyle(Qt::SolidLine);
-    iPen.setWidth(7);
-    iPen.setBrush(QColor(0,255,255));
-    pcPainter ->setBrush(Qt::NoBrush);
-    pcPainter ->setPen(iPen);
-    pcPainter ->drawRect(*pcScaledArea);
+    iPen.setWidth(m_cConfig.getPenWidth());
+    iPen.setBrush(m_cConfig.getPenColor());
+    pcPainter->setBrush(Qt::NoBrush);
+    pcPainter->setPen(iPen);
+    pcPainter->drawRect(*pcScaledArea);
 
     return true;
 
 
+}
+
+bool TileDisplayFilter::config(FilterContext *pcContext)
+{
+    m_cConfigDialog.exec();
+    return true;
 }
