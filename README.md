@@ -71,7 +71,7 @@ Road Map
 - [x] Frames Bit Heatmap Filter
 - [x] Frame Timeline
 - [ ] Slice Display
-- [ ] Tile Display
+- [x] Tile Display (Thank Yangyang Men)
 - [ ] GOP Structure Graph
 - [ ] 10 Bit YUV Support
 - [ ] Bitsteam Comparison 
@@ -114,17 +114,15 @@ Contact Us
 
 School of Software, Sun Yat-sen University, Guangzhou, P.R.China
 
-Author:
-Huang Li (李璜)
+Author: Huang Li (李璜)
 
-lihuang55555@gmail.com
-
+[ihuang55555@gmail.com](mailto:ihuang55555@gmail.com)
 
 Supervised by Prof. Hongyang CHAO
 
 Hongyang Chao (朝红阳)
 
-isschhy@mail.sysu.edu.cn
+[isschhy@mail.sysu.edu.cn](mailto:isschhy@mail.sysu.edu.cn)
 
 School of Software
 
