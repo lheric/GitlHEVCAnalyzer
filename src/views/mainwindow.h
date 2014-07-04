@@ -24,11 +24,11 @@ public:
 
 public:
     void onUIUpdate(GitlUpdateUIEvt& rcEvt);
-
-    void onFrameArrived(GitlUpdateUIEvt& rcEvt);
     void onPOCInfoChanged(GitlUpdateUIEvt& rcEvt);
     void onStylesheetChanged(GitlUpdateUIEvt& rcEvt);
     void onSnapshot(GitlUpdateUIEvt& rcEvt);
+    void onSequenceChanged(GitlUpdateUIEvt& rcEvt);
+    void onZooming(GitlUpdateUIEvt& rcEvt);
 
 protected:
     virtual void keyPressEvent ( QKeyEvent * event );
@@ -73,6 +73,12 @@ private slots:
 
     void on_darkThemeAction_triggered();
 
+
+    void on_resetZoomBtn_clicked();
+
+    void on_zoomSpinBox_valueChanged(int arg1);
+
+    void on_zoomSpinBox_editingFinished();
 
 private:
     Ui::MainWindow *ui;

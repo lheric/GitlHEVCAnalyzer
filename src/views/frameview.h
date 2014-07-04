@@ -6,14 +6,18 @@
 #include <QGraphicsScene>
 #include <QDialog>
 #include "gitldef.h"
+#include "gitlview.h"
 
-class FrameView : public QGraphicsView
+class FrameView : public QGraphicsView,  public GitlView
 {
     Q_OBJECT
 public:
     explicit FrameView(QWidget *parent = 0);
     void setDisplayImage(const QPixmap* pcFramePixmap);
 
+protected:
+    void xUpdateScale(GitlUpdateUIEvt& rcEvt);
+    void xOnFrameArrived(GitlUpdateUIEvt& rcEvt);
 
 protected:
     virtual void wheelEvent      ( QWheelEvent * event );
@@ -26,7 +30,7 @@ protected:
     /*!
      * current scale of the frame
      */
-    ADD_CLASS_FIELD_NOSETTER(double, dCurrScale, getCurrScale)
+    ADD_CLASS_FIELD(double, dCurrScale, getCurrScale, setCurrScale)
 
     /*!
      * Stage and Item to display the frame

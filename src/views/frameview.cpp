@@ -11,6 +11,10 @@ FrameView::FrameView(QWidget *parent) :
     m_cGraphicsScene.addItem(&m_cGraphicsPixmapItem);
     setScene(&m_cGraphicsScene);
     setAcceptDrops(false); //avoid blocking drop event to QMainWindow
+
+    listenToParams("picture", MAKE_CALLBACK(FrameView::xOnFrameArrived));   /// display frame
+    listenToParams("scale", MAKE_CALLBACK(FrameView::xUpdateScale));        /// record latest scale
+
 }
 
 
@@ -20,6 +24,18 @@ void FrameView::setDisplayImage(const QPixmap* pcFramePixmap)
     if(pcFramePixmap == NULL)
         return;
     m_cGraphicsPixmapItem.setPixmap(*pcFramePixmap);
+}
+
+void FrameView::xUpdateScale(GitlUpdateUIEvt &rcEvt)
+{
+    m_dCurrScale = rcEvt.getParameter("scale").toDouble();
+}
+
+void FrameView::xOnFrameArrived(GitlUpdateUIEvt& rcEvt)
+{
+    QVariant vValue = rcEvt.getParameter("picture");
+    QPixmap* pcPixMap = (QPixmap*)(vValue.value<void *>());
+    setDisplayImage(pcPixMap);
 }
 
 void FrameView::wheelEvent ( QWheelEvent * event )
@@ -44,19 +60,17 @@ void FrameView::wheelEvent ( QWheelEvent * event )
     else
     {
 
-        //AnalyzerMsgSender::getInstance()->msgOut(QString("%1").arg(dNextScale));
+        // zooming
         GitlIvkCmdEvt cEvt("zoom_frame");
         cEvt.setParameter("scale", dNextScale);
         cEvt.dispatch();
 
-
+        // center the mouse pos
         int iImgX = m_cGraphicsPixmapItem.scenePos().x();
         int iImgY = m_cGraphicsPixmapItem.scenePos().y();
 
         int iMouseX = mapToScene(event->pos()).x();
         int iMouseY = mapToScene(event->pos()).y();
-
-        //AnalyzerMsgSender::getInstance()->msgOut(QString("%1 %2 %3 %4").arg(iImgX).arg(iImgY).arg(iMouseX).arg(iMouseY));
 
         m_cGraphicsPixmapItem.moveBy((iImgX-iMouseX)*dIncrement/m_dCurrScale,
                                      (iImgY-iMouseY)*dIncrement/m_dCurrScale);

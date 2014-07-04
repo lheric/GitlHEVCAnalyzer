@@ -25,12 +25,13 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     /// set listeners
-    listenToParams("picture", MAKE_CALLBACK(MainWindow::onFrameArrived));
+
     listenToParams(QStringList() <<"total_frame_num"<<"current_frame_poc",
                    MAKE_CALLBACK(MainWindow::onPOCInfoChanged));
     listenToParams("theme_stylesheet", MAKE_CALLBACK(MainWindow::onStylesheetChanged));
     listenToParams("snapshot", MAKE_CALLBACK(MainWindow::onSnapshot));
-
+    listenToParams("current_sequence", MAKE_CALLBACK(MainWindow::onSequenceChanged));
+    listenToParams("scale", MAKE_CALLBACK(MainWindow::onZooming));
 
     /// layout hacks
     ui->msgDockWidget->widget()->layout()->setContentsMargins(0,0,0,0);
@@ -59,13 +60,6 @@ MainWindow::~MainWindow()
     GitlIvkCmdEvt cEvt("clean_cache");
     cEvt.dispatch();
     delete ui;
-}
-
-void MainWindow::onFrameArrived(GitlUpdateUIEvt& rcEvt)
-{
-    QVariant vValue = rcEvt.getParameter("picture");
-    QPixmap* pcPixMap = (QPixmap*)(vValue.value<void *>());
-    ui->imageView->setDisplayImage(pcPixMap);
 }
 
 void MainWindow::onPOCInfoChanged(GitlUpdateUIEvt& rcEvt)
@@ -116,6 +110,20 @@ void MainWindow::onSnapshot(GitlUpdateUIEvt& rcEvt)
     QVariant vValue = rcEvt.getParameter("snapshot");
     QPixmap* pcPixMap = (QPixmap*)(vValue.value<void *>());
     xSaveSnapshot(pcPixMap);
+}
+
+void MainWindow::onSequenceChanged(GitlUpdateUIEvt &rcEvt)
+{
+
+    ComSequence* pcCurSeq = (ComSequence*)(rcEvt.getParameter("current_sequence").value<void*>());
+    QString strResInfoText = QString("%1X%2").arg(pcCurSeq->getWidth()).arg(pcCurSeq->getHeight());
+    this->ui->resolutionInfoLabel->setText(strResInfoText);
+}
+
+void MainWindow::onZooming(GitlUpdateUIEvt &rcEvt)
+{
+    int iPercent = qRound(rcEvt.getParameter("scale").toDouble()*100);
+    this->ui->zoomSpinBox->setValue(iPercent);
 }
 
 /// Keyboard Event
@@ -321,3 +329,29 @@ void MainWindow::on_darkThemeAction_triggered()
     cEvt.dispatch();
 }
 
+
+void MainWindow::on_resetZoomBtn_clicked()
+{
+    GitlIvkCmdEvt cEvt("zoom_frame");
+    cEvt.setParameter("scale", 1.0);
+    cEvt.dispatch();
+}
+
+void MainWindow::on_zoomSpinBox_valueChanged(int arg1)
+{
+    /// if changed by user interaction (not programmatic)
+    if(ui->zoomSpinBox->hasFocus() == true)
+    {
+        GitlIvkCmdEvt cEvt("zoom_frame");
+        cEvt.setParameter("scale", arg1/100.0);
+        cEvt.dispatch();
+        ui->zoomSpinBox->clearFocus();  /// prevent infinite loop
+    }
+}
+
+void MainWindow::on_zoomSpinBox_editingFinished()
+{
+    GitlIvkCmdEvt cEvt("zoom_frame");
+    cEvt.setParameter("scale", ui->zoomSpinBox->value()/100.0);
+    cEvt.dispatch();
+}

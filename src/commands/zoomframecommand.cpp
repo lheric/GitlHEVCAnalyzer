@@ -21,6 +21,7 @@ bool ZoomFrameCommand::execute( GitlCommandParameter& rcInputArg, GitlCommandPar
     }
     ModelLocator* pModel = ModelLocator::getInstance();
     pModel->getDrawEngine().setScale(dScale);
+    rcOutputArg.setParameter("scale", dScale);
     /// refresh
     GitlIvkCmdEvt cRefreshEvt("refresh_screen");
     cRefreshEvt.dispatch();
