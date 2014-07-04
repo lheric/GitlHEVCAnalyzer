@@ -16,6 +16,10 @@ PluginFilterList::PluginFilterList(QWidget *parent) :
     // load filters command
     GitlIvkCmdEvt cRequest("reload_filter");
     cRequest.dispatch();
+
+    // drag reorder enable
+    setDragDropMode(QAbstractItemView::InternalMove);
+    setDropIndicatorShown(true);
 }
 
 void PluginFilterList::onSequenceChanged(GitlUpdateUIEvt &rcEvt)
@@ -42,5 +46,25 @@ void PluginFilterList::onSequenceChanged(GitlUpdateUIEvt &rcEvt)
     horizontalScrollBar()->setValue(iHPos);
 
 
+}
+
+void PluginFilterList::dropEvent(QDropEvent *event)
+{
+    QListWidget::dropEvent(event);
+    GitlIvkCmdEvt cEvt("saveorder_filter");
+    cEvt.setParameter("filter_order", xGetFilterOrder());
+    cEvt.dispatch();
+}
+
+QStringList PluginFilterList::xGetFilterOrder()
+{
+    QStringList cFilterOrder;
+    int iTotal = this->count();
+    for(int i = 0; i < iTotal; i++)
+    {
+        PluginFilterItem* pcItemWidget = (PluginFilterItem*)itemWidget(item(i));
+        cFilterOrder.push_back(pcItemWidget->getFilterName());
+    }
+    return cFilterOrder;
 }
 

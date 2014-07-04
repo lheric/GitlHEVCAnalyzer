@@ -17,8 +17,6 @@
 #include "commands/checkupdatecommand.h"
 #include "commands/filtermousepresscommand.h"
 #include "commands/filterkeypresscommand.h"
-#include "commands/filterorderdowncommand.h"
-#include "commands/filterorderupcommand.h"
 #include "commands/zoomframecommand.h"
 #include "commands/configfiltercommand.h"
 #include "commands/reloadfilterscommand.h"
@@ -27,7 +25,7 @@
 #include "commands/modifypreferencescommand.h"
 #include "commands/switchthemecommand.h"
 #include "commands/cleancachecommand.h"
-
+#include "commands/savefilterordercommand.h"
 SINGLETON_PATTERN_IMPLIMENT(AppFrontController)
 
 /// command <string,class> pair
@@ -52,9 +50,8 @@ s_sCmdTable[] =
     { "mousepress_filter",&FilterMousePressCommand::staticMetaObject   },
     { "keypress_filter",  &FilterKeyPressCommand::staticMetaObject     },
     { "reload_filter",    &ReloadFiltersCommand::staticMetaObject      },
+    { "saveorder_filter", &SaveFilterOrderCommand::staticMetaObject    },
     { "config_filter",    &ConfigFilterCommand::staticMetaObject       },
-    { "moveup_filter",    &FilterOrderUpCommand::staticMetaObject      },
-    { "movedown_filter",  &FilterOrderDownCommand::staticMetaObject    },
     { "switch_filter",    &SwitchFilterCommand::staticMetaObject       },
     { "check_update",     &CheckUpdateCommand::staticMetaObject        },
     { "modify_pref",      &ModifyPreferencesCommand::staticMetaObject  },

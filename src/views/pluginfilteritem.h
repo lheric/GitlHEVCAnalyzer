@@ -20,16 +20,12 @@ public:
                               QWidget *parent = 0 );
     ~PluginFilterItem();
 
-    ADD_CLASS_FIELD_PRIVATE(QString, strFilterName)
+    ADD_CLASS_FIELD_NOSETTER(QString, strFilterName, getFilterName)
 
 private slots:
     void on_enableCheckBox_clicked();
 
     void on_configBtn_clicked();
-
-    void on_upBtn_clicked();
-
-    void on_downBtn_clicked();
 
 private:
     Ui::PluginFilterItem *ui;

@@ -70,20 +70,12 @@ public:
      */
     AbstractFilter* getFilterByName(const QString& strFilterName);
 
-
     /*!
-     * \brief moveUpFilter
-     * \param strFilterName
-     * \return
+     * \brief sortFilters sort filters according to list
+     * \param rcFilterNames
      */
-    bool moveUpFilter(const QString& strFilterName);
+    void sortFilters(const QStringList& rcFilterNames);
 
-    /*!
-     * \brief moveDownFilter
-     * \param strFilterName
-     * \return
-     */
-    bool moveDownFilter(const QString& strFilterName);
 
     /*!
      * \brief saveFilterOrder Save filter orders to file
@@ -109,6 +101,7 @@ protected:
      * \brief xReadAndSortFilters sort filters according to loaded configurations (previous saved qsettings)
      */
     void xReadAndSortFilters();
+
 
     void xPrepareFilterContext();
 

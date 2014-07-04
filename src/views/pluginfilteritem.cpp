@@ -33,18 +33,3 @@ void PluginFilterItem::on_configBtn_clicked()
     cRequest.setParameter("filter_name", m_strFilterName);
     cRequest.dispatch();
 }
-
-void PluginFilterItem::on_upBtn_clicked()
-{
-    GitlIvkCmdEvt cRequest("moveup_filter");
-    cRequest.setParameter("filter_name", m_strFilterName);
-    cRequest.dispatch();
-
-}
-
-void PluginFilterItem::on_downBtn_clicked()
-{
-    GitlIvkCmdEvt cRequest("movedown_filter");
-    cRequest.setParameter("filter_name", m_strFilterName);
-    cRequest.dispatch();
-}

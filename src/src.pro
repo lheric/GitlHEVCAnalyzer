@@ -57,8 +57,6 @@ SOURCES += main.cpp \
     views/sequencelistitem.cpp \
     commands/zoomframecommand.cpp \
     commands/configfiltercommand.cpp \    
-    commands/filterorderupcommand.cpp \
-    commands/filterorderdowncommand.cpp \
     commands/checkupdatecommand.cpp \
     commands/reloadfilterscommand.cpp \
     commands/switchyuvcommand.cpp \
@@ -90,7 +88,8 @@ SOURCES += main.cpp \
     model/selectionmanager.cpp \
     commands/cleancachecommand.cpp \
     parsers/tileparser.cpp \
-    model/common/comtile.cpp
+    model/common/comtile.cpp \
+    commands/savefilterordercommand.cpp
 
 HEADERS += \
     model/common/comsequence.h \
@@ -137,8 +136,6 @@ HEADERS += \
     exceptions/decodingfailexception.h \
     exceptions/bitstreamnotfoundexception.h \
     commands/configfiltercommand.h \    
-    commands/filterorderupcommand.h \
-    commands/filterorderdowncommand.h \
     commands/checkupdatecommand.h \
     commands/reloadfilterscommand.h \
     commands/switchyuvcommand.h \
@@ -169,7 +166,8 @@ HEADERS += \
     model/selectionmanager.h \
     commands/cleancachecommand.h \
     parsers/tileparser.h \
-    model/common/comtile.h
+    model/common/comtile.h \
+    commands/savefilterordercommand.h
 
 
 #include & libs

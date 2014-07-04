@@ -3,6 +3,7 @@
 #include "gitlview.h"
 #include "gitlupdateuievt.h"
 #include <QListWidget>
+#include <QStringList>
 
 class PluginFilterList : public QListWidget, public GitlView
 {
@@ -11,6 +12,9 @@ public:
     explicit PluginFilterList( QWidget *parent = 0 );
     virtual void onSequenceChanged(GitlUpdateUIEvt &rcEvt);
 
+protected:
+    void dropEvent(QDropEvent * event);
+    QStringList xGetFilterOrder();
 
 };
 

@@ -292,58 +292,10 @@ AbstractFilter* FilterLoader::getFilterByName(const QString &strFilterName)
 }
 
 
-
-bool FilterLoader::moveUpFilter(const QString& strFilterName)
-{
-    for(int i = 0; i < m_apcFilters.size(); i++)
-    {
-        if(m_apcFilters.at(i)->getName() == strFilterName)
-        {
-            if(i == 0)
-            {
-                qWarning() << "Can't move up the first filter!";
-                return false;
-            }
-            else
-            {
-                AbstractFilter* pcTemp = m_apcFilters.at(i-1);
-                m_apcFilters.replace(i-1, m_apcFilters.at(i));
-                m_apcFilters.replace(i, pcTemp);
-                return true;
-            }
-        }
-    }
-    qWarning() << QString("Filter %1 NOT Found");
-    return false;
-}
-
-
-bool FilterLoader::moveDownFilter(const QString& strFilterName)
-{
-    for(int i = 0; i < m_apcFilters.size(); i++)
-    {
-        if(m_apcFilters.at(i)->getName() == strFilterName)
-        {
-            if(i+1 == m_apcFilters.size())
-                return false;
-            else
-            {
-                AbstractFilter* pcTemp = m_apcFilters.at(i+1);
-                m_apcFilters.replace(i+1, m_apcFilters.at(i));
-                m_apcFilters.replace(i, pcTemp);
-                return true;
-            }
-        }
-    }
-    qWarning() << QString("Filter %1 NOT Found");
-    return false;
-}
-
-
 void FilterLoader::xReadAndSortFilters()
 {
     ///read filter order
-    QVector<QString> cLastOrder;
+    QStringList cLastOrder;
     g_cAppSetting.beginGroup("Filters");
     int iSize = g_cAppSetting.beginReadArray("filter_order");
     for (int i = 0; i < iSize; ++i)
@@ -355,15 +307,20 @@ void FilterLoader::xReadAndSortFilters()
     g_cAppSetting.endArray();
     g_cAppSetting.endGroup();
 
-
-
     /// sorting
-    for (int i = 0; i < cLastOrder.size(); ++i)
+    sortFilters(cLastOrder);
+}
+
+void FilterLoader::sortFilters(const QStringList &rcFilterNames)
+{
+    QStringList cFilterNamesCopy = rcFilterNames;
+
+    for (int i = 0; i < cFilterNamesCopy.size(); ++i)
     {
         bool bFound = false;
         for(int j = 0; j < m_apcFilters.size(); j++)
         {
-            if(m_apcFilters.at(j)->getName() == cLastOrder.at(i))
+            if(m_apcFilters.at(j)->getName() == cFilterNamesCopy.at(i))
             {
                 bFound = true;
                 /// swap position i & j
@@ -379,11 +336,10 @@ void FilterLoader::xReadAndSortFilters()
         }
         if(bFound == false) /// earse the filters that are missing
         {
-            cLastOrder.erase(cLastOrder.begin()+i);
+            cFilterNamesCopy.erase(cFilterNamesCopy.begin()+i);
             i--;
         }
     }
-
 }
 
 void FilterLoader::xPrepareFilterContext()
