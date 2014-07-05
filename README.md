@@ -13,15 +13,15 @@ Current building status:  [![Build Status](https://travis-ci.org/lheric/GitlHEVC
 
 Looking for **binary**?
 
-(**If the binary is unstable on your system, please compile it from the source code**)
+(**If the binary is unstable on your system, please compile the source code**)
 
 Windows (64 bit):
 
 <a href="https://sourceforge.net/projects/gtilhevcanalyzer/">https://sourceforge.net/projects/gtilhevcanalyzer/</a>
 
-For linux users, please compile the source code
+For Linux & Mac OS X users, please compile the source code
 
-If you find any bugs, you are welcomed to open  new issues.
+If you find any bugs, you are welcomed to open new issues.
 
 
 Why Gitl HEVC Analyzer
@@ -63,8 +63,6 @@ For historical reasons, besides formal HEVC bitstream, it also supports bitstrea
 - [x] Transform Unit (TU) Display
 - [x] Motion Vectors (MV) Display
 - [x] Intra Mode (Angular, DC, Planar) Display
-
-<a href="http://gitl.sysu.edu.cn">Intelligent Information Processing Lab</a> 
 
 Road Map
 ========
@@ -110,7 +108,7 @@ Instead of the building on the command line , Qt Creator is supported. Clone thi
 
 Contact Us
 ============
-<a href="http://gitl.sysu.edu.cn">Intelligent Information Processing Lab</a>
+[Intelligent Information Processing Lab](http://gitl.sysu.edu.cn)
 
 School of Software, Sun Yat-sen University, Guangzhou, P.R.China
 
