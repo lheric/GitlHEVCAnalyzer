@@ -69,7 +69,7 @@ Road Map
 - [x] Frames Bit Heatmap Filter
 - [x] Frame Timeline
 - [ ] Slice Display
-- [x] Tile Display (Thank Yangyang Men)
+- [ ] Tile Display
 - [ ] GOP Structure Graph
 - [ ] 10 Bit YUV Support
 - [ ] Bitsteam Comparison 
