@@ -63,24 +63,14 @@
         <number>0</number>
        </property>
        <item>
-        <widget class="QPushButton" name="openBitstreamBtn">
-         <property name="font">
-          <font>
-           <pointsize>12</pointsize>
-          </font>
-         </property>
+        <widget class="QToolButton" name="openBitstreamBtn">
          <property name="text">
           <string>Open</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="printScreenBtn">
-         <property name="font">
-          <font>
-           <pointsize>12</pointsize>
-          </font>
-         </property>
+        <widget class="QToolButton" name="printScreenBtn">
          <property name="text">
           <string>Snapshot</string>
          </property>
@@ -401,7 +391,7 @@
      <x>0</x>
      <y>0</y>
      <width>1227</width>
-     <height>22</height>
+     <height>23</height>
     </rect>
    </property>
    <property name="nativeMenuBar">
