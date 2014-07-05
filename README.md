@@ -43,10 +43,13 @@ How to write a custom filter (coming soon)
 Screenshot
 ==========
 Windows (Dark theme):
-![Win](https://github.com/lheric/GitlHEVCAnalyzer/blob/master/screenshots/screenshoot_win.png?raw=true)
+![Win](https://github.com/lheric/GitlHEVCAnalyzer/blob/master/screenshots/screenshot_win.png?raw=true)
 
 Linux (Default theme):
-![Linux](https://github.com/lheric/GitlHEVCAnalyzer/blob/master/screenshots/screenshoot_linux.png?raw=true)
+![Linux](https://github.com/lheric/GitlHEVCAnalyzer/blob/master/screenshots/screenshot_linux.png?raw=true)
+
+Mac OS X (Default theme):
+![Linux](https://github.com/lheric/GitlHEVCAnalyzer/blob/master/screenshots/screenshot_mac.png?raw=true)
 
 Features
 ========
