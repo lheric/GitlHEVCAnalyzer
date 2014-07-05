@@ -269,12 +269,18 @@ void MainWindow::on_actionReloadPluginsFilters_triggered()
 
 void MainWindow::dragEnterEvent(QDragEnterEvent *event)
 {
-    event->acceptProposedAction();
+    if(event->mimeData()->hasUrls())
+        event->accept();
+    else
+        event->ignore();
 }
 
 void MainWindow::dragMoveEvent(QDragMoveEvent *event)
  {
-     event->acceptProposedAction();
+    if(event->mimeData()->hasUrls())
+        event->accept();
+    else
+        event->ignore();
  }
 
 void MainWindow::dropEvent(QDropEvent *event)
