@@ -69,7 +69,7 @@ bool BitstreamParser::parseFile(QString strDecoderFolder,
     QString strStandardOutputFile = strOutputPath+"/decoder_general.txt";
     m_cStdOutputFile.setFileName(strStandardOutputFile);
     m_cStdOutputFile.open(QIODevice::WriteOnly);
-    QString strDecoderCmd = strDecoderPath + QString(" -b \"%1\" -o decoder_yuv.yuv").arg(strBitstreamFilePath);
+    QString strDecoderCmd = QString("\"%1\" -b \"%2\" -o decoder_yuv.yuv").arg(strDecoderPath).arg(strBitstreamFilePath);
     qDebug() << strDecoderCmd;
 
     m_cDecoderProcess.start(strDecoderCmd);
