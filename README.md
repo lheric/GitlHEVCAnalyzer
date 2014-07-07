@@ -117,7 +117,7 @@ School of Software, Sun Yat-sen University, Guangzhou, P.R.China
 
 Author: Huang Li (李璜)
 
-[ihuang55555@gmail.com](mailto:ihuang55555@gmail.com)
+[lihuang55555@gmail.com](mailto:lihuang55555@gmail.com)
 
 Supervised by Prof. Hongyang CHAO
 
