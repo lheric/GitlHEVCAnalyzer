@@ -23,6 +23,8 @@ For Linux & Mac OS X users, please compile the source code
 
 If you find any bugs, you are welcomed to open new issues.
 
+**This work was partially supported by NSF of China under Grant 61173081 and Guangdong Natural Science Foundation, P.R.China, under Grant S2011020001215.**
+
 
 Why Gitl HEVC Analyzer
 ======================
