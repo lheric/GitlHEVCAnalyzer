@@ -113,6 +113,14 @@ qmake GitlHEVCAnalyzer.pro -r "CONFIG+=Release"
 make
 ```
 
+3c. Build on macosx:
+```bash
+# in case you don't have qt5 installed
+# brew install qt5
+qmake GitlHEVCAnalyzer.pro -r "CONFIG+=Release"
+make
+```
+
 Instead of the building on the command line , Qt Creator is supported. Clone this project and its submodules, then open `GitlHEVCAnalyzer.pro` in Qt Creator.
 
 Contact Us
