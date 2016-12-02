@@ -2,9 +2,9 @@ dist: trusty
 sudo: required
 
 before_install:
-  - yes | sudo add-apt-repository ppa:ubuntu-sdk-team/ppa
+  - sudo add-apt-repository ppa:ubuntu-sdk-team/ppa
   - sudo apt-get update -qq
-  - yes | sudo apt-get install qtdeclarative5-dev
+  - sudo apt-get install qtdeclarative5-dev
   - git submodule update --init --recursive
   - git submodule update --recursive  
 
