@@ -11,7 +11,7 @@ It is released under **modified** Apache License 2.0. If you want to use it for 
 
 Current building status:  [![Build Status](https://travis-ci.org/lheric/GitlHEVCAnalyzer.png?branch=master)](https://travis-ci.org/lheric/GitlHEVCAnalyzer)
 
-(Mac OS X version not working for now. Fixing..)
+(Not working on Mac OS X for now. Fixing..)
 
 Looking for **binary**?
 
