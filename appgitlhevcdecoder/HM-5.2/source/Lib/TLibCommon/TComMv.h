@@ -1,7 +1,7 @@
 /* The copyright in this software is being made available under the BSD
  * License, included below. This software may be subject to other third party
  * and contributor rights, including patent rights, and no such rights are
- * granted under this license.  
+ * granted under this license.
  *
  * Copyright (c) 2010-2012, ITU/ISO/IEC
  * All rights reserved.
@@ -53,95 +53,96 @@ class TComMv
 private:
   Short m_iHor;     ///< horizontal component of motion vector
   Short m_iVer;     ///< vertical component of motion vector
-  
+  Int abs(Int x) const { return x>0 ? x : -x; }
+
 public:
-  
+
   // ------------------------------------------------------------------------------------------------------------------
   // constructors
   // ------------------------------------------------------------------------------------------------------------------
-  
+
   TComMv() :
   m_iHor(0),
   m_iVer(0)
   {
   }
-  
+
   TComMv( Short iHor, Short iVer ) :
   m_iHor(iHor),
   m_iVer(iVer)
   {
   }
-  
+
   // ------------------------------------------------------------------------------------------------------------------
   // set
   // ------------------------------------------------------------------------------------------------------------------
-  
+
   Void  set       ( Short iHor, Short iVer)     { m_iHor = iHor;  m_iVer = iVer;            }
   Void  setHor    ( Short i )                   { m_iHor = i;                               }
   Void  setVer    ( Short i )                   { m_iVer = i;                               }
   Void  setZero   ()                            { m_iHor = m_iVer = 0;  }
-  
+
   // ------------------------------------------------------------------------------------------------------------------
   // get
   // ------------------------------------------------------------------------------------------------------------------
-  
+
   Int   getHor    () const { return m_iHor;          }
   Int   getVer    () const { return m_iVer;          }
   Int   getAbsHor () const { return abs( m_iHor );   }
   Int   getAbsVer () const { return abs( m_iVer );   }
-  
+
   // ------------------------------------------------------------------------------------------------------------------
   // operations
   // ------------------------------------------------------------------------------------------------------------------
-  
+
   const TComMv& operator += (const TComMv& rcMv)
   {
     m_iHor += rcMv.m_iHor;
     m_iVer += rcMv.m_iVer;
     return  *this;
   }
-  
+
   const TComMv& operator-= (const TComMv& rcMv)
   {
     m_iHor -= rcMv.m_iHor;
     m_iVer -= rcMv.m_iVer;
     return  *this;
   }
-  
+
   const TComMv& operator>>= (const Int i)
   {
     m_iHor >>= i;
     m_iVer >>= i;
     return  *this;
   }
-  
+
   const TComMv& operator<<= (const Int i)
   {
     m_iHor <<= i;
     m_iVer <<= i;
     return  *this;
   }
-  
+
   const TComMv operator - ( const TComMv& rcMv ) const
   {
     return TComMv( m_iHor - rcMv.m_iHor, m_iVer - rcMv.m_iVer );
   }
-  
+
   const TComMv operator + ( const TComMv& rcMv ) const
   {
     return TComMv( m_iHor + rcMv.m_iHor, m_iVer + rcMv.m_iVer );
   }
-  
+
   Bool operator== ( const TComMv& rcMv ) const
   {
     return (m_iHor==rcMv.m_iHor && m_iVer==rcMv.m_iVer);
   }
-  
+
   Bool operator!= ( const TComMv& rcMv ) const
   {
     return (m_iHor!=rcMv.m_iHor || m_iVer!=rcMv.m_iVer);
   }
-  
+
   const TComMv scaleMv( Int iScale ) const
   {
     return TComMv( (iScale * getHor() + 127 + (iScale * getHor() < 0)) >> 8, (iScale * getVer() + 127 + (iScale * getVer() < 0)) >> 8);
