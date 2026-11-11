@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>197</width>
-    <height>165</height>
+    <height>185</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -57,7 +57,14 @@
           <item>
            <widget class="QRadioButton" name="version120">
             <property name="text">
-             <string>HM 12.0 or later</string>
+             <string>HM 12.0</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QRadioButton" name="version180">
+            <property name="text">
+             <string>HM 18.0 or later</string>
             </property>
            </widget>
           </item>
