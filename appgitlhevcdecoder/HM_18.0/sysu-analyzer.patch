@@ -1,18 +1,26 @@
 diff --git a/source/App/TAppDecoder/TAppDecTop.cpp b/source/App/TAppDecoder/TAppDecTop.cpp
-index 979fb59..5457d20 100644
+index 979fb59..bd8d8c4 100644
 --- a/source/App/TAppDecoder/TAppDecTop.cpp
 +++ b/source/App/TAppDecoder/TAppDecTop.cpp
-@@ -44,6 +44,9 @@
+@@ -44,6 +44,17 @@
  #include "TAppDecTop.h"
  #include "TLibDecoder/AnnexBread.h"
  #include "TLibDecoder/NALread.h"
 +#if ENABLE_ANAYSIS_OUTPUT
 +#include "TLibSysuAnalyzer/TSysuAnalyzerOutput.h"
 +#endif
++
++#if ENABLE_ANAYSIS_OUTPUT
++// The analyzer writes every YUV file at the full coded size (no conformance-
++// window cropping), so that pictures line up with the CTU/CU grid it draws.
++#define SYSU_CROP(offset) 0
++#else
++#define SYSU_CROP(offset) (offset)
++#endif
  #if RExt__DECODER_DEBUG_BIT_STATISTICS
  #include "TLibCommon/TComCodingStatistics.h"
  #endif
-@@ -242,6 +245,9 @@ Void TAppDecTop::decode()
+@@ -242,6 +253,9 @@ Void TAppDecTop::decode()
          }
  
          m_cTVideoIOYuvReconFile.open( m_reconFileName, true, m_outputBitDepth, m_outputBitDepth, bitDepths.recon ); // write mode
@@ -22,7 +30,7 @@ index 979fb59..5457d20 100644
          openedReconFile = true;
        }
  #if JVET_X0048_X0103_FILM_GRAIN
-@@ -375,6 +381,9 @@ Void TAppDecTop::xDestroyDecLib()
+@@ -375,6 +389,9 @@ Void TAppDecTop::xDestroyDecLib()
    if ( !m_reconFileName.empty() )
    {
      m_cTVideoIOYuvReconFile.close();
@@ -32,62 +40,156 @@ index 979fb59..5457d20 100644
    }
  #if JVET_X0048_X0103_FILM_GRAIN
    if (!m_SEIFGSFileName.empty())
-@@ -521,6 +530,13 @@ Void TAppDecTop::xWriteOutput( TComList<TComPic*>* pcListPic, UInt tId )
-                                            conf.getWindowRightOffset() + defDisp.getWindowRightOffset(),
-                                            conf.getWindowTopOffset() + defDisp.getWindowTopOffset(),
-                                            conf.getWindowBottomOffset() + defDisp.getWindowBottomOffset(), NUM_CHROMA_FORMAT, isTff );
+@@ -517,10 +534,17 @@ Void TAppDecTop::xWriteOutput( TComList<TComPic*>* pcListPic, UInt tId )
+           {
+             m_cTVideoIOYuvReconFile.write( pcPicTop->getPicYuvRec(), pcPicBottom->getPicYuvRec(),
+                                            m_outputColourSpaceConvert,
+-                                           conf.getWindowLeftOffset() + defDisp.getWindowLeftOffset(),
+-                                           conf.getWindowRightOffset() + defDisp.getWindowRightOffset(),
+-                                           conf.getWindowTopOffset() + defDisp.getWindowTopOffset(),
+-                                           conf.getWindowBottomOffset() + defDisp.getWindowBottomOffset(), NUM_CHROMA_FORMAT, isTff );
++                                           SYSU_CROP(conf.getWindowLeftOffset() + defDisp.getWindowLeftOffset()),
++                                           SYSU_CROP(conf.getWindowRightOffset() + defDisp.getWindowRightOffset()),
++                                           SYSU_CROP(conf.getWindowTopOffset() + defDisp.getWindowTopOffset()),
++                                           SYSU_CROP(conf.getWindowBottomOffset() + defDisp.getWindowBottomOffset()), NUM_CHROMA_FORMAT, isTff );
 +#if ENABLE_ANAYSIS_OUTPUT
 +            TSysuAnalyzerOutput::getInstance()->writeYuvFiles( pcPicTop, pcPicBottom, m_outputColourSpaceConvert,
-+                                           conf.getWindowLeftOffset() + defDisp.getWindowLeftOffset(),
-+                                           conf.getWindowRightOffset() + defDisp.getWindowRightOffset(),
-+                                           conf.getWindowTopOffset() + defDisp.getWindowTopOffset(),
-+                                           conf.getWindowBottomOffset() + defDisp.getWindowBottomOffset(), isTff );
++                                           SYSU_CROP(conf.getWindowLeftOffset() + defDisp.getWindowLeftOffset()),
++                                           SYSU_CROP(conf.getWindowRightOffset() + defDisp.getWindowRightOffset()),
++                                           SYSU_CROP(conf.getWindowTopOffset() + defDisp.getWindowTopOffset()),
++                                           SYSU_CROP(conf.getWindowBottomOffset() + defDisp.getWindowBottomOffset()), isTff );
 +#endif
            }
          }
  
-@@ -577,6 +593,13 @@ Void TAppDecTop::xWriteOutput( TComList<TComPic*>* pcListPic, UInt tId )
-                                          conf.getWindowTopOffset() + defDisp.getWindowTopOffset(),
-                                          conf.getWindowBottomOffset() + defDisp.getWindowBottomOffset(),
+@@ -572,11 +596,18 @@ Void TAppDecTop::xWriteOutput( TComList<TComPic*>* pcListPic, UInt tId )
+ 
+           m_cTVideoIOYuvReconFile.write( pcPic->getPicYuvRec(),
+                                          m_outputColourSpaceConvert,
+-                                         conf.getWindowLeftOffset() + defDisp.getWindowLeftOffset(),
+-                                         conf.getWindowRightOffset() + defDisp.getWindowRightOffset(),
+-                                         conf.getWindowTopOffset() + defDisp.getWindowTopOffset(),
+-                                         conf.getWindowBottomOffset() + defDisp.getWindowBottomOffset(),
++                                         SYSU_CROP(conf.getWindowLeftOffset() + defDisp.getWindowLeftOffset()),
++                                         SYSU_CROP(conf.getWindowRightOffset() + defDisp.getWindowRightOffset()),
++                                         SYSU_CROP(conf.getWindowTopOffset() + defDisp.getWindowTopOffset()),
++                                         SYSU_CROP(conf.getWindowBottomOffset() + defDisp.getWindowBottomOffset()),
                                           NUM_CHROMA_FORMAT, m_bClipOutputVideoToRec709Range  );
 +#if ENABLE_ANAYSIS_OUTPUT
 +          TSysuAnalyzerOutput::getInstance()->writeYuvFiles( pcPic, m_outputColourSpaceConvert,
-+                                         conf.getWindowLeftOffset() + defDisp.getWindowLeftOffset(),
-+                                         conf.getWindowRightOffset() + defDisp.getWindowRightOffset(),
-+                                         conf.getWindowTopOffset() + defDisp.getWindowTopOffset(),
-+                                         conf.getWindowBottomOffset() + defDisp.getWindowBottomOffset() );
++                                         SYSU_CROP(conf.getWindowLeftOffset() + defDisp.getWindowLeftOffset()),
++                                         SYSU_CROP(conf.getWindowRightOffset() + defDisp.getWindowRightOffset()),
++                                         SYSU_CROP(conf.getWindowTopOffset() + defDisp.getWindowTopOffset()),
++                                         SYSU_CROP(conf.getWindowBottomOffset() + defDisp.getWindowBottomOffset()) );
 +#endif
          }
  
  #if JVET_X0048_X0103_FILM_GRAIN
-@@ -679,6 +702,13 @@ Void TAppDecTop::xFlushOutput( TComList<TComPic*>* pcListPic )
-                                          conf.getWindowRightOffset() + defDisp.getWindowRightOffset(),
-                                          conf.getWindowTopOffset() + defDisp.getWindowTopOffset(),
-                                          conf.getWindowBottomOffset() + defDisp.getWindowBottomOffset(), NUM_CHROMA_FORMAT, isTff );
+@@ -587,10 +618,10 @@ Void TAppDecTop::xWriteOutput( TComList<TComPic*>* pcListPic, UInt tId )
+           const Window  defDisp = m_respectDefDispWindow ? pcPic->getDefDisplayWindow() : Window();
+           m_cTVideoIOYuvSEIFGSFile.write(pcPic->getPicYuvDisp(),
+                                           m_outputColourSpaceConvert,
+-                                          conf.getWindowLeftOffset() + defDisp.getWindowLeftOffset(),
+-                                          conf.getWindowRightOffset() + defDisp.getWindowRightOffset(),
+-                                          conf.getWindowTopOffset() + defDisp.getWindowTopOffset(),
+-                                          conf.getWindowBottomOffset() + defDisp.getWindowBottomOffset(),
++                                          SYSU_CROP(conf.getWindowLeftOffset() + defDisp.getWindowLeftOffset()),
++                                          SYSU_CROP(conf.getWindowRightOffset() + defDisp.getWindowRightOffset()),
++                                          SYSU_CROP(conf.getWindowTopOffset() + defDisp.getWindowTopOffset()),
++                                          SYSU_CROP(conf.getWindowBottomOffset() + defDisp.getWindowBottomOffset()),
+                                           NUM_CHROMA_FORMAT, m_bClipOutputVideoToRec709Range);
+         }
+ #endif
+@@ -614,10 +645,10 @@ Void TAppDecTop::xWriteOutput( TComList<TComPic*>* pcListPic, UInt tId )
+ 
+           m_cTVideoIOYuvSIIPostFile.write( pcPic->getPicYuvPostRec(),
+                                         m_outputColourSpaceConvert,
+-                                        conf.getWindowLeftOffset() + defDisp.getWindowLeftOffset(),
+-                                        conf.getWindowRightOffset() + defDisp.getWindowRightOffset(),
+-                                        conf.getWindowTopOffset() + defDisp.getWindowTopOffset(),
+-                                        conf.getWindowBottomOffset() + defDisp.getWindowBottomOffset(),
++                                        SYSU_CROP(conf.getWindowLeftOffset() + defDisp.getWindowLeftOffset()),
++                                        SYSU_CROP(conf.getWindowRightOffset() + defDisp.getWindowRightOffset()),
++                                        SYSU_CROP(conf.getWindowTopOffset() + defDisp.getWindowTopOffset()),
++                                        SYSU_CROP(conf.getWindowBottomOffset() + defDisp.getWindowBottomOffset()),
+                                         NUM_CHROMA_FORMAT, m_bClipOutputVideoToRec709Range  );
+         }
+ #endif
+@@ -675,10 +706,17 @@ Void TAppDecTop::xFlushOutput( TComList<TComPic*>* pcListPic )
+           const Bool isTff = pcPicTop->isTopField();
+           m_cTVideoIOYuvReconFile.write( pcPicTop->getPicYuvRec(), pcPicBottom->getPicYuvRec(),
+                                          m_outputColourSpaceConvert,
+-                                         conf.getWindowLeftOffset() + defDisp.getWindowLeftOffset(),
+-                                         conf.getWindowRightOffset() + defDisp.getWindowRightOffset(),
+-                                         conf.getWindowTopOffset() + defDisp.getWindowTopOffset(),
+-                                         conf.getWindowBottomOffset() + defDisp.getWindowBottomOffset(), NUM_CHROMA_FORMAT, isTff );
++                                         SYSU_CROP(conf.getWindowLeftOffset() + defDisp.getWindowLeftOffset()),
++                                         SYSU_CROP(conf.getWindowRightOffset() + defDisp.getWindowRightOffset()),
++                                         SYSU_CROP(conf.getWindowTopOffset() + defDisp.getWindowTopOffset()),
++                                         SYSU_CROP(conf.getWindowBottomOffset() + defDisp.getWindowBottomOffset()), NUM_CHROMA_FORMAT, isTff );
 +#if ENABLE_ANAYSIS_OUTPUT
 +          TSysuAnalyzerOutput::getInstance()->writeYuvFiles( pcPicTop, pcPicBottom, m_outputColourSpaceConvert,
-+                                         conf.getWindowLeftOffset() + defDisp.getWindowLeftOffset(),
-+                                         conf.getWindowRightOffset() + defDisp.getWindowRightOffset(),
-+                                         conf.getWindowTopOffset() + defDisp.getWindowTopOffset(),
-+                                         conf.getWindowBottomOffset() + defDisp.getWindowBottomOffset(), isTff );
++                                         SYSU_CROP(conf.getWindowLeftOffset() + defDisp.getWindowLeftOffset()),
++                                         SYSU_CROP(conf.getWindowRightOffset() + defDisp.getWindowRightOffset()),
++                                         SYSU_CROP(conf.getWindowTopOffset() + defDisp.getWindowTopOffset()),
++                                         SYSU_CROP(conf.getWindowBottomOffset() + defDisp.getWindowBottomOffset()), isTff );
 +#endif
          }
  
          // update POC of display order
-@@ -738,6 +768,13 @@ Void TAppDecTop::xFlushOutput( TComList<TComPic*>* pcListPic )
-                                          conf.getWindowTopOffset() + defDisp.getWindowTopOffset(),
-                                          conf.getWindowBottomOffset() + defDisp.getWindowBottomOffset(),
+@@ -733,11 +771,18 @@ Void TAppDecTop::xFlushOutput( TComList<TComPic*>* pcListPic )
+ 
+           m_cTVideoIOYuvReconFile.write( pcPic->getPicYuvRec(),
+                                          m_outputColourSpaceConvert,
+-                                         conf.getWindowLeftOffset() + defDisp.getWindowLeftOffset(),
+-                                         conf.getWindowRightOffset() + defDisp.getWindowRightOffset(),
+-                                         conf.getWindowTopOffset() + defDisp.getWindowTopOffset(),
+-                                         conf.getWindowBottomOffset() + defDisp.getWindowBottomOffset(),
++                                         SYSU_CROP(conf.getWindowLeftOffset() + defDisp.getWindowLeftOffset()),
++                                         SYSU_CROP(conf.getWindowRightOffset() + defDisp.getWindowRightOffset()),
++                                         SYSU_CROP(conf.getWindowTopOffset() + defDisp.getWindowTopOffset()),
++                                         SYSU_CROP(conf.getWindowBottomOffset() + defDisp.getWindowBottomOffset()),
                                           NUM_CHROMA_FORMAT, m_bClipOutputVideoToRec709Range );
 +#if ENABLE_ANAYSIS_OUTPUT
 +          TSysuAnalyzerOutput::getInstance()->writeYuvFiles( pcPic, m_outputColourSpaceConvert,
-+                                         conf.getWindowLeftOffset() + defDisp.getWindowLeftOffset(),
-+                                         conf.getWindowRightOffset() + defDisp.getWindowRightOffset(),
-+                                         conf.getWindowTopOffset() + defDisp.getWindowTopOffset(),
-+                                         conf.getWindowBottomOffset() + defDisp.getWindowBottomOffset() );
++                                         SYSU_CROP(conf.getWindowLeftOffset() + defDisp.getWindowLeftOffset()),
++                                         SYSU_CROP(conf.getWindowRightOffset() + defDisp.getWindowRightOffset()),
++                                         SYSU_CROP(conf.getWindowTopOffset() + defDisp.getWindowTopOffset()),
++                                         SYSU_CROP(conf.getWindowBottomOffset() + defDisp.getWindowBottomOffset()) );
 +#endif
          }
  
  #if JVET_X0048_X0103_FILM_GRAIN
+@@ -748,10 +793,10 @@ Void TAppDecTop::xFlushOutput( TComList<TComPic*>* pcListPic )
+           const Window  defDisp = m_respectDefDispWindow ? pcPic->getDefDisplayWindow() : Window();
+           m_cTVideoIOYuvSEIFGSFile.write(pcPic->getPicYuvDisp(),
+                                           m_outputColourSpaceConvert,
+-                                          conf.getWindowLeftOffset() + defDisp.getWindowLeftOffset(),
+-                                          conf.getWindowRightOffset() + defDisp.getWindowRightOffset(),
+-                                          conf.getWindowTopOffset() + defDisp.getWindowTopOffset(),
+-                                          conf.getWindowBottomOffset() + defDisp.getWindowBottomOffset(),
++                                          SYSU_CROP(conf.getWindowLeftOffset() + defDisp.getWindowLeftOffset()),
++                                          SYSU_CROP(conf.getWindowRightOffset() + defDisp.getWindowRightOffset()),
++                                          SYSU_CROP(conf.getWindowTopOffset() + defDisp.getWindowTopOffset()),
++                                          SYSU_CROP(conf.getWindowBottomOffset() + defDisp.getWindowBottomOffset()),
+                                           NUM_CHROMA_FORMAT, m_bClipOutputVideoToRec709Range);
+         }
+ #endif
+@@ -765,10 +810,10 @@ Void TAppDecTop::xFlushOutput( TComList<TComPic*>* pcListPic )
+ 
+           m_cTVideoIOYuvSIIPostFile.write( pcPic->getPicYuvPostRec(),
+                                         m_outputColourSpaceConvert,
+-                                        conf.getWindowLeftOffset() + defDisp.getWindowLeftOffset(),
+-                                        conf.getWindowRightOffset() + defDisp.getWindowRightOffset(),
+-                                        conf.getWindowTopOffset() + defDisp.getWindowTopOffset(),
+-                                        conf.getWindowBottomOffset() + defDisp.getWindowBottomOffset(),
++                                        SYSU_CROP(conf.getWindowLeftOffset() + defDisp.getWindowLeftOffset()),
++                                        SYSU_CROP(conf.getWindowRightOffset() + defDisp.getWindowRightOffset()),
++                                        SYSU_CROP(conf.getWindowTopOffset() + defDisp.getWindowTopOffset()),
++                                        SYSU_CROP(conf.getWindowBottomOffset() + defDisp.getWindowBottomOffset()),
+                                         NUM_CHROMA_FORMAT, m_bClipOutputVideoToRec709Range  );
+         }
+ #endif
 diff --git a/source/Lib/TLibDecoder/TDecCu.cpp b/source/Lib/TLibDecoder/TDecCu.cpp
 index 0d8d7d6..6ff7c21 100644
 --- a/source/Lib/TLibDecoder/TDecCu.cpp

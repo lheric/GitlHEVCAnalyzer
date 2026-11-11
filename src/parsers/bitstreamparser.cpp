@@ -69,7 +69,9 @@ bool BitstreamParser::parseFile(QString strBitstreamFilePath,
     m_cStdOutputFile.open(QIODevice::WriteOnly);
     strDecoderPath = QDir::toNativeSeparators(strDecoderPath);              /// convert to native path
     strBitstreamFilePath = QDir::toNativeSeparators(strBitstreamFilePath);  /// convert to native path
-    QString strDecoderCmd = QString("\"%1\" -b \"%2\" -o decoder_yuv.yuv").arg(strDecoderPath).arg(strBitstreamFilePath);
+    /// -d 8: write decoder_yuv.yuv (and pred_yuv.yuv, which follows it) as 8-bit
+    /// whatever the stream's bit depth, since the GUI displays 8-bit YUV only
+    QString strDecoderCmd = QString("\"%1\" -b \"%2\" -o decoder_yuv.yuv -d 8").arg(strDecoderPath).arg(strBitstreamFilePath);
     qDebug() << strDecoderCmd;
 
     m_cDecoderProcess.start(strDecoderCmd);

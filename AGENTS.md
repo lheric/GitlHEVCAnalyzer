@@ -72,7 +72,7 @@ on Main profile streams.
 ### Decoder ↔ GUI contract
 
 `OpenBitstreamCommand` → `BitstreamParser` runs
-`<application dir>/decoders/HM_180 -b <bitstream> -o decoder_yuv.yuv` with the
+`<application dir>/decoders/HM_180 -b <bitstream> -o decoder_yuv.yuv -d 8` with the
 working directory set to `<cache folder>/<sequence index>` (cache folder = the
 `cache_path` preference, default `./cache`). There is no version choice: HM-18
 is the only decoder. The decoder must write, into its working directory:
@@ -86,6 +86,8 @@ is the only decoder. The decoder must write, into its working directory:
 - `decoder_yuv.yuv` (reconstruction), `resi_yuv.yuv` (residual, signed
   16-bit), `pred_yuv.yuv` (prediction)
 
+The full format of every file (values, ordering, how lines map to pictures)
+is specified in `DOCS/decoder-output-format.md`; update it with any change.
 All of these are produced by `TLibSysuAnalyzer/TSysuAnalyzerOutput`. Keep the
 file formats stable: any decoder change must keep the output byte-compatible
 with what `src/parsers/` expects (e.g. "no partition / no prediction" is

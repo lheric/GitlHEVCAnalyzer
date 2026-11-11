@@ -262,6 +262,11 @@ Void TSysuAnalyzerOutput::writeOutSps   ( TComSPS* pcSPS )
 
   m_cSpsOut << "Input Bit Depth:"  << iInputBitDepth  << endl;
 
+  /// conformance window in luma samples (the YUV files are NOT cropped to it)
+  const Window& rcConf = pcSPS->getConformanceWindow();
+  m_cSpsOut << "Conformance Window:" << rcConf.getWindowLeftOffset() << " " << rcConf.getWindowRightOffset()
+            << " " << rcConf.getWindowTopOffset() << " " << rcConf.getWindowBottomOffset() << endl;
+
 }
 
 
