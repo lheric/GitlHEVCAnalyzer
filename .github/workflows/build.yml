@@ -1,0 +1,79 @@
+name: Build
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: ${{ matrix.name }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: Linux (Qt 5, GCC)
+            os: ubuntu-24.04
+          - name: macOS (Qt 5, Clang)
+            os: macos-14
+          - name: Windows (Qt 5.15, MSVC)
+            os: windows-2022
+
+    steps:
+      - name: Checkout (with submodules)
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      # ---- Qt ---------------------------------------------------------------
+      - name: Install Qt (Linux)
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends qtbase5-dev qt5-qmake
+          echo "/usr/lib/qt5/bin" >> "$GITHUB_PATH"
+
+      - name: Install Qt (macOS)
+        if: runner.os == 'macOS'
+        run: |
+          brew install qt@5
+          echo "$(brew --prefix qt@5)/bin" >> "$GITHUB_PATH"
+
+      - name: Install Qt (Windows)
+        if: runner.os == 'Windows'
+        uses: jurplel/install-qt-action@v4
+        with:
+          version: '5.15.2'
+          arch: win64_msvc2019_64
+          cache: true
+
+      - name: Set up MSVC environment
+        if: runner.os == 'Windows'
+        uses: ilammy/msvc-dev-cmd@v1
+
+      # ---- Build ------------------------------------------------------------
+      - name: Configure
+        shell: bash
+        run: |
+          mkdir build
+          cd build
+          qmake -v
+          qmake -r ../GitlHEVCAnalyzer.pro \
+            "CONFIG+=release" "CONFIG-=debug debug_and_release" \
+            "CONFIG+=sdk_no_version_check"
+
+      - name: Build (Linux/macOS)
+        if: runner.os != 'Windows'
+        working-directory: build
+        run: make -j"$(getconf _NPROCESSORS_ONLN)"
+
+      - name: Build (Windows)
+        if: runner.os == 'Windows'
+        working-directory: build
+        shell: cmd
+        run: nmake
+
+      - name: List build output
+        shell: bash
+        run: ls -la build build/decoders

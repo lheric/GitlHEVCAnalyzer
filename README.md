@@ -9,7 +9,7 @@ It is released under **modified** Apache License 2.0. If you want to use it for 
 
 **If you are using our analyzer in your paper, please add a footnote or reference to our work**
 
-Current building status:  [![Build Status](https://travis-ci.org/lheric/GitlHEVCAnalyzer.png?branch=master)](https://travis-ci.org/lheric/GitlHEVCAnalyzer)
+Current building status:  [![Build](https://github.com/lheric/GitlHEVCAnalyzer/actions/workflows/build.yml/badge.svg?branch=master)](https://github.com/lheric/GitlHEVCAnalyzer/actions/workflows/build.yml)
 
 (Not working on Mac OS X for now. Fixing..)
 
