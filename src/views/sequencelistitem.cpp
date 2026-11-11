@@ -5,7 +5,7 @@
 struct YUV_SELECTION
 {
     int     iComboIndex;
-    char*   phLableName;
+    const char* phLableName;
     YUVRole eRole;
 };
 
