@@ -13,7 +13,7 @@ CONFIG(release, debug|release){
 CONFIG += staticlib
 DEFINES += _CRT_SECURE_NO_WARNINGS
 INCLUDEPATH += ../../source/Lib
-msvc: INCLUDEPATH += ../../compat/msvc
+msvc:lessThan(QMAKE_MSC_VER, 1600): INCLUDEPATH += ../../compat/msvc  # stdint.h stub only for VS2008 and older
 DEPENDPATH += .
 DESTDIR = $${OUT_PWD}/..
 include(TLibEncoder.pri)

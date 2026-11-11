@@ -42,7 +42,8 @@ INCLUDEPATH += \
 msvc {
     DEFINES += _CRT_SECURE_NO_WARNINGS
     QMAKE_CXXFLAGS += /wd4996
-    exists($$PWD/HM/compat/msvc): INCLUDEPATH += $$PWD/HM/compat/msvc
+    # Not adding HM/compat/msvc: its stdint.h stub (for VS2008 and older)
+    # shadows the real <stdint.h> of current MSVC. HM's CMake doesn't use it.
 } else {
     # Same as HM's CMake: -Wno-sign-compare, and -msse4.1 on x86 only.
     QMAKE_CXXFLAGS_WARN_ON += -Wno-sign-compare
