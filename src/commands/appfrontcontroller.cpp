@@ -108,7 +108,8 @@ void AppFrontController::run()
             qCritical() << "Bitstream decoding FAILED!\n"
                            "Following may be the reasons for this failure:\n"
                            "1. Corrupted HEVC bitstream?\n"
-                           "2. Bitstream-decoder version mismatch?\n"
+                           "2. Not a conforming HEVC stream? (streams from the pre-standard\n"
+                           "   HM-4.0/HM-5.2 encoders are no longer supported)\n"
                            "3. Non-English characters in bitstream path or analyzer path?\n";
         }
         catch( const BitstreamNotFoundException& )

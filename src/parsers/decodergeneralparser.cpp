@@ -47,11 +47,11 @@ bool DecoderGeneralParser::parseFile(QTextStream* pcInputStream, ComSequence* pc
     }
 
 
-    // POC   18 TId: 0 ( B-SLICE, QP 33 ) [DT  0.005] [L0 17 16 15 14 ] [L1 17 16 15 14 ] [LC 17 16 15 14 ] [MD5:f2984e1c87633f1c2476eb2ddb844a53,(OK)]
+    // POC   18 TId: 0 ( B-SLICE, QP 33 ) [DT  0.005] [L0 17 16 15 14 ] [L1 17 16 15 14 ] [MD5:f2984e1c87633f1c2476eb2ddb844a53,(OK)]
     // read one frame
 
     ComFrame *pcFrame = NULL;
-    cMatchTarget.setPattern("POC *(-?[0-9]+).*\\[DT *([0-9.]+) *\\] \\[L0(( -?[0-9]+){0,}) \\] \\[L1(( -?[0-9]+){0,}) \\] (\\[LC(( -?[0-9]+){0,}) \\])?");
+    cMatchTarget.setPattern("POC *(-?[0-9]+).*\\[DT *([0-9.]+) *\\] \\[L0(( -?[0-9]+){0,}) \\] \\[L1(( -?[0-9]+){0,}) \\]");
     pcInputStream->readLine();///< Skip a empty line
     while( !pcInputStream->atEnd() )
     {
@@ -69,12 +69,11 @@ bool DecoderGeneralParser::parseFile(QTextStream* pcInputStream, ComSequence* pc
             pcFrame->setPOC(cMatchTarget.cap(1).toInt());
             pcFrame->setTotalDecTime(cMatchTarget.cap(2).toDouble());
 
-            /// L0 L1 LC
-            QString strL0, strL1, strLC;
-            strL0 = cMatchTarget.cap(3); strL1 = cMatchTarget.cap(5); strLC = cMatchTarget.cap(7);
+            /// L0 L1
+            QString strL0, strL1;
+            strL0 = cMatchTarget.cap(3); strL1 = cMatchTarget.cap(5);
             readIntArray(&pcFrame->getL0List(), &strL0);
             readIntArray(&pcFrame->getL1List(), &strL1);
-            readIntArray(&pcFrame->getLCList(), &strLC);
 
             pcSequence->getFramesInDecOrder().push_back(pcFrame);
             pcSequence->getFramesInDisOrder().push_back(pcFrame);

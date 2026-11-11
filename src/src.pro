@@ -33,7 +33,6 @@ SOURCES += main.cpp \
     commands/prevframecommand.cpp \
     commands/jumptoframecommand.cpp \
     commands/appfrontcontroller.cpp \
-    views/bitstreamversionselector.cpp \
     parsers/bitstreamparser.cpp \
     parsers/decodergeneralparser.cpp \
     parsers/spsparser.cpp \
@@ -106,7 +105,6 @@ HEADERS += \
     commands/prevframecommand.h \
     commands/jumptoframecommand.h \
     commands/appfrontcontroller.h \
-    views/bitstreamversionselector.h \
     parsers/bitstreamparser.h \
     parsers/decodergeneralparser.h \
     parsers/spsparser.h \
@@ -186,7 +184,6 @@ CONFIG(release, debug|release){
 
 FORMS += \
     views/mainwindow.ui \
-    views/bitstreamversionselector.ui \
     views/busydialog.ui \
     views/aboutdialog.ui \
     views/pluginfilteritem.ui \

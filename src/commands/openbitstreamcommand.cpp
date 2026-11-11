@@ -30,11 +30,8 @@ bool OpenBitstreamCommand::execute( GitlCommandParameter& rcInputArg, GitlComman
     QVariant vValue;
     vValue = rcInputArg.getParameter("filename");
     QString strFilename = vValue.toString();
-    vValue = rcInputArg.getParameter("version");
-    int iVersion = vValue.toInt();
     vValue = rcInputArg.getParameter("skip_decode");
     bool bSkipDecode = vValue.toBool();
-    QString strDecoderPath = "./decoders";
     QString strDecoderOutputPath = pModel->getPreferences().getCacheFolder();
     int iSequenceIndex = pModel->getSequenceManager().getAllSequences().size();
     strDecoderOutputPath += QString("/%1").arg(iSequenceIndex);
@@ -73,9 +70,7 @@ bool OpenBitstreamCommand::execute( GitlCommandParameter& rcInputArg, GitlComman
         cDecodingStageInfo.setParameter("decoding_progress", "(1/11)Start Decoding Bitstream...");
         dispatchEvt(cDecodingStageInfo);
         BitstreamParser cBitstreamParser;
-        bSuccess = cBitstreamParser.parseFile(strDecoderPath,
-                                              iVersion,
-                                              strFilename,
+        bSuccess = cBitstreamParser.parseFile(strFilename,
                                               strDecoderOutputPath,
                                               pcSequence);
         if( !bSuccess )

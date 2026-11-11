@@ -16,11 +16,10 @@ CONFIG -= qt app_bundle
 
 # --- TLibSysuAnalyzer (analyzer output for the GUI) -------------------------
 # HM is an unmodified upstream submodule; the analyzer hooks live in
-# sysu-analyzer.patch (same hook points as the modified HM-12.0 sources) and
-# are applied to the submodule's working tree here, once. To move HM to
-# another tag: git -C HM checkout -- . , switch the tag, re-run qmake, and
-# refresh the patch if it no longer applies.
-HM_ANALYZER_DIR = $$clean_path($$PWD/../TLibSysuAnalyzer)
+# sysu-analyzer.patch (calls into TLibSysuAnalyzer/ from TDecTop, TDecSlice,
+# TDecCu and TAppDecTop) and are applied to the submodule's working tree here,
+# once. To move HM to another tag: git -C HM checkout -- . , switch the tag,
+# re-run qmake, and refresh the patch if it no longer applies.
 HM_PATCH        = $$PWD/sysu-analyzer.patch
 HM_GIT_APPLY    = git -C $$shell_quote($$PWD/HM) apply --ignore-whitespace
 !system("$$HM_GIT_APPLY --reverse --check $$shell_quote($$HM_PATCH) 2> $$QMAKE_SYSTEM_NULL_DEVICE") {
@@ -29,8 +28,8 @@ HM_GIT_APPLY    = git -C $$shell_quote($$PWD/HM) apply --ignore-whitespace
     }
     message("Applied TLibSysuAnalyzer hooks (sysu-analyzer.patch) to HM-18.0")
 }
-DEFINES     += ENABLE_ANAYSIS_OUTPUT=1 HM_VERSION=180
-INCLUDEPATH += $$clean_path($$PWD/..)    # for "TLibSysuAnalyzer/TSysuAnalyzerOutput.h"
+DEFINES     += ENABLE_ANAYSIS_OUTPUT=1   # (sic) the macro the hooks are guarded by
+INCLUDEPATH += $$PWD                     # for "TLibSysuAnalyzer/TSysuAnalyzerOutput.h"
 
 INCLUDEPATH += \
     $$HM_SRC/Lib \
@@ -53,7 +52,7 @@ msvc {
     contains(QT_ARCH, x86_64)|contains(QT_ARCH, i386): QMAKE_CXXFLAGS += -msse4.1
 }
 
-# Library name with HM-12.0's "d" suffix for debug builds.
+# Library name with a "d" suffix for debug builds.
 defineReplace(hmLibName) {
     CONFIG(debug, debug|release): return($${1}d)
     return($$1)

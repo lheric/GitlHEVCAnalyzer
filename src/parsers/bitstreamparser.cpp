@@ -23,19 +23,17 @@ BitstreamParser::~BitstreamParser()
 }
 
 
-bool BitstreamParser::parseFile(QString strDecoderFolder,
-                                int iEncoderVersion,
-                                QString strBitstreamFilePath,
+bool BitstreamParser::parseFile(QString strBitstreamFilePath,
                                 QString strOutputPath,
                                 ComSequence* pcSequence)
 {
     QDir cCurDir = QDir::current();
-    /// check if decoder exist
+    /// the HM-18 decoder lives in "decoders" next to the application binary
+    /// (not relative to the working directory)
+    QString strDecoderFolder = QDir(QCoreApplication::applicationDirPath()).filePath("decoders");
     QString strDecoderPath;
     QStringList cCandidateDecoderList;
-    cCandidateDecoderList << QString("HM_%1").arg(iEncoderVersion)
-                          << QString("HM_%1.exe").arg(iEncoderVersion)
-                          << QString("HM_%1.out").arg(iEncoderVersion);
+    cCandidateDecoderList << "HM_180" << "HM_180.exe";
     QDir cDecoderFolder(strDecoderFolder);
     foreach(const QString& strDecoderExe, cCandidateDecoderList)
     {

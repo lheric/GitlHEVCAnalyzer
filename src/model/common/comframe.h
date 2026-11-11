@@ -30,10 +30,9 @@ public:
     /*! Tile info */
     ADD_CLASS_FIELD_NOSETTER(QVector<ComTile*>, acTiles, getTiles)
 
-    /*! L0 & L1 & LC*/
+    /*! L0 & L1 */
     ADD_CLASS_FIELD_NOSETTER(QVector<int>, aiL0List, getL0List )
     ADD_CLASS_FIELD_NOSETTER(QVector<int>, aiL1List, getL1List )
-    ADD_CLASS_FIELD_NOSETTER(QVector<int>, aiLCList, getLCList )
 
 
     /*! Decoding time comsumed*/

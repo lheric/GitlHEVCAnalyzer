@@ -8,7 +8,6 @@
 #include <QApplication>
 #include "model/modellocator.h"
 #include "commands/appfrontcontroller.h"
-#include "bitstreamversionselector.h"
 #include "model/common/comrom.h"
 #include "gitlivkcmdevt.h"
 #include "preferencedialog.h"
@@ -210,16 +209,10 @@ void MainWindow::on_actionOpen_bitstream_triggered()
         return;
     }
 
-    /// select HM version
-    BitstreamVersionSelector cBitstreamDig(this);
-    if( cBitstreamDig.exec() == QDialog::Rejected )
-        return;
-
     /// prepare & sent event to bus
     GitlIvkCmdEvt cEvt("open_bitstream");
     cEvt.setParameter("filename", strFilename);
     cEvt.setParameter("skip_decode", false);
-    cEvt.setParameter("version", cBitstreamDig.getBitstreamVersion());
     cEvt.dispatch();
 
 }
@@ -302,17 +295,11 @@ void MainWindow::dropEvent(QDropEvent *event)
         return;
     }
 
-    /// select HM version
-    BitstreamVersionSelector cBitstreamDig(this);
-    if( cBitstreamDig.exec() == QDialog::Rejected )
-        return;
-
     /// prepare & sent event to bus
     /// invoke command
     GitlIvkCmdEvt cEvt("open_bitstream");
     cEvt.setParameter("filename", strFilename);
     cEvt.setParameter("skip_decode", false);
-    cEvt.setParameter("version", cBitstreamDig.getBitstreamVersion());
     cEvt.dispatch();
 }
 

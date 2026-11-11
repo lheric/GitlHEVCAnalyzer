@@ -12,9 +12,9 @@ class BitstreamParser : public QObject, public GitlModual
 public:
     explicit BitstreamParser(QObject *parent = 0);
     ~BitstreamParser();
-    bool parseFile(QString strDecoderFolder,
-                   int iEncoderVersion,
-                   QString strBitstreamFilePath,
+    /// Runs the HM-18 decoder (decoders/HM_180 next to the application) on
+    /// the bitstream, writing its output files into strTempOutputPath.
+    bool parseFile(QString strBitstreamFilePath,
                    QString strTempOutputPath,
                    ComSequence* pcSequence);
 
