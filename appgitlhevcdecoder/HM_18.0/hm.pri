@@ -41,6 +41,9 @@ INCLUDEPATH += \
 
 msvc {
     DEFINES += _CRT_SECURE_NO_WARNINGS
+    # Qt's MSVC mkspec adds -Zc:strictStrings; HM's own CMake doesn't use it.
+    QMAKE_CFLAGS   -= -Zc:strictStrings
+    QMAKE_CXXFLAGS -= -Zc:strictStrings
     QMAKE_CXXFLAGS += /wd4996
     # Not adding HM/compat/msvc: its stdint.h stub (for VS2008 and older)
     # shadows the real <stdint.h> of current MSVC. HM's CMake doesn't use it.
