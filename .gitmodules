@@ -1,3 +1,7 @@
 [submodule "libgitlmvc"]
 	path = libgitlmvc
 	url = https://github.com/lheric/libgitlmvc.git
+[submodule "appgitlhevcdecoder/HM_18.0/HM"]
+	path = appgitlhevcdecoder/HM_18.0/HM
+	url = https://vcgit.hhi.fraunhofer.de/jvet/HM.git
+	shallow = true
