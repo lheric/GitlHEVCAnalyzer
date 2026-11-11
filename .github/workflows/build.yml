@@ -16,7 +16,7 @@ jobs:
           - name: Linux (Qt 5, GCC)
             os: ubuntu-24.04
           - name: macOS (Qt 5, Clang)
-            os: macos-14
+            os: macos-latest
           - name: Windows (Qt 5.15, MSVC)
             os: windows-2022
 
