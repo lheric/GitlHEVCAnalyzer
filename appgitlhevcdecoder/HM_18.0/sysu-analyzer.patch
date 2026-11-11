@@ -1,0 +1,243 @@
+diff --git a/source/App/TAppDecoder/TAppDecTop.cpp b/source/App/TAppDecoder/TAppDecTop.cpp
+index 979fb59..5457d20 100644
+--- a/source/App/TAppDecoder/TAppDecTop.cpp
++++ b/source/App/TAppDecoder/TAppDecTop.cpp
+@@ -44,6 +44,9 @@
+ #include "TAppDecTop.h"
+ #include "TLibDecoder/AnnexBread.h"
+ #include "TLibDecoder/NALread.h"
++#if ENABLE_ANAYSIS_OUTPUT
++#include "TLibSysuAnalyzer/TSysuAnalyzerOutput.h"
++#endif
+ #if RExt__DECODER_DEBUG_BIT_STATISTICS
+ #include "TLibCommon/TComCodingStatistics.h"
+ #endif
+@@ -242,6 +245,9 @@ Void TAppDecTop::decode()
+         }
+ 
+         m_cTVideoIOYuvReconFile.open( m_reconFileName, true, m_outputBitDepth, m_outputBitDepth, bitDepths.recon ); // write mode
++#if ENABLE_ANAYSIS_OUTPUT
++        TSysuAnalyzerOutput::getInstance()->openYuvFiles( m_outputBitDepth, bitDepths.recon ); // pred_yuv.yuv + resi_yuv.yuv
++#endif
+         openedReconFile = true;
+       }
+ #if JVET_X0048_X0103_FILM_GRAIN
+@@ -375,6 +381,9 @@ Void TAppDecTop::xDestroyDecLib()
+   if ( !m_reconFileName.empty() )
+   {
+     m_cTVideoIOYuvReconFile.close();
++#if ENABLE_ANAYSIS_OUTPUT
++    TSysuAnalyzerOutput::getInstance()->closeYuvFiles();
++#endif
+   }
+ #if JVET_X0048_X0103_FILM_GRAIN
+   if (!m_SEIFGSFileName.empty())
+@@ -521,6 +530,13 @@ Void TAppDecTop::xWriteOutput( TComList<TComPic*>* pcListPic, UInt tId )
+                                            conf.getWindowRightOffset() + defDisp.getWindowRightOffset(),
+                                            conf.getWindowTopOffset() + defDisp.getWindowTopOffset(),
+                                            conf.getWindowBottomOffset() + defDisp.getWindowBottomOffset(), NUM_CHROMA_FORMAT, isTff );
++#if ENABLE_ANAYSIS_OUTPUT
++            TSysuAnalyzerOutput::getInstance()->writeYuvFiles( pcPicTop, pcPicBottom, m_outputColourSpaceConvert,
++                                           conf.getWindowLeftOffset() + defDisp.getWindowLeftOffset(),
++                                           conf.getWindowRightOffset() + defDisp.getWindowRightOffset(),
++                                           conf.getWindowTopOffset() + defDisp.getWindowTopOffset(),
++                                           conf.getWindowBottomOffset() + defDisp.getWindowBottomOffset(), isTff );
++#endif
+           }
+         }
+ 
+@@ -577,6 +593,13 @@ Void TAppDecTop::xWriteOutput( TComList<TComPic*>* pcListPic, UInt tId )
+                                          conf.getWindowTopOffset() + defDisp.getWindowTopOffset(),
+                                          conf.getWindowBottomOffset() + defDisp.getWindowBottomOffset(),
+                                          NUM_CHROMA_FORMAT, m_bClipOutputVideoToRec709Range  );
++#if ENABLE_ANAYSIS_OUTPUT
++          TSysuAnalyzerOutput::getInstance()->writeYuvFiles( pcPic, m_outputColourSpaceConvert,
++                                         conf.getWindowLeftOffset() + defDisp.getWindowLeftOffset(),
++                                         conf.getWindowRightOffset() + defDisp.getWindowRightOffset(),
++                                         conf.getWindowTopOffset() + defDisp.getWindowTopOffset(),
++                                         conf.getWindowBottomOffset() + defDisp.getWindowBottomOffset() );
++#endif
+         }
+ 
+ #if JVET_X0048_X0103_FILM_GRAIN
+@@ -679,6 +702,13 @@ Void TAppDecTop::xFlushOutput( TComList<TComPic*>* pcListPic )
+                                          conf.getWindowRightOffset() + defDisp.getWindowRightOffset(),
+                                          conf.getWindowTopOffset() + defDisp.getWindowTopOffset(),
+                                          conf.getWindowBottomOffset() + defDisp.getWindowBottomOffset(), NUM_CHROMA_FORMAT, isTff );
++#if ENABLE_ANAYSIS_OUTPUT
++          TSysuAnalyzerOutput::getInstance()->writeYuvFiles( pcPicTop, pcPicBottom, m_outputColourSpaceConvert,
++                                         conf.getWindowLeftOffset() + defDisp.getWindowLeftOffset(),
++                                         conf.getWindowRightOffset() + defDisp.getWindowRightOffset(),
++                                         conf.getWindowTopOffset() + defDisp.getWindowTopOffset(),
++                                         conf.getWindowBottomOffset() + defDisp.getWindowBottomOffset(), isTff );
++#endif
+         }
+ 
+         // update POC of display order
+@@ -738,6 +768,13 @@ Void TAppDecTop::xFlushOutput( TComList<TComPic*>* pcListPic )
+                                          conf.getWindowTopOffset() + defDisp.getWindowTopOffset(),
+                                          conf.getWindowBottomOffset() + defDisp.getWindowBottomOffset(),
+                                          NUM_CHROMA_FORMAT, m_bClipOutputVideoToRec709Range );
++#if ENABLE_ANAYSIS_OUTPUT
++          TSysuAnalyzerOutput::getInstance()->writeYuvFiles( pcPic, m_outputColourSpaceConvert,
++                                         conf.getWindowLeftOffset() + defDisp.getWindowLeftOffset(),
++                                         conf.getWindowRightOffset() + defDisp.getWindowRightOffset(),
++                                         conf.getWindowTopOffset() + defDisp.getWindowTopOffset(),
++                                         conf.getWindowBottomOffset() + defDisp.getWindowBottomOffset() );
++#endif
+         }
+ 
+ #if JVET_X0048_X0103_FILM_GRAIN
+diff --git a/source/Lib/TLibDecoder/TDecCu.cpp b/source/Lib/TLibDecoder/TDecCu.cpp
+index 0d8d7d6..6ff7c21 100644
+--- a/source/Lib/TLibDecoder/TDecCu.cpp
++++ b/source/Lib/TLibDecoder/TDecCu.cpp
+@@ -38,6 +38,9 @@
+ #include "TDecCu.h"
+ #include "TLibCommon/TComTU.h"
+ #include "TLibCommon/TComPrediction.h"
++#if ENABLE_ANAYSIS_OUTPUT
++#include "TLibSysuAnalyzer/TSysuAnalyzerOutput.h"
++#endif
+ 
+ //! \ingroup TLibDecoder
+ //! \{
+@@ -162,6 +165,9 @@ Void TDecCu::decodeCtu( TComDataCU* pCtu, Bool& isLastCtuOfSliceSegment )
+ Void TDecCu::decompressCtu( TComDataCU* pCtu )
+ {
+   xDecompressCU( pCtu, 0,  0 );
++#if ENABLE_ANAYSIS_OUTPUT
++  TSysuAnalyzerOutput::getInstance()->writeOutCUInfo( pCtu );
++#endif
+ }
+ 
+ // ====================================================================================================================
+@@ -237,6 +243,9 @@ Void TDecCu::xDecodeCU( TComDataCU*const pcCU, const UInt uiAbsPartIdx, const UI
+       else
+       {
+         pcCU->setOutsideCUPart( uiIdx, uiDepth+1 );
++#if ENABLE_ANAYSIS_OUTPUT
++        TSysuAnalyzerOutput::getInstance()->addOutsideCU();    ///< 0 bit for out of image cus
++#endif
+       }
+ 
+       uiIdx += uiQNumParts;
+@@ -252,6 +261,10 @@ Void TDecCu::xDecodeCU( TComDataCU*const pcCU, const UInt uiAbsPartIdx, const UI
+     return;
+   }
+ 
++#if ENABLE_ANAYSIS_OUTPUT
++  TSysuAnalyzerOutput::getInstance()->beginCU();
++#endif
++
+   if( uiDepth <= pps.getMaxCuDQPDepth() && pps.getUseDQP())
+   {
+     setdQPFlag(true);
+@@ -354,6 +367,9 @@ Void TDecCu::xFinishDecodeCU( TComDataCU* pcCU, UInt uiAbsPartIdx, UInt uiDepth,
+   }
+ 
+   isLastCtuOfSliceSegment = xDecodeSliceEnd( pcCU, uiAbsPartIdx );
++#if ENABLE_ANAYSIS_OUTPUT
++  TSysuAnalyzerOutput::getInstance()->endCU();
++#endif
+ }
+ 
+ Void TDecCu::xDecompressCU( TComDataCU* pCtu, UInt uiAbsPartIdx,  UInt uiDepth )
+@@ -441,6 +457,9 @@ Void TDecCu::xReconInter( TComDataCU* pcCU, UInt uiDepth )
+   }
+ #endif
+   m_pcPrediction->motionCompensation( pcCU, m_ppcYuvReco[uiDepth] );
++#if ENABLE_ANAYSIS_OUTPUT
++  m_ppcYuvReco[uiDepth]->copyToPicYuv( TSysuAnalyzerOutput::getInstance()->getPredYuv( pcCU->getPic() ), pcCU->getCtuRsAddr(), pcCU->getZorderIdxInCtu() );
++#endif
+ 
+ #if DEBUG_STRING
+   const Int debugPredModeMask=DebugStringGetPredModeMask(MODE_INTER);
+@@ -542,6 +561,9 @@ TDecCu::xIntraRecBlk(       TComYuv*    pcRecoYuv,
+   //===== get prediction signal =====
+ 
+   m_pcPrediction->predIntraAng( compID,   uiChFinalMode, 0 /* Decoder does not have an original image */, 0, piPred, uiStride, rTu, bUseFilteredPredictions );
++#if ENABLE_ANAYSIS_OUTPUT
++  TSysuAnalyzerOutput::getInstance()->storeIntraPred( pcCU, compID, uiAbsPartIdx, piPred, uiStride, uiWidth, uiHeight );
++#endif
+ 
+ #if DEBUG_STRING
+   ss << sTemp;
+@@ -754,6 +776,14 @@ Void TDecCu::xCopyToPic( TComDataCU* pcCU, TComPic* pcPic, UInt uiZorderIdx, UIn
+ 
+   m_ppcYuvReco[uiDepth]->copyToPicYuv  ( pcPic->getPicYuvRec (), uiCtuRsAddr, uiZorderIdx );
+ 
++#if ENABLE_ANAYSIS_OUTPUT
++  m_ppcYuvResi[uiDepth]->copyToPicYuv  ( TSysuAnalyzerOutput::getInstance()->getResiYuv( pcPic ), uiCtuRsAddr, uiZorderIdx );
++  if( pcCU->getIPCMFlag(0) )
++  {
++    m_ppcYuvReco[uiDepth]->copyToPicYuv( TSysuAnalyzerOutput::getInstance()->getPredYuv( pcPic ), uiCtuRsAddr, uiZorderIdx );
++  }
++#endif
++
+   return;
+ }
+ 
+diff --git a/source/Lib/TLibDecoder/TDecSlice.cpp b/source/Lib/TLibDecoder/TDecSlice.cpp
+index fac47ac..d31c307 100644
+--- a/source/Lib/TLibDecoder/TDecSlice.cpp
++++ b/source/Lib/TLibDecoder/TDecSlice.cpp
+@@ -37,6 +37,9 @@
+ 
+ #include "TDecSlice.h"
+ #include "TDecConformance.h"
++#if ENABLE_ANAYSIS_OUTPUT
++#include "TLibSysuAnalyzer/TSysuAnalyzerOutput.h"
++#endif
+ 
+ //! \ingroup TLibDecoder
+ //! \{
+@@ -211,7 +214,13 @@ Void TDecSlice::decompressSlice(TComInputBitstream** ppcSubstreams, TComPic* pcP
+       }
+     }
+ 
++#if ENABLE_ANAYSIS_OUTPUT
++    TSysuAnalyzerOutput::getInstance()->beginCtu( ppcSubstreams[uiSubStrm] );
++#endif
+     m_pcCuDecoder->decodeCtu     ( pCtu, isLastCtuOfSliceSegment );
++#if ENABLE_ANAYSIS_OUTPUT
++    TSysuAnalyzerOutput::getInstance()->endCtu( pCtu );
++#endif
+ 
+ #if DECODER_PARTIAL_CONFORMANCE_CHECK != 0
+     const UInt numRemainingBitsPostCtu=ppcSubstreams[uiSubStrm]->getNumBitsLeft(); // NOTE: Does not account for changes in buffered bits in CABAC decoder, although it's probably good enough.
+diff --git a/source/Lib/TLibDecoder/TDecTop.cpp b/source/Lib/TLibDecoder/TDecTop.cpp
+index e6bea84..1617af5 100644
+--- a/source/Lib/TLibDecoder/TDecTop.cpp
++++ b/source/Lib/TLibDecoder/TDecTop.cpp
+@@ -38,6 +38,9 @@
+ #include "NALread.h"
+ #include "TDecTop.h"
+ #include "TDecConformance.h"
++#if ENABLE_ANAYSIS_OUTPUT
++#include "TLibSysuAnalyzer/TSysuAnalyzerOutput.h"
++#endif
+ 
+ //! \ingroup TLibDecoder
+ //! \{
+@@ -806,6 +809,10 @@ Bool TDecTop::xDecodeSlice(InputNALUnit &nalu, Int &iSkipFrame, Int iPOCLastDisp
+   //  Decode a picture
+   m_cGopDecoder.decompressSlice(&(nalu.getBitstream()), m_pcPic);
+ 
++#if ENABLE_ANAYSIS_OUTPUT
++  TSysuAnalyzerOutput::getInstance()->writeOutTileInfo(m_pcPic);
++#endif
++
+   m_bFirstSliceInPicture = false;
+   m_uiSliceIdx++;
+ 
+@@ -827,6 +834,9 @@ Void TDecTop::xDecodeSPS(const std::vector<UChar> &naluData)
+   sps->setForceDecodeBitDepth(m_forceDecodeBitDepth);
+ #endif
+   m_cEntropyDecoder.decodeSPS( sps );
++#if ENABLE_ANAYSIS_OUTPUT
++  TSysuAnalyzerOutput::getInstance()->writeOutSps( sps );
++#endif
+   m_parameterSetManager.storeSPS(sps, naluData);
+ }
+ 

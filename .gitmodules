@@ -5,3 +5,4 @@
 	path = appgitlhevcdecoder/HM_18.0/HM
 	url = https://vcgit.hhi.fraunhofer.de/jvet/HM.git
 	shallow = true
+	ignore = dirty

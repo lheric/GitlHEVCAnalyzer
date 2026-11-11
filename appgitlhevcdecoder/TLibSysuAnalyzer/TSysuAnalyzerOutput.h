@@ -8,6 +8,14 @@
 #include "TLibCommon/TComSlice.h"
 #include "TLibDecoder/TDecCu.h"
 
+#if (HM_VERSION >= 160)
+#include <map>
+#include "TLibCommon/TComPic.h"
+#include "TLibCommon/TComPicYuv.h"
+#include "TLibCommon/TComBitStream.h"
+#include "Utilities/TVideoIOYuv.h"
+#endif
+
 
 
 class TSysuAnalyzerOutput
@@ -37,6 +45,32 @@ public:
 
 
   std::vector<int> aiCUBits;
+
+#if (HM_VERSION >= 160)
+  /// ---- HM-16+ hooks (HM-12 changed the TDecCu signatures instead) ----
+
+  /// bit (byte) consumption per CTU / leaf CU, called from TDecSlice / TDecCu
+  Void beginCtu     ( TComInputBitstream* pcBitstream );
+  Void endCtu       ( TComDataCU* pcCtu );
+  Void beginCU      ();
+  Void endCU        ();
+  Void addOutsideCU ();
+
+  /// per-picture predicted & residual buffers (HM-16+ TComPic has none)
+  TComPicYuv* getPredYuv ( TComPic* pcPic );
+  TComPicYuv* getResiYuv ( TComPic* pcPic );
+  /// store one intra prediction block before it is overwritten by the reconstruction
+  Void storeIntraPred    ( TComDataCU* pcCU, ComponentID compID, UInt uiAbsPartIdx,
+                           const Pel* piPred, UInt uiStride, UInt uiWidth, UInt uiHeight );
+
+  /// pred_yuv.yuv / resi_yuv.yuv output, called from TAppDecTop next to the reconstruction output
+  Void openYuvFiles  ( const Int outputBitDepth[MAX_NUM_CHANNEL_TYPE], const Int internalBitDepth[MAX_NUM_CHANNEL_TYPE] );
+  Void writeYuvFiles ( TComPic* pcPic, const InputColourSpaceConversion ipCSC,
+                       Int confLeft, Int confRight, Int confTop, Int confBottom );
+  Void writeYuvFiles ( TComPic* pcPicTop, TComPic* pcPicBottom, const InputColourSpaceConversion ipCSC,
+                       Int confLeft, Int confRight, Int confTop, Int confBottom, Bool isTff );
+  Void closeYuvFiles ();
+#endif
   /*
   Void setAllDepthTo       ( TComDataCU* pcCU, UInt uiDepth );
   Bool compareSplitMode    ( TComDataCU* pcRecursive, TComDataCU* pcFast );
@@ -66,6 +100,18 @@ private:
 
   /// Encoder output ( extracted in the encoding process
   std::ofstream m_cMEOutput;    ///< ME info (search point number, SAD, cost, etc)
+
+#if (HM_VERSION >= 160)
+  TComPicYuv* xGetPicBuffer ( TComPic* pcPic, Int iIdx );
+
+  TComInputBitstream* m_pcBitstream;   ///< substream of the CTU being decoded
+  UInt                m_uiCtuStartByte;
+  UInt                m_uiCUStartByte;
+  std::map< TComPic*, TComPicYuv* > m_acPicBuffers[2];  ///< [0] predicted, [1] residual
+  TVideoIOYuv         m_cPredYuvFile;
+  TVideoIOYuv         m_cResiYuvFile;
+  Bool                m_bYuvFilesOpened;
+#endif
 
   static TSysuAnalyzerOutput* m_instance;
 

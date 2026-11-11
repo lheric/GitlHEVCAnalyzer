@@ -10,4 +10,5 @@ SUBDIRS  = \
     TLibCommon \
     TLibDecoder \
     Utilities \
+    TLibSysuAnalyzer \
     TAppDecoder

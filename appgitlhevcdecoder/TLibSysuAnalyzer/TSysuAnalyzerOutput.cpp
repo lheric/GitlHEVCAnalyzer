@@ -20,6 +20,13 @@ TSysuAnalyzerOutput::TSysuAnalyzerOutput()
   m_cTileOutPut.open("decoder_tile.txt", ios::out);
 #endif
 
+#if (HM_VERSION >= 160)
+  m_pcBitstream     = NULL;
+  m_uiCtuStartByte  = 0;
+  m_uiCUStartByte   = 0;
+  m_bYuvFilesOpened = false;
+#endif
+
 
 }
 
@@ -29,8 +36,13 @@ TSysuAnalyzerOutput::TSysuAnalyzerOutput()
 void TSysuAnalyzerOutput::writeOutTileInfo(TComPic * pcPic)
 {
     int iPoc = pcPic ->getPOC();
+#if (HM_VERSION >= 160)
+    int iTileNumRows = pcPic->getPicSym()->getNumTileRowsMinus1()+1;
+    int iTileNumCols = pcPic->getPicSym()->getNumTileColumnsMinus1()+1;
+#else
     int iTileNumRows =  pcPic ->getPicSym() ->getNumRowsMinus1()+1;
     int iTileNumCols = pcPic ->getPicSym() ->getNumColumnsMinus1()+1;
+#endif
 
 
     for( int uiRowIdx=0; uiRowIdx < iTileNumRows; uiRowIdx++ )
@@ -43,11 +55,17 @@ void TSysuAnalyzerOutput::writeOutTileInfo(TComPic * pcPic)
              int uiTileHeight = 0;
              int uiFirstCUAddr = 0;
 
+#if (HM_VERSION >= 160)
+             uiTileWidth   = pcPic->getPicSym()->getTComTile(uiTileIdx)->getTileWidthInCtus();
+             uiTileHeight  = pcPic->getPicSym()->getTComTile(uiTileIdx)->getTileHeightInCtus();
+             uiFirstCUAddr = pcPic->getPicSym()->getTComTile(uiTileIdx)->getFirstCtuRsAddr();
+#else
              uiTileWidth = pcPic ->getPicSym()->getTComTile(uiTileIdx)->getTileWidth();
 
              uiTileHeight = pcPic ->getPicSym()->getTComTile(uiTileIdx)->getTileHeight();
 
              uiFirstCUAddr = pcPic ->getPicSym()->getTComTile(uiTileIdx) ->getFirstCUAddr();
+#endif
 
              m_cTileOutPut << "<" << iPoc << "," << (iTileNumCols )* (iTileNumRows )<< ">"
                   << " " << uiFirstCUAddr << " " << uiTileWidth << " " << uiTileHeight << endl;
@@ -64,7 +82,11 @@ void TSysuAnalyzerOutput::writeOutTileInfo(TComPic * pcPic)
 void TSysuAnalyzerOutput::writeOutCUInfo   ( TComDataCU* pcCU )
 {
   Int iPoc = pcCU->getSlice()->getPOC();
+#if (HM_VERSION >= 160)
+  Int iAddr = pcCU->getCtuRsAddr();
+#else
   Int iAddr = pcCU->getAddr();
+#endif
   Int iTotalNumPart = pcCU->getTotalNumPart();
 
 
@@ -98,14 +120,23 @@ void TSysuAnalyzerOutput::xWriteOutCUInfo  ( TComDataCU* pcCU, Int iLength, Int 
 {
   
   UChar* puhDepth    = pcCU->getDepth();
+#if (HM_VERSION >= 160)
+  SChar* puhPartSize = pcCU->getPartitionSize();
+#else
   Char*  puhPartSize = pcCU->getPartitionSize();
+#endif
 
   TComMv rcMV;
 
   if( puhDepth[iOffset] <= iDepth )
   {
     ///< CU PU info
+#if (HM_VERSION >= 160)
+    ///< HM-16+ marks "no partition" with NUMBER_OF_PART_SIZES instead of SIZE_NONE (15)
+    m_cCUPUOutput << ( puhPartSize[iOffset] == NUMBER_OF_PART_SIZES ? 15 : (Int)(puhPartSize[iOffset]) ) << " ";
+#else
     m_cCUPUOutput << (Int)(puhPartSize[iOffset]) << " "; 
+#endif
 
     ///< TU info
     xWriteOutTUInfo  ( pcCU, iLength, iOffset, 0 );   ///< Recursive write TU
@@ -168,7 +199,11 @@ void TSysuAnalyzerOutput::xWriteOutCUInfo  ( TComDataCU* pcCU, Int iLength, Int 
         iPred = 1;
       else if(ePred == MODE_INTRA)
         iPred = 2;
+#if (HM_VERSION >= 160)
+      else if(ePred == NUMBER_OF_PREDICTION_MODES)   ///< HM-16+ has no MODE_NONE
+#else
       else if(ePred == MODE_NONE)
+#endif
         iPred = 15;
       m_cPredOutput << iPred << " ";
 
@@ -211,8 +246,13 @@ void TSysuAnalyzerOutput::xWriteOutCUInfo  ( TComDataCU* pcCU, Int iLength, Int 
       }    
 
       /// Write Intra info
+#if (HM_VERSION >= 160)
+      Int iLumaIntraDir   = pcCU->getIntraDir(CHANNEL_TYPE_LUMA,   iOffset+iPartAddOffset);
+      Int iChromaIntraDir = pcCU->getIntraDir(CHANNEL_TYPE_CHROMA, iOffset+iPartAddOffset);
+#else
       Int iLumaIntraDir   = pcCU->getLumaIntraDir(iOffset+iPartAddOffset);
       Int iChromaIntraDir = pcCU->getChromaIntraDir(iOffset+iPartAddOffset);
+#endif
       m_cIntraOutput << iLumaIntraDir << " " << iChromaIntraDir << " ";
 
 
@@ -258,11 +298,17 @@ Void TSysuAnalyzerOutput::writeOutSps   ( TComSPS* pcSPS )
 #endif
 
   m_cSpsOut << "Max CU Size:"  << pcSPS->getMaxCUHeight() << endl;
+#if (HM_VERSION >= 160)
+  m_cSpsOut << "Max CU Depth:" << pcSPS->getMaxTotalCUDepth() << endl;
+#else
   m_cSpsOut << "Max CU Depth:" << pcSPS->getMaxCUDepth() << endl;
+#endif
   m_cSpsOut << "Max Inter TU Depth:" << pcSPS->getQuadtreeTUMaxDepthInter() << endl;
   m_cSpsOut << "Max Intra TU Depth:" << pcSPS->getQuadtreeTUMaxDepthIntra() << endl;
 
-#if (HM_VERSION >= 100)
+#if (HM_VERSION >= 160)
+  int iInputBitDepth = pcSPS->getBitDepth(CHANNEL_TYPE_LUMA);
+#elif (HM_VERSION >= 100)
   int iInputBitDepth = pcSPS->getBitDepthY();
 #else
   int iInputBitDepth = pcSPS->getBitDepth();
@@ -272,6 +318,161 @@ Void TSysuAnalyzerOutput::writeOutSps   ( TComSPS* pcSPS )
 
 }
 
+
+#if (HM_VERSION >= 160)
+// ---------------------------------------------------------------------------
+// HM-16+ hooks
+// ---------------------------------------------------------------------------
+
+/// Called by TDecSlice right before decodeCtu(): remember the substream and
+/// the CTU start position (same byte-based measure as the HM-12 version).
+Void TSysuAnalyzerOutput::beginCtu( TComInputBitstream* pcBitstream )
+{
+  m_pcBitstream    = pcBitstream;
+  m_uiCtuStartByte = pcBitstream->getByteLocation();
+  m_uiCUStartByte  = m_uiCtuStartByte;
+  aiCUBits.clear();
+}
+
+/// Called by TDecSlice right after decodeCtu()
+Void TSysuAnalyzerOutput::endCtu( TComDataCU* pcCtu )
+{
+  pcCtu->getTotalBits() = m_pcBitstream->getByteLocation() - m_uiCtuStartByte;
+}
+
+/// Called by TDecCu::xDecodeCU when a leaf CU starts
+Void TSysuAnalyzerOutput::beginCU()
+{
+  m_uiCUStartByte = m_pcBitstream->getByteLocation();
+}
+
+/// Called at the end of TDecCu::xFinishDecodeCU (every leaf CU ends there)
+Void TSysuAnalyzerOutput::endCU()
+{
+  aiCUBits.push_back( m_pcBitstream->getByteLocation() - m_uiCUStartByte );
+}
+
+/// CU outside of the picture: 0 bit
+Void TSysuAnalyzerOutput::addOutsideCU()
+{
+  aiCUBits.push_back( 0 );
+}
+
+/// Picture-sized buffer that lives as long as the TComPic it belongs to
+/// (TComPic objects are recycled by the decoder, and so are these buffers).
+TComPicYuv* TSysuAnalyzerOutput::xGetPicBuffer( TComPic* pcPic, Int iIdx )
+{
+  TComPicYuv*  pcRec  = pcPic->getPicYuvRec();
+  TComPicYuv*& rpcBuf = m_acPicBuffers[iIdx][pcPic];
+
+  if( rpcBuf != NULL &&
+      ( rpcBuf->getWidth(COMPONENT_Y)  != pcRec->getWidth(COMPONENT_Y)  ||
+        rpcBuf->getHeight(COMPONENT_Y) != pcRec->getHeight(COMPONENT_Y) ||
+        rpcBuf->getChromaFormat()      != pcRec->getChromaFormat() ) )
+  {
+    rpcBuf->destroy();
+    delete rpcBuf;
+    rpcBuf = NULL;
+  }
+
+  if( rpcBuf == NULL )
+  {
+    const TComSPS& rcSPS = pcPic->getPicSym()->getSPS();
+    rpcBuf = new TComPicYuv;
+    rpcBuf->create( pcRec->getWidth(COMPONENT_Y), pcRec->getHeight(COMPONENT_Y), pcRec->getChromaFormat(),
+                    rcSPS.getMaxCUWidth(), rcSPS.getMaxCUHeight(), rcSPS.getMaxTotalCUDepth(), true );
+
+    for( UInt comp = 0; comp < rpcBuf->getNumberValidComponents(); comp++ )
+    {
+      const ComponentID compID = ComponentID(comp);
+      Pel* piDst = rpcBuf->getAddr(compID);
+      for( Int y = 0; y < rpcBuf->getHeight(compID); y++, piDst += rpcBuf->getStride(compID) )
+      {
+        for( Int x = 0; x < rpcBuf->getWidth(compID); x++ )
+        {
+          piDst[x] = 0;
+        }
+      }
+    }
+  }
+  return rpcBuf;
+}
+
+TComPicYuv* TSysuAnalyzerOutput::getPredYuv( TComPic* pcPic )
+{
+  return xGetPicBuffer( pcPic, 0 );
+}
+
+TComPicYuv* TSysuAnalyzerOutput::getResiYuv( TComPic* pcPic )
+{
+  return xGetPicBuffer( pcPic, 1 );
+}
+
+Void TSysuAnalyzerOutput::storeIntraPred( TComDataCU* pcCU, ComponentID compID, UInt uiAbsPartIdx,
+                                          const Pel* piPred, UInt uiStride, UInt uiWidth, UInt uiHeight )
+{
+  TComPicYuv* pcPredYuv  = getPredYuv( pcCU->getPic() );
+  Pel*        piDst      = pcPredYuv->getAddr( compID, pcCU->getCtuRsAddr(), pcCU->getZorderIdxInCtu() + uiAbsPartIdx );
+  const Int   iDstStride = pcPredYuv->getStride( compID );
+
+  for( UInt y = 0; y < uiHeight; y++, piDst += iDstStride, piPred += uiStride )
+  {
+    for( UInt x = 0; x < uiWidth; x++ )
+    {
+      piDst[x] = piPred[x];
+    }
+  }
+}
+
+Void TSysuAnalyzerOutput::openYuvFiles( const Int outputBitDepth[MAX_NUM_CHANNEL_TYPE], const Int internalBitDepth[MAX_NUM_CHANNEL_TYPE] )
+{
+  /// residual: signed 16-bit samples, written without any scaling (as in HM-12)
+  Int aiResiBitDepth[MAX_NUM_CHANNEL_TYPE];
+  for( UInt ch = 0; ch < MAX_NUM_CHANNEL_TYPE; ch++ )
+  {
+    aiResiBitDepth[ch] = 16;
+  }
+
+  /// prediction: same format as the reconstruction file
+  m_cPredYuvFile.open( "pred_yuv.yuv", true, outputBitDepth, outputBitDepth, internalBitDepth );
+  m_cResiYuvFile.open( "resi_yuv.yuv", true, aiResiBitDepth, aiResiBitDepth, aiResiBitDepth );
+  m_bYuvFilesOpened = true;
+}
+
+Void TSysuAnalyzerOutput::writeYuvFiles( TComPic* pcPic, const InputColourSpaceConversion ipCSC,
+                                         Int confLeft, Int confRight, Int confTop, Int confBottom )
+{
+  if( !m_bYuvFilesOpened )
+  {
+    return;
+  }
+  m_cPredYuvFile.write( getPredYuv(pcPic), ipCSC, confLeft, confRight, confTop, confBottom );
+  m_cResiYuvFile.write( getResiYuv(pcPic), IPCOLOURSPACE_UNCHANGED, confLeft, confRight, confTop, confBottom );
+}
+
+Void TSysuAnalyzerOutput::writeYuvFiles( TComPic* pcPicTop, TComPic* pcPicBottom, const InputColourSpaceConversion ipCSC,
+                                         Int confLeft, Int confRight, Int confTop, Int confBottom, Bool isTff )
+{
+  if( !m_bYuvFilesOpened )
+  {
+    return;
+  }
+  m_cPredYuvFile.write( getPredYuv(pcPicTop), getPredYuv(pcPicBottom), ipCSC,
+                        confLeft, confRight, confTop, confBottom, NUM_CHROMA_FORMAT, isTff );
+  m_cResiYuvFile.write( getResiYuv(pcPicTop), getResiYuv(pcPicBottom), IPCOLOURSPACE_UNCHANGED,
+                        confLeft, confRight, confTop, confBottom, NUM_CHROMA_FORMAT, isTff );
+}
+
+Void TSysuAnalyzerOutput::closeYuvFiles()
+{
+  if( m_bYuvFilesOpened )
+  {
+    m_cPredYuvFile.close();
+    m_cResiYuvFile.close();
+    m_bYuvFilesOpened = false;
+  }
+}
+#endif
 
 TSysuAnalyzerOutput::~TSysuAnalyzerOutput()
 {

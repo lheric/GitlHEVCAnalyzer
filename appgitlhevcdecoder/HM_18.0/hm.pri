@@ -14,6 +14,24 @@ HM_LIBDIR = $$shadowed($$PWD)
 CONFIG += c++11 thread
 CONFIG -= qt app_bundle
 
+# --- TLibSysuAnalyzer (analyzer output for the GUI) -------------------------
+# HM is an unmodified upstream submodule; the analyzer hooks live in
+# sysu-analyzer.patch (same hook points as the modified HM-12.0 sources) and
+# are applied to the submodule's working tree here, once. To move HM to
+# another tag: git -C HM checkout -- . , switch the tag, re-run qmake, and
+# refresh the patch if it no longer applies.
+HM_ANALYZER_DIR = $$clean_path($$PWD/../TLibSysuAnalyzer)
+HM_PATCH        = $$PWD/sysu-analyzer.patch
+HM_GIT_APPLY    = git -C $$shell_quote($$PWD/HM) apply --ignore-whitespace
+!system("$$HM_GIT_APPLY --reverse --check $$shell_quote($$HM_PATCH) 2> $$QMAKE_SYSTEM_NULL_DEVICE") {
+    !system("$$HM_GIT_APPLY $$shell_quote($$HM_PATCH)") {
+        error("Could not apply $$HM_PATCH to $$PWD/HM. Reset it with: git -C $$PWD/HM checkout -- .")
+    }
+    message("Applied TLibSysuAnalyzer hooks (sysu-analyzer.patch) to HM-18.0")
+}
+DEFINES     += ENABLE_ANAYSIS_OUTPUT=1 HM_VERSION=180
+INCLUDEPATH += $$clean_path($$PWD/..)    # for "TLibSysuAnalyzer/TSysuAnalyzerOutput.h"
+
 INCLUDEPATH += \
     $$HM_SRC/Lib \
     $$HM_SRC/Lib/TLibCommon \

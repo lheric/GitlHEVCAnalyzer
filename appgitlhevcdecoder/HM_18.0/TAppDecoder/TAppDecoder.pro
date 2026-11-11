@@ -10,7 +10,7 @@ SOURCES += $$files($$HM_SRC/App/TAppDecoder/*.cpp)
 HEADERS += $$files($$HM_SRC/App/TAppDecoder/*.h)
 INCLUDEPATH += $$HM_SRC/App/TAppDecoder
 
-HM_LIBS = TLibDecoder Utilities TLibCommon
+HM_LIBS = TLibDecoder TLibSysuAnalyzer Utilities TLibCommon
 LIBS += -L$$HM_LIBDIR
 for(lib, HM_LIBS) {
     name = $$hmLibName($$lib)
