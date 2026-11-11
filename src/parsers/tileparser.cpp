@@ -1,4 +1,5 @@
 #include "tileparser.h"
+#include "decorderframetracker.h"
 #include <QRegExp>
 
 
@@ -22,8 +23,8 @@ bool TileParser::parseFile(QTextStream *pcInputStream, ComSequence *pcSequence)
     cMatchTarget.setPattern("^<(-?[0-9]+),([0-9]+)> (.*)");
 
     QTextStream cTileInfoStream;
+    DecOrderFrameTracker cFrameTracker;   ///< picture of each line, in decoding order
     int iDecOrder = -1;
-    int iLastPOC = -1;
 
 
     while(!pcInputStream->atEnd())
@@ -33,8 +34,8 @@ bool TileParser::parseFile(QTextStream *pcInputStream, ComSequence *pcSequence)
         {
             ///poc addr and iTileNum
             int iPoc = cMatchTarget.cap(1).toInt();
-            iDecOrder += (iLastPOC != iPoc);
-            iLastPOC = iPoc;
+            int iFirstCtuAddr = cMatchTarget.cap(3).section(' ', 0, 0, QString::SectionSkipEmpty).toInt();
+            iDecOrder = cFrameTracker.next(iPoc, iFirstCtuAddr);
 
             pcFrame = pcSequence->getFramesInDecOrder().at(iDecOrder);
 

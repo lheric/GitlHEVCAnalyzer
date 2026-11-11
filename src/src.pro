@@ -106,6 +106,7 @@ HEADERS += \
     commands/jumptoframecommand.h \
     commands/appfrontcontroller.h \
     parsers/bitstreamparser.h \
+    parsers/decorderframetracker.h \
     parsers/decodergeneralparser.h \
     parsers/spsparser.h \
     parsers/cupuparser.h \

@@ -207,7 +207,7 @@ index fac47ac..d31c307 100644
  #if DECODER_PARTIAL_CONFORMANCE_CHECK != 0
      const UInt numRemainingBitsPostCtu=ppcSubstreams[uiSubStrm]->getNumBitsLeft(); // NOTE: Does not account for changes in buffered bits in CABAC decoder, although it's probably good enough.
 diff --git a/source/Lib/TLibDecoder/TDecTop.cpp b/source/Lib/TLibDecoder/TDecTop.cpp
-index e6bea84..1617af5 100644
+index e6bea84..61ec5e1 100644
 --- a/source/Lib/TLibDecoder/TDecTop.cpp
 +++ b/source/Lib/TLibDecoder/TDecTop.cpp
 @@ -38,6 +38,9 @@
@@ -220,18 +220,21 @@ index e6bea84..1617af5 100644
  
  //! \ingroup TLibDecoder
  //! \{
-@@ -806,6 +809,10 @@ Bool TDecTop::xDecodeSlice(InputNALUnit &nalu, Int &iSkipFrame, Int iPOCLastDisp
+@@ -806,6 +809,13 @@ Bool TDecTop::xDecodeSlice(InputNALUnit &nalu, Int &iSkipFrame, Int iPOCLastDisp
    //  Decode a picture
    m_cGopDecoder.decompressSlice(&(nalu.getBitstream()), m_pcPic);
  
 +#if ENABLE_ANAYSIS_OUTPUT
-+  TSysuAnalyzerOutput::getInstance()->writeOutTileInfo(m_pcPic);
++  if( m_bFirstSliceInPicture )   // tiles are per picture: write them once, not once per slice
++  {
++    TSysuAnalyzerOutput::getInstance()->writeOutTileInfo(m_pcPic);
++  }
 +#endif
 +
    m_bFirstSliceInPicture = false;
    m_uiSliceIdx++;
  
-@@ -827,6 +834,9 @@ Void TDecTop::xDecodeSPS(const std::vector<UChar> &naluData)
+@@ -827,6 +837,9 @@ Void TDecTop::xDecodeSPS(const std::vector<UChar> &naluData)
    sps->setForceDecodeBitDepth(m_forceDecodeBitDepth);
  #endif
    m_cEntropyDecoder.decodeSPS( sps );

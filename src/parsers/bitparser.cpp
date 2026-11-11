@@ -1,4 +1,5 @@
 #include "bitparser.h"
+#include "decorderframetracker.h"
 #include <QRegExp>
 
 BitParser::BitParser(QObject *parent) :
@@ -21,8 +22,8 @@ bool BitParser::parseLCUBitFile(QTextStream* pcInputStream, ComSequence* pcSeque
     ComCU* pcLCU = NULL;
     cMatchTarget.setPattern("^<(-?[0-9]+),([0-9]+)> (.*)");
 
+    DecOrderFrameTracker cFrameTracker;   ///< picture of each line, in decoding order
     int iDecOrder = -1;
-    int iLastPOC  = -1;
 
     while( !pcInputStream->atEnd() )
     {
@@ -33,8 +34,7 @@ bool BitParser::parseLCUBitFile(QTextStream* pcInputStream, ComSequence* pcSeque
 
             /// poc and lcu addr
             int iPoc = cMatchTarget.cap(1).toInt();
-            iDecOrder += (iLastPOC != iPoc);
-            iLastPOC = iPoc;
+            iDecOrder = cFrameTracker.next(iPoc, cMatchTarget.cap(2).toInt());
 
             pcFrame = pcSequence->getFramesInDecOrder().at(iDecOrder);
             int iAddr = cMatchTarget.cap(2).toInt();
@@ -69,8 +69,8 @@ bool BitParser::parseSCUBitFile(QTextStream* pcInputStream, ComSequence* pcSeque
     ComCU* pcLCU = NULL;
     cMatchTarget.setPattern("^<(-?[0-9]+),([0-9]+)> (.*)");
     QTextStream cSCUBitInfoStream;
+    DecOrderFrameTracker cFrameTracker;   ///< picture of each line, in decoding order
     int iDecOrder = -1;
-    int iLastPOC  = -1;
     while( !pcInputStream->atEnd() )
     {
 
@@ -79,8 +79,7 @@ bool BitParser::parseSCUBitFile(QTextStream* pcInputStream, ComSequence* pcSeque
         {
             /// poc and lcu addr
             int iPoc = cMatchTarget.cap(1).toInt();
-            iDecOrder += (iLastPOC != iPoc);
-            iLastPOC = iPoc;
+            iDecOrder = cFrameTracker.next(iPoc, cMatchTarget.cap(2).toInt());
 
             pcFrame = pcSequence->getFramesInDecOrder().at(iDecOrder);
             int iAddr = cMatchTarget.cap(2).toInt();

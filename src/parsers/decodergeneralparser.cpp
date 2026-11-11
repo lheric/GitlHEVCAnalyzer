@@ -52,7 +52,9 @@ bool DecoderGeneralParser::parseFile(QTextStream* pcInputStream, ComSequence* pc
 
     ComFrame *pcFrame = NULL;
     cMatchTarget.setPattern("POC *(-?[0-9]+).*\\[DT *([0-9.]+) *\\] \\[L0(( -?[0-9]+){0,}) \\] \\[L1(( -?[0-9]+){0,}) \\]");
-    pcInputStream->readLine();///< Skip a empty line
+    /// no line is skipped here: HM-18 prints the first POC line right after the
+    /// version line (HM-12 printed a blank line first); the loop below scans for
+    /// POC lines and ignores everything else
     while( !pcInputStream->atEnd() )
     {
 
@@ -110,19 +112,24 @@ bool DecoderGeneralParser::parseFile(QTextStream* pcInputStream, ComSequence* pc
 
 void DecoderGeneralParser::xSortByFrameCount( ComSequence* pcSequence )
 {
-    /// Get IDR groups
+    QVector<ComFrame*>& rcFrames = pcSequence->getFramesInDisOrder();
+    if( rcFrames.isEmpty() )
+        return;
+
+    /// Get IDR groups: frames are in decoding order here; a group starts at the
+    /// first frame and at every later frame whose POC is reset to 0 (IDR). The
+    /// first frame need not be POC 0 (e.g. a stream starting with a CRA).
     QList<QVector<ComFrame*>::iterator> cIDRGroup;
-    QVector<ComFrame*>::iterator cIter = pcSequence->getFramesInDisOrder().begin();
-    while(cIter!=pcSequence->getFramesInDisOrder().end())
+    QVector<ComFrame*>::iterator cIter = rcFrames.begin();
+    cIDRGroup.push_back(cIter);
+    for( ++cIter; cIter != rcFrames.end(); ++cIter )
     {
         if ((*cIter)->getPOC() == 0)
         {
             cIDRGroup.push_back(cIter);
         }
-        cIter++;
     }
-    cIDRGroup.push_back(cIter);
-    Q_ASSERT(cIDRGroup.size() >= 2);    /// at least one IDR group
+    cIDRGroup.push_back(rcFrames.end());
 
     /// sort each IDRGroup
     for(int i = 0; i < cIDRGroup.size()-1; i++)
